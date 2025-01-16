@@ -79,11 +79,11 @@ public class Player_Move : MonoBehaviour
     {
         moveInput = 0;
 
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.A))
         {
             moveInput = -1;
         }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.D))
         {
             moveInput = 1;
         }

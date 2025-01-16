@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class TileMiningController : MonoBehaviour
+public class Player_TileMining : MonoBehaviour
 {
     public Tilemap tilemap;            // 타일맵
     public Transform player;           // 플레이어의 위치

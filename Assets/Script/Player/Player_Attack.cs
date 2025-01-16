@@ -29,7 +29,7 @@ public class Player_Attack : MonoBehaviour
     {
         if (curTime <= 0)
         {
-            if (Input.GetKeyDown(KeyCode.A) && !playerMove.isAttack)
+            if (Input.GetKeyDown(KeyCode.Q) && !playerMove.isAttack)
             {
                 audioSource.PlayOneShot(attackSound);
                 Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
