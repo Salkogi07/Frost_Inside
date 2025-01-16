@@ -4,6 +4,9 @@ using System.Collections.Generic;
 
 public class Player_TileMining : MonoBehaviour
 {
+    [Header("Component")]
+    private Player_Move player_move;
+
     [Header("Existing settings")]
     public Tilemap tilemap;            // 실제 맵(블록이 깔린) 타일맵
     public Transform player;           // 플레이어의 위치
@@ -17,9 +20,6 @@ public class Player_TileMining : MonoBehaviour
 
     private Vector3Int? lastHighlightedTile = null;  // 마지막으로 강조했던 타일
     private Vector3Int? currentMiningTile = null;    // 현재 채굴 중인 타일 위치
-
-    [Header("Component")]
-    private Player_Move player_move;
 
     // 각 타일(블록)마다 현재 알파값(1=불투명, 0=완전투명)을 저장
     private Dictionary<Vector3Int, float> tileAlphaDict = new Dictionary<Vector3Int, float>();

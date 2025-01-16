@@ -3,6 +3,11 @@ using UnityEngine;
 
 public class Player_Move : MonoBehaviour
 {
+    [Header("Component")]
+    public ParticleSystem dust;
+    private SpriteRenderer spriteRenderer;
+    public Rigidbody2D rb { get; private set; }
+
     [Header("Player Info")]
     [SerializeField] public float moveSpeed = 5f;
     [SerializeField] public float jumpForce = 10f;
@@ -24,10 +29,9 @@ public class Player_Move : MonoBehaviour
     [SerializeField] PlatformEffector2D effector;
     [SerializeField] public bool isPlatform = false;
 
-    [Header("Component")]
-    public ParticleSystem dust;
-    private SpriteRenderer spriteRenderer;
-    public Rigidbody2D rb { get; private set; }
+    [Header("Stamina info")]
+    [SerializeField] private int currentStamina = 0;
+    [SerializeField] private int maxStamina = 0;
 
     [Header("IsMining")]
     public bool isMining = false;
@@ -64,6 +68,8 @@ public class Player_Move : MonoBehaviour
         {
             return;
         }
+
+
 
         PlatformCheck();
         GroundCheck();
