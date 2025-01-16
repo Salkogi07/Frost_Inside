@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 687c1621f923bce4da57c81018b2ab4d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 165307
+  packageName: Dark Platformer SET1
+  packageVersion: 1.0
+  assetPath: Assets/DPSET1/Anim/elevator1.anim
+  uploadId: 532751

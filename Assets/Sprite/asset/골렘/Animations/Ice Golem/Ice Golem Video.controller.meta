@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: f4cad2c83fdb64f479a7bc1dd0d7023d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 9100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 254291
+  packageName: Elemental Golems - Pixel Art Fantasy Creature Pack
+  packageVersion: 1.0.0
+  assetPath: Assets/AssetsForStore/Elemental Golems/Animations/Ice Golem/Ice Golem
+    Video.controller
+  uploadId: 582416

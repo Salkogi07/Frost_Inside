@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: e844fe49b29951946957f2435667327d
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 7400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 165307
+  packageName: Dark Platformer SET1
+  packageVersion: 1.0
+  assetPath: Assets/DPSET1/Anim/teleport.anim
+  uploadId: 532751
