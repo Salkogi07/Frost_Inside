@@ -26,6 +26,12 @@ public class Player_TileMining : MonoBehaviour
         // player가 null이라면, 이 스크립트가 달린 오브젝트의 Transform을 할당
         if (player == null)
             player = GetComponent<Transform>();
+
+        if (highlightTilemap == null)
+            highlightTilemap = GameObject.Find("mining").GetComponent<Tilemap>();
+
+        if (tilemap == null)
+            tilemap = GameObject.Find("ground").GetComponent<Tilemap>();
     }
 
     private void Start()
@@ -35,7 +41,7 @@ public class Player_TileMining : MonoBehaviour
         if (renderer != null)
         {
             renderer.sortingLayerName = "Default";
-            renderer.sortingOrder = 10;  // 맵 타일맵보다 높은 값
+            renderer.sortingOrder = -2;  // 맵 타일맵보다 높은 값
         }
 
         // 초기화: 맵 전체 타일을 훑어보면서 tileAlphaDict에 alpha=1f로 등록
