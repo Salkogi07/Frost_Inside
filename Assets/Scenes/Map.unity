@@ -1102,6 +1102,7 @@ MonoBehaviour:
   highlightTilemap: {fileID: 0}
   borderTile: {fileID: 0}
   blockedBorderTile: {fileID: 0}
+  player_move: {fileID: 0}
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
@@ -7011,7 +7012,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f05d9d8404e4c6042ae1091176fc95be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
+  moveSpeed: 7
   jumpForce: 16
   coyoteTime: 0.13
   jumpBufferTime: 0.13
@@ -7028,9 +7029,9 @@ MonoBehaviour:
   effector: {fileID: 1250905502}
   isPlatform: 0
   dust: {fileID: 1027099486}
+  isMining: 0
   isJumping: 0
   isFacingRight: 0
-  isDashing: 0
   isAttack: 0
   canDoubleJump: 0
 --- !u!50 &1156874119
@@ -7134,6 +7135,7 @@ MonoBehaviour:
   highlightTilemap: {fileID: 1048228185}
   borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
   blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
+  player_move: {fileID: 1156874117}
 --- !u!1 &1250905497
 GameObject:
   m_ObjectHideFlags: 0

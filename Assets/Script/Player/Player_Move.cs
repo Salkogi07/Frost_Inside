@@ -30,7 +30,7 @@ public class Player_Move : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
 
     [Header("IsMining")]
-    [SerializeField] public bool isMining = false;
+    public bool isMining = false;
 
     [Header("IsAtcitoning")]
     [SerializeField] private bool isJumping;

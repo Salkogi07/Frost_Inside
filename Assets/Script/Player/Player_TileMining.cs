@@ -4,19 +4,22 @@ using System.Collections.Generic;
 
 public class Player_TileMining : MonoBehaviour
 {
-    [Header("기존 설정")]
+    [Header("Existing settings")]
     public Tilemap tilemap;            // 실제 맵(블록이 깔린) 타일맵
     public Transform player;           // 플레이어의 위치
     public float miningRange = 5f;     // 채굴 가능 범위
     public float miningTime = 2f;      // 한 블록을 채굴하는 데 걸리는 시간
 
-    [Header("테두리 강조용")]
+    [Header("For border emphasis")]
     public Tilemap highlightTilemap;   // 강조용 타일맵
     public Tile borderTile;            // 채굴 가능 테두리
     public Tile blockedBorderTile;     // 채굴 불가 테두리
 
     private Vector3Int? lastHighlightedTile = null;  // 마지막으로 강조했던 타일
     private Vector3Int? currentMiningTile = null;    // 현재 채굴 중인 타일 위치
+
+    [Header("Component")]
+    private Player_Move player_move;
 
     // 각 타일(블록)마다 현재 알파값(1=불투명, 0=완전투명)을 저장
     private Dictionary<Vector3Int, float> tileAlphaDict = new Dictionary<Vector3Int, float>();
@@ -26,6 +29,9 @@ public class Player_TileMining : MonoBehaviour
         // player가 null이라면, 이 스크립트가 달린 오브젝트의 Transform을 할당
         if (player == null)
             player = GetComponent<Transform>();
+        
+        if (player_move == null)
+            player_move = GetComponent<Player_Move>();
 
         if (highlightTilemap == null)
             highlightTilemap = GameObject.Find("mining").GetComponent<Tilemap>();
@@ -55,7 +61,7 @@ public class Player_TileMining : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         // 1) 마우스가 가리키는 타일 좌표 구하기
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -123,6 +129,8 @@ public class Player_TileMining : MonoBehaviour
             // canMine == true 일 때만 실제 채굴 진행
             if (canMine)
             {
+                player_move.isMining = true;
+
                 // 새로 채굴 타일 선택
                 if (currentMiningTile == null || currentMiningTile != mouseTilePos)
                 {
@@ -150,6 +158,7 @@ public class Player_TileMining : MonoBehaviour
                     tilemap.SetTile(mouseTilePos, null);
                     tileAlphaDict.Remove(mouseTilePos);
                     currentMiningTile = null;
+                    player_move.isMining = false;
                 }
                 else
                 {
@@ -169,6 +178,10 @@ public class Player_TileMining : MonoBehaviour
             // 마우스 왼쪽 버튼을 떼면, 채굴 중이던 타일 정보를 초기화
             // (이미 깎인 알파값은 그대로 유지 -> "채굴 중단 후 재개" 가능)
             currentMiningTile = null;
+            if (player_move != null)
+            {
+                player_move.isMining = false;
+            }
         }
 
         // 범위 밖 블록은 알파값 원래 색 복원
