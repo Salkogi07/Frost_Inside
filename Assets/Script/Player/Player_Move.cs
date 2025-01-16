@@ -28,7 +28,9 @@ public class Player_Move : MonoBehaviour
     public ParticleSystem dust;
     private SpriteRenderer spriteRenderer;
     public Rigidbody2D rb { get; private set; }
-    private Player_Skill playerSkill;
+
+    [Header("IsMining")]
+    [SerializeField] public bool isMining = false;
 
     [Header("IsAtcitoning")]
     [SerializeField] private bool isJumping;
@@ -41,7 +43,6 @@ public class Player_Move : MonoBehaviour
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
 
-    public bool isDashing = false;
     public bool isAttack = false;
     private bool isJumpCut = false;
 
@@ -52,7 +53,6 @@ public class Player_Move : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        playerSkill = GetComponent<Player_Skill>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
         gravityScale = rb.gravityScale;
@@ -60,7 +60,7 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
-        if (isDashing)
+        if (isMining)
         {
             return;
         }

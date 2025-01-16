@@ -22,15 +22,6 @@ public class Player_Hp : MonoBehaviour
     {
         if (isInvincible)
             return;
-
-        if (!playerMove.isDashing)
-        {
-            //player_HP -= _value;
-
-            // 무적 상태 시작
-            StartCoroutine(InvincibilityCoroutine());
-
-        }
     }
 
     private IEnumerator InvincibilityCoroutine()
