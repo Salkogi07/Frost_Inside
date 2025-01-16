@@ -6,12 +6,23 @@ public class Player_Move : MonoBehaviour
     [Header("Component")]
     public ParticleSystem dust;
     private SpriteRenderer spriteRenderer;
+    private Player_UI player_ui;
+
     public Rigidbody2D rb { get; private set; }
 
     [Header("Player Info")]
-    [SerializeField] public float moveSpeed = 5f;
-    [SerializeField] public float jumpForce = 10f;
+    [SerializeField] public float walkSpeed = 5f;
+    [SerializeField] private float sprintSpeed = 10f;
+    [SerializeField] private float currentSpeed;
+    [SerializeField] private bool isSprinting = false;
 
+    [Header("Stamina info")]
+    [SerializeField] private float sprintCost = 5f; // 초당 스테미나 감소량
+    [SerializeField] private float jumpCost = 25f; // 초당 스테미나 감소량
+    [SerializeField] private float staminaRecoverRate = 20f; // 초당 스테미나 회복량
+
+    [Header("Jump Info")]
+    [SerializeField] public float jumpForce = 10f;
     [SerializeField] public float coyoteTime = 0.2f;
     [SerializeField] public float jumpBufferTime = 0.2f;
 
@@ -29,9 +40,6 @@ public class Player_Move : MonoBehaviour
     [SerializeField] PlatformEffector2D effector;
     [SerializeField] public bool isPlatform = false;
 
-    [Header("Stamina info")]
-    [SerializeField] private int currentStamina = 0;
-    [SerializeField] private int maxStamina = 0;
 
     [Header("IsMining")]
     public bool isMining = false;
@@ -58,8 +66,10 @@ public class Player_Move : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        player_ui = GetComponent<Player_UI>();
 
         gravityScale = rb.gravityScale;
+        currentSpeed = walkSpeed;
     }
 
     void Update()
@@ -69,7 +79,8 @@ public class Player_Move : MonoBehaviour
             return;
         }
 
-
+        Sprint();
+        HandleStamina();
 
         PlatformCheck();
         GroundCheck();
@@ -78,8 +89,23 @@ public class Player_Move : MonoBehaviour
         CheckJumpPlatform();
 
         Flip();
+
     }
 
+    void Sprint()
+    {
+        // Shift를 누르고 있고, 스테미나가 남아있을 경우 달리기
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            isSprinting = true;
+            currentSpeed = sprintSpeed;
+        }
+        else
+        {
+            isSprinting = false;
+            currentSpeed = walkSpeed;
+        }
+    }
 
     void MoveInput()
     {
@@ -93,8 +119,35 @@ public class Player_Move : MonoBehaviour
         {
             moveInput = 1;
         }
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed / (isAttack ? 2 : 1), rb.linearVelocity.y);
+        rb.linearVelocity = new Vector2(moveInput * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocity.y);
     }
+
+    void HandleStamina()
+    {
+        if (isSprinting)
+        {
+            if (player_ui.stamina > sprintCost * Time.deltaTime)
+            {
+                player_ui.stamina -= sprintCost * Time.deltaTime;
+            }
+            else
+            {
+                player_ui.stamina = 0;
+                isSprinting = false; // 스테미나가 없으면 스프린트 중단
+                currentSpeed = walkSpeed;
+            }
+        }
+        else
+        {
+            if (player_ui.stamina < player_ui.maxStamina)
+            {
+                player_ui.stamina += staminaRecoverRate * Time.deltaTime;
+                if (player_ui.stamina > player_ui.maxStamina)
+                    player_ui.stamina = player_ui.maxStamina;
+            }
+        }
+    }
+
 
     private void Flip()
     {
@@ -146,7 +199,7 @@ public class Player_Move : MonoBehaviour
         }
         else
         {
-            if(jumpBufferCounter > 0)
+            if (jumpBufferCounter > 0)
             {
                 jumpBufferCounter -= Time.deltaTime;
             }
@@ -154,15 +207,23 @@ public class Player_Move : MonoBehaviour
 
         if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f && !isJumping)
         {
-            CreateDust();
-            PerformJump();
-            isJumpCut = true;
+            if (player_ui.stamina >= jumpCost)
+            {
+                player_ui.stamina -= jumpCost;
+                CreateDust();
+                PerformJump();
+                isJumpCut = true;
+            }
         }
         else if (canDoubleJump && doubleJumpAvailable && !isGrounded && Input.GetButtonDown("Jump"))
         {
-            PerformJump();
-            isJumpCut = true;
-            doubleJumpAvailable = false;
+            if (player_ui.stamina >= jumpCost)
+            {
+                player_ui.stamina -= jumpCost;
+                PerformJump();
+                isJumpCut = true;
+                doubleJumpAvailable = false;
+            }
         }
 
         if (isJumpCut && Input.GetButtonUp("Jump") && rb.linearVelocityY > 0f)
