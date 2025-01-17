@@ -15,6 +15,11 @@ public class Player_UI : MonoBehaviour
     [Header("Component")]
     [SerializeField] Image staminaImage;
     [SerializeField] Image temperatureImage; // 체온 상태 이미지
+    [SerializeField] Image timeImage; //시간 이미지
+    [SerializeField] Text timeText; //시간 이미지
+
+    [Header("Time info")]
+    [SerializeField] private Sprite[] timeSprites; // 시간별 이미지 (3개 필요)
 
     [Header("Hp info")]
     [SerializeField] private float hp = 0;
@@ -49,8 +54,26 @@ public class Player_UI : MonoBehaviour
     {
         UpdateStamina();
         UpdateTemperatureState();
+        UpdateTime();
+    }
 
-        temperature -= 10 * Time.deltaTime;
+    private void UpdateTime()
+    {
+        timeText.text = GameManager.instance.hours.ToString("D2") + ":" + GameManager.instance.minutes.ToString("D2");
+
+        if (GameManager.instance.hours < 17)  // 17시 전까지
+        {
+            timeImage.sprite = timeSprites[0];
+        }
+        else if (GameManager.instance.hours < 21)  // 21시 전까지
+        {
+            timeImage.sprite = timeSprites[1];
+        }
+        else // 21시 이후 (22시 포함)
+        {
+            timeImage.sprite = timeSprites[2];
+        }
+
     }
 
     private void UpdateStamina()

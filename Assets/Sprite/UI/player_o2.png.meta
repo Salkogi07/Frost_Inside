@@ -14,9 +14,6 @@ TextureImporter:
   - first:
       213: -5474256692824668798
     second: player_o2_3
-  - first:
-      213: 1744966091131425669
-    second: player_o2_4
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -138,7 +135,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_o2_1
+      name: player_o2_0
       rect:
         serializedVersion: 2
         x: 0
@@ -146,15 +143,15 @@ TextureImporter:
         width: 50
         height: 50
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 5d7ffdfd4c48fe4c0800000000000000
-      internalID: -4256037141737375787
+      spriteID: 1bed36788f9206a4dbec7cf274555c10
+      internalID: -788835701
       vertices: []
       indices: 
       edges: []
@@ -163,7 +160,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: da327207e08904d4d856fad8c219b09c
+    spriteID: 23cf90fda1b427b4bafe4942f8544981
     internalID: 0
     vertices: []
     indices: 
@@ -173,11 +170,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_o2_0: 1533293028513574383
-      player_o2_1: -4256037141737375787
-      player_o2_2: -8641831801672619526
-      player_o2_3: -5474256692824668798
-      player_o2_4: 1744966091131425669
+      player_o2_0: -788835701
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

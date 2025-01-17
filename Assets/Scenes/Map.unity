@@ -1239,7 +1239,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -4256037141737375787, guid: efc962d755678b2468312b272fd08c80, type: 3}
+  m_Sprite: {fileID: -788835701, guid: efc962d755678b2468312b272fd08c80, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1257,6 +1257,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 815791848}
   m_CullTransparentMesh: 1
+--- !u!1 &852017077
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 852017078}
+  - component: {fileID: 852017079}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &852017078
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852017077}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 212.43768, y: 509.0072, z: 4.610427}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &852017079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852017077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b19883c03b742264ea31f3c24a338dbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hours: 8
+  minutes: 0
 --- !u!1 &979659155
 GameObject:
   m_ObjectHideFlags: 0
@@ -7130,6 +7176,12 @@ MonoBehaviour:
   isInvincible: 0
   staminaImage: {fileID: 1812174817}
   temperatureImage: {fileID: 1237943402}
+  timeImage: {fileID: 1820440501}
+  timeText: {fileID: 629632972}
+  timeSprites:
+  - {fileID: 4138823062835201441, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
+  - {fileID: 4628948989125786106, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
+  - {fileID: 8823166479081205076, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
   hp: 0
   maxHp: 100
   stamina: 100
@@ -19808,3 +19860,4 @@ SceneRoots:
   - {fileID: 287746791}
   - {fileID: 1504661258}
   - {fileID: 190581304}
+  - {fileID: 852017078}
