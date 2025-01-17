@@ -28,9 +28,9 @@ public class NetworkManager : MonoBehaviourPunCallbacks // MonoBehaviourPunCallb
     public void JoinLobby() => PhotonNetwork.JoinLobby();
     public override void OnJoinedLobby() => print("로비접속");
 
-    public void CreateRoom() => PhotonNetwork.CreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 1 });
+    public void CreateRoom() => PhotonNetwork.CreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 2 });
     public void JoinRoom() => PhotonNetwork.JoinRoom(roomInput.text);
-    public void JoinOrCreateRoom() => PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 1 }, null);
+    public void JoinOrCreateRoom() => PhotonNetwork.JoinOrCreateRoom(roomInput.text, new RoomOptions { MaxPlayers = 2 }, null);
     public void JoinRandomRoom() => PhotonNetwork.JoinRandomRoom();
     public void LeaveRoom() => PhotonNetwork.LeaveRoom();
 
