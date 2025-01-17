@@ -481,6 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 310299959}
   - component: {fileID: 310299960}
+  - component: {fileID: 310299961}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -549,6 +550,18 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 8, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &310299961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 310299958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6462135134d1df746b6b76a1a5726280, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &434756460
 GameObject:
   m_ObjectHideFlags: 0
@@ -7563,6 +7576,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b45c83e473d0046a9c784ec4f75d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  invincibilityDuration: 0.5
+  isInvincible: 0
+  staminaImage: {fileID: 0}
+  hp: 0
+  maxHp: 100
+  stamina: 0
+  maxStamina: 100
 --- !u!1 &1250905497
 GameObject:
   m_ObjectHideFlags: 0
@@ -19936,6 +19956,7 @@ GameObject:
   - component: {fileID: 1690818746}
   - component: {fileID: 1690818748}
   - component: {fileID: 1690818747}
+  - component: {fileID: 1690818749}
   m_Layer: 0
   m_Name: Square
   m_TagString: monster
@@ -20026,7 +20047,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61c44f6c2da88274d8ec814c35debee2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  detectionRadius: 5
   player: {fileID: 1156874121}
+  moveSpeed: 3
 --- !u!50 &1690818747
 Rigidbody2D:
   serializedVersion: 5
@@ -20100,6 +20123,27 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!231 &1690818749
+SpringJoint2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1690818743}
+  m_Enabled: 0
+  serializedVersion: 4
+  m_EnableCollision: 0
+  m_ConnectedRigidBody: {fileID: 0}
+  m_BreakForce: Infinity
+  m_BreakTorque: Infinity
+  m_BreakAction: 3
+  m_AutoConfigureConnectedAnchor: 0
+  m_Anchor: {x: 5, y: 0}
+  m_ConnectedAnchor: {x: 0, y: 0}
+  m_AutoConfigureDistance: 1
+  m_Distance: 5.0115466
+  m_DampingRatio: 0
+  m_Frequency: 1
 --- !u!1 &1930148638
 GameObject:
   m_ObjectHideFlags: 0
