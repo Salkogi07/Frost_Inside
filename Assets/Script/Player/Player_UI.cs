@@ -10,10 +10,11 @@ public class Player_UI : MonoBehaviour
     SpriteRenderer sprite;
     Rigidbody2D rb;
 
-    public bool isInvincible  = false;
+    public bool isInvincible = false;
 
     [Header("Component")]
     [SerializeField] Image staminaImage;
+    [SerializeField] Image temperatureImage; // 체온 상태 이미지
 
     [Header("Hp info")]
     [SerializeField] private float hp = 0;
@@ -22,6 +23,20 @@ public class Player_UI : MonoBehaviour
     [Header("Stamina info")]
     [SerializeField] public float stamina = 0;
     [SerializeField] public float maxStamina = 100;
+
+    [Header("Weight info")]
+    [SerializeField] private float weight = 0;
+    [SerializeField] private float maxWeight = 100;
+
+    [Header("Temperature info")]
+    [SerializeField] private float temperature = 100;
+    [SerializeField] private float maxTemperature = 100;
+    [SerializeField] private Sprite[] temperatureSprites; // 체온 단계별 이미지 (4개 필요)
+
+    [Header("O2 info")]
+    [SerializeField] private float O2 = 0;
+    [SerializeField] private float maxO2 = 100;
+
 
     private void Awake()
     {
@@ -32,8 +47,49 @@ public class Player_UI : MonoBehaviour
 
     private void Update()
     {
+        UpdateStamina();
+        UpdateTemperatureState();
+
+        temperature -= 10 * Time.deltaTime;
+    }
+
+    private void UpdateStamina()
+    {
         float StaminaValue = stamina / maxStamina;
         staminaImage.fillAmount = StaminaValue;
+    }
+
+    private void UpdateTemperatureState()
+    {
+        float tempRatio = temperature / maxTemperature;
+        int tempState = 0;
+
+        if (tempRatio >= 0.75f)
+        {
+            tempState = 0; // 정상 체온
+        }
+        else if (tempRatio >= 0.5f)
+        {
+            tempState = 1; // 약간 추움
+        }
+        else if (tempRatio >= 0.25f)
+        {
+            tempState = 2; // 많이 추움
+        }
+        else
+        {
+            tempState = 3; // 극도로 추움
+        }
+
+        temperatureImage.sprite = temperatureSprites[tempState];
+        temperatureImage.fillAmount = tempRatio;
+    }
+
+    public void DecreaseTemperature(float value)
+    {
+        temperature -= value;
+        if (temperature < 0)
+            temperature = 0;
     }
 
     public void Damage_HP(int _value)
