@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
+  m_Name: brick
+  m_EditorClassIdentifier: 
+  itemName: brick
+  icon: {fileID: -1572391234087474867, guid: b55b2ab76dd0d9540b8b68c4c06eaa62, type: 3}
