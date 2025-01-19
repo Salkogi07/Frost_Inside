@@ -63,6 +63,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks // MonoBehaviourPunCallb
             for (int i = 0; i < PhotonNetwork.PlayerList.Length; i++) playerstr += PhotonNetwork.PlayerList[i].NickName + ", ";
             print(playerstr);
 
+
             info.text = "현재 방 이름 : " + PhotonNetwork.CurrentRoom.Name + "\n" + "현재 방 인원수 : " + PhotonNetwork.CurrentRoom.PlayerCount + "\n" + "현재 방 최대 인원수 : " + PhotonNetwork.CurrentRoom.MaxPlayers; 
         }
         else
@@ -72,6 +73,8 @@ public class NetworkManager : MonoBehaviourPunCallbacks // MonoBehaviourPunCallb
             print("모든 방에 있는 인원 수 : " + PhotonNetwork.CountOfPlayersInRooms);
             print("로비에 있는지? : " + PhotonNetwork.InLobby);
             print("연결됐는지? : " + PhotonNetwork.IsConnected);
+
+
             info.text = "접속한 인원 수 : " + PhotonNetwork.CountOfPlayers+"\n"+ "방 개수 : " + 
                 PhotonNetwork.CountOfRooms+"\n"+ "모든 방에 있는 인원 수 : " + PhotonNetwork.CountOfPlayersInRooms+"\n"+
                 "로비에 있는지? : " + PhotonNetwork.InLobby+"\n"+ "연결됐는지? : " + PhotonNetwork.IsConnected;
