@@ -12,6 +12,8 @@ public class UI_ItemSlot : MonoBehaviour
     {
         item = _newItem;
 
+        itemImage.color = Color.white;
+
         if(item != null)
         {
             itemImage.sprite = item.data.icon;
