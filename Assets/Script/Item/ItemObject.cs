@@ -6,6 +6,9 @@ public class ItemObject : MonoBehaviour
 
     private void OnValidate()
     {
+        if (itemData != null)
+            return;
+
         GetComponent<SpriteRenderer>().sprite = itemData.icon;
         gameObject.name = "Item object - " + itemData.name;
     }

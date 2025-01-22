@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59923eb8644543e4885a657c6587d9d6, type: 3}
-  m_Name: armor
+  m_Name: netherite_pickaxe
   m_EditorClassIdentifier: 
   itemType: 0
-  itemName: chest
-  icon: {fileID: 972524890855885471, guid: cd66af76bf75ad24e999ca8920a89d8c, type: 3}
-  equipmentType: 2
+  itemName: netherite_pickaxe
+  icon: {fileID: -4996926775656393898, guid: debd916f3e37e4a4b91a6c02bb4f65d1, type: 3}
+  equipmentType: 0
