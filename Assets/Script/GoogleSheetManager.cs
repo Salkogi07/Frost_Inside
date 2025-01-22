@@ -20,7 +20,9 @@ public class GoogleSheetManager : MonoBehaviour
     public InputField IDInput, PassInput;
     string id, pass;
 
-
+    public GameObject register;
+    public GameObject Lobby;
+    public Text Status;
 
     bool SetIDPass()
     {
@@ -90,16 +92,14 @@ public class GoogleSheetManager : MonoBehaviour
         if (string.IsNullOrEmpty(json)) return;
 
         GD = JsonUtility.FromJson<GoogleData>(json);
+        
+        Status.text = GD.msg.ToString();
+        Debug.Log(GD.msg);
 
         if (GD.result == "ERROR")
         {
             print(GD.order + "을 실행할 수 없습니다. 에러 메시지 : " + GD.msg);
             return;
-        }
-
-        if (GD.msg == "로그인 완료")
-        {
-
         }
         print(GD.order + "을 실행했습니다. 메시지 : " + GD.msg);
     }
