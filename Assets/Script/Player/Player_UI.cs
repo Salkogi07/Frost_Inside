@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -42,6 +43,9 @@ public class Player_UI : MonoBehaviour
     [SerializeField] private float O2 = 0;
     [SerializeField] private float maxO2 = 100;
 
+    [Header("Inventory info")]
+    [SerializeField] private GameObject inventoryObject;
+
 
     private void Awake()
     {
@@ -55,6 +59,16 @@ public class Player_UI : MonoBehaviour
         UpdateStamina();
         UpdateTemperatureState();
         UpdateTime();
+        UpdateInventory();
+    }
+
+    private void UpdateInventory()
+    {
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            bool isInventory = !inventoryObject.activeSelf;
+            inventoryObject.SetActive(isInventory);
+        }
     }
 
     private void UpdateTime()

@@ -1,7 +1,8 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_ItemSlot : MonoBehaviour
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] private Image itemImage;
 
@@ -18,5 +19,11 @@ public class UI_ItemSlot : MonoBehaviour
         {
             itemImage.sprite = item.data.icon;
         }
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        if(item.data.itemType == ItemType.Equipment)
+            Inventory.instance.EquipItem(item.data);
     }
 }

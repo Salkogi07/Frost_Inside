@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
-  m_Name: cake
+  m_Name: bow
   m_EditorClassIdentifier: 
-  itemName: cake
-  icon: {fileID: 8732635013323328055, guid: e64147369201043458bd17e890444cb7, type: 3}
+  itemType: 1
+  itemName: bow
+  icon: {fileID: -415446080585258355, guid: 6992b6e5c8870124295b24a074f96e18, type: 3}

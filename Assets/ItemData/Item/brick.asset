@@ -10,7 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
-  m_Name: paper
+  m_Name: brick
   m_EditorClassIdentifier: 
-  itemName: paper
-  icon: {fileID: -1469909079130451432, guid: 53d47b3cfc816b440ad4148bba34b9dd, type: 3}
+  itemType: 1
+  itemName: brick
+  icon: {fileID: -1572391234087474867, guid: b55b2ab76dd0d9540b8b68c4c06eaa62, type: 3}

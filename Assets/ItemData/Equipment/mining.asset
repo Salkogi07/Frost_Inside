@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
-  m_Name: apple
+  m_Script: {fileID: 11500000, guid: 59923eb8644543e4885a657c6587d9d6, type: 3}
+  m_Name: mining
   m_EditorClassIdentifier: 
-  itemName: apple
-  icon: {fileID: -7832214784768987486, guid: 8d9f233baaa915941a7f0a83371d3423, type: 3}
+  itemType: 0
+  itemName: pickaxe
+  icon: {fileID: -5563659230636437988, guid: 46264459fb4bc2048a33516533a52f1c, type: 3}
+  equipmentType: 0

@@ -6,8 +6,10 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
+    public List<InventoryItem> equipment;
+    public Dictionary<ItemData, InventoryItem> equipmentDictionary;
+
     public List<InventoryItem> inventoryItems;
-    //public Dictionary<ItemData, InventoryItem> inventoryDictanory;
 
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
@@ -25,9 +27,19 @@ public class Inventory : MonoBehaviour
     private void Start()
     {
         inventoryItems = new List<InventoryItem>();
-        //inventoryDictanory = new Dictionary<ItemData, InventoryItem>();
+
+        equipment = new List<InventoryItem>();
+        equipmentDictionary = new Dictionary<ItemData, InventoryItem>();
 
         itemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
+    }
+
+    public void EquipItem(ItemData _item)
+    {
+        InventoryItem newItem = new InventoryItem(_item);
+
+        equipment.Add(newItem);
+        equipmentDictionary.Add(_item, newItem);
     }
 
     private void UpdateSlotUI()
@@ -50,11 +62,6 @@ public class Inventory : MonoBehaviour
     public void RemoveItem(ItemData _item)
     {
         InventoryItem itemToRemove = null;
-        /*if(inventoryDictanory.TryGetValue(_item, out InventoryItem value))
-        {
-            
-            inventoryDictanory.Remove(_item);
-        }*/
 
         inventoryItems.Remove(itemToRemove);
 
