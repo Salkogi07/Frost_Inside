@@ -19,6 +19,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Transform equipmentSlotParent;
 
     private UI_ItemSlot[] inventoryItemSlot;
+    private UI_EquipmentSlot[] equipmentSlot;
 
     private void Awake()
     {
@@ -36,6 +37,7 @@ public class Inventory : MonoBehaviour
         equipmentDictionary = new Dictionary<ItemData_Equipment, InventoryItem>();
 
         inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
+        equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
     }
 
     public void EquipItem(ItemData _item)
@@ -75,6 +77,15 @@ public class Inventory : MonoBehaviour
 
     private void UpdateSlotUI()
     {
+        for(int i = 0; i < equipmentSlot.Length; i++)
+        {
+            foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+            {
+                if (item.Key.equipmentType == equipmentSlot[i].slotType)
+                    equipmentSlot[i].UpdateSlot(item.Value);
+            }
+        }
+
         for(int i =0; i < inventoryItemSlot.Length; i++)
         {
             inventoryItemSlot[i].CleanUpSlot();
