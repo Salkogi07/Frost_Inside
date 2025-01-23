@@ -240,7 +240,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bbb675982942d4fa6acd5ee2f73714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: []
+  equipment: []
+  inventoryItems: []
+  inventorySlotParent: {fileID: 0}
+  equipmentSlotParent: {fileID: 0}
 --- !u!1 &216024160
 GameObject:
   m_ObjectHideFlags: 0
@@ -7352,10 +7355,22 @@ MonoBehaviour:
   invincibilityDuration: 0.5
   isInvincible: 0
   staminaImage: {fileID: 1812174817}
+  temperatureImage: {fileID: 0}
+  timeImage: {fileID: 0}
+  timeText: {fileID: 0}
+  timeSprites: []
   hp: 0
   maxHp: 100
   stamina: 100
   maxStamina: 100
+  weight: 0
+  maxWeight: 100
+  temperature: 100
+  maxTemperature: 100
+  temperatureSprites: []
+  O2: 0
+  maxO2: 100
+  inventoryObject: {fileID: 0}
 --- !u!1 &1237943400
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,7 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class monster_AI : MonoBehaviour
+public class monster_AI2 : MonoBehaviour
 {
 
     public float detectionRadius = 5f; // 적이 플레이어를 감지할 범위
@@ -72,8 +72,6 @@ public class monster_AI : MonoBehaviour
 
                 break;
             default:
-
-                
 
                 break;
         }
