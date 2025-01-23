@@ -11,4 +11,18 @@ public enum EquipmentType
 public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
+
+    public int mining;
+    public int armor;
+    public int lagging;
+
+    public void AddModifiers()
+    {
+
+    }
+
+    public void RemoveModifiers()
+    {
+
+    }
 }
