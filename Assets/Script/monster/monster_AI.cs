@@ -73,6 +73,8 @@ public class monster_AI : MonoBehaviour
                 break;
             default:
 
+                
+
                 break;
         }
     }
