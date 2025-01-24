@@ -67,15 +67,14 @@ public class NetworkManager2 : MonoBehaviourPunCallbacks
     public void login()
     {
         PhotonNetwork.ConnectUsingSettings();
-        base.OnConnectedToMaster();
         Debug.Log("로비에 접속을 시도합니다.");
 
         Lobby.SetActive(true);
         Room.SetActive(false);
         register.SetActive(false);
 
-        PhotonNetwork.NickName = NickNameInput.text;
-        //PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
+        //PhotonNetwork.NickName = NickNameInput.text;
+        PhotonNetwork.LocalPlayer.NickName = NickNameInput.text;
     }
 
 
