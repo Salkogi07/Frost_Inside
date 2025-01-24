@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class CharactorStats : MonoBehaviour
+public class PlayerStats : MonoBehaviour
 {
     [Header("Item info")]
     [SerializeField] private Stat mining;
@@ -31,7 +31,7 @@ public class CharactorStats : MonoBehaviour
         stamina = maxStamina;
     }
     
-    public void TakeDamage(int _damage)
+    public virtual void TakeDamage(int _damage)
     {
         hp -= _damage;
 
@@ -39,7 +39,7 @@ public class CharactorStats : MonoBehaviour
             Die();
     }
 
-    private void Die()
+    protected virtual void Die()
     {
         throw new NotImplementedException();
     }

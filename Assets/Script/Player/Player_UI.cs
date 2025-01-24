@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Player_UI : MonoBehaviour
 {
-    CharactorStats stats;
+    PlayerStats stats;
 
     [Header("Component")]
     [SerializeField] Image hpImage;
@@ -25,7 +25,7 @@ public class Player_UI : MonoBehaviour
 
     private void Awake()
     {
-        stats = GetComponent<CharactorStats>();
+        stats = GetComponent<PlayerStats>();
     }
 
     private void Update()
