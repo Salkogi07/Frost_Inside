@@ -6,7 +6,7 @@ public class Player_Move : MonoBehaviour
     [Header("Component")]
     public ParticleSystem dust;
     private SpriteRenderer spriteRenderer;
-    private CharactorStats stats;
+    private PlayerStats stats;
 
     public Rigidbody2D rb { get; private set; }
 
@@ -66,7 +66,7 @@ public class Player_Move : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        stats = GetComponent<CharactorStats>();
+        stats = GetComponent<PlayerStats>();
 
         gravityScale = rb.gravityScale;
         currentSpeed = walkSpeed;
