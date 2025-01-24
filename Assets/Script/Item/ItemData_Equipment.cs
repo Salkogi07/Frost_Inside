@@ -18,7 +18,7 @@ public class ItemData_Equipment : ItemData
 
     public void AddModifiers()
     {
-
+        
     }
 
     public void RemoveModifiers()
