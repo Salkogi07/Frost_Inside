@@ -1,81 +1,136 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+//using UnityEngine.Random;
 
 public class monster_AI : MonoBehaviour
 {
-
-    public float detectionRadius = 5f; // 적이 플레이어를 감지할 범위
-    public Transform player; // 플레이어의 위치
-    public float moveSpeed = 3f; // 적의 이동 속도
-    string pattern ;
-    public float xDistanceThreshold = 2f;
-
-    // 범위 내에 플레이어가 들어왔을 때 호출
-    private void OnTriggerEnter2D(Collider2D other)
+    public enum MonsterBehavior
     {
-        if (other.CompareTag("Player")) // 플레이어 태그를 가진 객체 감지
+        Move,
+        Attack,
+        Flee // 추가적인 행동 예시
+    }
+
+    public class Monster
+    {
+        // 몬스터의 위치, 범위 등
+        public int X { get; set; }
+        public int Y { get; set; }
+        public MonsterBehavior Behavior { get; set; }
+        public int maxDetectingRange = 10;  // 예시 최대 탐지 범위
+        public int minDetectingRange = 3;   // 예시 최소 탐지 범위
+
+        // 플레이어 객체, 여기서는 Player 클래스가 이미 정의된 것으로 가정
+        public Player Player { get; set; }
+
+        // 랜덤 객체를 클래스 레벨에서 한 번만 생성
+        private static System.Random random = new System.Random();
+
+        public void ChooseBehavior()
         {
-            pattern = "chase";
-            Debug.Log("플레이어가 범위 안에 들어왔습니다!");
+            // 플레이어와의 거리가 가까워지면 behavior를 랜덤으로 설정
+
+            // 거리 계산 (제곱근을 쓰지 않고 거리 제곱으로 비교할 수 있음)
+            int dx = Player.X - X;
+            int dy = Player.Y - Y;
+            int distanceSquared = dx * dx + dy * dy; // 제곱된 거리
+
+            // 제곱된 범위로 비교
+            int maxDetectingRangeSquared = maxDetectingRange * maxDetectingRange;
+            int minDetectingRangeSquared = minDetectingRange * minDetectingRange;
+
+            if (distanceSquared <= maxDetectingRangeSquared && distanceSquared > minDetectingRangeSquared)
+            {
+                // 행동을 랜덤으로 결정 (예시: Move, Attack, Flee 등)
+                Behavior = (MonsterBehavior)random.Next(1, Enum.GetValues(typeof(MonsterBehavior)).Length);
+            }
+            else
+            {
+                // 거리가 멀면 이동 행동을 기본으로 설정
+                Behavior = MonsterBehavior.Move;
+            }
+
+            // 현재 Behavior에 맞는 함수 실행
+            switch (Behavior)
+            {
+                case MonsterBehavior.Move:
+                    Move();
+                    break;
+
+                case MonsterBehavior.Attack:
+                    Attack();
+                    break;
+
+                case MonsterBehavior.Flee:
+                    Flee();  // 추가된 행동 예시
+                    break;
+
+                default:
+                    Program.WarningLog($"알 수 없는 MonsterBehavior: {Enum.GetName(typeof(MonsterBehavior), Behavior)}");
+                    break;
+            }
+
+            // 턴 시스템을 제어
+            TurnSystem.ToggleIsPlayerTurn();
+        }
+
+        // 행동: 이동
+        private void Move()
+        {
+            // 이동 로직 구현 (예시로 단순히 일정 방향으로 이동)
+            Console.WriteLine("몬스터가 이동합니다.");
+            // X, Y 값을 업데이트하는 로직을 추가
+        }
+
+        // 행동: 공격
+        private void Attack()
+        {
+            // 공격 로직 구현
+            Console.WriteLine("몬스터가 공격합니다.");
+            // 공격에 대한 로직을 추가
+        }
+
+        // 행동: 도망
+        private void Flee()
+        {
+            // 도망 로직 구현
+            Console.WriteLine("몬스터가 도망칩니다.");
+            // 도망을 위한 로직을 추가
         }
     }
 
-    // 범위 내에 플레이어가 계속 있을 때 호출
-    //private void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        pattern = "chase";
-    //        // 적이 플레이어를 추적
-    //    }
-    //}
-
-    // 범위 밖으로 나가면 호출
-    private void OnTriggerExit2D(Collider2D other)
+    public class Player
     {
-        if (other.CompareTag("Player"))
+        public int X { get; set; }
+        public int Y { get; set; }
+    }
+
+    public static class Program
+    {
+        public static void WarningLog(string message)
         {
-            pattern = "";
-            Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
+            Console.WriteLine("Warning: " + message);
+        }
+
+        public static void Main()
+        {
+            // 예시로 몬스터와 플레이어 생성
+            Player player = new Player { X = 5, Y = 5 };
+            Monster monster = new Monster { X = 0, Y = 0, Player = player };
+
+            // 몬스터의 행동을 선택
+            monster.ChooseBehavior();
         }
     }
 
-    // 플레이어를 추적하는 함수
-
-
-    // 매 프레임마다 플레이어와의 거리 체크
-    private void Update()
+    public static class TurnSystem
     {
-        
-        switch (pattern)
+        // 플레이어의 턴을 관리하는 시스템
+        public static void ToggleIsPlayerTurn()
         {
-            case "move":
-
-                break;
-
-            case "chase":
-                //float distanceX = Mathf.Abs(player.position.x - transform.position.x);
-
-                //// X축 기준으로 일정 거리 이상 차이날 때만 이동
-                //if (distanceX > xDistanceThreshold)
-                //{
-                    // 플레이어 방향으로 X축으로만 이동
-                    float moveDirection = player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
-                    transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-                
-                //Vector3 direction = (player.position - transform.position).normalized;
-                //transform.position += direction * moveSpeed * Time.deltaTime;
-                break;
-
-            case "attack":
-
-                break;
-            default:
-
-                
-
-                break;
+            Console.WriteLine("플레이어 턴으로 전환되었습니다.");
         }
     }
 }
+
