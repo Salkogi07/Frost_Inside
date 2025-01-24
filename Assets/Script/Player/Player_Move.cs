@@ -6,7 +6,7 @@ public class Player_Move : MonoBehaviour
     [Header("Component")]
     public ParticleSystem dust;
     private SpriteRenderer spriteRenderer;
-    private Player_UI player_ui;
+    private CharactorStats stats;
 
     public Rigidbody2D rb { get; private set; }
 
@@ -66,7 +66,7 @@ public class Player_Move : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        player_ui = GetComponent<Player_UI>();
+        stats = GetComponent<CharactorStats>();
 
         gravityScale = rb.gravityScale;
         currentSpeed = walkSpeed;
@@ -126,24 +126,24 @@ public class Player_Move : MonoBehaviour
     {
         if (isSprinting)
         {
-            if (player_ui.stamina > sprintCost * Time.deltaTime)
+            if (stats.stamina > sprintCost * Time.deltaTime)
             {
-                player_ui.stamina -= sprintCost * Time.deltaTime;
+                stats.stamina -= sprintCost * Time.deltaTime;
             }
             else
             {
-                player_ui.stamina = 0;
+                stats.stamina = 0;
                 isSprinting = false; // 스테미나가 없으면 스프린트 중단
                 currentSpeed = walkSpeed;
             }
         }
         else
         {
-            if (player_ui.stamina < player_ui.maxStamina)
+            if (stats.stamina < stats.maxStamina)
             {
-                player_ui.stamina += staminaRecoverRate * Time.deltaTime;
-                if (player_ui.stamina > player_ui.maxStamina)
-                    player_ui.stamina = player_ui.maxStamina;
+                stats.stamina += staminaRecoverRate * Time.deltaTime;
+                if (stats.stamina > stats.maxStamina)
+                    stats.stamina = stats.maxStamina;
             }
         }
     }
@@ -207,9 +207,9 @@ public class Player_Move : MonoBehaviour
 
         if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f && !isJumping)
         {
-            if (player_ui.stamina >= jumpCost)
+            if (stats.stamina >= jumpCost)
             {
-                player_ui.stamina -= jumpCost;
+                stats.stamina -= jumpCost;
                 CreateDust();
                 PerformJump();
                 isJumpCut = true;
@@ -217,9 +217,9 @@ public class Player_Move : MonoBehaviour
         }
         else if (canDoubleJump && doubleJumpAvailable && !isGrounded && Input.GetButtonDown("Jump"))
         {
-            if (player_ui.stamina >= jumpCost)
+            if (stats.stamina >= jumpCost)
             {
-                player_ui.stamina -= jumpCost;
+                stats.stamina -= jumpCost;
                 PerformJump();
                 isJumpCut = true;
                 doubleJumpAvailable = false;

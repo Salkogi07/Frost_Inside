@@ -10,20 +10,20 @@ public class CharactorStats : MonoBehaviour
     [SerializeField] private Stat lagging;
 
     [Header("Hp info")]
-    [SerializeField] private float hp = 0;
-    [SerializeField] private float maxHp = 100;
+    [SerializeField] public float hp = 0;
+    [SerializeField] public float maxHp = 100;
 
     [Header("Stamina info")]
     [SerializeField] public float stamina = 0;
     [SerializeField] public float maxStamina = 100;
 
     [Header("Weight info")]
-    [SerializeField] private float weight = 0;
-    [SerializeField] private float maxWeight = 100;
+    [SerializeField] public float weight = 0;
+    [SerializeField] public float maxWeight = 100;
 
     [Header("Temperature info")]
-    [SerializeField] private float temperature = 100;
-    [SerializeField] private float maxTemperature = 100;
+    [SerializeField] public float temperature = 100;
+    [SerializeField] public float maxTemperature = 100;
 
     private void Start()
     {
@@ -62,23 +62,23 @@ public class CharactorStats : MonoBehaviour
         return temperatureValue;
     }
 
-    public Stat GetMining()
+    public int GetMining()
     {
-        return mining;
+        return mining.GetValue();
     }
 
-    public Stat GetDamage()
+    public int GetDamage()
     {
-        return damage;
+        return damage.GetValue();
     }
 
-    public Stat GetArmor()
+    public int GetArmor()
     {
-        return armor;
+        return armor.GetValue();
     }
 
-    public Stat GetLagging()
+    public int GetLagging()
     {
-        return lagging;
+        return lagging.GetValue();
     }
 }
