@@ -8065,6 +8065,7 @@ GameObject:
   - component: {fileID: 1156874117}
   - component: {fileID: 1156874122}
   - component: {fileID: 1156874123}
+  - component: {fileID: 1156874124}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -8225,17 +8226,47 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b45c83e473d0046a9c784ec4f75d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  invincibilityDuration: 0.5
-  isInvincible: 0
+  hpImage: {fileID: 0}
   staminaImage: {fileID: 1812174817}
   temperatureImage: {fileID: 1237943402}
+  weightImage: {fileID: 0}
   timeImage: {fileID: 1820440501}
   timeText: {fileID: 629632972}
   timeSprites:
   - {fileID: 4138823062835201441, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
   - {fileID: 4628948989125786106, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
   - {fileID: 8823166479081205076, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
-  hp: 0
+  temperatureSprites:
+  - {fileID: -8253450362007579573, guid: 06edabf6c9a6fda4993b5c3915dc490f, type: 3}
+  - {fileID: -4587185269259707429, guid: 4fb4d03349b05ce449196fe6f357a4b2, type: 3}
+  - {fileID: -5288437434449059614, guid: 97882ce62eabc90488b4ad0bac3d7ce7, type: 3}
+  - {fileID: -6495796635727040263, guid: b92b7c63129717f46bb887a1036c4fef, type: 3}
+  inventoryObject: {fileID: 1700269484}
+--- !u!114 &1156874124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1156874114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f07e5c41a6f07a148a1eab2dfd1ff290, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mining:
+    baseValue: 0
+    modifier: 0
+  damage:
+    baseValue: 0
+    modifier: 0
+  armor:
+    baseValue: 0
+    modifier: 0
+  lagging:
+    baseValue: 0
+    modifier: 0
+  hp: 100
   maxHp: 100
   stamina: 100
   maxStamina: 100
@@ -8243,14 +8274,6 @@ MonoBehaviour:
   maxWeight: 100
   temperature: 100
   maxTemperature: 100
-  temperatureSprites:
-  - {fileID: -8253450362007579573, guid: 06edabf6c9a6fda4993b5c3915dc490f, type: 3}
-  - {fileID: -4587185269259707429, guid: 4fb4d03349b05ce449196fe6f357a4b2, type: 3}
-  - {fileID: -5288437434449059614, guid: 97882ce62eabc90488b4ad0bac3d7ce7, type: 3}
-  - {fileID: -6495796635727040263, guid: b92b7c63129717f46bb887a1036c4fef, type: 3}
-  O2: 0
-  maxO2: 100
-  inventoryObject: {fileID: 1700269484}
 --- !u!1001 &1203717541
 PrefabInstance:
   m_ObjectHideFlags: 0
