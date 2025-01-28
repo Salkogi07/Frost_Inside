@@ -36,7 +36,7 @@ public class monster_AI2 : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            pattern = "";
+            pattern = "move";
             Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
