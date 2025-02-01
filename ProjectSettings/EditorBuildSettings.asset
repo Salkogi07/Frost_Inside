@@ -15,7 +15,7 @@ EditorBuildSettings:
     path: Assets/Scenes/multi/main.unity
     guid: 9fcd2290fdadc8b40a32800cce4d7ada
   - enabled: 1
-    path: Assets/Scenes/multi/Steam_Lobby.unity
+    path: Assets/Scenes/multi/MainMenu.unity
     guid: f817c9b3c0cf5d6489cf98094fc35a1a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
