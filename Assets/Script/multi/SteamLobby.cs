@@ -18,7 +18,6 @@ public class SteamLobby : MonoBehaviour
     private const string HostAddressKey = "HostAddress";
     private NetworkManager_steam manager;
 
-    public Text LobbyNameText;
     private void Start()
     {
         if (!SteamManager.Initialized) { return; }
@@ -61,8 +60,7 @@ public class SteamLobby : MonoBehaviour
     {
         //Everyone
         CurrentLobbyID = callback.m_ulSteamIDLobby;
-        LobbyNameText.gameObject.SetActive(true);
-        LobbyNameText.text = SteamMatchmaking.GetLobbyData(new CSteamID(callback.m_ulSteamIDLobby), "name");
+
 
         //Clients
         if (NetworkServer.active) { return; }
