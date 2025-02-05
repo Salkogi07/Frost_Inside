@@ -62,6 +62,7 @@ public class Player_Move : MonoBehaviour
     [SerializeField] private bool canDoubleJump = true;
     private bool doubleJumpAvailable = false;
 
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
