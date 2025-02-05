@@ -1,34 +1,30 @@
-using UnityEngine;
 using System.Collections.Generic;
-using System.Collections;
+using UnityEngine;
 using Mirror;
 using Steamworks;
 using UnityEngine.UI;
 using System.Linq;
-using Mirror.BouncyCastle.Bcpg.OpenPgp;
-using NUnit.Framework;
 
 public class LobbyController : MonoBehaviour
 {
-    public static LobbyController instance;
+    public static LobbyController Instance;
 
-    // UI Elements
+    //UI Elements
     public Text LobbyNameText;
 
-    // Player Data
+    //Player Data
     public GameObject PlayerListViewContent;
     public GameObject PlayerListItemPrefab;
     public GameObject LocalPlayerObject;
 
-    // other Data
+    //other Data
     public ulong CurrentLobbyID;
     public bool PlayerItemCreated = false;
-    public List<PlayerListItem> PlayerListItems = new List<PlayerListItem>();
-    public PlayerObjectController LocalPlayerController;
+    private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
+    public PlayerObjectController LocalplayerController;
 
-    // Manager
+    //Manager
     private CustomNetworkManager manager;
-
     private CustomNetworkManager Manager
     {
         get
@@ -43,7 +39,7 @@ public class LobbyController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) { instance = this; }
+        if(Instance == null) { Instance = this; }
     }
 
     public void UpdateLobbyName()
@@ -55,15 +51,15 @@ public class LobbyController : MonoBehaviour
     public void UpdatePlayerList()
     {
         if (!PlayerItemCreated) { CreateHostPlayerItem(); }
-        if(PlayerListItems.Count < Manager.GamePlayers.Count) { CreateClientPlayerItem(); }
-        if(PlayerListItems.Count > Manager.GamePlayers.Count) { RemovePlayerItem(); }
-        if(PlayerListItems.Count == Manager.GamePlayers.Count) { UpdatePlayerItem(); }
+        if (playerListItems.Count < Manager.GamePlayers.Count) { CreateClientPlayerItem(); }
+        if (playerListItems.Count > Manager.GamePlayers.Count) { RemovePlayerItem(); }
+        if (playerListItems.Count == Manager.GamePlayers.Count) { UpdatePlayerItem(); }
     }
 
     public void FindLocalPlayer()
     {
         LocalPlayerObject = GameObject.Find("LocalGamePlayer");
-        LocalPlayerController = LocalPlayerObject.GetComponent<PlayerObjectController>();
+        LocalplayerController = LocalPlayerObject.GetComponent<PlayerObjectController>();
     }
 
     public void CreateHostPlayerItem()
@@ -78,10 +74,10 @@ public class LobbyController : MonoBehaviour
             NewPlayerItemScript.PlayerSteamID = player.PlayerSteamID;
             NewPlayerItemScript.SetPlayerValues();
 
-            NewPlayerItem.transform.SetParent(PlayerListViewContent.transform);
-            NewPlayerItem.transform.localScale = Vector3.one;
+            NewPlayerItemScript.transform.SetParent(PlayerListViewContent.transform);
+            NewPlayerItemScript.transform.localScale = Vector3.one;
 
-            PlayerListItems.Add(NewPlayerItemScript);
+            playerListItems.Add(NewPlayerItemScript);
         }
         PlayerItemCreated = true;
     }
@@ -90,7 +86,7 @@ public class LobbyController : MonoBehaviour
     {
         foreach (PlayerObjectController player in Manager.GamePlayers)
         {
-            if(!PlayerListItems.Any(b => b.ConnectionID == player.ConnectionID))
+            if (!playerListItems.Any(b => b.ConnectionID == player.ConnectionID))
             {
                 GameObject NewPlayerItem = Instantiate(PlayerListItemPrefab) as GameObject;
                 PlayerListItem NewPlayerItemScript = NewPlayerItem.GetComponent<PlayerListItem>();
@@ -100,10 +96,10 @@ public class LobbyController : MonoBehaviour
                 NewPlayerItemScript.PlayerSteamID = player.PlayerSteamID;
                 NewPlayerItemScript.SetPlayerValues();
 
-                NewPlayerItem.transform.SetParent(PlayerListViewContent.transform);
-                NewPlayerItem.transform.localScale = Vector3.one;
+                NewPlayerItemScript.transform.SetParent(PlayerListViewContent.transform);
+                NewPlayerItemScript.transform.localScale = Vector3.one;
 
-                PlayerListItems.Add(NewPlayerItemScript);
+                playerListItems.Add(NewPlayerItemScript);
             }
         }
     }
@@ -112,12 +108,12 @@ public class LobbyController : MonoBehaviour
     {
         foreach (PlayerObjectController player in Manager.GamePlayers)
         {
-            foreach(PlayerListItem playerlistitemScript in PlayerListItems)
+            foreach (PlayerListItem PlayerListItemScript in playerListItems)
             {
-                if (playerlistitemScript.ConnectionID == player.ConnectionID)
+                if (PlayerListItemScript.ConnectionID == player.ConnectionID)
                 {
-                    playerlistitemScript.PlayerName = player.PlayerName;
-                    playerlistitemScript.SetPlayerValues();
+                    PlayerListItemScript.PlayerName = player.PlayerName;
+                    PlayerListItemScript.SetPlayerValues();
                 }
             }
         }
@@ -125,11 +121,11 @@ public class LobbyController : MonoBehaviour
 
     public void RemovePlayerItem()
     {
-        List<PlayerListItem> playerListItemToRemove = new List<PlayerListItem>();
+        List<PlayerListItem> playerListItemToRemove = new List<PlayerListItem> ();
 
-        foreach(PlayerListItem playerListItem in PlayerListItems)
+        foreach(PlayerListItem playerListItem in playerListItems)
         {
-            if (!manager.GamePlayers.Any(b => b.ConnectionID == playerListItem.ConnectionID))
+            if(!Manager.GamePlayers.Any(b => b.ConnectionID == playerListItem.ConnectionID))
             {
                 playerListItemToRemove.Add(playerListItem);
             }
@@ -139,7 +135,7 @@ public class LobbyController : MonoBehaviour
             foreach(PlayerListItem playerlistItemToRemove in playerListItemToRemove)
             {
                 GameObject ObjectToRemove = playerlistItemToRemove.gameObject;
-                PlayerListItems.Remove(playerlistItemToRemove);
+                playerListItems.Remove(playerlistItemToRemove);
                 Destroy(ObjectToRemove);
                 ObjectToRemove = null;
             }

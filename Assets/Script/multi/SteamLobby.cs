@@ -16,7 +16,7 @@ public class SteamLobby : MonoBehaviour
     // Variables
     public ulong CurrentLobbyID;
     private const string HostAddressKey = "HostAddress";
-    private NetworkManager_steam manager;
+    private CustomNetworkManager manager;
 
     private void Start()
     {
@@ -24,7 +24,7 @@ public class SteamLobby : MonoBehaviour
 
         if(Instance == null) { Instance = this; }
 
-        manager = GetComponent<NetworkManager_steam>();
+        manager = GetComponent<CustomNetworkManager>();
 
         LobbyCreated = Callback<LobbyCreated_t>.Create(OnLobbyCreated);
         JoinRequest = Callback<GameLobbyJoinRequested_t>.Create(OnJoinRequest);
@@ -33,7 +33,7 @@ public class SteamLobby : MonoBehaviour
 
     public void HostLobby()
     {
-        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypePublic, manager.maxConnections);
+        SteamMatchmaking.CreateLobby(ELobbyType.k_ELobbyTypeFriendsOnly, manager.maxConnections);
     }
 
     private void OnLobbyCreated(LobbyCreated_t callback)

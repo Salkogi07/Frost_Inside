@@ -16,7 +16,7 @@ public class PlayerObjectController : NetworkBehaviour
     {
         get
         {
-            if (manager != null)
+            if(manager != null)
             {
                 return manager;
             }
@@ -26,41 +26,42 @@ public class PlayerObjectController : NetworkBehaviour
 
     public override void OnStartAuthority()
     {
+        Debug.Log("인증");
         CmdSetPlayerName(SteamFriends.GetPersonaName().ToString());
         gameObject.name = "LocalGamePlayer";
-        LobbyController.instance.FindLocalPlayer();
-        LobbyController.instance.UpdateLobbyName();
+        LobbyController.Instance.FindLocalPlayer();
+        LobbyController.Instance.UpdateLobbyName();
     }
 
     public override void OnStartClient()
     {
+        Debug.Log("시작");
         Manager.GamePlayers.Add(this);
-        LobbyController.instance.UpdateLobbyName();
-        LobbyController.instance.UpdatePlayerList();
+        LobbyController.Instance.UpdateLobbyName();
+        LobbyController.Instance.UpdatePlayerList();
     }
 
     public override void OnStopClient()
     {
-        manager.GamePlayers.Remove(this);
-        LobbyController.instance.UpdatePlayerList();
+        Manager.GamePlayers.Remove(this);
+        LobbyController.Instance.UpdatePlayerList();
     }
 
     [Command]
-    private void CmdSetPlayerName(string PlayerName)
+    public void CmdSetPlayerName(string PlayerName)
     {
         this.PlayerNameUpdate(this.PlayerName, PlayerName);
     }
 
-    public void PlayerNameUpdate(string OldValue,  string NewValue)
+    public void PlayerNameUpdate(string OldValue, string NewValue)
     {
         if (isServer)
         {
             this.PlayerName = NewValue;
         }
-        if(isClient)
+        if (isClient)
         {
-            LobbyController.instance.UpdatePlayerList();
+            LobbyController.Instance.UpdatePlayerList();
         }
     }
-
 }

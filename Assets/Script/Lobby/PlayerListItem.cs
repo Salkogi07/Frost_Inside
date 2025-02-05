@@ -16,21 +16,20 @@ public class PlayerListItem : MonoBehaviour
 
     private void Start()
     {
-        ImageLoaded = Callback<AvatarImageLoaded_t>.Create(OnImageLoaded);
+         ImageLoaded = Callback<AvatarImageLoaded_t>.Create(OnImageLoaded);
     }
 
-    public void SetPlayerValues()
+    public void SetPlayerValues() 
     {
         PlayerNameText.text = PlayerName;
         if (!AvatarReceived) { GetPlayerIcon(); }
     }
 
-
-    void GetPlayerIcon()
+    void GetPlayerIcon() 
     {
-        int imageID = SteamFriends.GetLargeFriendAvatar((CSteamID)PlayerSteamID);
-        if(imageID == -1) { return; }
-        PlayerIcon.texture = GetSteamImageAsTexture(imageID);
+        int ImageID = SteamFriends.GetLargeFriendAvatar((CSteamID)PlayerSteamID);
+        if (ImageID == -1) { return; }
+        PlayerIcon.texture = GetSteamImageAsTexture(ImageID);
     }
 
     private Texture2D GetSteamImageAsTexture(int iImage)
