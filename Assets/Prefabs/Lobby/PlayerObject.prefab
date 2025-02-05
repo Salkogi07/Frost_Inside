@@ -69,3 +69,4 @@ MonoBehaviour:
   PlayerIdNumber: 0
   PlayerSteamID: 0
   PlayerName: 
+  Ready: 0
