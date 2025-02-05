@@ -8226,10 +8226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b45c83e473d0046a9c784ec4f75d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpImage: {fileID: 0}
+  hpImage: {fileID: 1829849391}
   staminaImage: {fileID: 1812174817}
   temperatureImage: {fileID: 1237943402}
-  weightImage: {fileID: 0}
+  weightImage: {fileID: 1918246980}
   timeImage: {fileID: 1820440501}
   timeText: {fileID: 629632972}
   timeSprites:
