@@ -12,4 +12,5 @@ public class Character_Manager : MonoBehaviour
     }
 
     public Character_Data currentCharacter;
+    public Select_Character selectedCharacter; // 선택된 캐릭터 저장
 }
