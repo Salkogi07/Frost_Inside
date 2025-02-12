@@ -1137,7 +1137,6 @@ GameObject:
   m_Component:
   - component: {fileID: 554253551}
   - component: {fileID: 554253550}
-  - component: {fileID: 554253552}
   m_Layer: 3
   m_Name: Grid_Ground
   m_TagString: Ground
@@ -1175,25 +1174,6 @@ Transform:
   - {fileID: 1250905498}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &554253552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 554253549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148b3047e622f6e4eaeef57964986dbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemap: {fileID: 0}
-  player: {fileID: 0}
-  miningRange: 5
-  miningTime: 2
-  highlightTilemap: {fileID: 0}
-  borderTile: {fileID: 0}
-  blockedBorderTile: {fileID: 0}
 --- !u!1 &572382308
 GameObject:
   m_ObjectHideFlags: 0
@@ -7577,7 +7557,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1172855037
   m_SortingLayer: 2
-  m_SortingOrder: -3
+  m_SortingOrder: -2
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -8208,12 +8188,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 1357205983}
-  player: {fileID: 0}
+  player: {fileID: 1156874121}
   miningRange: 5
   miningTime: 2
   highlightTilemap: {fileID: 1048228185}
   borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
   blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
+  useSpriteMining: 0
+  miningSpriteRenderer: {fileID: 0}
+  maskResolution: 512
+  brushSize: 30
+  brushTexture: {fileID: 0}
 --- !u!114 &1156874123
 MonoBehaviour:
   m_ObjectHideFlags: 0

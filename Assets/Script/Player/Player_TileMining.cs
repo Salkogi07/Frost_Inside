@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
@@ -8,28 +8,28 @@ public class Player_TileMining : MonoBehaviour
     private Player_Move player_move;
 
     [Header("Existing settings")]
-    public Tilemap tilemap;            // ½ÇÁ¦ ¸Ê(ºí·ÏÀÌ ±ò¸°) Å¸ÀÏ¸Ê
-    public Transform player;           // ÇÃ·¹ÀÌ¾îÀÇ À§Ä¡
-    public float miningRange = 5f;     // Ã¤±¼ °¡´É ¹üÀ§
-    public float miningTime = 2f;      // ÇÑ ºí·ÏÀ» Ã¤±¼ÇÏ´Â µ¥ °É¸®´Â ½Ã°£
+    public Tilemap tilemap;            // ì‹¤ì œ ë§µ(ë¸”ë¡ì´ ê¹”ë¦°) íƒ€ì¼ë§µ
+    public Transform player;           // í”Œë ˆì´ì–´ì˜ ìœ„ì¹˜
+    public float miningRange = 5f;     // ì±„êµ´ ê°€ëŠ¥ ë²”ìœ„
+    public float miningTime = 2f;      // í•œ ë¸”ë¡ì„ ì±„êµ´í•˜ëŠ” ë° ê±¸ë¦¬ëŠ” ì‹œê°„
 
     [Header("For border emphasis")]
-    public Tilemap highlightTilemap;   // °­Á¶¿ë Å¸ÀÏ¸Ê
-    public Tile borderTile;            // Ã¤±¼ °¡´É Å×µÎ¸®
-    public Tile blockedBorderTile;     // Ã¤±¼ ºÒ°¡ Å×µÎ¸®
+    public Tilemap highlightTilemap;   // ê°•ì¡°ìš© íƒ€ì¼ë§µ
+    public Tile borderTile;            // ì±„êµ´ ê°€ëŠ¥ í…Œë‘ë¦¬
+    public Tile blockedBorderTile;     // ì±„êµ´ ë¶ˆê°€ í…Œë‘ë¦¬
 
-    private Vector3Int? lastHighlightedTile = null;  // ¸¶Áö¸·À¸·Î °­Á¶Çß´ø Å¸ÀÏ
-    private Vector3Int? currentMiningTile = null;    // ÇöÀç Ã¤±¼ ÁßÀÎ Å¸ÀÏ À§Ä¡
+    private Vector3Int? lastHighlightedTile = null;  // ë§ˆì§€ë§‰ìœ¼ë¡œ ê°•ì¡°í–ˆë˜ íƒ€ì¼
+    private Vector3Int? currentMiningTile = null;    // í˜„ì¬ ì±„êµ´ ì¤‘ì¸ íƒ€ì¼ ìœ„ì¹˜
 
-    // °¢ Å¸ÀÏ(ºí·Ï)¸¶´Ù ÇöÀç ¾ËÆÄ°ª(1=ºÒÅõ¸í, 0=¿ÏÀüÅõ¸í)À» ÀúÀå
+    // ê° íƒ€ì¼(ë¸”ë¡)ë§ˆë‹¤ í˜„ì¬ ì•ŒíŒŒê°’(1=ë¶ˆíˆ¬ëª…, 0=ì™„ì „íˆ¬ëª…)ì„ ì €ì¥
     private Dictionary<Vector3Int, float> tileAlphaDict = new Dictionary<Vector3Int, float>();
 
     private void Awake()
     {
-        // player°¡ nullÀÌ¶ó¸é, ÀÌ ½ºÅ©¸³Æ®°¡ ´Ş¸° ¿ÀºêÁ§Æ®ÀÇ TransformÀ» ÇÒ´ç
+        // playerê°€ nullì´ë¼ë©´, ì´ ìŠ¤í¬ë¦½íŠ¸ê°€ ë‹¬ë¦° ì˜¤ë¸Œì íŠ¸ì˜ Transformì„ í• ë‹¹
         if (player == null)
             player = GetComponent<Transform>();
-        
+
         if (player_move == null)
             player_move = GetComponent<Player_Move>();
 
@@ -42,32 +42,24 @@ public class Player_TileMining : MonoBehaviour
 
     private void Start()
     {
-        // highlightTilemapÀÇ ·»´õ ¼ø¼­¸¦ ±âÁ¸ Å¸ÀÏ¸Êº¸´Ù ¾ÕÀ¸·Î ¼³Á¤
-        TilemapRenderer renderer = highlightTilemap.GetComponent<TilemapRenderer>();
-        if (renderer != null)
-        {
-            renderer.sortingLayerName = "Default";
-            renderer.sortingOrder = -2;  // ¸Ê Å¸ÀÏ¸Êº¸´Ù ³ôÀº °ª
-        }
-
-        // ÃÊ±âÈ­: ¸Ê ÀüÃ¼ Å¸ÀÏÀ» ÈÈ¾îº¸¸é¼­ tileAlphaDict¿¡ alpha=1f·Î µî·Ï
+        // ì´ˆê¸°í™”: ë§µ ì „ì²´ íƒ€ì¼ì„ í›‘ì–´ë³´ë©´ì„œ tileAlphaDictì— alpha=1fë¡œ ë“±ë¡
         BoundsInt bounds = tilemap.cellBounds;
         foreach (var pos in bounds.allPositionsWithin)
         {
             if (tilemap.HasTile(pos))
             {
-                tileAlphaDict[pos] = 1f; // Ã³À½¿£ ºÒÅõ¸í
+                tileAlphaDict[pos] = 1f; // ì²˜ìŒì—” ë¶ˆíˆ¬ëª…
             }
         }
     }
 
     private void Update()
     {
-        // 1) ¸¶¿ì½º°¡ °¡¸®Å°´Â Å¸ÀÏ ÁÂÇ¥ ±¸ÇÏ±â
+        // 1) ë§ˆìš°ìŠ¤ê°€ ê°€ë¦¬í‚¤ëŠ” íƒ€ì¼ ì¢Œí‘œ êµ¬í•˜ê¸°
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int mouseTilePos = tilemap.WorldToCell(mouseWorldPos);
 
-        // 2) ¹üÀ§ Ã¼Å© (°Å¸®°¡ miningRange ÀÌÇÏÀÎÁö)
+        // 2) ë²”ìœ„ ì²´í¬ (ê±°ë¦¬ê°€ miningRange ì´í•˜ì¸ì§€)
         bool inRange = false;
         if (tilemap.HasTile(mouseTilePos))
         {
@@ -78,33 +70,33 @@ public class Player_TileMining : MonoBehaviour
             }
         }
 
-        // 3) ¸¸¾à ÀÌÀü¿¡ °­Á¶Çß´ø Å¸ÀÏ°ú ÇöÀç ¸¶¿ì½º Å¸ÀÏÀÌ ´Ù¸£¸é ÀÌÀü °­Á¶ Áö¿ì±â
+        // 3) ë§Œì•½ ì´ì „ì— ê°•ì¡°í–ˆë˜ íƒ€ì¼ê³¼ í˜„ì¬ ë§ˆìš°ìŠ¤ íƒ€ì¼ì´ ë‹¤ë¥´ë©´ ì´ì „ ê°•ì¡° ì§€ìš°ê¸°
         if (lastHighlightedTile.HasValue && lastHighlightedTile.Value != mouseTilePos)
         {
             highlightTilemap.SetTile(lastHighlightedTile.Value, null);
             lastHighlightedTile = null;
         }
 
-        // 4) Ã¤±¼ °¡´É ¿©ºÎ ÆÇ´Ü
+        // 4) ì±„êµ´ ê°€ëŠ¥ ì—¬ë¶€ íŒë‹¨
         bool canMine = false;
         bool canSee = false;
 
         if (inRange)
         {
-            // ÇÃ·¹ÀÌ¾î Å¸ÀÏ ÁÂÇ¥
+            // í”Œë ˆì´ì–´ íƒ€ì¼ ì¢Œí‘œ
             Vector3Int playerTilePos = tilemap.WorldToCell(player.position);
 
-            // Bresenham µîÀ¸·Î Áß°£ ¼¿ÀÌ ¸·Çû´ÂÁö °Ë»ç
+            // Bresenham ë“±ìœ¼ë¡œ ì¤‘ê°„ ì…€ì´ ë§‰í˜”ëŠ”ì§€ ê²€ì‚¬
             canSee = CheckLineOfSight(tilemap, playerTilePos, mouseTilePos);
 
-            // canSee°¡ true ¸é, Áß°£¿¡ ¸·´Â Å¸ÀÏÀÌ ¾ø´Ù°í ÆÇ´Ü
+            // canSeeê°€ true ë©´, ì¤‘ê°„ì— ë§‰ëŠ” íƒ€ì¼ì´ ì—†ë‹¤ê³  íŒë‹¨
             if (canSee)
             {
                 canMine = true;
             }
         }
 
-        // 5) Å×µÎ¸® Ç¥½Ã ·ÎÁ÷
+        // 5) í…Œë‘ë¦¬ í‘œì‹œ ë¡œì§
         if (inRange)
         {
             Tile tileToUse = canSee ? borderTile : blockedBorderTile;
@@ -113,7 +105,7 @@ public class Player_TileMining : MonoBehaviour
         }
         else
         {
-            // ¹üÀ§ ¹ÛÀÌ¸é Å×µÎ¸®¸¦ Áö¿î´Ù
+            // ë²”ìœ„ ë°–ì´ë©´ í…Œë‘ë¦¬ë¥¼ ì§€ìš´ë‹¤
             if (lastHighlightedTile.HasValue && lastHighlightedTile.Value == mouseTilePos)
             {
                 highlightTilemap.SetTile(mouseTilePos, null);
@@ -122,23 +114,23 @@ public class Player_TileMining : MonoBehaviour
         }
 
         // ---------------------------------------------
-        // Ã¤±¼(¸¶ÀÌ´×) ·ÎÁ÷
+        // ì±„êµ´(ë§ˆì´ë‹) ë¡œì§
         // ---------------------------------------------
-        if (Input.GetMouseButton(0))  // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° ´©¸£°í ÀÖÀ¸¸é Ã¤±¼
+        if (Input.GetMouseButton(0))  // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ ëˆ„ë¥´ê³  ìˆìœ¼ë©´ ì±„êµ´
         {
-            // canMine == true ÀÏ ¶§¸¸ ½ÇÁ¦ Ã¤±¼ ÁøÇà
+            // canMine == true ì¼ ë•Œë§Œ ì‹¤ì œ ì±„êµ´ ì§„í–‰
             if (canMine)
             {
                 player_move.isMining = true;
 
-                // »õ·Î Ã¤±¼ Å¸ÀÏ ¼±ÅÃ
+                // ìƒˆë¡œ ì±„êµ´ íƒ€ì¼ ì„ íƒ
                 if (currentMiningTile == null || currentMiningTile != mouseTilePos)
                 {
                     currentMiningTile = mouseTilePos;
                 }
 
-                // Ã¤±¼ ÁßÀÎ Å¸ÀÏÀÇ ¾ËÆÄ°ª °¡Á®¿À±â
-                // (Dictionary¿¡ ¾øÀ¸¸é, ¾ÆÁ÷ µî·Ï ¾È µÈ °ÍÀÌ¹Ç·Î ÃÊ±â°ª 1f·Î µî·Ï)
+                // ì±„êµ´ ì¤‘ì¸ íƒ€ì¼ì˜ ì•ŒíŒŒê°’ ê°€ì ¸ì˜¤ê¸°
+                // (Dictionaryì— ì—†ìœ¼ë©´, ì•„ì§ ë“±ë¡ ì•ˆ ëœ ê²ƒì´ë¯€ë¡œ ì´ˆê¸°ê°’ 1fë¡œ ë“±ë¡)
                 if (!tileAlphaDict.ContainsKey(mouseTilePos))
                 {
                     tileAlphaDict[mouseTilePos] = 1f;
@@ -146,15 +138,15 @@ public class Player_TileMining : MonoBehaviour
 
                 float currentAlpha = tileAlphaDict[mouseTilePos];
 
-                // Ã¤±¼ ¼Óµµ: 1ÃÊ¿¡ (1 / miningTime)¸¸Å­ ¾ËÆÄ°¡ ÁÙ¾îµç´Ù°í ÇØ¼®
-                // Time.deltaTimeÀ» °öÇØ ½ÇÁ¦ ÇÁ·¹ÀÓº° °¨¼Ò·® °è»ê
+                // ì±„êµ´ ì†ë„: 1ì´ˆì— (1 / miningTime)ë§Œí¼ ì•ŒíŒŒê°€ ì¤„ì–´ë“ ë‹¤ê³  í•´ì„
+                // Time.deltaTimeì„ ê³±í•´ ì‹¤ì œ í”„ë ˆì„ë³„ ê°ì†ŒëŸ‰ ê³„ì‚°
                 float alphaDecrease = (1f / miningTime) * Time.deltaTime;
                 currentAlpha -= alphaDecrease;
 
-                // ¾ËÆÄ°ªÀÌ 0 ÀÌÇÏ¸é ºí·Ï Á¦°Å
+                // ì•ŒíŒŒê°’ì´ 0 ì´í•˜ë©´ ë¸”ë¡ ì œê±°
                 if (currentAlpha <= 0f)
                 {
-                    // ¿ÏÀüÈ÷ »ç¶óÁü
+                    // ì™„ì „íˆ ì‚¬ë¼ì§
                     tilemap.SetTile(mouseTilePos, null);
                     tileAlphaDict.Remove(mouseTilePos);
                     currentMiningTile = null;
@@ -162,10 +154,10 @@ public class Player_TileMining : MonoBehaviour
                 }
                 else
                 {
-                    // »ç¶óÁöÁø ¾Ê¾ÒÀ¸¹Ç·Î, »õ ¾ËÆÄ°ª ¹İ¿µ
+                    // ì‚¬ë¼ì§€ì§„ ì•Šì•˜ìœ¼ë¯€ë¡œ, ìƒˆ ì•ŒíŒŒê°’ ë°˜ì˜
                     tileAlphaDict[mouseTilePos] = currentAlpha;
 
-                    // Å¸ÀÏ¿¡ ¾ËÆÄ°ª Àû¿ë
+                    // íƒ€ì¼ì— ì•ŒíŒŒê°’ ì ìš©
                     tilemap.SetTileFlags(mouseTilePos, TileFlags.None);
                     Color newColor = tilemap.GetColor(mouseTilePos);
                     newColor.a = currentAlpha;
@@ -175,8 +167,8 @@ public class Player_TileMining : MonoBehaviour
         }
         else
         {
-            // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°À» ¶¼¸é, Ã¤±¼ ÁßÀÌ´ø Å¸ÀÏ Á¤º¸¸¦ ÃÊ±âÈ­
-            // (ÀÌ¹Ì ±ğÀÎ ¾ËÆÄ°ªÀº ±×´ë·Î À¯Áö -> "Ã¤±¼ Áß´Ü ÈÄ Àç°³" °¡´É)
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì„ ë–¼ë©´, ì±„êµ´ ì¤‘ì´ë˜ íƒ€ì¼ ì •ë³´ë¥¼ ì´ˆê¸°í™”
+            // (ì´ë¯¸ ê¹ì¸ ì•ŒíŒŒê°’ì€ ê·¸ëŒ€ë¡œ ìœ ì§€ -> "ì±„êµ´ ì¤‘ë‹¨ í›„ ì¬ê°œ" ê°€ëŠ¥)
             currentMiningTile = null;
             if (player_move != null)
             {
@@ -184,10 +176,10 @@ public class Player_TileMining : MonoBehaviour
             }
         }
 
-        // ¹üÀ§ ¹Û ºí·ÏÀº ¾ËÆÄ°ª ¿ø·¡ »ö º¹¿ø
-        // (¡°¹üÀ§ ¹ş¾î³ª¸é ¸ğµç ºí·Ï Åõ¸íµµ 1·Î ÀÚµ¿ º¹¿ø¡±ÀÌ ÇÊ¿äÇÑ °æ¿ì)
-        // ¿©±â¼­´Â ¡°ÀÌ¹Ì ±ğÀÎ ºí·ÏÀº ±×´ë·Î¡±·Î À¯ÁöÇÑ´Ù°í °¡Á¤ÇÏ°Ú½À´Ï´Ù.
-        // ¾Æ·¡ ÁÖ¼® Á¦°Å ½Ã, ¹üÀ§¸¦ ¹ş¾î³ª¸é ÀüºÎ ¾ËÆÄ=1·Î µ¹¾Æ°©´Ï´Ù.
+        // ë²”ìœ„ ë°– ë¸”ë¡ì€ ì•ŒíŒŒê°’ ì›ë˜ ìƒ‰ ë³µì›
+        // (â€œë²”ìœ„ ë²—ì–´ë‚˜ë©´ ëª¨ë“  ë¸”ë¡ íˆ¬ëª…ë„ 1ë¡œ ìë™ ë³µì›â€ì´ í•„ìš”í•œ ê²½ìš°)
+        // ì—¬ê¸°ì„œëŠ” â€œì´ë¯¸ ê¹ì¸ ë¸”ë¡ì€ ê·¸ëŒ€ë¡œâ€ë¡œ ìœ ì§€í•œë‹¤ê³  ê°€ì •í•˜ê² ìŠµë‹ˆë‹¤.
+        // ì•„ë˜ ì£¼ì„ ì œê±° ì‹œ, ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ë©´ ì „ë¶€ ì•ŒíŒŒ=1ë¡œ ëŒì•„ê°‘ë‹ˆë‹¤.
         /*
         foreach (var pos in tilemap.cellBounds.allPositionsWithin)
         {
@@ -196,8 +188,8 @@ public class Player_TileMining : MonoBehaviour
                 float dist = Vector3.Distance(tilemap.GetCellCenterWorld(pos), player.position);
                 if (dist > miningRange)
                 {
-                    // ¸¸¾à "Ã¤±¼ ÁøÇàµµµµ ÃÊ±âÈ­"ÇÑ´Ù¸é:
-                    tileAlphaDict[pos] = 1f; // ¾ËÆÄ°ª 1·Î º¹¿ø
+                    // ë§Œì•½ "ì±„êµ´ ì§„í–‰ë„ë„ ì´ˆê¸°í™”"í•œë‹¤ë©´:
+                    tileAlphaDict[pos] = 1f; // ì•ŒíŒŒê°’ 1ë¡œ ë³µì›
                     tilemap.SetTileFlags(pos, TileFlags.None);
                     Color c = tilemap.GetColor(pos);
                     c.a = 1f;
@@ -209,14 +201,14 @@ public class Player_TileMining : MonoBehaviour
     }
 
     /// <summary>
-    /// Bresenham ¾Ë°í¸®ÁòÀ» »ç¿ëÇØ start ~ end »çÀÌ¿¡
-    /// (start¿Í end¸¦ Á¦¿ÜÇÑ) ´Ù¸¥ Å¸ÀÏÀÌ ÀÖ´ÂÁö Ã¼Å©.
-    /// true¸é Áß°£¿¡ ¸·ÈûÀÌ ¾ø´Ù´Â ÀÇ¹Ì(½Ã¾ß O),
-    /// false¸é Áß°£¿¡ ¸·ÈûÀÌ ÀÖ´Ù´Â ÀÇ¹Ì(½Ã¾ß X).
+    /// Bresenham ì•Œê³ ë¦¬ì¦˜ì„ ì‚¬ìš©í•´ start ~ end ì‚¬ì´ì—
+    /// (startì™€ endë¥¼ ì œì™¸í•œ) ë‹¤ë¥¸ íƒ€ì¼ì´ ìˆëŠ”ì§€ ì²´í¬.
+    /// trueë©´ ì¤‘ê°„ì— ë§‰í˜ì´ ì—†ë‹¤ëŠ” ì˜ë¯¸(ì‹œì•¼ O),
+    /// falseë©´ ì¤‘ê°„ì— ë§‰í˜ì´ ìˆë‹¤ëŠ” ì˜ë¯¸(ì‹œì•¼ X).
     /// </summary>
     bool CheckLineOfSight(Tilemap tilemap, Vector3Int start, Vector3Int end)
     {
-        // °°Àº Å¸ÀÏÀÌ¸é ´ç¿¬È÷ ½Ã¾ß°¡ Æ®¿©ÀÖ´Â °ÍÀ¸·Î Ã³¸®
+        // ê°™ì€ íƒ€ì¼ì´ë©´ ë‹¹ì—°íˆ ì‹œì•¼ê°€ íŠ¸ì—¬ìˆëŠ” ê²ƒìœ¼ë¡œ ì²˜ë¦¬
         if (start == end) return true;
 
         int x0 = start.x;
@@ -236,12 +228,12 @@ public class Player_TileMining : MonoBehaviour
         // Bresenham line
         while (true)
         {
-            // Áß°£¿¡ ¸·Èû È®ÀÎ(½ÃÀÛ Å¸ÀÏ, ¸ñÇ¥ Å¸ÀÏÀº Á¦¿Ü)
+            // ì¤‘ê°„ì— ë§‰í˜ í™•ì¸(ì‹œì‘ íƒ€ì¼, ëª©í‘œ íƒ€ì¼ì€ ì œì™¸)
             if (!(currentX == x0 && currentY == y0) && !(currentX == x1 && currentY == y1))
             {
                 if (tilemap.HasTile(new Vector3Int(currentX, currentY, 0)))
                 {
-                    // Áß°£¿¡ ´Ù¸¥ Å¸ÀÏÀÌ ÀÖÀ¸¹Ç·Î ½Ã¾ß°¡ ¸·Èû
+                    // ì¤‘ê°„ì— ë‹¤ë¥¸ íƒ€ì¼ì´ ìˆìœ¼ë¯€ë¡œ ì‹œì•¼ê°€ ë§‰í˜
                     return false;
                 }
             }
@@ -262,7 +254,7 @@ public class Player_TileMining : MonoBehaviour
             }
         }
 
-        // ¿©±â±îÁö ¿Ô´Ù¸é Áß°£¿¡ ¸·Èù Å¸ÀÏ ¾øÀ½
+        // ì—¬ê¸°ê¹Œì§€ ì™”ë‹¤ë©´ ì¤‘ê°„ì— ë§‰íŒ íƒ€ì¼ ì—†ìŒ
         return true;
     }
 }
