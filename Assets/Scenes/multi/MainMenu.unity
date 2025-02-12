@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 485816234}
   - component: {fileID: 485816235}
   - component: {fileID: 485816237}
-  - component: {fileID: 485816236}
+  - component: {fileID: 485816239}
   - component: {fileID: 485816238}
   m_Layer: 0
   m_Name: NetworkManager
@@ -462,18 +462,6 @@ MonoBehaviour:
   evaluationInterval: 3
   timeInterpolationGui: 0
   GamePlayerPrefab: {fileID: 7124153215713920026, guid: 484a5b593ebb3b140b99de599cffadd2, type: 3}
---- !u!114 &485816236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 485816233}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16ba9ee1b2f9c9a40a05264ef6a1181c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &485816237
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -503,6 +491,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentLobbyID: 0
+--- !u!114 &485816239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 485816233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef4bffeda13d7a748973ff9204401c07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &502031091
 GameObject:
   m_ObjectHideFlags: 0
