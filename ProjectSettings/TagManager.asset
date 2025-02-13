@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - EnemySmoke
   - monster
+  - Item
   layers:
   - Default
   - TransparentFX
