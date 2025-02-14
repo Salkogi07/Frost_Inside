@@ -30,7 +30,7 @@ public class PlayerStats : MonoBehaviour
         hp = maxHp;
         stamina = maxStamina;
     }
-    
+
     public virtual void TakeDamage(int _damage)
     {
         hp -= _damage;

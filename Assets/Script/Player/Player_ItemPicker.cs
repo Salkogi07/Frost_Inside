@@ -6,7 +6,7 @@ public class Player_ItemPicker : MonoBehaviour
     public float pickupRange = 3f;
 
     [Tooltip("아이템 줍기 키")]
-    public KeyCode pickupKey = KeyCode.F;
+    public KeyCode pickupKey = KeyCode.E;
 
     [Tooltip("아이템 줍기 후 쿨다운 시간 (초)")]
     public float pickupCooldown = 0.5f;

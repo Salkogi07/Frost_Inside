@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class Player_Move : MonoBehaviour
@@ -20,6 +21,16 @@ public class Player_Move : MonoBehaviour
     [SerializeField] private float sprintCost = 5f; // 초당 스테미나 감소량
     [SerializeField] private float jumpCost = 25f; // 초당 스테미나 감소량
     [SerializeField] private float staminaRecoverRate = 20f; // 초당 스테미나 회복량
+
+    [Header("Stamina Cooldown")]
+    [SerializeField] private float staminaCooldownDuration = 2f;
+    private float staminaCooldownTimer = 0f;
+
+    [Header("Temperature Info")]
+    [SerializeField] private float temperatureDropRate = 1f;
+    [SerializeField] private float hpDropRate = 0.5f;
+    [SerializeField] private bool isNearHeatSource = false; // 불 근처에 있는지 체크
+    [SerializeField] private bool isInColdZone = false; // 추운 지역인지 체크
 
     [Header("Jump Info")]
     [SerializeField] public float jumpForce = 10f;
@@ -82,6 +93,8 @@ public class Player_Move : MonoBehaviour
 
         Sprint();
         HandleStamina();
+        HandleTemperature();
+        HandleHp();
 
         PlatformCheck();
         GroundCheck();
@@ -125,6 +138,9 @@ public class Player_Move : MonoBehaviour
 
     void HandleStamina()
     {
+        float tempRatio = stats.GetTemperature();
+        int tempState = Temp(tempRatio);
+
         if (isSprinting)
         {
             if (stats.stamina > sprintCost * Time.deltaTime)
@@ -134,21 +150,91 @@ public class Player_Move : MonoBehaviour
             else
             {
                 stats.stamina = 0;
-                isSprinting = false; // 스테미나가 없으면 스프린트 중단
+                isSprinting = false;
                 currentSpeed = walkSpeed;
+                staminaCooldownTimer = staminaCooldownDuration;
             }
         }
         else
         {
-            if (stats.stamina < stats.maxStamina)
+            if (staminaCooldownTimer > 0)
             {
-                stats.stamina += staminaRecoverRate * Time.deltaTime;
-                if (stats.stamina > stats.maxStamina)
-                    stats.stamina = stats.maxStamina;
+                staminaCooldownTimer -= Time.deltaTime;
+            }
+            else if (stats.stamina < stats.maxStamina)
+            {
+                if (tempState == 3)
+                {
+                    stats.stamina = 0; // 극도로 추운 경우 스테미나 0
+                }
+                else if (tempState == 2)
+                {
+                    stats.stamina += staminaRecoverRate * Time.deltaTime;
+                    if (stats.stamina > stats.maxStamina * 0.5f)
+                    {
+                        stats.stamina = stats.maxStamina * 0.5f; // 많이 추운 경우 최대 50%까지만 회복
+                    }
+                }
+                else
+                {
+                    stats.stamina += staminaRecoverRate * Time.deltaTime;
+                    if (stats.stamina > stats.maxStamina)
+                    {
+                        stats.stamina = stats.maxStamina;
+                    }
+                }
             }
         }
     }
 
+    void HandleHp()
+    {
+        float tempRatio = stats.GetTemperature();
+        if(tempRatio == 0)
+        {
+            stats.hp -= hpDropRate * Time.deltaTime;
+        }
+    }
+
+    private static int Temp(float tempRatio)
+    {
+        int tempState;
+        if (tempRatio >= 0.75f)
+        {
+            tempState = 0; // 정상 체온
+        }
+        else if (tempRatio >= 0.5f)
+        {
+            tempState = 1; // 약간 추움
+        }
+        else if (tempRatio >= 0.25f)
+        {
+            tempState = 2; // 많이 추움
+        }
+        else
+        {
+            tempState = 3; // 극도로 추움
+        }
+
+        return tempState;
+    }
+
+    void HandleTemperature()
+    {
+        float dropRate = temperatureDropRate;
+
+        if (moveInput != 0)
+            dropRate *= 0.5f; // 움직이면 감소율 줄이기
+
+        if (isSprinting)
+            dropRate *= 0.25f; // 뛰고 있으면 온도 감소율 더 낮추기
+
+        if (isAttack)
+            dropRate *= 0.5f; // 공격 중에는 감소율 반으로
+
+        stats.temperature -= dropRate * Time.deltaTime;
+        stats.temperature = Mathf.Max(stats.temperature, 0f);
+    }
 
     private void Flip()
     {
