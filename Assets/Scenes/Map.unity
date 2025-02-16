@@ -16099,7 +16099,7 @@ MonoBehaviour:
   staminaDecreaseRate: 10
   staminaCooldownDuration: 2
   temperatureDropRate: 1
-  hpDropRate: 0.5
+  hpDropRate: 2
   isNearHeatSource: 0
   isInColdZone: 0
   jumpForce: 16
