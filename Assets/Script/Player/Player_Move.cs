@@ -20,7 +20,8 @@ public class Player_Move : MonoBehaviour
     [Header("Stamina info")]
     [SerializeField] private float sprintCost = 5f; // 초당 스테미나 감소량
     [SerializeField] private float jumpCost = 25f; // 초당 스테미나 감소량
-    [SerializeField] private float staminaRecoverRate = 20f; // 초당 스테미나 회복량
+    [SerializeField] private float staminaRecoverRate = 15f; // 초당 스테미나 회복량
+    [SerializeField] private float staminaDecreaseRate = 10f; // 초당 스테미나 갑소량
 
     [Header("Stamina Cooldown")]
     [SerializeField] private float staminaCooldownDuration = 2f;
@@ -28,7 +29,8 @@ public class Player_Move : MonoBehaviour
 
     [Header("Temperature Info")]
     [SerializeField] private float temperatureDropRate = 1f;
-    [SerializeField] private float hpDropRate = 0.5f;
+    [SerializeField] private float hpDropRate = 2f;
+    private float damageTimer = 0f;
     [SerializeField] private bool isNearHeatSource = false; // 불 근처에 있는지 체크
     [SerializeField] private bool isInColdZone = false; // 추운 지역인지 체크
 
@@ -161,18 +163,34 @@ public class Player_Move : MonoBehaviour
             {
                 staminaCooldownTimer -= Time.deltaTime;
             }
-            else if (stats.stamina < stats.maxStamina)
+            else if (stats.stamina <= stats.maxStamina)
             {
                 if (tempState == 3)
                 {
-                    stats.stamina = 0; // 극도로 추운 경우 스테미나 0
+                    if (stats.stamina > 0)
+                    {
+                        stats.stamina -= staminaDecreaseRate * Time.deltaTime;
+                        if (stats.stamina < 0)
+                            stats.stamina = 0;
+                    }
                 }
                 else if (tempState == 2)
                 {
-                    stats.stamina += staminaRecoverRate * Time.deltaTime;
-                    if (stats.stamina > stats.maxStamina * 0.5f)
+                    float targetStamina = stats.maxStamina * 0.5f;
+
+                    // 스태미나가 목표치보다 높다면 서서히 감소
+                    if (stats.stamina > targetStamina)
                     {
-                        stats.stamina = stats.maxStamina * 0.5f; // 많이 추운 경우 최대 50%까지만 회복
+                        stats.stamina -= staminaDecreaseRate * Time.deltaTime;
+                        if (stats.stamina < targetStamina)
+                            stats.stamina = targetStamina;
+                    }
+                    else
+                    {
+                        // 목표치보다 낮으면 회복 (최대 targetStamina까지만 회복)
+                        stats.stamina += staminaRecoverRate * Time.deltaTime;
+                        if (stats.stamina > targetStamina)
+                            stats.stamina = targetStamina;
                     }
                 }
                 else
@@ -190,9 +208,20 @@ public class Player_Move : MonoBehaviour
     void HandleHp()
     {
         float tempRatio = stats.GetTemperature();
-        if(tempRatio == 0)
+
+        if (tempRatio == 0)
         {
-            stats.hp -= hpDropRate * Time.deltaTime;
+            damageTimer += Time.deltaTime;
+
+            if (damageTimer >= 1f)
+            {
+                stats.hp -= hpDropRate;
+                damageTimer = 0f;
+            }
+        }
+        else
+        {
+            damageTimer = 0f;
         }
     }
 
