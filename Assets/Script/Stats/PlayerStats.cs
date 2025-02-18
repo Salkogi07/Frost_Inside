@@ -45,16 +45,21 @@ public class PlayerStats : MonoBehaviour
     public virtual void TakeDamage(int _damage)
     {
         hp -= _damage;
-
-        UIManager.instance.ShowDamageEffect();
-
-        if (hp < 0)
+        if(hp <= 0)
+        {
+            hp = 0;
             Die();
+            
+        }
+        else
+        {
+            UIManager.instance.ShowDamageEffect();
+        }
     }
 
     protected virtual void Die()
     {
-        throw new NotImplementedException();
+        Debug.Log("사망했습니다.");
     }
 
     public int GetMining()
