@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Net.NetworkInformation;
 using UnityEngine;
 
 public class Player_Move : MonoBehaviour
@@ -14,8 +13,8 @@ public class Player_Move : MonoBehaviour
     [Header("Player Info")]
     [SerializeField] public float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 10f;
-    [SerializeField] private float currentSpeed;
-    [SerializeField] private bool isSprinting = false;
+    private float currentSpeed;
+    private bool isSprinting = false;
 
     [Header("Stamina info")]
     [SerializeField] private float sprintCost = 5f; // 초당 스테미나 감소량
@@ -29,10 +28,10 @@ public class Player_Move : MonoBehaviour
 
     [Header("Temperature Info")]
     [SerializeField] private float temperatureDropRate = 1f;
-    [SerializeField] private float hpDropRate = 2f;
+    [SerializeField] private int hpDropRate = 2;
     private float damageTimer = 0f;
-    [SerializeField] private bool isNearHeatSource = false; // 불 근처에 있는지 체크
-    [SerializeField] private bool isInColdZone = false; // 추운 지역인지 체크
+    private bool isNearHeatSource = false; // 불 근처에 있는지 체크
+    private bool isInColdZone = false; // 추운 지역인지 체크
 
     [Header("Jump Info")]
     [SerializeField] public float jumpForce = 10f;
@@ -42,24 +41,24 @@ public class Player_Move : MonoBehaviour
     private float gravityScale = 3.5f;
 
     [Header("Ground Check")]
-    [SerializeField] private bool isGrounded;
-    [SerializeField] public float groundCheckDistance;
-    [SerializeField] public Transform groundCheck;
-    [SerializeField] public Vector2 groundCheckSize = new Vector2(1f, 0.1f);
-    [SerializeField] public LayerMask groundLayer;
+    private bool isGrounded;
+    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
+    [SerializeField] private LayerMask groundLayer;
 
     [Header("Platform Check")]
-    [SerializeField] public LayerMask platformLayer;
+    [SerializeField] private LayerMask platformLayer;
     [SerializeField] PlatformEffector2D effector;
-    [SerializeField] public bool isPlatform = false;
+    private bool isPlatform = false;
 
 
     [Header("IsMining")]
     public bool isMining = false;
 
     [Header("IsAtcitoning")]
-    [SerializeField] private bool isJumping;
-    [SerializeField] public bool isFacingRight = false;
+    private bool isJumping;
+    private bool isFacingRight = false;
     bool isreversed;
 
     private int facingDir;
@@ -140,7 +139,7 @@ public class Player_Move : MonoBehaviour
 
     void HandleStamina()
     {
-        float tempRatio = stats.GetTemperature();
+        float tempRatio = stats.temperature / stats.maxTemperature.GetValue();
         int tempState = Temp(tempRatio);
 
         if (isSprinting)
@@ -159,46 +158,46 @@ public class Player_Move : MonoBehaviour
         }
         else
         {
-            if (staminaCooldownTimer > 0)
+            if (tempState == 3)
             {
-                staminaCooldownTimer -= Time.deltaTime;
-            }
-            else if (stats.stamina <= stats.maxStamina)
-            {
-                if (tempState == 3)
+                if (stats.stamina > 0)
                 {
-                    if (stats.stamina > 0)
-                    {
-                        stats.stamina -= staminaDecreaseRate * Time.deltaTime;
-                        if (stats.stamina < 0)
-                            stats.stamina = 0;
-                    }
+                    stats.stamina -= staminaDecreaseRate * Time.deltaTime;
+                    if (stats.stamina < 0)
+                        stats.stamina = 0;
                 }
-                else if (tempState == 2)
-                {
-                    float targetStamina = stats.maxStamina * 0.5f;
+            }
+            else if (tempState == 2)
+            {
+                float targetStamina = stats.maxStamina.GetValue() * 0.5f;
 
-                    // 스태미나가 목표치보다 높다면 서서히 감소
+                // 스태미나가 목표치보다 높다면 서서히 감소
+                if (stats.stamina > targetStamina)
+                {
+                    stats.stamina -= staminaDecreaseRate * Time.deltaTime;
+                    if (stats.stamina < targetStamina)
+                        stats.stamina = targetStamina;
+                }
+                else
+                {
+                    // 목표치보다 낮으면 회복 (최대 targetStamina까지만 회복)
+                    stats.stamina += staminaRecoverRate * Time.deltaTime;
                     if (stats.stamina > targetStamina)
-                    {
-                        stats.stamina -= staminaDecreaseRate * Time.deltaTime;
-                        if (stats.stamina < targetStamina)
-                            stats.stamina = targetStamina;
-                    }
-                    else
-                    {
-                        // 목표치보다 낮으면 회복 (최대 targetStamina까지만 회복)
-                        stats.stamina += staminaRecoverRate * Time.deltaTime;
-                        if (stats.stamina > targetStamina)
-                            stats.stamina = targetStamina;
-                    }
+                        stats.stamina = targetStamina;
+                }
+            }
+            else
+            {
+                if (staminaCooldownTimer > 0)
+                {
+                    staminaCooldownTimer -= Time.deltaTime;
                 }
                 else
                 {
                     stats.stamina += staminaRecoverRate * Time.deltaTime;
-                    if (stats.stamina > stats.maxStamina)
+                    if (stats.stamina > stats.maxStamina.GetValue())
                     {
-                        stats.stamina = stats.maxStamina;
+                        stats.stamina = stats.maxStamina.GetValue();
                     }
                 }
             }
@@ -207,7 +206,7 @@ public class Player_Move : MonoBehaviour
 
     void HandleHp()
     {
-        float tempRatio = stats.GetTemperature();
+        float tempRatio = stats.temperature;
 
         if (tempRatio == 0)
         {
@@ -215,7 +214,7 @@ public class Player_Move : MonoBehaviour
 
             if (damageTimer >= 1f)
             {
-                stats.hp -= hpDropRate;
+                stats.TakeDamage(hpDropRate);
                 damageTimer = 0f;
             }
         }
@@ -309,7 +308,7 @@ public class Player_Move : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             jumpBufferCounter = jumpBufferTime;
         }
@@ -331,7 +330,7 @@ public class Player_Move : MonoBehaviour
                 isJumpCut = true;
             }
         }
-        else if (canDoubleJump && doubleJumpAvailable && !isGrounded && Input.GetButtonDown("Jump"))
+        else if (canDoubleJump && doubleJumpAvailable && !isGrounded && Input.GetKeyDown(KeyCode.Space))
         {
             if (stats.stamina >= jumpCost)
             {
@@ -342,7 +341,7 @@ public class Player_Move : MonoBehaviour
             }
         }
 
-        if (isJumpCut && Input.GetButtonUp("Jump") && rb.linearVelocityY > 0f)
+        if (isJumpCut && Input.GetKeyUp(KeyCode.Space) && rb.linearVelocityY > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, rb.linearVelocityY * 0.5f);
             coyoteTimeCounter = 0f;
@@ -368,10 +367,9 @@ public class Player_Move : MonoBehaviour
     {
         if (isPlatform)
         {
-            if (Input.GetKey(KeyCode.DownArrow))
+            if (Input.GetKey(KeyCode.S))
             {
-                if (Input.GetButtonDown("Jump"))
-                    ReverseOneWay();
+                ReverseOneWay();
             }
             else
             {

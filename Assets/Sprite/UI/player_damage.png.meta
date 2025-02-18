@@ -1,25 +1,16 @@
 fileFormatVersion: 2
-guid: 8935efc0689447c4bbdfa3b0d0ca75ca
+guid: c3a8b20ec5bb0f3468a5c30db6d449b4
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7382854718450532701
-    second: cold_reminder1_0
+      213: -6053999917210064813
+    second: player_damage_0
   - first:
-      213: 7045957511683926030
-    second: cold_reminder1_1
+      213: 5933781993170510923
+    second: player_damage_1
   - first:
-      213: 2774601422332063880
-    second: cold_reminder1_2
-  - first:
-      213: -3875455903672108766
-    second: cold_reminder1_3
-  - first:
-      213: -6300166803138317349
-    second: cold_reminder1_4
-  - first:
-      213: 5956375511098744597
-    second: cold_reminder1_5
+      213: -2285171266522518446
+    second: player_damage_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -141,13 +132,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cold_reminder1_0
+      name: player_damage_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 42
-        width: 16
-        height: 12
+        y: 0
+        width: 58
+        height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -156,19 +147,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3ae7076efb4da8990800000000000000
-      internalID: -7382854718450532701
+      spriteID: 3582378962fdbfba0800000000000000
+      internalID: -6053999917210064813
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cold_reminder1_1
+      name: player_damage_1
       rect:
         serializedVersion: 2
-        x: 21
-        y: 44
-        width: 21
+        x: 0
+        y: 0
+        width: 8
         height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -178,64 +169,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e086a6a960548c160800000000000000
-      internalID: 7045957511683926030
+      spriteID: b44a985c847095250800000000000000
+      internalID: 5933781993170510923
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cold_reminder1_2
+      name: player_damage_2
       rect:
         serializedVersion: 2
-        x: 52
-        y: 46
-        width: 23
-        height: 8
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 880756b0b4d518620800000000000000
-      internalID: 2774601422332063880
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cold_reminder1_3
-      rect:
-        serializedVersion: 2
-        x: 78
-        y: 31
-        width: 18
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 229feee736d973ac0800000000000000
-      internalID: -3875455903672108766
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cold_reminder1_4
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 67
         y: 0
-        width: 33
-        height: 22
+        width: 29
+        height: 54
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -244,30 +191,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bd37b391caf4198a0800000000000000
-      internalID: -6300166803138317349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cold_reminder1_5
-      rect:
-        serializedVersion: 2
-        x: 52
-        y: 0
-        width: 44
-        height: 11
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 51f50e718fb49a250800000000000000
-      internalID: 5956375511098744597
+      spriteID: 25ceef727d07940e0800000000000000
+      internalID: -2285171266522518446
       vertices: []
       indices: 
       edges: []
@@ -286,12 +211,9 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cold_reminder1_0: -7382854718450532701
-      cold_reminder1_1: 7045957511683926030
-      cold_reminder1_2: 2774601422332063880
-      cold_reminder1_3: -3875455903672108766
-      cold_reminder1_4: -6300166803138317349
-      cold_reminder1_5: 5956375511098744597
+      player_damage_0: -6053999917210064813
+      player_damage_1: 5933781993170510923
+      player_damage_2: -2285171266522518446
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

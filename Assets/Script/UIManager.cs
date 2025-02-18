@@ -1,11 +1,11 @@
-using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Player_UI : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
-    PlayerStats stats;
+    public static UIManager instance;
 
     [Header("Component")]
     [SerializeField] Image hpImage;
@@ -23,6 +23,11 @@ public class Player_UI : MonoBehaviour
     [Header("Freeze Edges")]
     [SerializeField] private Image[] freezeEdges; // 얼음 테두리 3장
     [SerializeField] private float fadeSpeed = 2f; // 알파 변화 속도
+    private Coroutine damageCoroutine; // 현재 실행 중인 데미지 효과 코루틴 저장 변수
+
+    [Header("Player Damage")]
+    [SerializeField] private Image damageImage;
+    public float fadeDuration = 0.5f; // 페이드 아웃 지속 시간
 
     // 각 테두리가 목표로 할 알파 값 (0~1 사이)
     private float[] targetAlphas;
@@ -32,7 +37,15 @@ public class Player_UI : MonoBehaviour
 
     private void Awake()
     {
-        stats = GetComponent<PlayerStats>();
+        if (instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         // freezeEdges 개수만큼 targetAlphas 초기화
         targetAlphas = new float[freezeEdges.Length];
@@ -49,55 +62,88 @@ public class Player_UI : MonoBehaviour
     private void Update()
     {
         UpdateInventory();
-        UpdateHp();
-        UpdateStamina();
-        UpdateTemperatureState();
         UpdateTime();
         UpdateFreezeEdges();
     }
 
-    private void UpdateFreezeEdges()
-    {
-        for (int i = 0; i < freezeEdges.Length; i++)
-        {
-            // 현재 알파
-            float currentAlpha = freezeEdges[i].color.a;
-            // 목표 알파로 서서히 보간
-            float newAlpha = Mathf.Lerp(currentAlpha, targetAlphas[i], Time.deltaTime * fadeSpeed);
-            SetImageAlpha(freezeEdges[i], newAlpha);
-        }
-    }
-
-    private void SetImageAlpha(Image image, float alpha)
-    {
-        Color c = image.color;
-        c.a = alpha;
-        image.color = c;
-    }
-
-
     private void UpdateInventory()
     {
-        if(Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab))
         {
             bool isInventory = !inventoryObject.activeSelf;
             inventoryObject.SetActive(isInventory);
         }
     }
 
-    private void UpdateHp()
+    private void UpdateTime()
     {
-        hpImage.fillAmount = stats.GetHp();
+        timeText.text = GameManager.instance.hours.ToString("D2") + ":" + GameManager.instance.minutes.ToString("D2");
+
+        if (GameManager.instance.hours < 17)  // 17시 전까지
+        {
+            timeImage.sprite = timeSprites[0];
+        }
+        else if (GameManager.instance.hours < 21)  // 21시 전까지
+        {
+            timeImage.sprite = timeSprites[1];
+        }
+        else // 21시 이후 (22시 포함)
+        {
+            timeImage.sprite = timeSprites[2];
+        }
+
     }
 
-    private void UpdateStamina()
+    public void ShowDamageEffect()
     {
-        staminaImage.fillAmount = stats.GetStamina();
+        // 현재 실행 중인 코루틴이 있다면 중지
+        if (damageCoroutine != null)
+        {
+            StopCoroutine(damageCoroutine);
+        }
+
+        // 새로운 코루틴 실행
+        damageCoroutine = StartCoroutine(PlayerDamageUI());
     }
 
-    private void UpdateTemperatureState()
+    private IEnumerator PlayerDamageUI()
     {
-        float tempRatio = stats.GetTemperature();
+        if (damageImage == null)
+        {
+            Debug.LogWarning("damageImage가 설정되지 않았습니다.");
+            yield break;
+        }
+
+        // 데미지 효과 초기화
+        damageImage.color = new Color(1, 1, 1, 1); // 완전 불투명 흰색
+        damageImage.gameObject.SetActive(true);
+
+        float elapsed = 0f;
+        while (elapsed < fadeDuration)
+        {
+            elapsed += Time.deltaTime;
+            float alpha = Mathf.Lerp(1, 0, elapsed / fadeDuration);
+            damageImage.color = new Color(1, 1, 1, alpha);
+            yield return null;
+        }
+
+        damageImage.gameObject.SetActive(false); // 투명해지면 비활성화
+        damageCoroutine = null; // 코루틴 종료 후 변수 초기화
+    }
+
+    public void UpdateHp(float value)
+    {
+        hpImage.fillAmount = value;
+    }
+
+    public void UpdateStamina(float value)
+    {
+        staminaImage.fillAmount = value;
+    }
+
+    public void UpdateTemperatureState(float value)
+    {
+        float tempRatio = value;
         int tempState = 0;
 
         // 체온 구간에 따라 상태 구분
@@ -148,23 +194,22 @@ public class Player_UI : MonoBehaviour
         temperatureImage.fillAmount = tempRatio;
     }
 
-
-    private void UpdateTime()
+    private void SetImageAlpha(Image image, float alpha)
     {
-        timeText.text = GameManager.instance.hours.ToString("D2") + ":" + GameManager.instance.minutes.ToString("D2");
+        Color c = image.color;
+        c.a = alpha;
+        image.color = c;
+    }
 
-        if (GameManager.instance.hours < 17)  // 17시 전까지
+    private void UpdateFreezeEdges()
+    {
+        for (int i = 0; i < freezeEdges.Length; i++)
         {
-            timeImage.sprite = timeSprites[0];
+            // 현재 알파
+            float currentAlpha = freezeEdges[i].color.a;
+            // 목표 알파로 서서히 보간
+            float newAlpha = Mathf.Lerp(currentAlpha, targetAlphas[i], Time.deltaTime * fadeSpeed);
+            SetImageAlpha(freezeEdges[i], newAlpha);
         }
-        else if (GameManager.instance.hours < 21)  // 21시 전까지
-        {
-            timeImage.sprite = timeSprites[1];
-        }
-        else // 21시 이후 (22시 포함)
-        {
-            timeImage.sprite = timeSprites[2];
-        }
-
     }
 }

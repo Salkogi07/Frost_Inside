@@ -8270,6 +8270,7 @@ GameObject:
   - component: {fileID: 852017078}
   - component: {fileID: 852017079}
   - component: {fileID: 852017080}
+  - component: {fileID: 852017081}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -8332,6 +8333,42 @@ MonoBehaviour:
   MenuPanel: {fileID: 67130461}
   KeyPanel: {fileID: 1968125784}
   currentPage: 0
+--- !u!114 &852017081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852017077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4082e6d8bd7d7a74688db940f6bb0389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpImage: {fileID: 1829849391}
+  staminaImage: {fileID: 1812174817}
+  staminaFreezeImage: {fileID: 221035959}
+  temperatureImage: {fileID: 1237943402}
+  weightImage: {fileID: 1918246980}
+  timeImage: {fileID: 1820440501}
+  timeText: {fileID: 629632972}
+  timeSprites:
+  - {fileID: 4138823062835201441, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
+  - {fileID: 4628948989125786106, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
+  - {fileID: 8823166479081205076, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
+  temperatureSprites:
+  - {fileID: -8253450362007579573, guid: 06edabf6c9a6fda4993b5c3915dc490f, type: 3}
+  - {fileID: -4587185269259707429, guid: 4fb4d03349b05ce449196fe6f357a4b2, type: 3}
+  - {fileID: -5288437434449059614, guid: 97882ce62eabc90488b4ad0bac3d7ce7, type: 3}
+  - {fileID: -6495796635727040263, guid: b92b7c63129717f46bb887a1036c4fef, type: 3}
+  freezeEdges:
+  - {fileID: 627551751}
+  - {fileID: 1368038534}
+  - {fileID: 226852056}
+  fadeSpeed: 2
+  damageImage: {fileID: 1071256452}
+  fadeDuration: 0.3
+  inventoryObject: {fileID: 1700269484}
 --- !u!1 &865430449
 GameObject:
   m_ObjectHideFlags: 0
@@ -14844,6 +14881,81 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!1 &1071256450
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1071256451}
+  - component: {fileID: 1071256453}
+  - component: {fileID: 1071256452}
+  m_Layer: 5
+  m_Name: PlayerDamage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!224 &1071256451
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071256450}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1354079673}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1071256452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071256450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c3a8b20ec5bb0f3468a5c30db6d449b4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1071256453
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071256450}
+  m_CullTransparentMesh: 1
 --- !u!1 &1073762936
 GameObject:
   m_ObjectHideFlags: 0
@@ -16067,7 +16179,6 @@ GameObject:
   - component: {fileID: 1156874124}
   - component: {fileID: 1156874117}
   - component: {fileID: 1156874122}
-  - component: {fileID: 1156874123}
   - component: {fileID: 1156874125}
   m_Layer: 6
   m_Name: Player
@@ -16091,8 +16202,6 @@ MonoBehaviour:
   dust: {fileID: 1027099486}
   walkSpeed: 5
   sprintSpeed: 10
-  currentSpeed: 0
-  isSprinting: 0
   sprintCost: 15
   jumpCost: 20
   staminaRecoverRate: 15
@@ -16100,12 +16209,9 @@ MonoBehaviour:
   staminaCooldownDuration: 2
   temperatureDropRate: 1
   hpDropRate: 2
-  isNearHeatSource: 0
-  isInColdZone: 0
   jumpForce: 16
   coyoteTime: 0.13
   jumpBufferTime: 0.13
-  isGrounded: 0
   groundCheckDistance: 0.1
   groundCheck: {fileID: 539113852}
   groundCheckSize: {x: 0.3, y: 0.1}
@@ -16116,10 +16222,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   effector: {fileID: 1250905502}
-  isPlatform: 0
   isMining: 0
-  isJumping: 0
-  isFacingRight: 0
   isAttack: 0
   canDoubleJump: 0
 --- !u!50 &1156874119
@@ -16223,40 +16326,6 @@ MonoBehaviour:
   highlightTilemap: {fileID: 1048228185}
   borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
   blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
---- !u!114 &1156874123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1156874114}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 77b45c83e473d0046a9c784ec4f75d95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpImage: {fileID: 1829849391}
-  staminaImage: {fileID: 1812174817}
-  staminaFreezeImage: {fileID: 221035959}
-  temperatureImage: {fileID: 1237943402}
-  weightImage: {fileID: 1918246980}
-  timeImage: {fileID: 1820440501}
-  timeText: {fileID: 629632972}
-  timeSprites:
-  - {fileID: 4138823062835201441, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
-  - {fileID: 4628948989125786106, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
-  - {fileID: 8823166479081205076, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
-  temperatureSprites:
-  - {fileID: -8253450362007579573, guid: 06edabf6c9a6fda4993b5c3915dc490f, type: 3}
-  - {fileID: -4587185269259707429, guid: 4fb4d03349b05ce449196fe6f357a4b2, type: 3}
-  - {fileID: -5288437434449059614, guid: 97882ce62eabc90488b4ad0bac3d7ce7, type: 3}
-  - {fileID: -6495796635727040263, guid: b92b7c63129717f46bb887a1036c4fef, type: 3}
-  freezeEdges:
-  - {fileID: 627551751}
-  - {fileID: 1368038534}
-  - {fileID: 226852056}
-  fadeSpeed: 0.3
-  inventoryObject: {fileID: 1700269484}
 --- !u!114 &1156874124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16282,13 +16351,21 @@ MonoBehaviour:
     baseValue: 0
     modifier: 0
   hp: 100
-  maxHp: 100
+  maxHp:
+    baseValue: 100
+    modifier: 0
   stamina: 100
-  maxStamina: 100
+  maxStamina:
+    baseValue: 100
+    modifier: 0
   weight: 0
-  maxWeight: 100
+  maxWeigh:
+    baseValue: 100
+    modifier: 0
   temperature: 100
-  maxTemperature: 100
+  maxTemperature:
+    baseValue: 100
+    modifier: 0
 --- !u!114 &1156874125
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16978,7 +17055,7 @@ GameObject:
   - component: {fileID: 1237943403}
   - component: {fileID: 1237943402}
   m_Layer: 5
-  m_Name: TemperatureValue
+  m_Name: Value
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18314,6 +18391,7 @@ RectTransform:
   - {fileID: 74745527}
   - {fileID: 815791849}
   - {fileID: 1820440500}
+  - {fileID: 1071256451}
   m_Father: {fileID: 1022042130}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -32461,7 +32539,7 @@ GameObject:
   - component: {fileID: 1795581987}
   - component: {fileID: 1795581986}
   m_Layer: 5
-  m_Name: TemperatureValueBack
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

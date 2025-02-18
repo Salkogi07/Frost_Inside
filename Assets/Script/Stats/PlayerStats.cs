@@ -11,29 +11,42 @@ public class PlayerStats : MonoBehaviour
 
     [Header("Hp info")]
     [SerializeField] public float hp = 0;
-    [SerializeField] public float maxHp = 100;
+    [SerializeField] public Stat maxHp;
 
     [Header("Stamina info")]
     [SerializeField] public float stamina = 0;
-    [SerializeField] public float maxStamina = 100;
+    [SerializeField] public Stat maxStamina;
 
     [Header("Weight info")]
     [SerializeField] public float weight = 0;
-    [SerializeField] public float maxWeight = 100;
+    [SerializeField] public Stat maxWeigh;
 
     [Header("Temperature info")]
     [SerializeField] public float temperature = 100;
-    [SerializeField] public float maxTemperature = 100;
+    [SerializeField] public Stat maxTemperature;
+
 
     private void Start()
     {
-        hp = maxHp;
-        stamina = maxStamina;
+        hp = maxHp.GetValue();
+        stamina = maxStamina.GetValue();
+    }
+
+    private void Update()
+    {
+        float hpValue = hp / maxHp.GetValue();
+        float staminaValue = stamina / maxStamina.GetValue();
+        float temperatureValue = temperature / maxTemperature.GetValue();
+        UIManager.instance.UpdateHp(hpValue);
+        UIManager.instance.UpdateStamina(staminaValue);
+        UIManager.instance.UpdateTemperatureState(temperatureValue);
     }
 
     public virtual void TakeDamage(int _damage)
     {
         hp -= _damage;
+
+        UIManager.instance.ShowDamageEffect();
 
         if (hp < 0)
             Die();
@@ -42,24 +55,6 @@ public class PlayerStats : MonoBehaviour
     protected virtual void Die()
     {
         throw new NotImplementedException();
-    }
-
-    public float GetHp()
-    {
-        float hpValue = hp / maxHp;
-        return hpValue;
-    }
-
-    public float GetStamina()
-    {
-        float staminaValue = stamina / maxStamina;
-        return staminaValue;
-    }
-
-    public float GetTemperature()
-    {
-        float temperatureValue = temperature / maxTemperature;
-        return temperatureValue;
     }
 
     public int GetMining()
