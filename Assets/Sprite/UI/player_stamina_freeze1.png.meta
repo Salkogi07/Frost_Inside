@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 0d227a5ee0a0d404da9b7fa3b58cba28
+guid: 1a202aefaf9078342b4e91f0bbb30407
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4770837806101348859
-    second: player_hp_value_0
+      213: 6189523220189027069
+    second: player_stamina_freeze1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_hp_value_0
+      name: player_stamina_freeze1_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 84
-        height: 20
+        y: 5
+        width: 86
+        height: 9
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: bf1cca925bb653240800000000000000
-      internalID: 4770837806101348859
+      spriteID: dfa1664439a95e550800000000000000
+      internalID: 6189523220189027069
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4641471ec7115fa4ca863218cab74d1e
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_hp_value_0: 4770837806101348859
+      player_stamina_freeze1_0: 6189523220189027069
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
