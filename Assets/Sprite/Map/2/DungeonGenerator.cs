@@ -137,9 +137,13 @@ public class DungeonGenerator : MonoBehaviour
 
     void ConnectRooms()
     {
-        for (int i = 0; i < placedRooms.Count - 1; i++)
+        if (placedRooms.Count == 0) return;
+
+        RoomData largeRoom = placedRooms[0]; // 첫 번째 방이 큰 방
+
+        for (int i = 1; i < placedRooms.Count; i++) // 작은 방들과 연결
         {
-            CreateCorridor(placedRooms[i].center, placedRooms[i + 1].center);
+            CreateCorridor(largeRoom.center, placedRooms[i].center);
         }
     }
 
