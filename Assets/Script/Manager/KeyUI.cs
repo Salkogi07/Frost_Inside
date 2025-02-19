@@ -18,7 +18,7 @@ public class KeyUI : MonoBehaviour
     private void Start()
     {
         keyExplanation.text = keyName;
-        keyButton.onClick.AddListener(() => KeyManager.Instance.StartRebinding(keyName));
-        resetButton.onClick.AddListener(() => KeyManager.Instance.ResetKey(keyName));
+        keyButton.onClick.AddListener(() => KeyManager.instance.StartRebinding(keyName));
+        resetButton.onClick.AddListener(() => KeyManager.instance.ResetKey(keyName));
     }
 }

@@ -111,7 +111,7 @@ public class Player_Move : MonoBehaviour
     void Sprint()
     {
         // Shift를 누르고 있고, 스테미나가 남아있을 경우 달리기
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Sprint")))
         {
             isSprinting = true;
             currentSpeed = sprintSpeed;

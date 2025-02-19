@@ -5,14 +5,14 @@ using TMPro;
 
 public class KeyManager : MonoBehaviour
 {
-    public static KeyManager Instance;
+    public static KeyManager instance;
 
     [System.Serializable]
     public class KeyBinding
     {
         public string keyName;
         public KeyCode defaultKey;
-        public TextMeshProUGUI keyText; // 키 변경 시 적용할 UI 텍스트
+        public KeyUI keyUI;
     }
 
     public List<KeyBinding> keyBindings = new List<KeyBinding>();
@@ -22,8 +22,8 @@ public class KeyManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
-            Instance = this;
+        if (instance == null)
+            instance = this;
     }
 
     private void Start()
@@ -103,10 +103,20 @@ public class KeyManager : MonoBehaviour
     {
         foreach (var binding in keyBindings)
         {
-            if (binding.keyText != null)
+            if (binding.keyUI.keyText != null)
             {
-                binding.keyText.text = currentKeys[binding.keyName].ToString();
+                binding.keyUI.keyText.text = currentKeys[binding.keyName].ToString();
             }
         }
+    }
+
+    public KeyCode GetKeyCodeByName(string keyName)
+    {
+        if (currentKeys.TryGetValue(keyName, out KeyCode key))
+        {
+            return key;
+        }
+        Debug.LogError("Key not found for: " + keyName);
+        return KeyCode.None;
     }
 }
