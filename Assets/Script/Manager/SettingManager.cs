@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,14 +14,7 @@ public enum SettingPage
 
 public class SettingManager : MonoBehaviour
 {
-    [System.Serializable]
-    public class KeyMapping
-    {
-        public string actionName;
-        public KeyCode key;
-    }
-
-    public List<KeyMapping> keyMappings = new List<KeyMapping>();
+    public static SettingManager Instance;
 
     [Header("Setting Panel")]
     public GameObject MenuPanel;
@@ -28,6 +22,12 @@ public class SettingManager : MonoBehaviour
 
     public SettingPage currentPage = SettingPage.None;
     private bool isPause = false;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+    }
 
     private void Update()
     {
