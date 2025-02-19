@@ -46,7 +46,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -131,7 +131,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 100
+        width: 84
         height: 20
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 34cf3637d04da5d469e2eb9e2226d27c
+    spriteID: 4641471ec7115fa4ca863218cab74d1e
     internalID: 0
     vertices: []
     indices: 

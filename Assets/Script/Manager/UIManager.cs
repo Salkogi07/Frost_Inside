@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image hpImage;
     [SerializeField] Image staminaImage;
     [SerializeField] Image staminaFreezeImage;
+    [SerializeField] private Sprite[] staminaFreezeSprite; // 얼음 테두리 3장
     [SerializeField] Image temperatureImage; // 체온 상태 이미지
     [SerializeField] Image weightImage;
     [Space(10)]
@@ -170,8 +171,8 @@ public class UIManager : MonoBehaviour
         else if (tempRatio >= 0.25f)
         {
             tempState = 2; // 많이 추움
+            staminaFreezeImage.sprite = staminaFreezeSprite[0];
             staminaFreezeImage.gameObject.SetActive(true);
-            staminaFreezeImage.fillAmount = 0.5f;
 
             // 첫 번째, 두 번째 테두리까지 표시
             targetAlphas[0] = 1f;
@@ -181,8 +182,8 @@ public class UIManager : MonoBehaviour
         else
         {
             tempState = 3; // 극도로 추움
+            staminaFreezeImage.sprite = staminaFreezeSprite[1];
             staminaFreezeImage.gameObject.SetActive(true);
-            staminaFreezeImage.fillAmount = 1f;
 
             // 모든 테두리 다 표시
             targetAlphas[0] = 1f;
