@@ -329,7 +329,7 @@ GameObject:
   m_Component:
   - component: {fileID: 266980385}
   - component: {fileID: 266980386}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -490,7 +490,7 @@ GameObject:
   - component: {fileID: 395179453}
   - component: {fileID: 395179452}
   - component: {fileID: 395179451}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: Mimic Box
   m_TagString: monster
   m_Icon: {fileID: 0}
@@ -721,7 +721,7 @@ GameObject:
   m_Component:
   - component: {fileID: 512783029}
   - component: {fileID: 512783030}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2000,7 +2000,7 @@ GameObject:
   - component: {fileID: 846422667}
   - component: {fileID: 846422666}
   - component: {fileID: 846422665}
-  m_Layer: 10
+  m_Layer: 8
   m_Name: monster
   m_TagString: monster
   m_Icon: {fileID: 0}
