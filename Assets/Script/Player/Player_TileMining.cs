@@ -55,6 +55,9 @@ public class Player_TileMining : MonoBehaviour
 
     private void Update()
     {
+        if (player_move.isDead)
+            return;
+        
         // 1) 마우스가 가리키는 타일 좌표 구하기
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3Int mouseTilePos = tilemap.WorldToCell(mouseWorldPos);

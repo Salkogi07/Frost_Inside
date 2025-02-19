@@ -69,6 +69,7 @@ public class Player_Move : MonoBehaviour
 
     public bool isAttack = false;
     private bool isJumpCut = false;
+    public bool isDead = false;
 
     [Header("Double Jump")]
     [SerializeField] private bool canDoubleJump = true;
@@ -87,7 +88,7 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
-        if (isMining)
+        if (isMining || isDead)
         {
             return;
         }

@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class PlayerStats : MonoBehaviour
 {
+    Player_Move player_move;
+
     [Header("Item info")]
     [SerializeField] private Stat mining;
     [SerializeField] private Stat damage;
@@ -25,6 +27,11 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] public float temperature = 100;
     [SerializeField] public Stat maxTemperature;
 
+
+    private void Awake()
+    {
+        player_move = GetComponent<Player_Move>();
+    }
 
     private void Start()
     {
@@ -59,6 +66,7 @@ public class PlayerStats : MonoBehaviour
 
     protected virtual void Die()
     {
+        player_move.isDead = true;
         Debug.Log("사망했습니다.");
     }
 
