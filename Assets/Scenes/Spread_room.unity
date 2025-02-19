@@ -1040,7 +1040,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!156049354 &554253550
 Grid:
   m_ObjectHideFlags: 0
@@ -7867,8 +7867,6 @@ MonoBehaviour:
   dust: {fileID: 1027099486}
   walkSpeed: 5
   sprintSpeed: 10
-  currentSpeed: 0
-  isSprinting: 0
   sprintCost: 15
   jumpCost: 20
   staminaRecoverRate: 15
@@ -7876,12 +7874,9 @@ MonoBehaviour:
   staminaCooldownDuration: 2
   temperatureDropRate: 1
   hpDropRate: 2
-  isNearHeatSource: 0
-  isInColdZone: 0
   jumpForce: 16
   coyoteTime: 0.13
   jumpBufferTime: 0.13
-  isGrounded: 0
   groundCheckDistance: 0.1
   groundCheck: {fileID: 539113852}
   groundCheckSize: {x: 0.3, y: 0.1}
@@ -7892,10 +7887,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   effector: {fileID: 1250905502}
-  isPlatform: 0
   isMining: 0
-  isJumping: 0
-  isFacingRight: 0
   isAttack: 0
   canDoubleJump: 0
 --- !u!50 &1156874119
@@ -8011,25 +8003,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b45c83e473d0046a9c784ec4f75d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpImage: {fileID: 1829849391}
-  staminaImage: {fileID: 1812174817}
-  staminaFreezeImage: {fileID: 0}
-  temperatureImage: {fileID: 1237943402}
-  weightImage: {fileID: 1918246980}
-  timeImage: {fileID: 1820440501}
-  timeText: {fileID: 629632972}
-  timeSprites:
-  - {fileID: 4138823062835201441, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
-  - {fileID: 4628948989125786106, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
-  - {fileID: 8823166479081205076, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
-  temperatureSprites:
-  - {fileID: -8253450362007579573, guid: 06edabf6c9a6fda4993b5c3915dc490f, type: 3}
-  - {fileID: -4587185269259707429, guid: 4fb4d03349b05ce449196fe6f357a4b2, type: 3}
-  - {fileID: -5288437434449059614, guid: 97882ce62eabc90488b4ad0bac3d7ce7, type: 3}
-  - {fileID: -6495796635727040263, guid: b92b7c63129717f46bb887a1036c4fef, type: 3}
-  freezeEdges: []
-  fadeSpeed: 2
-  inventoryObject: {fileID: 1700269484}
 --- !u!114 &1156874124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8055,13 +8028,21 @@ MonoBehaviour:
     baseValue: 0
     modifier: 0
   hp: 100
-  maxHp: 100
+  maxHp:
+    baseValue: 0
+    modifier: 0
   stamina: 100
-  maxStamina: 100
+  maxStamina:
+    baseValue: 0
+    modifier: 0
   weight: 0
-  maxWeight: 100
+  maxWeigh:
+    baseValue: 0
+    modifier: 0
   temperature: 100
-  maxTemperature: 100
+  maxTemperature:
+    baseValue: 0
+    modifier: 0
 --- !u!1001 &1203717541
 PrefabInstance:
   m_ObjectHideFlags: 0
