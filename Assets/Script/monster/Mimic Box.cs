@@ -8,7 +8,8 @@ public class MimicBox : MonoBehaviour
     public float detectionRadius = 5f; // 적이 플레이어를 감지할 범위
     public Transform player; // 플레이어의 위치
     public float moveSpeed = 3f; // 적의 이동 속도
-    bool Hide = true;
+    public bool Hide = true;
+    int moverandomDirection; //랜덤방향으로 이동하는 변수
 
     public float xDistanceThreshold = 2f;
 
@@ -18,6 +19,8 @@ public class MimicBox : MonoBehaviour
         Attack,
         Concealment,
         Chase,
+        exiting,
+
 
 
     }
@@ -28,14 +31,7 @@ public class MimicBox : MonoBehaviour
     {
 
     }
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player")) // 플레이어 태그를 가진 객체 감지
-        {
-            //pattern = "chase";
-            Debug.Log("플레이어가 범위 안에 들어왔습니다!");
-        }
-    }
+    
 
     // 범위 내에 플레이어가 계속 있을 때 호출
     //private void OnTriggerStay2D(Collider2D other)
@@ -72,15 +68,18 @@ public class MimicBox : MonoBehaviour
                 //플레이어가 건들어야 숨기상태를 해제
                 //if("")
                 //{
-                //    Hide = false;
+                //    Pattern = pattern.exiting;
                 //}
 
                 break;
             //case :
 
             //    break;
+            case pattern.exiting:
+                //나오는 애니메이션
+                break;
             case pattern.Move:
-                
+                moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
                 Move();
                 break;
 
@@ -109,10 +108,20 @@ public class MimicBox : MonoBehaviour
 
         }
         
-    }
+    } 
+    private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Player") && Hide == false ) // 플레이어 태그를 가진 객체 감지
+            {
+                
+                
+            }
+
+        }
     private void Move()
     {
-        int moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
+        
+        
         transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
     
     }
