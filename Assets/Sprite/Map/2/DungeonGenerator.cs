@@ -8,6 +8,7 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private GameObject[] roomPrefabs;  // 방 프리팹 (큰 방, 작은 방)
     [SerializeField] private int minSmallRooms = 3;     // 최소 작은 방 개수
     [SerializeField] private int maxSmallRooms = 6;     // 최대 작은 방 개수
+    [SerializeField] private int roomSpacing = 4;       // 방 사이의 최소 거리
 
     [Header("Tilemap Settings")]
     [SerializeField] private Tilemap groundTilemap;      // 바닥 타일맵
@@ -97,8 +98,8 @@ public class DungeonGenerator : MonoBehaviour
         {
             GameObject smallRoomPrefab = roomPrefabs[Random.Range(1, roomPrefabs.Length)]; // 작은 방은 첫 번째 제외
             Vector2Int position = new Vector2Int(
-                Random.Range(-10, 10),  // X좌표 랜덤
-                Random.Range(-10, 10)   // Y좌표 랜덤
+                Random.Range(-20, 20),  // X좌표 랜덤
+                Random.Range(-20, 20)   // Y좌표 랜덤
             );
 
             RoomData newRoomData = new RoomData(smallRoomPrefab, position);
@@ -121,9 +122,9 @@ public class DungeonGenerator : MonoBehaviour
             // 기존 방의 경계를 얻고, 새로운 방과 비교
             BoundsInt existingBounds = room.bounds;
 
-            // X축과 Y축 범위가 겹치는지 확인
-            bool xOverlap = newBounds.xMin < existingBounds.xMax && newBounds.xMax > existingBounds.xMin;
-            bool yOverlap = newBounds.yMin < existingBounds.yMax && newBounds.yMax > existingBounds.yMin;
+            // X축과 Y축 범위가 겹치는지 확인 (roomSpacing을 고려)
+            bool xOverlap = newBounds.xMin < existingBounds.xMax + roomSpacing && newBounds.xMax > existingBounds.xMin - roomSpacing;
+            bool yOverlap = newBounds.yMin < existingBounds.yMax + roomSpacing && newBounds.yMax > existingBounds.yMin - roomSpacing;
 
             // X축과 Y축 모두 겹치면 true 반환
             if (xOverlap && yOverlap)
@@ -134,7 +135,6 @@ public class DungeonGenerator : MonoBehaviour
         return false;
     }
 
-
     void ConnectRooms()
     {
         if (placedRooms.Count == 0) return;
@@ -143,8 +143,29 @@ public class DungeonGenerator : MonoBehaviour
 
         for (int i = 1; i < placedRooms.Count; i++) // 작은 방들과 연결
         {
-            CreateCorridor(largeRoom.center, placedRooms[i].center);
+            Vector2Int start = GetClosestEdgePoint(largeRoom.bounds, placedRooms[i].center);
+            CreateCorridor(start, placedRooms[i].center);
         }
+    }
+
+    Vector2Int GetClosestEdgePoint(BoundsInt bounds, Vector2Int point)
+    {
+        Vector2Int closestPoint = new Vector2Int(
+            Mathf.Clamp(point.x, bounds.xMin, bounds.xMax - 1),
+            Mathf.Clamp(point.y, bounds.yMin, bounds.yMax - 1)
+        );
+
+        if (closestPoint.x == bounds.xMin || closestPoint.x == bounds.xMax - 1)
+        {
+            closestPoint.y = Mathf.Clamp(point.y, bounds.yMin + corridorWidth, bounds.yMax - 1 - corridorWidth);
+        }
+
+        if (closestPoint.y == bounds.yMin || closestPoint.y == bounds.yMax - 1)
+        {
+            closestPoint.x = Mathf.Clamp(point.x, bounds.xMin + corridorWidth, bounds.xMax - 1 - corridorWidth);
+        }
+
+        return closestPoint;
     }
 
     void CreateCorridor(Vector2Int start, Vector2Int end)
@@ -170,10 +191,13 @@ public class DungeonGenerator : MonoBehaviour
 
     void FillCorridor(Vector2Int position)
     {
-        for (int w = 0; w < corridorWidth; w++)
+        for (int x = -corridorWidth / 2; x <= corridorWidth / 2; x++)
         {
-            Vector3Int tilePosition = new Vector3Int(position.x - w, position.y, 0);
-            corridorTilemap.SetTile(tilePosition, corridorTile);
+            for (int y = -corridorWidth / 2; y <= corridorWidth / 2; y++)
+            {
+                Vector3Int tilePosition = new Vector3Int(position.x + x, position.y + y, 0);
+                corridorTilemap.SetTile(tilePosition, corridorTile);
+            }
         }
     }
 

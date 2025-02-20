@@ -40,18 +40,18 @@ public class Player_Move : MonoBehaviour
 
     private float gravityScale = 3.5f;
 
+    [Header("Climing")]
+    [SerializeField] public float climbSpeed;
+    [SerializeField] private float climbDirection;
+    public bool IsLadder = false;
+    public bool IsClimbingAllowed = false;
+
     [Header("Ground Check")]
     private bool isGrounded;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
     [SerializeField] private LayerMask groundLayer;
-
-    [Header("Platform Check")]
-    [SerializeField] private LayerMask platformLayer;
-    [SerializeField] PlatformEffector2D effector;
-    private bool isPlatform = false;
-
 
     [Header("IsMining")]
     public bool isMining = false;
@@ -98,14 +98,13 @@ public class Player_Move : MonoBehaviour
         HandleTemperature();
         HandleHp();
 
-        PlatformCheck();
         GroundCheck();
+        Ladder();
 
         MoveInput();
-        CheckJumpPlatform();
+        Jump();
 
         Flip();
-
     }
 
     void Sprint()
@@ -123,19 +122,52 @@ public class Player_Move : MonoBehaviour
         }
     }
 
+    void Ladder()
+    {
+        if (IsLadder)
+        {
+            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Interaction")))
+            {
+                IsClimbingAllowed = true;
+            }
+        }
+    }
+
     void MoveInput()
     {
         moveInput = 0;
+        climbDirection = 0;
 
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
+        if (IsClimbingAllowed)
         {
-            moveInput = -1;
+            rb.gravityScale = 0;
+
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Down")))
+            {
+                climbDirection = -1;
+            }
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Up")))
+            {
+                climbDirection = 1;
+            }
+
+            rb.linearVelocity = new Vector2(0, climbDirection * climbSpeed);
         }
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
+        else
         {
-            moveInput = 1;
+            rb.gravityScale = gravityScale;
+
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
+            {
+                moveInput = -1;
+            }
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
+            {
+                moveInput = 1;
+            }
+
+            rb.linearVelocity = new Vector2(moveInput * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
         }
-        rb.linearVelocity = new Vector2(moveInput * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocity.y);
     }
 
     void HandleStamina()
@@ -364,31 +396,6 @@ public class Player_Move : MonoBehaviour
         isJumping = false;
     }
 
-    private void CheckJumpPlatform()
-    {
-        if (isPlatform)
-        {
-            if (Input.GetKey(KeyCode.S))
-            {
-                ReverseOneWay();
-            }
-            else
-            {
-                Jump();
-            }
-        }
-        else
-        {
-            Jump();
-        }
-    }
-
-    private void PlatformCheck()
-    {
-        Collider2D collider = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, platformLayer);
-        isPlatform = collider != null;
-    }
-
     private void GroundCheck()
     {
         Collider2D collider = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, groundLayer);
@@ -423,22 +430,6 @@ public class Player_Move : MonoBehaviour
             animator.PlayAnimation("Idle");
         }
     }*/
-
-    IEnumerator _reversePlatformEffector()
-    {
-        effector.rotationalOffset = 180f;
-        yield return new WaitForSeconds(.5f);
-        effector.rotationalOffset = 0f;
-        isreversed = false;
-    }
-
-    public void ReverseOneWay()
-    {
-        if (isreversed) return;
-        isreversed = true;
-        StartCoroutine(_reversePlatformEffector());
-    }
-
 
     void OnDrawGizmos()
     {
