@@ -40,6 +40,12 @@ public class Player_Move : MonoBehaviour
 
     private float gravityScale = 3.5f;
 
+    [Header("Climing")]
+    public bool IsClimbingAllowed = false;
+    [SerializeField] public float climbSpeed;
+    [SerializeField] private float climbDirection;
+    [SerializeField] private float gravityStore;
+
     [Header("Ground Check")]
     private bool isGrounded;
     [SerializeField] private float groundCheckDistance;
@@ -127,14 +133,29 @@ public class Player_Move : MonoBehaviour
     {
         moveInput = 0;
 
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
+        if (IsClimbingAllowed)
         {
-            moveInput = -1;
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Down")))
+            {
+                moveInput = -1;
+            }
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Up")))
+            {
+                moveInput = 1;
+            }
         }
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
+        else
         {
-            moveInput = 1;
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
+            {
+                moveInput = -1;
+            }
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
+            {
+                moveInput = 1;
+            }
         }
+
         rb.linearVelocity = new Vector2(moveInput * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocity.y);
     }
 
