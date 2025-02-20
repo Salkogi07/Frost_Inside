@@ -119,7 +119,7 @@ public class Player_TileMining : MonoBehaviour
         // ---------------------------------------------
         // 채굴(마이닝) 로직
         // ---------------------------------------------
-        if (Input.GetMouseButton(0))  // 마우스 왼쪽 버튼 누르고 있으면 채굴
+        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Mining")))  // 마우스 왼쪽 버튼 누르고 있으면 채굴
         {
             // canMine == true 일 때만 실제 채굴 진행
             if (canMine)

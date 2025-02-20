@@ -7,9 +7,6 @@ public class Player_ItemPicker : MonoBehaviour
     [Tooltip("아이템을 줍기 위한 최대 거리")]
     public float pickupRange = 3f;
 
-    [Tooltip("아이템 줍기 키")]
-    public KeyCode pickupKey = KeyCode.E;
-
     [Tooltip("아이템 줍기 후 쿨다운 시간 (초)")]
     public float pickupCooldown = 0.5f;
 
@@ -26,7 +23,7 @@ public class Player_ItemPicker : MonoBehaviour
             return;
 
         // 현재 시간과 비교하여 쿨다운이 지났을 때만 실행
-        if (Time.time >= nextPickupTime && Input.GetKeyDown(pickupKey))
+        if (Time.time >= nextPickupTime && Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Pick Up Item")))
         {
             GameObject nearestItem = FindNearestItem();
             if (nearestItem != null)

@@ -69,7 +69,7 @@ public class UIManager : MonoBehaviour
 
     private void UpdateInventory()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Open Inventory")))
         {
             bool isInventory = !inventoryObject.activeSelf;
             inventoryObject.SetActive(isInventory);

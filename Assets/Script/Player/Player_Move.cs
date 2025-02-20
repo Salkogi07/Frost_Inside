@@ -127,11 +127,11 @@ public class Player_Move : MonoBehaviour
     {
         moveInput = 0;
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
         {
             moveInput = -1;
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
         {
             moveInput = 1;
         }
@@ -309,7 +309,7 @@ public class Player_Move : MonoBehaviour
             coyoteTimeCounter -= Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
         {
             jumpBufferCounter = jumpBufferTime;
         }
@@ -331,7 +331,7 @@ public class Player_Move : MonoBehaviour
                 isJumpCut = true;
             }
         }
-        else if (canDoubleJump && doubleJumpAvailable && !isGrounded && Input.GetKeyDown(KeyCode.Space))
+        else if (canDoubleJump && doubleJumpAvailable && !isGrounded && Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
         {
             if (stats.stamina >= jumpCost)
             {
@@ -342,7 +342,7 @@ public class Player_Move : MonoBehaviour
             }
         }
 
-        if (isJumpCut && Input.GetKeyUp(KeyCode.Space) && rb.linearVelocityY > 0f)
+        if (isJumpCut && Input.GetKeyUp(KeyManager.instance.GetKeyCodeByName("Jump")) && rb.linearVelocityY > 0f)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, rb.linearVelocityY * 0.5f);
             coyoteTimeCounter = 0f;
