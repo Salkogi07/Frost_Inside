@@ -7,6 +7,9 @@ public class Player_TileMining : MonoBehaviour
     [Header("Component")]
     private Player_Move player_move;
 
+    [Header("IsMining")]
+    public bool isMining = false;
+
     [Header("Existing settings")]
     public Tilemap tilemap;            // 실제 맵(블록이 깔린) 타일맵
     public Transform player;           // 플레이어의 위치
@@ -124,7 +127,7 @@ public class Player_TileMining : MonoBehaviour
             // canMine == true 일 때만 실제 채굴 진행
             if (canMine)
             {
-                player_move.isMining = true;
+                isMining = true;
 
                 // 새로 채굴 타일 선택
                 if (currentMiningTile == null || currentMiningTile != mouseTilePos)
@@ -153,7 +156,7 @@ public class Player_TileMining : MonoBehaviour
                     tilemap.SetTile(mouseTilePos, null);
                     tileAlphaDict.Remove(mouseTilePos);
                     currentMiningTile = null;
-                    player_move.isMining = false;
+                    isMining = false;
                 }
                 else
                 {
@@ -175,7 +178,7 @@ public class Player_TileMining : MonoBehaviour
             currentMiningTile = null;
             if (player_move != null)
             {
-                player_move.isMining = false;
+                isMining = false;
             }
         }
 
