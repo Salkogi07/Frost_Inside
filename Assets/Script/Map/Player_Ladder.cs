@@ -3,7 +3,8 @@ using UnityEngine.Tilemaps;
 
 public class Player_Ladder : MonoBehaviour
 {
-    private Tilemap ladderTilemap;
+    private Tilemap ladder_Tilemap;
+    private Tilemap ladderTop_Tilemap;
     private Rigidbody2D rb;
 
     [Header("Climing")]
@@ -20,7 +21,8 @@ public class Player_Ladder : MonoBehaviour
 
     private void Awake()
     {
-        ladderTilemap = GameObject.FindGameObjectWithTag("Ladder").GetComponent<Tilemap>();
+        ladder_Tilemap = GameObject.FindGameObjectWithTag("Ladder").GetComponent<Tilemap>();
+        //ladderTop_Tilemap = GameObject.FindGameObjectWithTag("LadderTop").GetComponent<Tilemap>();
         rb = GetComponent<Rigidbody2D>();
     }
 
@@ -103,7 +105,7 @@ public class Player_Ladder : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Interaction")))
             {
-                if (ladderTilemap == null)
+                if (ladder_Tilemap == null)
                 {
                     Debug.LogError("Ladder Tilemap이 할당되지 않았습니다!");
                     return;
@@ -114,12 +116,12 @@ public class Player_Ladder : MonoBehaviour
                 float targetX = playerPos.x;
 
                 // 타일맵의 전체 셀 범위를 순회하며 실제 타일이 있는 셀 중 가장 가까운 x 좌표 찾기
-                BoundsInt bounds = ladderTilemap.cellBounds;
+                BoundsInt bounds = ladder_Tilemap.cellBounds;
                 foreach (Vector3Int cellPos in bounds.allPositionsWithin)
                 {
-                    if (ladderTilemap.HasTile(cellPos))
+                    if (ladder_Tilemap.HasTile(cellPos))
                     {
-                        Vector3 cellCenter = ladderTilemap.GetCellCenterWorld(cellPos);
+                        Vector3 cellCenter = ladder_Tilemap.GetCellCenterWorld(cellPos);
                         float xDistance = Mathf.Abs(playerPos.x - cellCenter.x);
                         if (xDistance < minXDistance)
                         {

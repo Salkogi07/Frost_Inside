@@ -11,6 +11,7 @@ TagManager:
   - monster
   - Item
   - Ladder
+  - LadderTop
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Enemy
   - Ladder
   - mob
-  - 
+  - LadderTop
   - 
   - 
   - 
