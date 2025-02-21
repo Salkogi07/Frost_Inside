@@ -6,7 +6,9 @@ public class Player_Move : MonoBehaviour
     [Header("Component")]
     public ParticleSystem dust;
     private SpriteRenderer spriteRenderer;
-    private PlayerStats stats;
+    private Player_Stats stats;
+    private Player_Ladder player_ladder;
+    private Player_TileMining player_tileMing;
 
     public Rigidbody2D rb { get; private set; }
 
@@ -14,7 +16,7 @@ public class Player_Move : MonoBehaviour
     [SerializeField] public float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 10f;
     private float currentSpeed;
-    private bool isSprinting = false;
+    public bool isSprinting = false;
 
     [Header("Stamina info")]
     [SerializeField] private float sprintCost = 5f; // 초당 스테미나 감소량
@@ -26,25 +28,12 @@ public class Player_Move : MonoBehaviour
     [SerializeField] private float staminaCooldownDuration = 2f;
     private float staminaCooldownTimer = 0f;
 
-    [Header("Temperature Info")]
-    [SerializeField] private float temperatureDropRate = 1f;
-    [SerializeField] private int hpDropRate = 2;
-    private float damageTimer = 0f;
-    private bool isNearHeatSource = false; // 불 근처에 있는지 체크
-    private bool isInColdZone = false; // 추운 지역인지 체크
-
     [Header("Jump Info")]
     [SerializeField] public float jumpForce = 10f;
     [SerializeField] public float coyoteTime = 0.2f;
     [SerializeField] public float jumpBufferTime = 0.2f;
 
     private float gravityScale = 3.5f;
-
-    [Header("Climing")]
-    [SerializeField] public float climbSpeed;
-    [SerializeField] private float climbDirection;
-    public bool IsLadder = false;
-    public bool IsClimbingAllowed = false;
 
     [Header("Ground Check")]
     private bool isGrounded;
@@ -53,16 +42,13 @@ public class Player_Move : MonoBehaviour
     [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
     [SerializeField] private LayerMask groundLayer;
 
-    [Header("IsMining")]
-    public bool isMining = false;
-
     [Header("IsAtcitoning")]
     private bool isJumping;
     private bool isFacingRight = false;
     bool isreversed;
 
     private int facingDir;
-    private int moveInput = 0;
+    public int moveInput = 0;
 
     private float coyoteTimeCounter;
     private float jumpBufferCounter;
@@ -80,7 +66,9 @@ public class Player_Move : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-        stats = GetComponent<PlayerStats>();
+        stats = GetComponent<Player_Stats>();
+        player_tileMing = GetComponent<Player_TileMining>();
+        player_ladder = GetComponent<Player_Ladder>();
 
         gravityScale = rb.gravityScale;
         currentSpeed = walkSpeed;
@@ -88,18 +76,15 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
-        if (isMining || isDead)
+        if (player_tileMing.isMining || isDead  || player_ladder.IsClimbing)
         {
             return;
         }
 
         Sprint();
         HandleStamina();
-        HandleTemperature();
-        HandleHp();
 
         GroundCheck();
-        Ladder();
 
         MoveInput();
         Jump();
@@ -122,38 +107,11 @@ public class Player_Move : MonoBehaviour
         }
     }
 
-    void Ladder()
-    {
-        if (IsLadder)
-        {
-            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Interaction")))
-            {
-                IsClimbingAllowed = true;
-            }
-        }
-    }
-
     void MoveInput()
     {
         moveInput = 0;
-        climbDirection = 0;
 
-        if (IsClimbingAllowed)
-        {
-            rb.gravityScale = 0;
-
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Down")))
-            {
-                climbDirection = -1;
-            }
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Up")))
-            {
-                climbDirection = 1;
-            }
-
-            rb.linearVelocity = new Vector2(0, climbDirection * climbSpeed);
-        }
-        else
+        if(!player_ladder.IsClimbing)
         {
             rb.gravityScale = gravityScale;
 
@@ -237,26 +195,6 @@ public class Player_Move : MonoBehaviour
         }
     }
 
-    void HandleHp()
-    {
-        float tempRatio = stats.temperature;
-
-        if (tempRatio == 0)
-        {
-            damageTimer += Time.deltaTime;
-
-            if (damageTimer >= 1f)
-            {
-                stats.TakeDamage(hpDropRate);
-                damageTimer = 0f;
-            }
-        }
-        else
-        {
-            damageTimer = 0f;
-        }
-    }
-
     private static int Temp(float tempRatio)
     {
         int tempState;
@@ -278,23 +216,6 @@ public class Player_Move : MonoBehaviour
         }
 
         return tempState;
-    }
-
-    void HandleTemperature()
-    {
-        float dropRate = temperatureDropRate;
-
-        if (moveInput != 0)
-            dropRate *= 0.5f; // 움직이면 감소율 줄이기
-
-        if (isSprinting)
-            dropRate *= 0.25f; // 뛰고 있으면 온도 감소율 더 낮추기
-
-        if (isAttack)
-            dropRate *= 0.5f; // 공격 중에는 감소율 반으로
-
-        stats.temperature -= dropRate * Time.deltaTime;
-        stats.temperature = Mathf.Max(stats.temperature, 0f);
     }
 
     private void Flip()

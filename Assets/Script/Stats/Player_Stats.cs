@@ -1,7 +1,8 @@
 using System;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
-public class PlayerStats : MonoBehaviour
+public class Player_Stats : MonoBehaviour
 {
     Player_Move player_move;
 
@@ -28,6 +29,13 @@ public class PlayerStats : MonoBehaviour
     [SerializeField] public Stat maxTemperature;
 
 
+    [Header("Temperature Info")]
+    [SerializeField] private float temperatureDropRate = 1f;
+    [SerializeField] private int hpDropRate = 2;
+    private float damageTimer = 0f;
+    private bool isNearHeatSource = false; // 불 근처에 있는지 체크
+    private bool isInColdZone = false; // 추운 지역인지 체크
+
     private void Awake()
     {
         player_move = GetComponent<Player_Move>();
@@ -47,6 +55,43 @@ public class PlayerStats : MonoBehaviour
         UIManager.instance.UpdateHp(hpValue);
         UIManager.instance.UpdateStamina(staminaValue);
         UIManager.instance.UpdateTemperatureState(temperatureValue);
+    }
+
+    void HandleTemperature()
+    {
+        float dropRate = temperatureDropRate;
+
+        if (player_move.moveInput != 0)
+            dropRate *= 0.5f; // 움직이면 감소율 줄이기
+
+        if (player_move.isSprinting)
+            dropRate *= 0.25f; // 뛰고 있으면 온도 감소율 더 낮추기
+
+        if (player_move.isAttack)
+            dropRate *= 0.5f; // 공격 중에는 감소율 반으로
+
+        temperature -= dropRate * Time.deltaTime;
+        temperature = Mathf.Max(temperature, 0f);
+    }
+
+    void HandleHp()
+    {
+        float tempRatio = temperature;
+
+        if (tempRatio == 0)
+        {
+            damageTimer += Time.deltaTime;
+
+            if (damageTimer >= 1f)
+            {
+                TakeDamage(hpDropRate);
+                damageTimer = 0f;
+            }
+        }
+        else
+        {
+            damageTimer = 0f;
+        }
     }
 
     public virtual void TakeDamage(int _damage)

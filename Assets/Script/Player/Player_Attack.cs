@@ -4,7 +4,7 @@ using UnityEngine;
 public class Player_Attack : MonoBehaviour
 {
     Player_Move playerMove;
-    PlayerStats stats;
+    Player_Stats stats;
 
     private float curTime;
     public float coolTime = 0.5f;
