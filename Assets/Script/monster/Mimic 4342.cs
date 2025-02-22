@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using static monster_AI;
 
 public class MimicBoxAncient_Research_Facility_Robots : MonoBehaviour
 {

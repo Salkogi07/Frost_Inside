@@ -55,6 +55,9 @@ public class Player_Stats : MonoBehaviour
         UIManager.instance.UpdateHp(hpValue);
         UIManager.instance.UpdateStamina(staminaValue);
         UIManager.instance.UpdateTemperatureState(temperatureValue);
+
+        HandleTemperature();
+        HandleHp();
     }
 
     void HandleTemperature()
