@@ -5,10 +5,11 @@ using System.Collections.Generic;
 public class DungeonGenerator : MonoBehaviour
 {
     [Header("Room Settings")]
-    [SerializeField] private GameObject[] roomPrefabs;  // 방 프리팹 (큰 방, 작은 방)
+    [SerializeField] private GameObject[] roomPrefabs;  // 다양한 크기와 형태의 방 프리팹
     [SerializeField] private int minSmallRooms = 3;     // 최소 작은 방 개수
     [SerializeField] private int maxSmallRooms = 6;     // 최대 작은 방 개수
     [SerializeField] private int roomSpacing = 4;       // 방 사이의 최소 거리
+    [SerializeField] private Vector2Int dungeonBounds = new Vector2Int(40, 40); // 던전 크기 제한
 
     [Header("Tilemap Settings")]
     [SerializeField] private Tilemap groundTilemap;      // 바닥 타일맵
@@ -16,6 +17,10 @@ public class DungeonGenerator : MonoBehaviour
     [SerializeField] private Tile corridorTile;          // 통로 타일
     [SerializeField] private Tile groundTile;            // 바닥 타일
     [SerializeField] private int corridorWidth = 2;      // 통로 너비
+
+    [Header("Optional Features")]
+    [SerializeField] private GameObject[] obstacles;     // 방 내부 장애물 프리팹 (선택적)
+    [SerializeField] private GameObject[] decorations;   // 방 내부 장식 프리팹 (선택적)
 
     private List<RoomData> placedRooms = new List<RoomData>();
 
@@ -34,14 +39,22 @@ public class DungeonGenerator : MonoBehaviour
             if (room != null)
             {
                 Tilemap roomTilemap = room.GetComponentInChildren<Tilemap>();
-                size = new Vector2Int(
-                    roomTilemap.cellBounds.size.x,
-                    roomTilemap.cellBounds.size.y
-                );
+                if (roomTilemap != null)
+                {
+                    size = new Vector2Int(
+                        roomTilemap.cellBounds.size.x,
+                        roomTilemap.cellBounds.size.y
+                    );
+                }
+                else
+                {
+                    size = new Vector2Int(10, 10); // 기본값
+                    Debug.LogWarning("Room prefab does not have a Tilemap component.");
+                }
             }
             else
             {
-                size = new Vector2Int(10, 10);
+                size = new Vector2Int(10, 10); // 기본값
             }
 
             center = position;
@@ -58,75 +71,125 @@ public class DungeonGenerator : MonoBehaviour
 
     void Start()
     {
+        if (corridorTile == null || corridorTilemap == null || groundTile == null || groundTilemap == null)
+        {
+            Debug.LogError("One or more tilemap or tile settings are missing in the Inspector.");
+            return;
+        }
         GenerateDungeon();
     }
 
     void GenerateDungeon()
     {
-        // 큰 방 배치
-        GameObject largeRoomPrefab = roomPrefabs[0]; // 큰 방은 첫 번째로 설정
-        Vector2Int largeRoomPosition = new Vector2Int(0, 0); // 큰 방의 위치는 중심에 배치
-        PlaceRoom(largeRoomPrefab, largeRoomPosition);
-
-        // 작은 방 배치
-        int smallRoomCount = Random.Range(minSmallRooms, maxSmallRooms + 1);
-        for (int i = 0; i < smallRoomCount; i++)
+        if (roomPrefabs.Length == 0)
         {
-            TryPlaceSmallRoom();
+            Debug.LogError("No room prefabs assigned.");
+            return;
+        }
+        GameObject largeRoomPrefab = roomPrefabs[0];
+        Vector2Int largeRoomPosition = new Vector2Int(0, 0);
+        PlaceRoom(largeRoomPrefab, largeRoomPosition, true);
+
+        int smallRoomCount = Random.Range(minSmallRooms, maxSmallRooms + 1);
+        int placedSmallRooms = 0;
+
+        while (placedSmallRooms < smallRoomCount)
+        {
+            if (TryPlaceSmallRoom())
+            {
+                placedSmallRooms++;
+            }
         }
 
-        // 방들을 연결하는 직사각형 통로 생성
         ConnectRooms();
+
+        Debug.Log($"Dungeon generated with {placedRooms.Count} rooms.");
     }
 
-    void PlaceRoom(GameObject roomPrefab, Vector2Int position)
+    void PlaceRoom(GameObject roomPrefab, Vector2Int position, bool isLargeRoom = false)
     {
+        if (!IsWithinDungeonBounds(position, roomPrefab))
+        {
+            Debug.LogWarning("Room placement outside dungeon bounds, skipping.");
+            return;
+        }
+
         GameObject roomInstance = Instantiate(roomPrefab, new Vector3(position.x, position.y, 0), Quaternion.identity);
         RoomData roomData = new RoomData(roomInstance, position);
         placedRooms.Add(roomData);
-        roomInstance.transform.position = new Vector3(position.x, position.y, 0);
 
         FillRoomWithGroundTiles(roomData.bounds);
+
+        if (isLargeRoom && (obstacles.Length > 0 || decorations.Length > 0))
+        {
+            AddRoomFeatures(roomData.bounds);
+        }
     }
 
-    void TryPlaceSmallRoom()
+    bool IsWithinDungeonBounds(Vector2Int position, GameObject roomPrefab)
     {
-        int maxAttempts = 10;
+        if (roomPrefab == null)
+        {
+            Debug.LogError("Room prefab is null.");
+            return false;
+        }
+
+        Tilemap roomTilemap = roomPrefab.GetComponentInChildren<Tilemap>();
+        if (roomTilemap == null)
+        {
+            Debug.LogError("Room prefab does not have a Tilemap component.");
+            return false;
+        }
+
+        Vector2Int roomSize = new Vector2Int(
+            roomTilemap.cellBounds.size.x,
+            roomTilemap.cellBounds.size.y
+        );
+
+        int minX = position.x - roomSize.x / 2;
+        int maxX = position.x + roomSize.x / 2;
+        int minY = position.y - roomSize.y / 2;
+        int maxY = position.y + roomSize.y / 2;
+
+        return minX >= -dungeonBounds.x / 2 && maxX <= dungeonBounds.x / 2 &&
+               minY >= -dungeonBounds.y / 2 && maxY <= dungeonBounds.y / 2;
+    }
+
+    bool TryPlaceSmallRoom()
+    {
+        int maxAttempts = 50;
         int attempts = 0;
 
         while (attempts < maxAttempts)
         {
-            GameObject smallRoomPrefab = roomPrefabs[Random.Range(1, roomPrefabs.Length)]; // 작은 방은 첫 번째 제외
+            GameObject smallRoomPrefab = roomPrefabs[Random.Range(1, roomPrefabs.Length)];
             Vector2Int position = new Vector2Int(
-                Random.Range(-20, 20),  // X좌표 랜덤
-                Random.Range(-20, 20)   // Y좌표 랜덤
+                Random.Range(-dungeonBounds.x / 2 + 10, dungeonBounds.x / 2 - 10),
+                Random.Range(-dungeonBounds.y / 2 + 10, dungeonBounds.y / 2 - 10)
             );
 
             RoomData newRoomData = new RoomData(smallRoomPrefab, position);
 
-            // 방이 기존 방들과 겹치지 않으면 배치
-            if (!IsOverlappingWithExistingRooms(newRoomData.bounds))
+            if (!IsOverlappingWithExistingRooms(newRoomData.bounds) && IsWithinDungeonBounds(position, smallRoomPrefab))
             {
                 PlaceRoom(smallRoomPrefab, position);
-                break;
+                return true;
             }
 
             attempts++;
         }
+
+        Debug.LogWarning("Failed to place a small room after max attempts.");
+        return false;
     }
 
     bool IsOverlappingWithExistingRooms(BoundsInt newBounds)
     {
         foreach (var room in placedRooms)
         {
-            // 기존 방의 경계를 얻고, 새로운 방과 비교
             BoundsInt existingBounds = room.bounds;
-
-            // X축과 Y축 범위가 겹치는지 확인 (roomSpacing을 고려)
             bool xOverlap = newBounds.xMin < existingBounds.xMax + roomSpacing && newBounds.xMax > existingBounds.xMin - roomSpacing;
             bool yOverlap = newBounds.yMin < existingBounds.yMax + roomSpacing && newBounds.yMax > existingBounds.yMin - roomSpacing;
-
-            // X축과 Y축 모두 겹치면 true 반환
             if (xOverlap && yOverlap)
             {
                 return true;
@@ -137,14 +200,16 @@ public class DungeonGenerator : MonoBehaviour
 
     void ConnectRooms()
     {
-        if (placedRooms.Count == 0) return;
+        if (placedRooms.Count <= 1) return;
 
-        RoomData largeRoom = placedRooms[0]; // 첫 번째 방이 큰 방
+        RoomData largeRoom = placedRooms[0];
 
-        for (int i = 1; i < placedRooms.Count; i++) // 작은 방들과 연결
+        for (int i = 1; i < placedRooms.Count; i++)
         {
             Vector2Int start = GetClosestEdgePoint(largeRoom.bounds, placedRooms[i].center);
-            CreateCorridor(start, placedRooms[i].center);
+            Vector2Int end = placedRooms[i].center;
+            Debug.Log($"Connecting rooms: Start {start}, End {end}");
+            CreateCorridor(start, end);
         }
     }
 
@@ -171,9 +236,7 @@ public class DungeonGenerator : MonoBehaviour
     void CreateCorridor(Vector2Int start, Vector2Int end)
     {
         Vector2Int current = start;
-
-        // 직사각형 통로 만들기
-        while (current.x != end.x || current.y != end.y)
+        while (current != end)
         {
             if (current.x != end.x)
             {
@@ -183,8 +246,6 @@ public class DungeonGenerator : MonoBehaviour
             {
                 current.y += (end.y > current.y) ? 1 : -1;
             }
-
-            // 통로 타일 배치
             FillCorridor(current);
         }
     }
@@ -210,5 +271,10 @@ public class DungeonGenerator : MonoBehaviour
                 groundTilemap.SetTile(new Vector3Int(x, y, 0), groundTile);
             }
         }
+    }
+
+    void AddRoomFeatures(BoundsInt bounds)
+    {
+        // 장애물 및 장식 추가 로직 (필요 시 구현)
     }
 }
