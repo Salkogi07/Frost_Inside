@@ -142,7 +142,7 @@ public class MimicBox : MonoBehaviour
             //Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
-    private void Move()
+    /*private void Move()
     {
         if ()
         {
@@ -157,7 +157,7 @@ public class MimicBox : MonoBehaviour
         }
         
     
-    }
+    }*/
     private void Chase()
     {
         float moveDirection = player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
