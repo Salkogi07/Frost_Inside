@@ -17,6 +17,10 @@ public class Player_Ladder : MonoBehaviour
     public Transform pos;
     public Vector2 boxSize;
 
+    [Header("Cooldown")]
+    [SerializeField] public float ladderCooldownDuration = 0.5f; // 쿨타임 지속시간 (초)
+    private float ladderCooldownTimer = 0f; // 남은 쿨타임
+
     private float gravityScale = 0f;
 
     private void Awake()
@@ -34,6 +38,10 @@ public class Player_Ladder : MonoBehaviour
 
     private void Update()
     {
+        // 쿨타임 타이머 업데이트
+        if (ladderCooldownTimer > 0)
+            ladderCooldownTimer -= Time.deltaTime;
+
         LadderCheck();
         LadderOut();
         LadderActiveCheck();
@@ -66,9 +74,12 @@ public class Player_Ladder : MonoBehaviour
 
     void LadderOut()
     {
-        if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
+        if (IsClimbing)
         {
-            LadderExit();
+            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
+            {
+                LadderExit();
+            }
         }
     }
 
@@ -76,6 +87,8 @@ public class Player_Ladder : MonoBehaviour
     {
         IsClimbing = false;
         rb.gravityScale = gravityScale;
+        // 사다리 탈출 시 쿨타임 시작
+        ladderCooldownTimer = ladderCooldownDuration;
     }
 
     void Climbing()
@@ -101,6 +114,10 @@ public class Player_Ladder : MonoBehaviour
 
     void LadderActiveCheck()
     {
+        // 쿨타임이 진행 중이면 사다리 활성화 실행 안 함
+        if (ladderCooldownTimer > 0)
+            return;
+
         if (IsLadder && !IsClimbing)
         {
             if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Interaction")))
