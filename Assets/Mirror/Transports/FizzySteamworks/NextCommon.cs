@@ -1,4 +1,4 @@
-#if !DISABLESTEAMWORKS
+/*#if !DISABLESTEAMWORKS
 using Steamworks;
 using System;
 using System.Runtime.InteropServices;
@@ -45,4 +45,4 @@ namespace Mirror.FizzySteam
         }
     }
 }
-#endif // !DISABLESTEAMWORKS
+#endif // !DISABLESTEAMWORKS*/

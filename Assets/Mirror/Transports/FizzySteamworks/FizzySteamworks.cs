@@ -1,4 +1,4 @@
-#if !DISABLESTEAMWORKS
+/*#if !DISABLESTEAMWORKS
 using Steamworks;
 using System;
 using UnityEngine;
@@ -317,4 +317,4 @@ namespace Mirror.FizzySteam
         }
     }
 }
-#endif // !DISABLESTEAMWORKS
+#endif // !DISABLESTEAMWORKS*/

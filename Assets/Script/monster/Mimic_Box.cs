@@ -10,8 +10,11 @@ public class MimicBox : MonoBehaviour
     public float moveSpeed = 3f; // 적의 이동 속도
     public bool Hide = true;
     bool Scoping;
-    int moverandomDirection; //랜덤방향으로 이동하는 변수
-    
+    int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
+    float Concealment_time;
+
+
+    float move_time = 5f;
 
     public float xDistanceThreshold = 2f;
 
@@ -54,14 +57,18 @@ public class MimicBox : MonoBehaviour
     // 매 프레임마다 플레이어와의 거리 체크
     private void Update()
     {
-        /*if(Scoping == false && Pattern != pattern.Concealment)
+        if(Scoping == false && Pattern != pattern.Concealment)
         {
             
-            float Concealment_time  = Time.deltaTime;
+            Concealment_time  = +Time.deltaTime;
             if(Concealment_time >= 5f)
             {
                 Pattern = pattern.Concealment;
             }
+        }
+        else
+        {
+            Concealment_time = 0f;
         }
         switch (Pattern)
         {
@@ -89,12 +96,12 @@ public class MimicBox : MonoBehaviour
                 Scoping = false;
                 break;
             case pattern.Move:
-                
-                
-                    Move();
-                
-                
-                
+
+                moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
+                StartCoroutine("Move", move_time);
+
+
+
                 break;
 
             case pattern.Chase:
@@ -122,7 +129,7 @@ public class MimicBox : MonoBehaviour
 
 
 
-        }*/
+        }
         
     } 
     private void OnTriggerEnter2D(Collider2D other)
@@ -142,22 +149,18 @@ public class MimicBox : MonoBehaviour
             //Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
-    /*private void Move()
+    void Move()
     {
-        if ()
+        for (int i = 0; i < 120; i++)
         {
-
-        
-        moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
-
-
-        }else if (Scoping == false)
-        {
+            //if() 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
             transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+        
         }
         
+        
     
-    }*/
+    }
     private void Chase()
     {
         float moveDirection = player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
