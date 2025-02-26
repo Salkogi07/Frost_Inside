@@ -2,12 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Mirror;
-/*using Steamworks;*/
+using Steamworks;
 
 public class PlayerObjectController : NetworkBehaviour
 {
     //Player Data
-    [SyncVar] public int ConnectionID;
+    /*[SyncVar] public int ConnectionID;
     [SyncVar] public int PlayerIdNumber;
     [SyncVar] public ulong PlayerSteamID;
     [SyncVar(hook = nameof(PlayerNameUpdate))] public string PlayerName;
@@ -114,5 +114,5 @@ public class PlayerObjectController : NetworkBehaviour
     public void CmdCanStartGame(string SceneName)
     {
         manager.StartGame(SceneName);
-    }
+    }*/
 }

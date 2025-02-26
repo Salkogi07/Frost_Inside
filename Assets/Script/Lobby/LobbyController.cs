@@ -20,7 +20,7 @@ public class LobbyController : MonoBehaviour
     //other Data
     public ulong CurrentLobbyID;
     public bool PlayerItemCreated = false;
-    private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
+    /*private List<PlayerListItem> playerListItems = new List<PlayerListItem>();
     public PlayerObjectController LocalplayerController;
 
     //Ready
@@ -210,5 +210,5 @@ public class LobbyController : MonoBehaviour
     public void StartGame(string SceneName)
     {
         LocalplayerController.CanStartGame(SceneName);
-    }
+    }*/
 }
