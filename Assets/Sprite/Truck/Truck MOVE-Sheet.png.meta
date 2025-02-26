@@ -1,0 +1,429 @@
+fileFormatVersion: 2
+guid: 3f6d43e3037fc0a4e83f3c1f643976e1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1669431471026249828
+    second: Truck MOVE-Sheet_0
+  - first:
+      213: 8132146540626235846
+    second: Truck MOVE-Sheet_1
+  - first:
+      213: -8515310407711504393
+    second: Truck MOVE-Sheet_2
+  - first:
+      213: -8804778103526062228
+    second: Truck MOVE-Sheet_3
+  - first:
+      213: 6982672247021243001
+    second: Truck MOVE-Sheet_4
+  - first:
+      213: 3158093229299129472
+    second: Truck MOVE-Sheet_5
+  - first:
+      213: -5332949599258583848
+    second: Truck MOVE-Sheet_6
+  - first:
+      213: 6691603374136252924
+    second: Truck MOVE-Sheet_7
+  - first:
+      213: -6090516007454828879
+    second: Truck MOVE-Sheet_8
+  - first:
+      213: 757741292538111737
+    second: Truck MOVE-Sheet_9
+  - first:
+      213: -4523990844430055641
+    second: Truck MOVE-Sheet_10
+  - first:
+      213: 311272108875578847
+    second: Truck MOVE-Sheet_11
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 460a06fe3130b2710800000000000000
+      internalID: 1669431471026249828
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c1d27751303bd070800000000000000
+      internalID: 8132146540626235846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7f74b2cdc4a83d980800000000000000
+      internalID: -8515310407711504393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 2025
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c67013de6f42fc580800000000000000
+      internalID: -8804778103526062228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 97a0ea2b96f67e060800000000000000
+      internalID: 6982672247021243001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 3375
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 08cd0fb4f0dc3db20800000000000000
+      internalID: 3158093229299129472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 4050
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8dc512b389e8df5b0800000000000000
+      internalID: -5332949599258583848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 4725
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf9523da0d95ddc50800000000000000
+      internalID: 6691603374136252924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b613dcc5f32a7ba0800000000000000
+      internalID: -6090516007454828879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 6075
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9f6216dd0b9048a00800000000000000
+      internalID: 757741292538111737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 6750
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 72780aecb4e8731c0800000000000000
+      internalID: -4523990844430055641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Truck MOVE-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 7425
+        y: 0
+        width: 670
+        height: 236
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: fddf306755cd15400800000000000000
+      internalID: 311272108875578847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Truck MOVE-Sheet_0: 1669431471026249828
+      Truck MOVE-Sheet_1: 8132146540626235846
+      Truck MOVE-Sheet_10: -4523990844430055641
+      Truck MOVE-Sheet_11: 311272108875578847
+      Truck MOVE-Sheet_2: -8515310407711504393
+      Truck MOVE-Sheet_3: -8804778103526062228
+      Truck MOVE-Sheet_4: 6982672247021243001
+      Truck MOVE-Sheet_5: 3158093229299129472
+      Truck MOVE-Sheet_6: -5332949599258583848
+      Truck MOVE-Sheet_7: 6691603374136252924
+      Truck MOVE-Sheet_8: -6090516007454828879
+      Truck MOVE-Sheet_9: 757741292538111737
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
