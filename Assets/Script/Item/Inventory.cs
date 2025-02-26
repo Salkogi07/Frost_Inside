@@ -54,7 +54,7 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            
+            AddItem(oldEquipment);
         }
 
         equipment.Add(newItem);
@@ -70,7 +70,6 @@ public class Inventory : MonoBehaviour
     {
         if(equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem newItem))
         {
-            AddItem(itemToRemove);
             equipment.Remove(newItem);
             equipmentDictionary.Remove(itemToRemove);
             itemToRemove.RemoveModifiers();
