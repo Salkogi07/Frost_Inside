@@ -5,9 +5,9 @@ public class ItemObject : MonoBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] public ItemData itemData;
 
-    private void setuoVisuals()
+    private void setupVisuals()
     {
-        if (itemData != null)
+        if (itemData == null)
             return;
 
         GetComponent<SpriteRenderer>().sprite = itemData.icon;
@@ -19,6 +19,6 @@ public class ItemObject : MonoBehaviour
         itemData = _itemData;
         rb.linearVelocity = _velocity;
 
-        setuoVisuals();
+        setupVisuals();
     }
 }
