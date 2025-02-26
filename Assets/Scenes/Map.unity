@@ -5198,6 +5198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 852017078}
+  - component: {fileID: 852017083}
   - component: {fileID: 852017079}
   - component: {fileID: 852017080}
   - component: {fileID: 852017082}
@@ -5344,6 +5345,19 @@ MonoBehaviour:
   - keyName: Interaction
     defaultKey: 102
     keyUI: {fileID: 1644150001}
+--- !u!114 &852017083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 852017077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee27851c40b35714d894586e442c82c6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1156874126}
 --- !u!1001 &872251963
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12042,8 +12056,8 @@ MonoBehaviour:
     baseValue: 100
     modifier: 0
   weight: 0
-  maxWeigh:
-    baseValue: 100
+  maxWeight:
+    baseValue: 0
     modifier: 0
   temperature: 100
   maxTemperature:

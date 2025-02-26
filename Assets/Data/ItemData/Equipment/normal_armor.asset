@@ -16,3 +16,8 @@ MonoBehaviour:
   itemName: normal_chest
   icon: {fileID: 972524890855885471, guid: cd66af76bf75ad24e999ca8920a89d8c, type: 3}
   equipmentType: 2
+  mining: 0
+  armor: 5
+  lagging: 10
+  Hp: 0
+  Temperature: 0

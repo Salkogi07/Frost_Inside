@@ -6,24 +6,31 @@ public class Stat
 {
     [SerializeField] private int baseValue;
 
-    public int modifier;
+    public List<int> modifiers;
 
     public int GetValue()
     {
         int finalValue = baseValue;
 
-        finalValue += modifier;
-
+        foreach (int modifier in modifiers)
+        {
+            finalValue += modifier;
+        }
         return finalValue;
     }
 
-    public void SetModifier(int _modifier)
+    public void SetDefaultValue(int _value)
     {
-        modifier = _modifier;
+        baseValue = _value;
     }
 
-    public void RemoveModifier()
+    public void AddModifier(int _modifier)
     {
-        modifier = 0;
+        modifiers.Add(_modifier);
+    }
+
+    public void RemoveModifier(int _modifier)
+    {
+        modifiers.Remove(_modifier);
     }
 }
