@@ -1,43 +1,43 @@
 fileFormatVersion: 2
-guid: 3f6d43e3037fc0a4e83f3c1f643976e1
+guid: b44fcad67b0ad104f82a532af4d0a49d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1669431471026249828
-    second: Truck MOVE-Sheet_0
+      213: -898534445308244903
+    second: Truck_move_0
   - first:
-      213: 8132146540626235846
-    second: Truck MOVE-Sheet_1
+      213: 8545381362842077475
+    second: Truck_move_1
   - first:
-      213: -8515310407711504393
-    second: Truck MOVE-Sheet_2
+      213: 8276332769286736827
+    second: Truck_move_2
   - first:
-      213: -8804778103526062228
-    second: Truck MOVE-Sheet_3
+      213: 424239057217584740
+    second: Truck_move_3
   - first:
-      213: 6982672247021243001
-    second: Truck MOVE-Sheet_4
+      213: 167888888644689586
+    second: Truck_move_4
   - first:
-      213: 3158093229299129472
-    second: Truck MOVE-Sheet_5
+      213: 3655527882624650893
+    second: Truck_move_5
   - first:
-      213: -5332949599258583848
-    second: Truck MOVE-Sheet_6
+      213: 2671612794627150325
+    second: Truck_move_6
   - first:
-      213: 6691603374136252924
-    second: Truck MOVE-Sheet_7
+      213: -6034651858135453088
+    second: Truck_move_7
   - first:
-      213: -6090516007454828879
-    second: Truck MOVE-Sheet_8
+      213: 7895280477768519899
+    second: Truck_move_8
   - first:
-      213: 757741292538111737
-    second: Truck MOVE-Sheet_9
+      213: -3900507752537572617
+    second: Truck_move_9
   - first:
-      213: -4523990844430055641
-    second: Truck MOVE-Sheet_10
+      213: 6374617911818380898
+    second: Truck_move_10
   - first:
-      213: 311272108875578847
-    second: Truck MOVE-Sheet_11
+      213: -326539300423121125
+    second: Truck_move_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -105,7 +105,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 4096
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -129,17 +129,43 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_0
+      name: Truck_move_0
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
+        y: 279
         width: 670
-        height: 236
+        height: 237
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -148,20 +174,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 460a06fe3130b2710800000000000000
-      internalID: 1669431471026249828
+      spriteID: 95c03f0cea3c783f0800000000000000
+      internalID: -898534445308244903
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_1
+      name: Truck_move_1
       rect:
         serializedVersion: 2
         x: 675
-        y: 0
+        y: 279
         width: 670
-        height: 236
+        height: 237
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -170,20 +196,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 6c1d27751303bd070800000000000000
-      internalID: 8132146540626235846
+      spriteID: 329027af21b479670800000000000000
+      internalID: 8545381362842077475
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_2
+      name: Truck_move_2
       rect:
         serializedVersion: 2
         x: 1350
-        y: 0
+        y: 279
         width: 670
-        height: 236
+        height: 237
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,20 +218,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 7f74b2cdc4a83d980800000000000000
-      internalID: -8515310407711504393
+      spriteID: bbbc244cdc07bd270800000000000000
+      internalID: 8276332769286736827
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_3
+      name: Truck_move_3
       rect:
         serializedVersion: 2
         x: 2025
-        y: 0
+        y: 279
         width: 670
-        height: 236
+        height: 237
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -214,20 +240,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: c67013de6f42fc580800000000000000
-      internalID: -8804778103526062228
+      spriteID: 46efc41cc2333e500800000000000000
+      internalID: 424239057217584740
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_4
+      name: Truck_move_4
       rect:
         serializedVersion: 2
         x: 2700
-        y: 0
+        y: 279
         width: 670
-        height: 236
+        height: 237
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -236,20 +262,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 97a0ea2b96f67e060800000000000000
-      internalID: 6982672247021243001
+      spriteID: 2bed6610e06745200800000000000000
+      internalID: 167888888644689586
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_5
+      name: Truck_move_5
       rect:
         serializedVersion: 2
         x: 3375
-        y: 0
+        y: 279
         width: 670
-        height: 236
+        height: 237
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -258,17 +284,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 08cd0fb4f0dc3db20800000000000000
-      internalID: 3158093229299129472
+      spriteID: d8ec06ecd3b0bb230800000000000000
+      internalID: 3655527882624650893
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_6
+      name: Truck_move_6
       rect:
         serializedVersion: 2
-        x: 4050
+        x: 1
         y: 0
         width: 670
         height: 236
@@ -280,17 +306,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8dc512b389e8df5b0800000000000000
-      internalID: -5332949599258583848
+      spriteID: 5f1d3219ea9731520800000000000000
+      internalID: 2671612794627150325
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_7
+      name: Truck_move_7
       rect:
         serializedVersion: 2
-        x: 4725
+        x: 676
         y: 0
         width: 670
         height: 236
@@ -302,17 +328,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cf9523da0d95ddc50800000000000000
-      internalID: 6691603374136252924
+      spriteID: 0627fa4ab1c904ca0800000000000000
+      internalID: -6034651858135453088
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_8
+      name: Truck_move_8
       rect:
         serializedVersion: 2
-        x: 5400
+        x: 1351
         y: 0
         width: 670
         height: 236
@@ -324,17 +350,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1b613dcc5f32a7ba0800000000000000
-      internalID: -6090516007454828879
+      spriteID: bd0187773cba19d60800000000000000
+      internalID: 7895280477768519899
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_9
+      name: Truck_move_9
       rect:
         serializedVersion: 2
-        x: 6075
+        x: 2026
         y: 0
         width: 670
         height: 236
@@ -346,17 +372,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9f6216dd0b9048a00800000000000000
-      internalID: 757741292538111737
+      spriteID: 7fa37566ddc9ed9c0800000000000000
+      internalID: -3900507752537572617
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_10
+      name: Truck_move_10
       rect:
         serializedVersion: 2
-        x: 6750
+        x: 2701
         y: 0
         width: 670
         height: 236
@@ -368,17 +394,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 72780aecb4e8731c0800000000000000
-      internalID: -4523990844430055641
+      spriteID: 266e6c47731377850800000000000000
+      internalID: 6374617911818380898
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_11
+      name: Truck_move_11
       rect:
         serializedVersion: 2
-        x: 7425
+        x: 3376
         y: 0
         width: 670
         height: 236
@@ -390,8 +416,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fddf306755cd15400800000000000000
-      internalID: 311272108875578847
+      spriteID: b1743118c36e77bf0800000000000000
+      internalID: -326539300423121125
       vertices: []
       indices: 
       edges: []
@@ -410,18 +436,18 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Truck MOVE-Sheet_0: 1669431471026249828
-      Truck MOVE-Sheet_1: 8132146540626235846
-      Truck MOVE-Sheet_10: -4523990844430055641
-      Truck MOVE-Sheet_11: 311272108875578847
-      Truck MOVE-Sheet_2: -8515310407711504393
-      Truck MOVE-Sheet_3: -8804778103526062228
-      Truck MOVE-Sheet_4: 6982672247021243001
-      Truck MOVE-Sheet_5: 3158093229299129472
-      Truck MOVE-Sheet_6: -5332949599258583848
-      Truck MOVE-Sheet_7: 6691603374136252924
-      Truck MOVE-Sheet_8: -6090516007454828879
-      Truck MOVE-Sheet_9: 757741292538111737
+      Truck_move_0: -898534445308244903
+      Truck_move_1: 8545381362842077475
+      Truck_move_10: 6374617911818380898
+      Truck_move_11: -326539300423121125
+      Truck_move_2: 8276332769286736827
+      Truck_move_3: 424239057217584740
+      Truck_move_4: 167888888644689586
+      Truck_move_5: 3655527882624650893
+      Truck_move_6: 2671612794627150325
+      Truck_move_7: -6034651858135453088
+      Truck_move_8: 7895280477768519899
+      Truck_move_9: -3900507752537572617
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

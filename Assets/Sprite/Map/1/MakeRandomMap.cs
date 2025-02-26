@@ -39,7 +39,7 @@ public class MakeRandomMap : MonoBehaviour
         Vector2Int startPos = Vector2Int.zero;
         PlaceRoom(roomPrefabs[0], startPos);
 
-        // 이후 maxRooms-1개의 방을 추가
+        // 이후 maxRooms-1개의 방 생성
         for (int i = 1; i < maxRooms; i++)
         {
             GameObject nextRoomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
@@ -49,12 +49,12 @@ public class MakeRandomMap : MonoBehaviour
             }
             else
             {
-                // 더 이상 배치할 수 없다면 중단
+                // 더 이상 배치 불가하면 중단
                 break;
             }
         }
 
-        // 실제 타일맵에 Floor, Wall, Corridor 타일 반영
+        // 실제 타일맵에 Floor, Wall, Corridor 배치
         spreadTilemap.SpreadFloorTilemap(floorTiles);
         spreadTilemap.SpreadWallTilemap(wallTiles);
         spreadTilemap.SpreadCorridorTilemap(corridorTiles);
@@ -63,6 +63,9 @@ public class MakeRandomMap : MonoBehaviour
         player.transform.position = Vector2.zero;
     }
 
+    /// <summary>
+    /// 방(프리팹) 타일맵을 오프셋 위치에 복사
+    /// </summary>
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)
     {
         Tilemap floorTilemap, wallTilemap, corridorTilemap;
@@ -74,37 +77,38 @@ public class MakeRandomMap : MonoBehaviour
     }
 
     /// <summary>
-    /// 다수의 통로 타일이 정확히 연결되도록 수정된 로직.
-    /// 새 방의 corridorTiles 중 최소 2개 이상이 기존 corridorTiles와 인접해야 배치가 허용됨.
+    /// 새 방을 기존 맵에 붙일 수 있는 오프셋을 찾는 과정:
+    ///  - 세로 방향(up/down)은 통로 1개 이상 연결이면 OK
+    ///  - 가로 방향(left/right)은 통로 2개 이상 연결이어야 OK
+    ///  - 연결이 성사되면 연결 지점의 벽 타일을 제거
     /// </summary>
     private bool TryFindPlacementForRoom(GameObject roomPrefab, out Vector2Int foundOffset)
     {
         foundOffset = Vector2Int.zero;
 
-        // 새 방의 타일맵 가져오기
+        // 새 방(프리팹)의 Tilemap들 가져오기
         Tilemap floorTilemap, wallTilemap, corridorTilemap;
         GetTilemaps(roomPrefab, out floorTilemap, out wallTilemap, out corridorTilemap);
 
-        // 새 방의 corridor 로컬 좌표
+        // 새 방 통로 타일 (로컬 좌표)
         List<Vector2Int> newRoomLocalCorridorTiles = GetLocalCorridorPositions(corridorTilemap);
         if (newRoomLocalCorridorTiles.Count == 0)
             return false;
 
-        // 기존 corridor 목록
+        // 기존 통로 타일 목록
         List<Vector2Int> existingCorridorList = new List<Vector2Int>(corridorTiles);
         if (existingCorridorList.Count == 0)
         {
+            // 아직 통로가 없다면 (0,0) 가상 통로라고 가정
             existingCorridorList.Add(Vector2Int.zero);
         }
 
-        // 무작위 순회
+        // 무작위 순회(셔플)
         existingCorridorList.Shuffle();
         newRoomLocalCorridorTiles.Shuffle();
 
+        // 상하좌우 방향
         Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-
-        // 최소 연결해야 하는 통로 타일 수
-        int requiredConnections = 2;
 
         foreach (Vector2Int existingCorridor in existingCorridorList)
         {
@@ -112,17 +116,32 @@ public class MakeRandomMap : MonoBehaviour
             {
                 foreach (Vector2Int dir in directions)
                 {
+                    // 세로: 1개 연결, 가로: 2개 연결
+                    int requiredConnections = (dir.y != 0) ? 1 : 2;
+
+                    // 배치 오프셋 계산
                     Vector2Int offset = (existingCorridor + dir) - localCorridorPos;
 
-                    // Floor / Wall 겹침 검사
+                    // Floor/Wall 겹침 검사
                     if (OverlapsExistingTiles(floorTilemap, offset, floorTiles)) continue;
                     if (OverlapsExistingTiles(wallTilemap, offset, wallTiles)) continue;
 
-                    // 복수의 corridor 타일 연결 검사
+                    // 통로 연결 검사
                     int connectedCount = CountCorridorConnections(newRoomLocalCorridorTiles, offset, existingCorridorList);
                     if (connectedCount >= requiredConnections)
                     {
+                        // 연결 성사!
                         foundOffset = offset;
+
+                        // 연결 지점의 벽 타일 제거하기
+                        // -> 기존 통로 타일(existingCorridor)와 새 통로 타일이 붙는 지점 = (existingCorridor + dir)
+                        //    만약 그 자리에 벽 타일이 있었다면 없앤다.
+                        Vector2Int connectingPos = existingCorridor + dir;
+                        if (wallTiles.Contains(connectingPos))
+                        {
+                            wallTiles.Remove(connectingPos);
+                        }
+
                         return true;
                     }
                 }
@@ -133,8 +152,8 @@ public class MakeRandomMap : MonoBehaviour
     }
 
     /// <summary>
-    /// 새 방 corridorTiles를 offset만큼 이동했을 때,
-    /// 기존 corridorTiles와 상하좌우 인접한 타일이 몇 개인지 계산
+    /// 새 방 corridor 타일들을 offset만큼 옮겼을 때,
+    /// 기존 corridor 타일들과 상하좌우로 인접한(= 연결된) 타일 개수를 센다.
     /// </summary>
     private int CountCorridorConnections(
         List<Vector2Int> newRoomLocalCorridorTiles,
@@ -154,17 +173,16 @@ public class MakeRandomMap : MonoBehaviour
                 if (existingCorridorSet.Contains(neighbor))
                 {
                     count++;
-                    // 한 타일이 여러 방향에서 연결되더라도 한 번만 세고 넘어가려면 break
+                    // 한 타일이 여러 방향으로 연결되어도 '1번'으로만 세려면 break
                     break;
                 }
             }
         }
-
         return count;
     }
 
     /// <summary>
-    /// corridor 타일맵의 로컬 좌표들을 리스트로 반환
+    /// corridorTilemap 내의 모든 타일 좌표를 리스트로 반환
     /// </summary>
     private List<Vector2Int> GetLocalCorridorPositions(Tilemap corridorTilemap)
     {
@@ -180,6 +198,9 @@ public class MakeRandomMap : MonoBehaviour
         return result;
     }
 
+    /// <summary>
+    /// sourceTilemap을 offset만큼 옮겼을 때, targetSet과 겹치는지 검사
+    /// </summary>
     private bool OverlapsExistingTiles(Tilemap sourceTilemap, Vector2Int offset, HashSet<Vector2Int> targetSet)
     {
         BoundsInt bounds = sourceTilemap.cellBounds;
@@ -197,6 +218,9 @@ public class MakeRandomMap : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// sourceTilemap 내 모든 타일을 offset만큼 평행 이동하여 targetSet에 복사
+    /// </summary>
     private void CopyTilemap(Tilemap sourceTilemap, Vector2Int offset, HashSet<Vector2Int> targetSet)
     {
         BoundsInt bounds = sourceTilemap.cellBounds;
@@ -211,12 +235,13 @@ public class MakeRandomMap : MonoBehaviour
     }
 
     /// <summary>
-    /// roomPrefab에서 FloorTilemap, WallTilemap, CorridorTilemap을 찾아서 out 파라미터로 반환
+    /// roomPrefab에서 FloorTilemap, WallTilemap, CorridorTilemap 찾기
+    /// (프로젝트 구조에 맞춰 수정 필요)
     /// </summary>
     private void GetTilemaps(GameObject roomPrefab, out Tilemap floorTilemap, out Tilemap wallTilemap, out Tilemap corridorTilemap)
     {
         Transform[] gridTransforms = roomPrefab.transform.GetComponentsInChildren<Transform>();
-        // 이 부분은 프리팹 구조에 맞춰 수정 필요
+        // 예시로 1번 인덱스 자식이 타일맵 부모라고 가정
         Transform tilemapParent = gridTransforms[1].transform;
 
         floorTilemap = tilemapParent.Find("FloorTilemap").GetComponent<Tilemap>();
@@ -224,6 +249,7 @@ public class MakeRandomMap : MonoBehaviour
         corridorTilemap = tilemapParent.Find("CorridorTilemap").GetComponent<Tilemap>();
     }
 }
+
 
 public static class ListExtensions
 {
