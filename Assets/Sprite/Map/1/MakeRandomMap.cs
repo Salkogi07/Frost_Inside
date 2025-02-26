@@ -79,7 +79,7 @@ public class MakeRandomMap : MonoBehaviour
     /// <summary>
     /// 새 방을 기존 맵에 붙일 수 있는 오프셋을 찾는 과정:
     ///  - 세로 방향(up/down)은 통로 1개 이상 연결이면 OK
-    ///  - 가로 방향(left/right)은 통로 2개 이상 연결이어야 OK
+    ///  - 가로 방향(left/right)은 2×2 형태로 통로가 연결되어야 OK
     ///  - 연결이 성사되면 연결 지점의 벽 타일을 제거
     /// </summary>
     private bool TryFindPlacementForRoom(GameObject roomPrefab, out Vector2Int foundOffset)
@@ -116,7 +116,7 @@ public class MakeRandomMap : MonoBehaviour
             {
                 foreach (Vector2Int dir in directions)
                 {
-                    // 세로: 1개 연결, 가로: 2개 연결
+                    // 세로 방향이면 1개 연결, 가로 방향이면 2개 연결
                     int requiredConnections = (dir.y != 0) ? 1 : 2;
 
                     // 배치 오프셋 계산
@@ -126,29 +126,50 @@ public class MakeRandomMap : MonoBehaviour
                     if (OverlapsExistingTiles(floorTilemap, offset, floorTiles)) continue;
                     if (OverlapsExistingTiles(wallTilemap, offset, wallTiles)) continue;
 
-                    // 통로 연결 검사
+                    // 먼저 기존 방식대로 연결 수 검사
                     int connectedCount = CountCorridorConnections(newRoomLocalCorridorTiles, offset, existingCorridorList);
-                    if (connectedCount >= requiredConnections)
+                    if (connectedCount < requiredConnections)
                     {
-                        // 연결 성사!
-                        foundOffset = offset;
-
-                        // 연결 지점의 벽 타일 제거하기
-                        // -> 기존 통로 타일(existingCorridor)와 새 통로 타일이 붙는 지점 = (existingCorridor + dir)
-                        //    만약 그 자리에 벽 타일이 있었다면 없앤다.
-                        Vector2Int connectingPos = existingCorridor + dir;
-                        if (wallTiles.Contains(connectingPos))
-                        {
-                            wallTiles.Remove(connectingPos);
-                        }
-
-                        return true;
+                        continue;
                     }
+
+                    // 가로 방향(Left/Right)일 경우, 2×2 형태 연결도 추가 확인
+                    if (dir.y == 0)
+                    {
+                        int pairCount = CountCorridorPairConnections(newRoomLocalCorridorTiles, offset, existingCorridorList);
+                        if (pairCount == 0)
+                        {
+                            // 2×2 형태가 하나도 없으면 실패
+                            continue;
+                        }
+                    }
+
+                    // 연결 성사!
+                    foundOffset = offset;
+                    RemoveWallAtConnection(existingCorridor, dir);
+                    return true;
                 }
             }
         }
 
         return false;
+    }
+
+    /// <summary>
+    /// corridorTilemap 내의 모든 타일 좌표를 리스트로 반환
+    /// </summary>
+    private List<Vector2Int> GetLocalCorridorPositions(Tilemap corridorTilemap)
+    {
+        List<Vector2Int> result = new List<Vector2Int>();
+        BoundsInt bounds = corridorTilemap.cellBounds;
+        foreach (var pos in bounds.allPositionsWithin)
+        {
+            if (corridorTilemap.HasTile(pos))
+            {
+                result.Add((Vector2Int)pos);
+            }
+        }
+        return result;
     }
 
     /// <summary>
@@ -182,20 +203,62 @@ public class MakeRandomMap : MonoBehaviour
     }
 
     /// <summary>
-    /// corridorTilemap 내의 모든 타일 좌표를 리스트로 반환
+    /// 가로 방향 연결 시, 실제로 세로 2칸(2×2)이 함께 연결되는지 검사
     /// </summary>
-    private List<Vector2Int> GetLocalCorridorPositions(Tilemap corridorTilemap)
+    private int CountCorridorPairConnections(
+        List<Vector2Int> newRoomLocalCorridorTiles,
+        Vector2Int offset,
+        List<Vector2Int> existingCorridorList)
     {
-        List<Vector2Int> result = new List<Vector2Int>();
-        BoundsInt bounds = corridorTilemap.cellBounds;
-        foreach (var pos in bounds.allPositionsWithin)
+        HashSet<Vector2Int> existingCorridorSet = new HashSet<Vector2Int>(existingCorridorList);
+        HashSet<Vector2Int> newRoomLocalCorridorSet = new HashSet<Vector2Int>(newRoomLocalCorridorTiles);
+
+        int pairConnectionCount = 0;
+        foreach (var localPos in newRoomLocalCorridorTiles)
         {
-            if (corridorTilemap.HasTile(pos))
+            Vector2Int worldPos = localPos + offset;
+            Vector2Int aboveWorldPos = worldPos + Vector2Int.up;
+
+            // 새 방 통로가 worldPos와 그 바로 위(aboveWorldPos) 모두 Corridor인지 확인
+            Vector2Int aboveLocalPos = localPos + Vector2Int.up;
+            if (newRoomLocalCorridorSet.Contains(aboveLocalPos))
             {
-                result.Add((Vector2Int)pos);
+                // 두 칸 모두 기존 맵의 통로에 인접하면(상하좌우로) 2칸 연결이 성립
+                bool firstConnected = IsAdjacentToCorridor(worldPos, existingCorridorSet);
+                bool secondConnected = IsAdjacentToCorridor(aboveWorldPos, existingCorridorSet);
+                if (firstConnected && secondConnected)
+                {
+                    pairConnectionCount++;
+                }
             }
         }
-        return result;
+        return pairConnectionCount;
+    }
+
+    private bool IsAdjacentToCorridor(Vector2Int pos, HashSet<Vector2Int> existingCorridorSet)
+    {
+        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+        foreach (var dir in directions)
+        {
+            Vector2Int neighbor = pos + dir;
+            if (existingCorridorSet.Contains(neighbor))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 기존 통로와 새 통로가 연결되는 지점(벽)을 제거
+    /// </summary>
+    private void RemoveWallAtConnection(Vector2Int existingCorridor, Vector2Int dir)
+    {
+        Vector2Int connectingPos = existingCorridor + dir;
+        if (wallTiles.Contains(connectingPos))
+        {
+            wallTiles.Remove(connectingPos);
+        }
     }
 
     /// <summary>
@@ -250,7 +313,9 @@ public class MakeRandomMap : MonoBehaviour
     }
 }
 
-
+/// <summary>
+/// List Shuffle 확장 메서드
+/// </summary>
 public static class ListExtensions
 {
     public static void Shuffle<T>(this List<T> list)
