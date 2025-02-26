@@ -21,15 +21,15 @@ public class monster_AI2 : MonoBehaviour
         }
     }
 
-    // 범위 내에 플레이어가 계속 있을 때 호출
-    //private void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        pattern = "chase";
-    //        // 적이 플레이어를 추적
-    //    }
-    //}
+    //범위 내에 플레이어가 계속 있을 때 호출
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            pattern = "chase";
+            // 적이 플레이어를 추적
+        }
+    }
 
     // 범위 밖으로 나가면 호출
     private void OnTriggerExit2D(Collider2D other)
