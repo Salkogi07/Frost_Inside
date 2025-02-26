@@ -5,11 +5,11 @@ using UnityEngine.EventSystems;
 public class MimicBox : MonoBehaviour
 {
 
-    public float detectionRadius = 5f; // 적이 플레이어를 감지할 범위
-    public Transform player; // 플레이어의 위치
-    public float moveSpeed = 3f; // 적의 이동 속도
+    [SerializeField]  public float detectionRadius = 5f; // 적이 플레이어를 감지할 범위
+    [SerializeField]  private Transform Player; // 플레이어의 위치
+    [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
     public bool Hide = true;
-    bool Scoping;
+    bool Scoping = true;
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
     float Concealment_time;
 
@@ -32,21 +32,22 @@ public class MimicBox : MonoBehaviour
     public pattern Pattern = pattern.Concealment;
 
 
-    private void Start()
+    void Start()
     {
-
+        //Player = GetComponent<Rigidbody2D>();
+        Transform Floor_Measurement = transform.Find("Floor Measurement");
     }
     
 
     // 범위 내에 플레이어가 계속 있을 때 호출
-    //private void OnTriggerStay2D(Collider2D other)
-    //{
-    //    if (other.CompareTag("Player"))
-    //    {
-    //        pattern = "chase";
-    //        // 적이 플레이어를 추적
-    //    }
-    //}
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Pattern = pattern.Chase;
+            // 적이 플레이어를 추적
+        }
+    }
 
     // 범위 밖으로 나가면 호출
     
@@ -77,7 +78,7 @@ public class MimicBox : MonoBehaviour
                 if(Scoping == false)
                 {
                     //바로 숨어듬
-                    Scoping = true;
+                    Hide = true;
                 }
                 //플레이어가 건들어야 숨기상태를 해제
                 //if("")
@@ -146,16 +147,23 @@ public class MimicBox : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Scoping = false;
-            //Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
+            Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
     void Move()
     {
         for (int i = 0; i < 120; i++)
         {
-            //if() 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
-            transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-        
+            //if()// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
+            //{
+            //    transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+            //}
+            //else if ()
+            //{
+
+            //}
+
+
         }
         
         
@@ -163,7 +171,7 @@ public class MimicBox : MonoBehaviour
     }
     private void Chase()
     {
-        float moveDirection = player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
+        float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
     }
 }

@@ -11,6 +11,10 @@ public class monster_collider2 : MonoBehaviour
         float distance = Vector3.Distance(player.position, enemy.position);
 
         // 거리 출력 (디버깅용)
-        Debug.Log("Player and Enemy Distance: " + distance);
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            Debug.Log("Player and Enemy Distance: " + distance);
+        }
+        
     }
 }
