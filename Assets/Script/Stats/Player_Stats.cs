@@ -7,10 +7,10 @@ public class Player_Stats : MonoBehaviour
     Player_Move player_move;
 
     [Header("Item info")]
-    [SerializeField] private Stat mining;
-    [SerializeField] private Stat damage;
-    [SerializeField] private Stat armor;
-    [SerializeField] private Stat lagging;
+    [SerializeField] public Stat mining;
+    [SerializeField] public Stat damage;
+    [SerializeField] public Stat armor;
+    [SerializeField] public Stat lagging;
 
     [Header("Hp info")]
     [SerializeField] public float hp = 0;
@@ -22,14 +22,11 @@ public class Player_Stats : MonoBehaviour
 
     [Header("Weight info")]
     [SerializeField] public float weight = 0;
-    [SerializeField] public Stat maxWeigh;
+    [SerializeField] public Stat maxWeight;
 
     [Header("Temperature info")]
     [SerializeField] public float temperature = 100;
     [SerializeField] public Stat maxTemperature;
-
-
-    [Header("Temperature Info")]
     [SerializeField] private float temperatureDropRate = 1f;
     [SerializeField] private int hpDropRate = 2;
     private float damageTimer = 0f;

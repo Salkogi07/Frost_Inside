@@ -1,6 +1,6 @@
 using UnityEngine;
-using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using System.Collections.Generic;
 
 public class SpreadTilemap : MonoBehaviour
 {
@@ -9,25 +9,35 @@ public class SpreadTilemap : MonoBehaviour
     [SerializeField]
     private Tilemap wall;
     [SerializeField]
+    private Tilemap corridor;  // 통로 타일맵
+
+    [SerializeField]
     private TileBase floorTile;
     [SerializeField]
     private TileBase wallTile;
+    [SerializeField]
+    private TileBase corridorTile; // 통로 타일
 
-    public void SpreadFloorTilemap (HashSet<Vector2Int> position)
+    public void SpreadFloorTilemap(HashSet<Vector2Int> positions)
     {
-        SpreadTile(position, floor, floorTile);
+        SpreadTile(positions, floor, floorTile);
     }
 
-    public void SpreadWallTilemap(HashSet<Vector2Int> position)
+    public void SpreadWallTilemap(HashSet<Vector2Int> positions)
     {
-        SpreadTile(position, wall, wallTile);
+        SpreadTile(positions, wall, wallTile);
+    }
+
+    public void SpreadCorridorTilemap(HashSet<Vector2Int> positions)
+    {
+        SpreadTile(positions, corridor, corridorTile);
     }
 
     private void SpreadTile(HashSet<Vector2Int> positions, Tilemap tilemap, TileBase tile)
     {
-        foreach(var position in positions)
+        foreach (var pos in positions)
         {
-            tilemap.SetTile((Vector3Int)position, tile);
+            tilemap.SetTile((Vector3Int)pos, tile);
         }
     }
 
@@ -35,5 +45,6 @@ public class SpreadTilemap : MonoBehaviour
     {
         floor.ClearAllTiles();
         wall.ClearAllTiles();
+        corridor.ClearAllTiles();
     }
 }

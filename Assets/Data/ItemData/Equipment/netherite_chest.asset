@@ -16,3 +16,8 @@ MonoBehaviour:
   itemName: netherite_chest
   icon: {fileID: -2108817306257686781, guid: c81a588e618718f4597addeeffea2d14, type: 3}
   equipmentType: 2
+  mining: 0
+  armor: 20
+  lagging: 0
+  Hp: 0
+  Temperature: 0

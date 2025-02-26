@@ -31,12 +31,17 @@ public class Player_ItemPicker : MonoBehaviour
                 ItemObject itemPickup = nearestItem.GetComponent<ItemObject>();
                 if (itemPickup != null)
                 {
-                    Inventory.instance.AddItem(itemPickup.itemData);
-                    Destroy(nearestItem);
+                    PickupItem(nearestItem, itemPickup);
                     nextPickupTime = Time.time + pickupCooldown;
                 }
             }
         }
+    }
+
+    private void PickupItem(GameObject nearestItem, ItemObject itemPickup)
+    {
+        Inventory.instance.AddItem(itemPickup.itemData);
+        Destroy(nearestItem);
     }
 
     // 플레이어 기준 가장 가까운 아이템 찾기

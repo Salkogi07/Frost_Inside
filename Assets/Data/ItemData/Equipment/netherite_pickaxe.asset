@@ -16,3 +16,8 @@ MonoBehaviour:
   itemName: netherite_pickaxe
   icon: {fileID: -4996926775656393898, guid: debd916f3e37e4a4b91a6c02bb4f65d1, type: 3}
   equipmentType: 0
+  mining: 20
+  armor: 0
+  lagging: 0
+  Hp: 0
+  Temperature: 0
