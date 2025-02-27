@@ -6,6 +6,9 @@ public class Player_Stats : MonoBehaviour
 {
     Player_Move player_move;
 
+    [Header("Player info")]
+    [SerializeField] public bool isDead = false;
+
     [Header("Item info")]
     [SerializeField] public Stat mining;
     [SerializeField] public Stat damage;
@@ -94,8 +97,11 @@ public class Player_Stats : MonoBehaviour
         }
     }
 
-    public virtual void TakeDamage(int _damage)
+    public void TakeDamage(int _damage)
     {
+        if(isDead)
+            return;
+
         hp -= _damage;
         if(hp <= 0)
         {
@@ -109,9 +115,11 @@ public class Player_Stats : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    void Die()
     {
-        player_move.isDead = true;
+        isDead = true;
+
+        GetComponent<Player_ItemDrop>()?.GenerateDrop();
         Debug.Log("사망했습니다.");
     }
 

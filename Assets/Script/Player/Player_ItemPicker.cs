@@ -3,6 +3,7 @@ using UnityEngine;
 public class Player_ItemPicker : MonoBehaviour
 {
     Player_Move player_move;
+    Player_Stats stats;
 
     [Tooltip("아이템을 줍기 위한 최대 거리")]
     public float pickupRange = 3f;
@@ -15,11 +16,12 @@ public class Player_ItemPicker : MonoBehaviour
     private void Awake()
     {
         player_move = GetComponent<Player_Move>();
+        stats = GetComponent<Player_Stats>();
     }
 
     void Update()
     {
-        if(player_move.isDead)
+        if(stats.isDead)
             return;
 
         // 현재 시간과 비교하여 쿨다운이 지났을 때만 실행

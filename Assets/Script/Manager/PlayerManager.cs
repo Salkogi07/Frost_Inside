@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
     public Player_Stats player;
+    public Player_ItemDrop item_drop;
     
     private void Awake()
     {
@@ -13,5 +14,7 @@ public class PlayerManager : MonoBehaviour
             Destroy(instance.gameObject);
         else
             instance = this;
+
+        item_drop = player.gameObject.GetComponent<Player_ItemDrop>();
     }
 }

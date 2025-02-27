@@ -2,23 +2,23 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
-    [SerializeField] public Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rb;
     [SerializeField] public ItemData itemData;
-    [SerializeField] public Vector2 velocity;
 
-    private void OnValidate()
+    private void setupVisuals()
     {
-        if (itemData != null)
+        if (itemData == null)
             return;
 
         GetComponent<SpriteRenderer>().sprite = itemData.icon;
         gameObject.name = "Item object - " + itemData.name;
     }
 
-    private void Update()
+    public void SetupItem(ItemData _itemData, Vector2 _velocity)
     {
-        if (Input.GetKeyDown(KeyCode.M)){
-            rb.linearVelocity = velocity;
-        }
+        itemData = _itemData;
+        rb.linearVelocity = _velocity;
+
+        setupVisuals();
     }
 }

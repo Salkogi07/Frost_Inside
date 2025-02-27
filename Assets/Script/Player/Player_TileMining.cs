@@ -6,6 +6,7 @@ public class Player_TileMining : MonoBehaviour
 {
     [Header("Component")]
     private Player_Move player_move;
+    private Player_Stats stats;
 
     [Header("IsMining")]
     public bool isMining = false;
@@ -36,6 +37,9 @@ public class Player_TileMining : MonoBehaviour
         if (player_move == null)
             player_move = GetComponent<Player_Move>();
 
+        if (stats == null)
+            stats = GetComponent<Player_Stats>();
+
         if (highlightTilemap == null)
             highlightTilemap = GameObject.Find("mining").GetComponent<Tilemap>();
 
@@ -58,7 +62,7 @@ public class Player_TileMining : MonoBehaviour
 
     private void Update()
     {
-        if (player_move.isDead)
+        if (stats.isDead)
             return;
         
         // 1) 마우스가 가리키는 타일 좌표 구하기
