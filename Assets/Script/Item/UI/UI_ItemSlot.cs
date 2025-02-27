@@ -31,6 +31,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+        if (item == null)
+            return;
 
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {

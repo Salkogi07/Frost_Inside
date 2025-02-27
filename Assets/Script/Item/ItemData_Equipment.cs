@@ -12,12 +12,22 @@ public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
 
+    public ItemEffect[] itemEffect;
+
     public int mining;
     public int armor;
     public int lagging;
 
     public int Hp;
     public int Temperature;
+
+    public void ExecuteItemEffect()
+    {
+        foreach (var item in itemEffect)
+        {
+            item.ExecuteEffect();
+        }
+    }
 
     public void AddModifiers()
     {
