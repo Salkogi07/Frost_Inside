@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Splines;
+using UnityEngine.UIElements;
 
 
-public class MimicBox : MonoBehaviour
+public class MimicBoxco : MonoBehaviour
 {
 
-    [SerializeField]  public float detectionRadius = 5f; // 적이 플레이어를 감지할 범위
+    [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위
     [SerializeField]  private Transform Player; // 플레이어의 위치
     [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
     public bool Hide = true;
@@ -18,8 +20,10 @@ public class MimicBox : MonoBehaviour
 
     public float xDistanceThreshold = 2f;
 
-
-
+    private Transform Floor_Measurement;
+    private Transform attack;
+    private Transform ragne;
+    public Rigidbody2D rb { get; private set; }
     public enum pattern
     {
         Move,
@@ -37,20 +41,15 @@ public class MimicBox : MonoBehaviour
     void Start()
     {
         //Player = GetComponent<Rigidbody2D>();
-        Transform Floor_Measurement = transform.Find("Floor Measurement");
-        Player = GameObject.FindWithTag("Player").transform;
-    } 
+        Floor_Measurement = transform.Find("Floor Measurement");
+        rb = GetComponent<Rigidbody2D>();
+        attack = transform.Find("Attack");
+        ragne = transform.Find("GameObjeck");
+        //Player = GameObject.FindWithTag("Player").transform; 
+    }
     
 
-    // 범위 내에 플레이어가 계속 있을 때 호출
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Pattern = pattern.Chase;
-            // 적이 플레이어를 추적
-        }
-    }
+    
 
     // 범위 밖으로 나가면 호출
     
@@ -61,6 +60,7 @@ public class MimicBox : MonoBehaviour
     // 매 프레임마다 플레이어와의 거리 체크
     private void Update()
     {
+
         if(Scoping == false && Pattern != pattern.Concealment)
         {
             
@@ -82,6 +82,7 @@ public class MimicBox : MonoBehaviour
                 {
                     //바로 숨어듬
                     Hide = true;
+                    Debug.Log("숨었다!");
                 }
                 //플레이어가 건들어야 숨기상태를 해제
                 //if("")
@@ -103,7 +104,7 @@ public class MimicBox : MonoBehaviour
 
                 moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
                 StartCoroutine("Move", move_time);
-
+                Debug.Log("움직인다!");
 
 
                 break;
@@ -116,7 +117,7 @@ public class MimicBox : MonoBehaviour
                 //{
                 // 플레이어 방향으로 X축으로만 이동
                 Chase();
-
+                Debug.Log("쫓는다!");
                 //Vector3 direction = (player.position - transform.position).normalized;
                 //transform.position += direction * moveSpeed * Time.deltaTime;
 
@@ -176,5 +177,10 @@ public class MimicBox : MonoBehaviour
     {
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+        //Vector3 newPosition = Floor_Measurement.position;
+        //newPosition.x = moveDirection;
+        //Floor_Measurement.position = Floor_Measurement.position-newPosition;
+        //Vector2 newPosition = moveDirection;
+        //Floor_Measurement.position -= new Vector3(0,1f);
     }
 }

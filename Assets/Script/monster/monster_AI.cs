@@ -18,7 +18,7 @@ public class monster_AI : MonoBehaviour
         public int X { get; set; }
         public int Y { get; set; }
         public MonsterBehavior Behavior { get; set; }
-        public int maxDetectingRange = 10;  // 예시 최대 탐지 범위
+        public int maxDetectingRange = 100;  // 예시 최대 탐지 범위
         public int minDetectingRange = 3;   // 예시 최소 탐지 범위
 
         // 플레이어 객체, 여기서는 Player 클래스가 이미 정의된 것으로 가정

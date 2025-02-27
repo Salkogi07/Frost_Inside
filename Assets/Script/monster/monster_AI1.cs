@@ -6,10 +6,15 @@ public class monster_AI2 : MonoBehaviour
 {
 
     public float detectionRadius = 5f; // 적이 플레이어를 감지할 범위
-    public Transform player; // 플레이어의 위치
+    private Transform player; // 플레이어의 위치
     public float moveSpeed = 3f; // 적의 이동 속도
     string pattern ;
     public float xDistanceThreshold = 2f;
+
+    private void Start()
+    {
+        
+    }
 
     // 범위 내에 플레이어가 들어왔을 때 호출
     private void OnTriggerEnter2D(Collider2D other)
@@ -51,7 +56,7 @@ public class monster_AI2 : MonoBehaviour
         switch (pattern)
         {
             case "move":
-
+                Debug.Log("move");
                 break;
 
             case "chase":
@@ -63,7 +68,7 @@ public class monster_AI2 : MonoBehaviour
                     // 플레이어 방향으로 X축으로만 이동
                     float moveDirection = player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
                     transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-                
+                Debug.Log("chase");
                 //Vector3 direction = (player.position - transform.position).normalized;
                 //transform.position += direction * moveSpeed * Time.deltaTime;
                 break;

@@ -7,9 +7,10 @@ public class monster_collider : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log("1");
+        //Debug.Log("1");
+        Player = GameObject.FindWithTag("Player").transform;
     }
-private void OnTriggerEnter2D(Collider2D other)
+void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player")) // 플레이어 태그를 가진 객체 감지
             {
