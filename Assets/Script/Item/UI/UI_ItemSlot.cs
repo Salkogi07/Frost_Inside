@@ -31,6 +31,13 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler
 
     public virtual void OnPointerDown(PointerEventData eventData)
     {
+
+        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
+        {
+            PlayerManager.instance.item_drop.GenerateThrow(item.data);
+            return;
+        }
+
         if(item.data.itemType == ItemType.Equipment)
             Inventory.instance.EquipItem(item.data);
     }

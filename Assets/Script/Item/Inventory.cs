@@ -11,7 +11,6 @@ public class Inventory : MonoBehaviour
     public List<InventoryItem> equipment;
     public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary;
 
-    [SerializeField]
     public List<InventoryItem> inventoryItems;
 
     [Header("Inventory UI")]
@@ -144,4 +143,8 @@ public class Inventory : MonoBehaviour
 
         return true;
     }
+
+    public List<InventoryItem> GetEquipmentList() => equipment;
+
+    public List<InventoryItem> GetInventoryList() => inventoryItems;
 }
