@@ -1,3 +1,4 @@
+using Mirror.Examples.CouchCoop;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Splines;
@@ -14,6 +15,7 @@ public class MimicBoxco : MonoBehaviour
     bool Scoping = true;
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
     float Concealment_time;
+    bool Moving =  false;
 
 
     float move_time = 5f;
@@ -102,9 +104,16 @@ public class MimicBoxco : MonoBehaviour
                 break;
             case pattern.Move:
 
-                moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
-                StartCoroutine("Move", move_time);
-                Debug.Log("움직인다!");
+                
+                if(Moving == false)
+                {
+                    moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
+                    //StartCoroutine("Move", move_time);
+                    //Move(,move_time);
+                    Moving = true;
+                }
+                
+                //Debug.Log("움직인다!");
 
 
                 break;
@@ -148,30 +157,33 @@ public class MimicBoxco : MonoBehaviour
         }
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && Hide == false)
         {
             Scoping = false;
+            Pattern = pattern.Move;
             Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
     void Move()
     {
+
         for (int i = 0; i < 120; i++)
         {
-            //if()// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
+            if (Scoping == false)// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
+            {
+
+                transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+            }
+            //else if (Scoping == true)
             //{
-            //    transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-            //}
-            //else if ()
-            //{
-
+            //continue;
             //}
 
-
+            
         }
-        
-        
-    
+
+        Moving = false;
+
     }
     private void Chase()
     {
@@ -182,5 +194,6 @@ public class MimicBoxco : MonoBehaviour
         //Floor_Measurement.position = Floor_Measurement.position-newPosition;
         //Vector2 newPosition = moveDirection;
         //Floor_Measurement.position -= new Vector3(0,1f);
+        //rb.linearVelocity = new Vector2(moveDirection * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
     }
 }
