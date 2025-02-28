@@ -39,7 +39,7 @@ public class Player_Attack : MonoBehaviour
                     GameObject testEffect = Instantiate(AttackEffect, pos);
                     Destroy(testEffect, 0.5f);
 
-                    Inventory.instance.GetEquipment(EquipmentType.Main_Hand).ExecuteItemEffect();
+                    //Inventory.instance.GetEquipment(EquipmentType.Main_Hand).ExecuteItemEffect();
                 }
                 //playerMove.isAttack = true;
                 curTime = coolTime;

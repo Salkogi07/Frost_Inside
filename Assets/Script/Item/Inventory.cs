@@ -8,17 +8,22 @@ public class Inventory : MonoBehaviour
 
     public List<ItemData> startingItems;
 
+    public InventoryItem[] quickSlotItems;
+    private int selectedQuickSlot = 0;
+
     public List<InventoryItem> equipment;
     public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary;
 
-    public List<InventoryItem> inventoryItems;
+    public InventoryItem[] inventoryItems;
 
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
     [SerializeField] private Transform equipmentSlotParent;
+    [SerializeField] private Transform quickSlotParent;
 
     private UI_ItemSlot[] inventoryItemSlot;
     private UI_EquipmentSlot[] equipmentSlot;
+    private UI_QuickSlot[] quickSlot;
 
     private void Awake()
     {
@@ -30,14 +35,27 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        inventoryItems = new List<InventoryItem>();
 
         equipment = new List<InventoryItem>();
         equipmentDictionary = new Dictionary<ItemData_Equipment, InventoryItem>();
 
         inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
+        quickSlot = quickSlotParent.GetComponentsInChildren<UI_QuickSlot>();
+
+        inventoryItems = new InventoryItem[inventoryItemSlot.Length];
+
         AddStartingItems();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectQuickSlot(0);
+        if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);
+        if (Input.GetKeyDown(KeyCode.Alpha3)) SelectQuickSlot(2);
+
+        if (Input.GetAxis("Mouse ScrollWheel") > 0) SelectQuickSlot((selectedQuickSlot + 1) % 3);
+        if (Input.GetAxis("Mouse ScrollWheel") < 0) SelectQuickSlot((selectedQuickSlot + 2) % 3);
     }
 
     private void AddStartingItems()
@@ -97,56 +115,80 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        for(int i =0; i < inventoryItemSlot.Length; i++)
+        // 인벤토리 슬롯 UI 업데이트
+        for (int i =0; i < inventoryItemSlot.Length; i++)
         {
             inventoryItemSlot[i].CleanUpSlot();
         }
 
-        for (int i = 0; i < inventoryItems.Count; i++)
+        for (int i = 0; i < inventoryItems.Length; i++)
         {
             inventoryItemSlot[i].UpdateSlot(inventoryItems[i]);
+        }
+
+        // quick slot UI 업데이트
+        for (int i = 0; i < quickSlot.Length; i++)
+        {
+            quickSlot[i].CleanUpSlot();
+        }
+        for (int i = 0; i < quickSlotItems.Length; i++)
+        {
+            if (i < quickSlot.Length)
+                quickSlot[i].UpdateSlot(quickSlotItems[i]);
         }
     }
 
     public void AddItem(ItemData _item)
     {
-        if (CanAddItem())
+        int index = GetFirstEmptySlot();
+        if (index == -1)
         {
-            InventoryItem newItem = new InventoryItem(_item);
-            inventoryItems.Add(newItem);
-
-            UpdateSlotUI();
+            Debug.Log("인벤토리가 가득 찼습니다!");
+            return;
         }
+        InventoryItem newItem = new InventoryItem(_item);
+        inventoryItems[index] = newItem;
+        UpdateSlotUI();
     }
+
 
     public void RemoveItem(ItemData _item)
     {
-        // inventoryItems 리스트에서 _item과 같은 아이템을 찾아 제거
-        for (int i = 0; i < inventoryItems.Count; i++)
+        // 해당 아이템이 있는 슬롯을 찾아 null로 설정하여 제거
+        for (int i = 0; i < inventoryItems.Length; i++)
         {
-            if (inventoryItems[i].data == _item)
+            if (inventoryItems[i] != null && inventoryItems[i].data == _item)
             {
-                inventoryItems.RemoveAt(i);
-                break; // 하나만 삭제하고 종료
+                inventoryItems[i] = null;
+                break; // 하나만 제거
             }
         }
-
         UpdateSlotUI();
     }
 
     public bool CanAddItem()
     {
-        if (inventoryItems.Count >= inventoryItemSlot.Length)
+        if (GetFirstEmptySlot() != -1)
         {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
+    }
+    
+    private int GetFirstEmptySlot()
+    {
+        for (int i = 0; i < inventoryItems.Length; i++)
+        {
+            if (inventoryItems[i] == null)
+                return i;
+        }
+        return -1;
     }
 
     public List<InventoryItem> GetEquipmentList() => equipment;
 
-    public List<InventoryItem> GetInventoryList() => inventoryItems;
+    public InventoryItem[] GetInventoryList() => inventoryItems;
 
     public ItemData_Equipment GetEquipment(EquipmentType _type)
     {
@@ -159,5 +201,17 @@ public class Inventory : MonoBehaviour
         }
 
         return equipedItem;
+    }
+
+    public void SelectQuickSlot(int index)
+    {
+        selectedQuickSlot = index;
+        Debug.Log("Quick Slot Selected: " + index);
+    }
+
+    public void AssignToQuickSlot(int slotIndex, InventoryItem item)
+    {
+        if (slotIndex < 0 || slotIndex >= quickSlotItems.Length) return;
+        quickSlotItems[slotIndex] = item;
     }
 }

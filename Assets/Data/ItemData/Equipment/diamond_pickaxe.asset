@@ -15,7 +15,8 @@ MonoBehaviour:
   itemType: 0
   itemName: diamond_pickaxe
   icon: {fileID: -5563659230636437988, guid: 46264459fb4bc2048a33516533a52f1c, type: 3}
-  equipmentType: 0
+  equipmentType: 2
+  itemEffect: []
   mining: 10
   armor: 0
   lagging: 0

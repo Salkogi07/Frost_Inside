@@ -2,9 +2,9 @@ using UnityEngine;
 
 public enum EquipmentType
 {
-    Main_Hand,
-    Serve_Hand,
-    Armor
+    Back_Slot,
+    Armor,
+    Tool
 }
 
 [CreateAssetMenu(fileName = "New ItemDatat", menuName = "Data/Equipment")]
@@ -21,11 +21,11 @@ public class ItemData_Equipment : ItemData
     public int Hp;
     public int Temperature;
 
-    public void ExecuteItemEffect()
+    public void ExecuteItemEffect(Transform _playerPosition)
     {
         foreach (var item in itemEffect)
         {
-            item.ExecuteEffect();
+            item.ExecuteEffect(_playerPosition);
         }
     }
 

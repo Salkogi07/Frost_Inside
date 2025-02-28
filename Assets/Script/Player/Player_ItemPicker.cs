@@ -42,8 +42,13 @@ public class Player_ItemPicker : MonoBehaviour
 
     private void PickupItem(GameObject nearestItem, ItemObject itemPickup)
     {
-        Inventory.instance.AddItem(itemPickup.itemData);
-        Destroy(nearestItem);
+        Inventory inventory = Inventory.instance;
+
+        if (inventory.CanAddItem())
+        {
+            inventory.AddItem(itemPickup.itemData);
+            Destroy(nearestItem);
+        }
     }
 
     // 플레이어 기준 가장 가까운 아이템 찾기
