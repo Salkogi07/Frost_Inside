@@ -2346,7 +2346,6 @@ MonoBehaviour:
     m_Bits: 2056
   moveInput: 0
   isAttack: 0
-  isDead: 0
   canDoubleJump: 0
 --- !u!114 &329892668
 MonoBehaviour:
@@ -2360,6 +2359,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bde7980eb8ea5e478115fc1e8e78032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDead: 0
   mining:
     baseValue: 1
     modifiers: 
@@ -2886,7 +2886,7 @@ MonoBehaviour:
   moveSpeed: 3
   Hide: 0
   xDistanceThreshold: 2
-  Pattern: 2
+  Pattern: 0
 --- !u!1 &404576172
 GameObject:
   m_ObjectHideFlags: 0
@@ -19781,6 +19781,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bbb675982942d4fa6acd5ee2f73714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingItems: []
   equipment: []
   inventoryItems: []
   inventorySlotParent: {fileID: 406004457}
