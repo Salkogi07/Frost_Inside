@@ -1,8 +1,10 @@
 using Mirror.Examples.CouchCoop;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.Splines;
 using UnityEngine.UIElements;
+using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
 
 
 public class MimicBoxco : MonoBehaviour
@@ -12,12 +14,13 @@ public class MimicBoxco : MonoBehaviour
     [SerializeField]  private Transform Player; // 플레이어의 위치
     [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
     public bool Hide = true;
-    bool Scoping = true;
+
+    bool Scoping = false;
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
     float Concealment_time;
     bool Moving =  false;
-
-
+    float Moving_Time;
+    float distance;
     float move_time = 5f;
 
     public float xDistanceThreshold = 2f;
@@ -66,8 +69,8 @@ public class MimicBoxco : MonoBehaviour
         if(Scoping == false && Pattern != pattern.Concealment)
         {
             
-            Concealment_time  = +Time.deltaTime;
-            if(Concealment_time >= 5f)
+            Concealment_time  += Time.deltaTime;
+            if(Concealment_time >= 30f)
             {
                 Pattern = pattern.Concealment;
             }
@@ -104,17 +107,33 @@ public class MimicBoxco : MonoBehaviour
                 break;
             case pattern.Move:
 
-                
-                if(Moving == false)
+                Debug.Log("ddeee");
+
+                if (distance <5f)
+                {
+                    Move();
+                    distance = Time.deltaTime;
+                }
+                else
+                {
+                    Moving = true;
+                }
+                    if (Moving == false && Moving_Time >= 5f)
                 {
                     moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
                     //StartCoroutine("Move", move_time);
-                    //Move(,move_time);
+                    
+                    Moving_Time = 0f;
                     Moving = true;
+                }
+                else
+                {
+                    Moving_Time += Time.deltaTime;
                 }
                 
                 //Debug.Log("움직인다!");
 
+                    // 수정 필요 (5초후 방향을 정하고 일정거리 이동필요)
 
                 break;
 
@@ -164,36 +183,38 @@ public class MimicBoxco : MonoBehaviour
             Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
-    void Move()
+    private void Move()
     {
+        transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+        //while(distance< 40f)
+        //{
+        //    if (Scoping == false )// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
+        //    {
+        //        distance += Time.time;
+        //        Debug.Log("" + distance);
+        //        
+        //    }//else if (Scoping == true)
+        //    //{
+        //    //continue;
+        //    //}
+        //}
 
-        for (int i = 0; i < 120; i++)
-        {
-            if (Scoping == false)// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
-            {
 
-                transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-            }
-            //else if (Scoping == true)
-            //{
-            //continue;
-            //}
-
-            
-        }
-
-        Moving = false;
-
+        //distance = 0f;
+        //Moving = false;
+        //Moving_Time = 0f;
     }
     private void Chase()
     {
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-        //Vector3 newPosition = Floor_Measurement.position;
-        //newPosition.x = moveDirection;
-        //Floor_Measurement.position = Floor_Measurement.position-newPosition;
+        Vector3 newPosition = Floor_Measurement.position;
+        newPosition.x = moveDirection;
+        //newPosition.y = transform.ps;
+        Floor_Measurement.position = newPosition;
+        //Floor_Measurement.position = 
         //Vector2 newPosition = moveDirection;
-        //Floor_Measurement.position -= new Vector3(0,1f);
+        //Floor_Measurement.position = Vector3(newPosition, transform.position);
         //rb.linearVelocity = new Vector2(moveDirection * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
     }
 }

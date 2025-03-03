@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using System.Collections;
 
 public class MimicBox : MonoBehaviour
 {
@@ -102,7 +102,7 @@ public class MimicBox : MonoBehaviour
             case pattern.Move:
 
                 moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
-                StartCoroutine("Move", move_time);
+                //StartCoroutine(Move("Move", move_time));
 
 
 
@@ -153,25 +153,25 @@ public class MimicBox : MonoBehaviour
             Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
-    void Move()
-    {
-        for (int i = 0; i < 120; i++)
-        {
-            //if()// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
-            //{
-            //    transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-            //}
-            //else if ()
-            //{
+    //private IEnumerator Move()
+    //{
+    //    for (int i = 0; i < 120; i++)
+    //    {
+    //        //if()// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
+    //        //{
+    //        //    transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+    //        //}
+    //        //else if ()
+    //        //{
 
-            //}
+    //        //}
 
 
-        }
+    //    }
         
         
     
-    }
+    //}
     private void Chase()
     {
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1

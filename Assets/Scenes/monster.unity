@@ -1916,7 +1916,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 2.9, y: 3.5}
+  m_Size: {x: 3.38, y: 3.5}
   m_EdgeRadius: 0
 --- !u!224 &292947673 stripped
 RectTransform:
@@ -19782,10 +19782,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingItems: []
+  quickSlotItems: []
   equipment: []
   inventoryItems: []
   inventorySlotParent: {fileID: 406004457}
   equipmentSlotParent: {fileID: 1005179073}
+  quickSlotParent: {fileID: 0}
 --- !u!4 &1128131729
 Transform:
   m_ObjectHideFlags: 0
@@ -29042,7 +29044,7 @@ GameObject:
   - component: {fileID: 1864232754}
   - component: {fileID: 1864232753}
   m_Layer: 5
-  m_Name: Equipment slot - Armor
+  m_Name: Equipment slot - Tool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29134,7 +29136,7 @@ GameObject:
   - component: {fileID: 1867669459}
   - component: {fileID: 1867669458}
   m_Layer: 5
-  m_Name: Equipment slot - Serve_Hand
+  m_Name: Equipment slot - Armor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29304,7 +29306,7 @@ GameObject:
   - component: {fileID: 1934015810}
   - component: {fileID: 1934015809}
   m_Layer: 5
-  m_Name: Equipment slot - Main_Hand
+  m_Name: Equipment slot - Back_Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
