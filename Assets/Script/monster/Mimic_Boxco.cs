@@ -14,6 +14,7 @@ public class MimicBoxco : MonoBehaviour
     [SerializeField]  private Transform Player; // 플레이어의 위치
     [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
     public bool Hide = true;
+    public float distanceMax = 5f;
 
     bool Scoping = false;
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
@@ -109,24 +110,21 @@ public class MimicBoxco : MonoBehaviour
 
                 Debug.Log("ddeee");
 
-                if (distance <5f)
-                {
+                
                     Move();
-                    distance = Time.deltaTime;
-                }
-                else
-                {
-                    Moving = true;
-                }
-                    if (Moving == false && Moving_Time >= 5f)
+                
+                if (Moving == false && Moving_Time >= 5f)
+                
+                    
                 {
                     moverandomDirection = Random.Range(1, 2) == 1 ? 1 : -1;
                     //StartCoroutine("Move", move_time);
                     
                     Moving_Time = 0f;
                     Moving = true;
+                    distance = 0f;
                 }
-                else
+                else if(Moving == false)
                 {
                     Moving_Time += Time.deltaTime;
                 }
@@ -185,7 +183,22 @@ public class MimicBoxco : MonoBehaviour
     }
     private void Move()
     {
-        transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+        
+        if (Moving == true )
+        { if(distance < distanceMax)
+            {
+                transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+                distance += Time.deltaTime;
+            }
+            else 
+            {
+                Moving = false;
+
+            }
+        }
+        
+
+
         //while(distance< 40f)
         //{
         //    if (Scoping == false )// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
@@ -209,9 +222,14 @@ public class MimicBoxco : MonoBehaviour
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
         Vector3 newPosition = Floor_Measurement.position;
-        newPosition.x = moveDirection;
-        //newPosition.y = transform.ps;
+
+        newPosition.x = moveDirection == -1f ? newPosition.x : moveDirection * newPosition.x ;
+
+        
+        
         Floor_Measurement.position = newPosition;
+        
+        //newPosition.y = ;
         //Floor_Measurement.position = 
         //Vector2 newPosition = moveDirection;
         //Floor_Measurement.position = Vector3(newPosition, transform.position);

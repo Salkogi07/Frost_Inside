@@ -2885,6 +2885,7 @@ MonoBehaviour:
   Player: {fileID: 329892671}
   moveSpeed: 3
   Hide: 0
+  distanceMax: 1.5
   xDistanceThreshold: 2
   Pattern: 0
 --- !u!1 &404576172
