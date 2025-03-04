@@ -19,8 +19,6 @@ public class UI_QuickSlot : UI_ItemSlot, IDropHandler
 
         InventoryItem draggedItem = draggedSlot.item;
 
-        // Inventory에서 quick slot에 아이템 할당
-        Inventory.instance.AssignToQuickSlot(slotIndex, draggedItem);
         Inventory.instance.RemoveItem(draggedItem.data);
 
         // UI 업데이트: 해당 슬롯에 아이템 아이콘 표시

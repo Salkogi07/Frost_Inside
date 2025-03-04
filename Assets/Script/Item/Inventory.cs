@@ -208,10 +208,4 @@ public class Inventory : MonoBehaviour
         selectedQuickSlot = index;
         Debug.Log("Quick Slot Selected: " + index);
     }
-
-    public void AssignToQuickSlot(int slotIndex, InventoryItem item)
-    {
-        if (slotIndex < 0 || slotIndex >= quickSlotItems.Length) return;
-        quickSlotItems[slotIndex] = item;
-    }
 }
