@@ -9,12 +9,14 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public static UI_ItemSlot draggedSlot;
     public static GameObject draggedItemIcon;
 
+    public int inventorySlotIndex;
+
     public void UpdateSlot(InventoryItem _newItem)
     {
         item = _newItem;
         itemImage.color = Color.white;
 
-        if (item != null)
+        if (item != null && item.data != null)
         {
             itemImage.sprite = item.data.icon;
         }
@@ -89,7 +91,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     private void SwapItems(UI_ItemSlot otherSlot)
     {
         InventoryItem tempItem = item;
-        UpdateSlot(otherSlot.item);
-        otherSlot.UpdateSlot(tempItem);
+        Inventory.instance.SwapInventoryItems(inventorySlotIndex, otherSlot.inventorySlotIndex);
     }
 }

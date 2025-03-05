@@ -4,11 +4,11 @@ using UnityEngine.UI;
 
 public class UI_QuickSlot : UI_ItemSlot, IDropHandler
 {
-    public int slotIndex; // 인스펙터에서 슬롯 번호 할당
+    public int quickslot_Index; // 인스펙터에서 슬롯 번호 할당
 
     private void OnValidate()
     {
-        gameObject.name = "Quick Slot - " + slotIndex;
+        gameObject.name = "Quick Slot - " + quickslot_Index;
     }
 
     public override void OnDrop(PointerEventData eventData)

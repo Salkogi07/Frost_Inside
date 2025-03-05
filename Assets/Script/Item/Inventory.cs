@@ -1,4 +1,4 @@
-using System.Collections;
+癤퓎sing System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
 
     private void Awake()
     {
-        if(instance == null)
+        if (instance == null)
             instance = this;
         else
             Destroy(instance);
@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
 
         ItemData_Equipment oldEquipment = null;
 
-        foreach(KeyValuePair<ItemData_Equipment,InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
         {
             if (item.Key.equipmentType == newEquipment.equipmentType)
                 oldEquipment = item.Key;
@@ -96,7 +96,7 @@ public class Inventory : MonoBehaviour
 
     public void UnequipItem(ItemData_Equipment itemToRemove)
     {
-        if(equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem newItem))
+        if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem newItem))
         {
             equipment.Remove(newItem);
             equipmentDictionary.Remove(itemToRemove);
@@ -106,7 +106,7 @@ public class Inventory : MonoBehaviour
 
     private void UpdateSlotUI()
     {
-        for(int i = 0; i < equipmentSlot.Length; i++)
+        for (int i = 0; i < equipmentSlot.Length; i++)
         {
             foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
             {
@@ -115,18 +115,15 @@ public class Inventory : MonoBehaviour
             }
         }
 
-        // 인벤토리 슬롯 UI 업데이트
-        for (int i =0; i < inventoryItemSlot.Length; i++)
+        for (int i = 0; i < inventoryItemSlot.Length; i++)
         {
             inventoryItemSlot[i].CleanUpSlot();
         }
-
         for (int i = 0; i < inventoryItems.Length; i++)
         {
             inventoryItemSlot[i].UpdateSlot(inventoryItems[i]);
         }
 
-        // quick slot UI 업데이트
         for (int i = 0; i < quickSlot.Length; i++)
         {
             quickSlot[i].CleanUpSlot();
@@ -143,7 +140,7 @@ public class Inventory : MonoBehaviour
         int index = GetFirstEmptySlot();
         if (index == -1)
         {
-            Debug.Log("인벤토리가 가득 찼습니다!");
+            Debug.Log("Full Inventory!");
             return;
         }
         InventoryItem newItem = new InventoryItem(_item);
@@ -154,15 +151,30 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItem(ItemData _item)
     {
-        // 해당 아이템이 있는 슬롯을 찾아 null로 설정하여 제거
         for (int i = 0; i < inventoryItems.Length; i++)
         {
             if (inventoryItems[i] != null && inventoryItems[i].data == _item)
             {
                 inventoryItems[i] = null;
-                break; // 하나만 제거
+                break;
             }
         }
+        UpdateSlotUI();
+    }
+
+    public void SwapInventoryItems(int index1, int index2)
+    {
+        if (index1 < 0 || index1 >= inventoryItems.Length ||
+            index2 < 0 || index2 >= inventoryItems.Length)
+        {
+            Debug.Log("index.");
+            return;
+        }
+
+        InventoryItem temp = inventoryItems[index1];
+        inventoryItems[index1] = inventoryItems[index2];
+        inventoryItems[index2] = temp;
+
         UpdateSlotUI();
     }
 
@@ -175,12 +187,12 @@ public class Inventory : MonoBehaviour
 
         return false;
     }
-    
+
     private int GetFirstEmptySlot()
     {
         for (int i = 0; i < inventoryItems.Length; i++)
         {
-            if (inventoryItems[i] == null)
+            if (inventoryItems[i] == null || inventoryItems[i].data == null)
                 return i;
         }
         return -1;
