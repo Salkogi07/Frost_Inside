@@ -782,7 +782,6 @@ RectTransform:
   m_Children:
   - {fileID: 463600005287965334}
   - {fileID: 2077817686}
-  - {fileID: 763486602}
   m_Father: {fileID: 1700269485}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -939,9 +938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingItems:
-  - {fileID: 11400000, guid: 9d31e3dde8d10e845827bb108098bbf0, type: 2}
   - {fileID: 11400000, guid: 3ea4994195fda904f9378dd114a81b28, type: 2}
-  - {fileID: 11400000, guid: fa61c9d7599211742a8d180dfb304b8c, type: 2}
   - {fileID: 11400000, guid: c2b3a195dce43e44382656eed1d7ce5f, type: 2}
   quickSlotItems: []
   equipment: []
@@ -2168,6 +2165,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: slotIndex
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: inventorySlotIndex
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5862490946847073606, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_Name
       value: ItemSlot (5)
@@ -2984,9 +2989,7 @@ MonoBehaviour:
   itemList:
   - {fileID: 11400000, guid: 1afe91a36f8df814f86a867e2bbd53a8, type: 2}
   - {fileID: 11400000, guid: 7ede445f3327c1d4c9279ba9cf6bc97f, type: 2}
-  - {fileID: 11400000, guid: 9d31e3dde8d10e845827bb108098bbf0, type: 2}
   - {fileID: 11400000, guid: 3ea4994195fda904f9378dd114a81b28, type: 2}
-  - {fileID: 11400000, guid: fa61c9d7599211742a8d180dfb304b8c, type: 2}
   - {fileID: 11400000, guid: c2b3a195dce43e44382656eed1d7ce5f, type: 2}
 --- !u!4 &615144008
 Transform:
@@ -3327,6 +3330,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: slotIndex
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: inventorySlotIndex
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 5862490946847073606, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_Name
       value: ItemSlot (8)
@@ -3341,98 +3352,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 463600006326993705, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
   m_PrefabInstance: {fileID: 627651450}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &628726212
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 628726213}
-  - component: {fileID: 628726216}
-  - component: {fileID: 628726215}
-  - component: {fileID: 628726214}
-  m_Layer: 5
-  m_Name: Equipment slot - Tool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &628726213
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628726212}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 763486602}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &628726214
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628726212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dced2ce6a26184245b7082849405dc30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemImage: {fileID: 628726215}
-  item:
-    data: {fileID: 0}
-  slotType: 2
---- !u!114 &628726215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628726212}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 1
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &628726216
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 628726212}
-  m_CullTransparentMesh: 1
 --- !u!1 &629632970
 GameObject:
   m_ObjectHideFlags: 0
@@ -4208,82 +4127,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 748587759}
   m_CullTransparentMesh: 1
---- !u!1 &763486601
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 763486602}
-  - component: {fileID: 763486604}
-  - component: {fileID: 763486603}
-  m_Layer: 5
-  m_Name: EquipmentSlot (3)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &763486602
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763486601}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 628726213}
-  m_Father: {fileID: 89284668}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 430, y: -65}
-  m_SizeDelta: {x: 130, y: 130}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &763486603
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763486601}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 3284326738551711527, guid: 0499c00a90f34be49a41db9168e02b82, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &763486604
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 763486601}
-  m_CullTransparentMesh: 1
 --- !u!224 &769906498 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7215720939812296226, guid: 19b02c871166adc48992e915e2554356, type: 3}
@@ -4760,7 +4603,7 @@ GameObject:
   - component: {fileID: 909096969}
   - component: {fileID: 909096971}
   m_Layer: 5
-  m_Name: Quick Slot - 1
+  m_Name: Quick Slot - 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4838,7 +4681,8 @@ MonoBehaviour:
   itemImage: {fileID: 909096969}
   item:
     data: {fileID: 0}
-  slotIndex: 1
+  inventorySlotIndex: 0
+  quickslot_Index: 0
 --- !u!1 &982628394
 GameObject:
   m_ObjectHideFlags: 0
@@ -10813,6 +10657,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: slotIndex
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: inventorySlotIndex
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5862490946847073606, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_Name
       value: ItemSlot (7)
@@ -10954,7 +10806,8 @@ MonoBehaviour:
   itemImage: {fileID: 1140294149}
   item:
     data: {fileID: 0}
-  slotIndex: 0
+  inventorySlotIndex: 0
+  quickslot_Index: 0
 --- !u!1 &1156874114
 GameObject:
   m_ObjectHideFlags: 0
@@ -11526,6 +11379,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: slotIndex
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: inventorySlotIndex
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 5862490946847073606, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_Name
       value: ItemSlot (6)
@@ -11789,6 +11650,14 @@ PrefabInstance:
     - target: {fileID: 463600006326993705, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: slotIndex
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: inventorySlotIndex
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5862490946847073606, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_Name
@@ -26643,7 +26512,7 @@ GameObject:
   - component: {fileID: 1771789558}
   - component: {fileID: 1771789560}
   m_Layer: 5
-  m_Name: Quick Slot - 2
+  m_Name: Quick Slot - 0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26721,7 +26590,8 @@ MonoBehaviour:
   itemImage: {fileID: 1771789558}
   item:
     data: {fileID: 0}
-  slotIndex: 2
+  inventorySlotIndex: 0
+  quickslot_Index: 0
 --- !u!1 &1778064724
 GameObject:
   m_ObjectHideFlags: 0
@@ -27466,6 +27336,7 @@ MonoBehaviour:
   itemImage: {fileID: 1838283030}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   slotType: 0
 --- !u!114 &1838283030
 MonoBehaviour:
@@ -28132,6 +28003,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: slotIndex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: inventorySlotIndex
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5862490946847073606, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_Name
       value: ItemSlot (2)
@@ -28501,6 +28380,14 @@ PrefabInstance:
     - target: {fileID: 463600006326993705, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: slotIndex
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1830448282416520651, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
+      propertyPath: inventorySlotIndex
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5862490946847073606, guid: f113aea398aaea549b5a131684a2c4a7, type: 3}
       propertyPath: m_Name
@@ -29132,7 +29019,7 @@ GameObject:
   - component: {fileID: 8664756592768586081}
   - component: {fileID: 8664756592768586082}
   m_Layer: 5
-  m_Name: Equipment slot - Armor
+  m_Name: Equipment slot - Tool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29183,6 +29070,7 @@ MonoBehaviour:
   itemImage: {fileID: 8664756592768586081}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   slotType: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
@@ -29195,8 +29083,8 @@ SceneRoots:
   - {fileID: 996676586}
   - {fileID: 619394802}
   - {fileID: 784575628}
+  - {fileID: 615144008}
   - {fileID: 1022042130}
   - {fileID: 190581304}
   - {fileID: 852017078}
   - {fileID: 287746791}
-  - {fileID: 615144008}

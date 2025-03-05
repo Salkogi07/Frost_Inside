@@ -3,7 +3,6 @@ using UnityEngine;
 public enum EquipmentType
 {
     Back_Slot,
-    Armor,
     Tool
 }
 

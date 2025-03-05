@@ -166,6 +166,26 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
+    public void SwapInventoryItems(int index1, int index2)
+    {
+        // 인덱스 범위가 유효한지 확인
+        if (index1 < 0 || index1 >= inventoryItems.Length ||
+            index2 < 0 || index2 >= inventoryItems.Length)
+        {
+            Debug.Log("아이템 스왑을 위한 인덱스가 유효하지 않습니다.");
+            return;
+        }
+
+        // 두 아이템의 위치 교환
+        InventoryItem temp = inventoryItems[index1];
+        inventoryItems[index1] = inventoryItems[index2];
+        inventoryItems[index2] = temp;
+
+        // 변경 사항을 UI에 반영
+        UpdateSlotUI();
+    }
+
+
     public bool CanAddItem()
     {
         if (GetFirstEmptySlot() != -1)
