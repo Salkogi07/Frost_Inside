@@ -143,7 +143,7 @@ public class MimicBoxco : MonoBehaviour
                 //{
                 // 플레이어 방향으로 X축으로만 이동
                 Chase();
-                Debug.Log("쫓는다!");
+                //Debug.Log("쫓는다!");
                 //Vector3 direction = (player.position - transform.position).normalized;
                 //transform.position += direction * moveSpeed * Time.deltaTime;
 
@@ -178,7 +178,7 @@ public class MimicBoxco : MonoBehaviour
         {
             Scoping = false;
             Pattern = pattern.Move;
-            Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
+            //Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
     private void Move()
@@ -221,14 +221,19 @@ public class MimicBoxco : MonoBehaviour
     {
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-        Vector3 newPosition = Floor_Measurement.position;
-
-        newPosition.x = moveDirection == -1f ? newPosition.x : moveDirection * newPosition.x ;
-
+        Vector3 newFloorPosition = Floor_Measurement.position;
+        Vector3 newPosition = transform.position;
+        //Debug.Log(newPosition);
         
-        
+        newPosition.x = moveDirection == -1f && newPosition.x > 0f ? moveDirection * newPosition.x  : newPosition.x;
+        Debug.Log(newPosition.x);
+        //bool minus = moveDirection == -1f && newPosition.x > 0f ? true : false;
+        //newPosition.x = minus == true ? 1f : 2f;
+
         Floor_Measurement.position = newPosition;
         
+
+
         //newPosition.y = ;
         //Floor_Measurement.position = 
         //Vector2 newPosition = moveDirection;
