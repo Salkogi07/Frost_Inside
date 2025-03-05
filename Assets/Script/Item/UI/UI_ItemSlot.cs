@@ -16,7 +16,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         item = _newItem;
         itemImage.color = Color.white;
 
-        if (item != null)
+        if (item != null && item.data != null)
         {
             itemImage.sprite = item.data.icon;
         }
