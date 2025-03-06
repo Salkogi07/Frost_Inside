@@ -13,6 +13,8 @@ public class MimicBoxco : MonoBehaviour
     [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위
     [SerializeField]  private Transform Player; // 플레이어의 위치
     [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
+    [SerializeField] public float jumpspeed;
+    [SerializeField] public float jumpcooltime;
     public bool Hide = true;
     public float distanceMax = 5f;
 
@@ -46,7 +48,7 @@ public class MimicBoxco : MonoBehaviour
 
     void Start()
     {
-        //Player = GetComponent<Rigidbody2D>();
+        //Floor_Measurement = GetComponent<Floor_Measurement>();
         Floor_Measurement = transform.Find("Floor Measurement");
         rb = GetComponent<Rigidbody2D>();
         attack = transform.Find("Attack");
@@ -199,45 +201,47 @@ public class MimicBoxco : MonoBehaviour
         
 
 
-        //while(distance< 40f)
-        //{
-        //    if (Scoping == false )// 오브젝트 주위에 바닥이 있으면 이동 없으면 중단
-        //    {
-        //        distance += Time.time;
-        //        Debug.Log("" + distance);
-        //        
-        //    }//else if (Scoping == true)
-        //    //{
-        //    //continue;
-        //    //}
-        //}
+        
 
 
-        //distance = 0f;
-        //Moving = false;
-        //Moving_Time = 0f;
+        
     }
     private void Chase()
     {
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-        Vector3 newFloorPosition = Floor_Measurement.position;
-        Vector3 newPosition = transform.position;
-        //Debug.Log(newPosition);
         
-        newPosition.x = moveDirection == -1f && newPosition.x > 0f ? moveDirection * newPosition.x  : newPosition.x;
-        Debug.Log(newPosition.x);
-        //bool minus = moveDirection == -1f && newPosition.x > 0f ? true : false;
-        //newPosition.x = minus == true ? 1f : 2f;
+        Vector3 newPosition = transform.position;
+        Floor_Measurement.position = newPosition;
+        newPosition = Floor_Measurement.position;
+     
+        Debug.Log(newPosition);
+
+        newPosition.y -= 1f;
+        if (moveDirection == -1f)
+        {
+
+            newPosition.x -= 1f;
+        }
+        else
+        {
+            newPosition.x += 1f;
+        }
+
 
         Floor_Measurement.position = newPosition;
-        
+        //bool minus = moveDirection == -1f && newPosition.x > 0f ? true : false;
+        //newPosition.x = minus == true ? 1f : 2f;
+        //newPosition.x *= -1f;
+
+
+
 
 
         //newPosition.y = ;
         //Floor_Measurement.position = 
         //Vector2 newPosition = moveDirection;
         //Floor_Measurement.position = Vector3(newPosition, transform.position);
-        //rb.linearVelocity = new Vector2(moveDirection * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
+        //rb.Floor_Measurement = new Vector2(moveDirection * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
     }
 }
