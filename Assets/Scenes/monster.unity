@@ -2884,6 +2884,8 @@ MonoBehaviour:
   detectionRadius: 1
   Player: {fileID: 329892671}
   moveSpeed: 3
+  jumpspeed: 0
+  jumpcooltime: 0
   Hide: 0
   distanceMax: 1.5
   xDistanceThreshold: 2
@@ -29045,7 +29047,7 @@ GameObject:
   - component: {fileID: 1864232754}
   - component: {fileID: 1864232753}
   m_Layer: 5
-  m_Name: Equipment slot - Tool
+  m_Name: Equipment slot - 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29085,6 +29087,7 @@ MonoBehaviour:
   itemImage: {fileID: 1864232754}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   slotType: 2
 --- !u!114 &1864232754
 MonoBehaviour:
@@ -29137,7 +29140,7 @@ GameObject:
   - component: {fileID: 1867669459}
   - component: {fileID: 1867669458}
   m_Layer: 5
-  m_Name: Equipment slot - Armor
+  m_Name: Equipment slot - Tool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29177,6 +29180,7 @@ MonoBehaviour:
   itemImage: {fileID: 1867669459}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   slotType: 1
 --- !u!114 &1867669459
 MonoBehaviour:
@@ -29347,6 +29351,7 @@ MonoBehaviour:
   itemImage: {fileID: 1934015810}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   slotType: 0
 --- !u!114 &1934015810
 MonoBehaviour:
