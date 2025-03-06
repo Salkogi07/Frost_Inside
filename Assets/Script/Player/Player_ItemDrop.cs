@@ -30,13 +30,25 @@ public class Player_ItemDrop : ItemDrop
 
         for(int i = 0;i < inventoryToDrop.Count; i++)
         {
-            inventory.RemoveItem(inventoryToDrop[i].data);
+            inventory.RemoveItem(inventoryToDrop[i].data, i);
         }
     }
 
-    public void GenerateThrow(ItemData _itemdata)
+    public void Inventory_Throw(ItemData _itemdata, int index)
     {
         ThrowItem(_itemdata);
-        Inventory.instance.RemoveItem(_itemdata);
+        Inventory.instance.RemoveItem(_itemdata, index);
+    }
+
+    public void EquipmentSlot_Throw(ItemData _itemdata)
+    {
+        ThrowItem(_itemdata);
+        Inventory.instance.UnequipItem(_itemdata as ItemData_Equipment);
+    }
+
+    public void QuickSlot_Throw(ItemData _itemdata, int index)
+    {
+        ThrowItem(_itemdata);
+        Inventory.instance.Remove_QuickSlot_Item(_itemdata, index);
     }
 }

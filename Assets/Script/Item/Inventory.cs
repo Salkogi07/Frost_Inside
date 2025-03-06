@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using System;
+using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -44,6 +46,7 @@ public class Inventory : MonoBehaviour
         quickSlot = quickSlotParent.GetComponentsInChildren<UI_QuickSlot>();
 
         inventoryItems = new InventoryItem[inventoryItemSlot.Length];
+        quickSlotItems = new InventoryItem[quickSlot.Length];
 
         AddStartingItems();
     }
@@ -53,6 +56,16 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1)) SelectQuickSlot(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) SelectQuickSlot(2);
+
+        Image selcetquickSlot = quickSlot[selectedQuickSlot].gameObject.GetComponent<Image>();
+        Image quickSlot1 = quickSlot[0].gameObject.GetComponent<Image>();
+        Image quickSlot2 = quickSlot[1].gameObject.GetComponent<Image>();
+        Image quickSlot3 = quickSlot[2].gameObject.GetComponent<Image>();
+
+        quickSlot1.color = Color.clear;
+        quickSlot2.color = Color.clear;
+        quickSlot3.color = Color.clear;
+        selcetquickSlot.color = Color.red;
 
         if (Input.GetAxis("Mouse ScrollWheel") > 0) SelectQuickSlot((selectedQuickSlot + 1) % 3);
         if (Input.GetAxis("Mouse ScrollWheel") < 0) SelectQuickSlot((selectedQuickSlot + 2) % 3);
@@ -66,7 +79,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void EquipItem(ItemData _item)
+    public void EquipItem(ItemData _item, int index)
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
         InventoryItem newItem = new InventoryItem(newEquipment);
@@ -89,7 +102,7 @@ public class Inventory : MonoBehaviour
         equipmentDictionary.Add(newEquipment, newItem);
         newEquipment.AddModifiers();
 
-        RemoveItem(_item);
+        RemoveItem(_item, index);
 
         UpdateSlotUI();
     }
@@ -137,7 +150,7 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(ItemData _item)
     {
-        int index = GetFirstEmptySlot();
+        int index = GetFirst_EmptySlot();
         if (index == -1)
         {
             Debug.Log("Full Inventory!");
@@ -149,16 +162,10 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public void RemoveItem(ItemData _item)
+    public void RemoveItem(ItemData _item, int index)
     {
-        for (int i = 0; i < inventoryItems.Length; i++)
-        {
-            if (inventoryItems[i] != null && inventoryItems[i].data == _item)
-            {
-                inventoryItems[i] = null;
-                break;
-            }
-        }
+        inventoryItems[index] = null;
+
         UpdateSlotUI();
     }
 
@@ -180,7 +187,7 @@ public class Inventory : MonoBehaviour
 
     public bool CanAddItem()
     {
-        if (GetFirstEmptySlot() != -1)
+        if (GetFirst_EmptySlot() != -1)
         {
             return true;
         }
@@ -188,7 +195,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    private int GetFirstEmptySlot()
+    private int GetFirst_EmptySlot()
     {
         for (int i = 0; i < inventoryItems.Length; i++)
         {
@@ -196,6 +203,37 @@ public class Inventory : MonoBehaviour
                 return i;
         }
         return -1;
+    }
+
+    public void Move_QuickSlot_Item(ItemData _item , int index)
+    {
+        InventoryItem newItem = new InventoryItem(_item);
+        quickSlotItems[index] = newItem;
+        UpdateSlotUI();
+    }
+
+
+    public void Remove_QuickSlot_Item(ItemData _item, int index)
+    {
+        quickSlotItems[index] = null;
+    
+        UpdateSlotUI();
+    }
+
+    public void SwapQuickItems(int index1, int index2)
+    {
+        if (index1 < 0 || index1 >= quickSlotItems.Length ||
+            index2 < 0 || index2 >= quickSlotItems.Length)
+        {
+            Debug.Log("index.");
+            return;
+        }
+
+        InventoryItem temp = quickSlotItems[index1];
+        quickSlotItems[index1] = quickSlotItems[index2];
+        quickSlotItems[index2] = temp;
+
+        UpdateSlotUI();
     }
 
     public List<InventoryItem> GetEquipmentList() => equipment;

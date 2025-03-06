@@ -4379,7 +4379,7 @@ GameObject:
   - component: {fileID: 909096969}
   - component: {fileID: 909096971}
   m_Layer: 5
-  m_Name: Quick Slot - 0
+  m_Name: Quick Slot - 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4457,8 +4457,7 @@ MonoBehaviour:
   itemImage: {fileID: 909096969}
   item:
     data: {fileID: 0}
-  inventorySlotIndex: 0
-  quickslot_Index: 0
+  quickslot_Index: 1
 --- !u!1 &982628394
 GameObject:
   m_ObjectHideFlags: 0
@@ -10473,7 +10472,6 @@ MonoBehaviour:
   itemImage: {fileID: 1140294149}
   item:
     data: {fileID: 0}
-  inventorySlotIndex: 0
   quickslot_Index: 0
 --- !u!1 &1156874114
 GameObject:
@@ -26068,7 +26066,7 @@ GameObject:
   - component: {fileID: 1771789558}
   - component: {fileID: 1771789560}
   m_Layer: 5
-  m_Name: Quick Slot - 0
+  m_Name: Quick Slot - 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -26146,8 +26144,7 @@ MonoBehaviour:
   itemImage: {fileID: 1771789558}
   item:
     data: {fileID: 0}
-  inventorySlotIndex: 0
-  quickslot_Index: 0
+  quickslot_Index: 2
 --- !u!1 &1778064724
 GameObject:
   m_ObjectHideFlags: 0
@@ -26892,7 +26889,6 @@ MonoBehaviour:
   itemImage: {fileID: 1838283030}
   item:
     data: {fileID: 0}
-  inventorySlotIndex: 0
   slotType: 0
 --- !u!114 &1838283030
 MonoBehaviour:
@@ -28626,7 +28622,6 @@ MonoBehaviour:
   itemImage: {fileID: 8664756592768586081}
   item:
     data: {fileID: 0}
-  inventorySlotIndex: 0
   slotType: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

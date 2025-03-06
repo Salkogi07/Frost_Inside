@@ -40,14 +40,16 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {
-            PlayerManager.instance.item_drop.GenerateThrow(item.data);
+            UI_ItemSlot draggedQuickSlot = draggedSlot;
+
+            PlayerManager.instance.item_drop.Inventory_Throw(item.data, inventorySlotIndex);
             return;
         }
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData)
     {
-        if (item == null) return;
+        if (item == null || item.data == null) return;
         draggedSlot = this;
         itemImage.raycastTarget = false;
 
@@ -85,6 +87,11 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public virtual void OnDrop(PointerEventData eventData)
     {
         if (draggedSlot == null || draggedSlot == this) return;
+
+        // 자기 자신에게 드롭하는 경우 무시
+        if (draggedSlot == this)
+            return;
+
         SwapItems(draggedSlot);
     }
 

@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class UI_EquipmentSlot : UI_ItemSlot
 {
     public EquipmentType slotType;
+    public int equipmentSlot_Index;
 
     private void OnValidate()
     {
@@ -17,7 +18,8 @@ public class UI_EquipmentSlot : UI_ItemSlot
 
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {
-            PlayerManager.instance.item_drop.GenerateThrow(item.data);
+            PlayerManager.instance.item_drop.EquipmentSlot_Throw(item.data);
+
             Inventory.instance.UnequipItem(item.data as ItemData_Equipment);
             CleanUpSlot();
             return;
@@ -36,6 +38,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
             return;
 
         InventoryItem draggedItem = draggedSlot.item;
+        UI_ItemSlot draggedQuickSlot = draggedSlot;
 
         // 드래그된 아이템이 장비 아이템인지 확인
         if (draggedItem.data is ItemData_Equipment equipmentData)
@@ -50,7 +53,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
                 }
 
                 // 인벤토리에서 해당 아이템 제거 후 장착 처리
-                Inventory.instance.EquipItem(equipmentData);
+                Inventory.instance.EquipItem(equipmentData, draggedSlot.inventorySlotIndex);
 
                 // 장비 슬롯 UI 업데이트 및 드래그 슬롯 정리
                 UpdateSlot(draggedItem);

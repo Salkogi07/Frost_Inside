@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_QuickSlot : UI_ItemSlot, IDropHandler
+public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public int quickslot_Index; // 인스펙터에서 슬롯 번호 할당
 
@@ -11,20 +11,51 @@ public class UI_QuickSlot : UI_ItemSlot, IDropHandler
         gameObject.name = "Quick Slot - " + quickslot_Index;
     }
 
+    public override void OnPointerDown(PointerEventData eventData)
+    {
+        if (item == null) return;
+
+        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
+        {
+            PlayerManager.instance.item_drop.QuickSlot_Throw(item.data, quickslot_Index);
+            return;
+        }
+
+        Inventory.instance.AddItem(item.data);
+        Inventory.instance.Remove_QuickSlot_Item(item.data,quickslot_Index);
+    }
+
     public override void OnDrop(PointerEventData eventData)
     {
         // 드래그된 슬롯과 아이템이 유효한지 확인
         if (draggedSlot == null || draggedSlot.item == null)
             return;
 
+        // 자기 자신에게 드롭하는 경우 무시
+        if (draggedSlot == this)
+            return;
+
         InventoryItem draggedItem = draggedSlot.item;
+        UI_QuickSlot draggedQuickSlot = draggedSlot as UI_QuickSlot;
 
-        Inventory.instance.RemoveItem(draggedItem.data);
+        if (draggedQuickSlot != null)
+        {
+            // 드래그된 슬롯이 빠른 슬롯인 경우, 두 슬롯의 아이템을 SwapQuickItems 함수를 통해 스왑합니다.
+            Inventory.instance.SwapQuickItems(draggedQuickSlot.quickslot_Index, this.quickslot_Index);
+        }
+        else
+        {
+            Inventory.instance.Move_QuickSlot_Item(draggedItem.data , this.quickslot_Index);
+            Inventory.instance.RemoveItem(draggedItem.data, draggedSlot.inventorySlotIndex);
+            UpdateSlot(draggedItem);
 
-        // UI 업데이트: 해당 슬롯에 아이템 아이콘 표시
-        UpdateSlot(draggedItem);
-
-        // 필요에 따라, 인벤토리 슬롯의 아이콘 처리를 원한다면 아래 주석 처리된 코드를 참고하세요.
-        // draggedSlot.CleanUpSlot();
+            // draggedSlot.CleanUpSlot();
+        }
     }
+
+    public override void OnBeginDrag(PointerEventData eventData) { }
+
+    public override void OnDrag(PointerEventData eventData) { }
+
+    public override void OnEndDrag(PointerEventData eventData) { }
 }
