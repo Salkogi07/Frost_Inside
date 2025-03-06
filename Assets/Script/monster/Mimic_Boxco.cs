@@ -210,19 +210,19 @@ public class MimicBoxco : MonoBehaviour
     {
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
-<<<<<<< HEAD
+
         Vector3 newFloorPosition = Floor_Measurement.position;
-        Vector3 newPosition = transform.position;
+        
         //Debug.Log(newPosition);
         
-        newPosition.x = moveDirection == -1f && newPosition.x > 0f ? moveDirection * newPosition.x  : newPosition.x;
-        Debug.Log(newPosition.x);
+        //newPosition.x = moveDirection == -1f && newPosition.x > 0f ? moveDirection * newPosition.x  : newPosition.x;
+        //Debug.Log(newPosition.x);
         //bool minus = moveDirection == -1f && newPosition.x > 0f ? true : false;
         //newPosition.x = minus == true ? 1f : 2f;
 
-        Floor_Measurement.position = newPosition;
         
-=======
+        
+
         
         Vector3 newPosition = transform.position;
         Floor_Measurement.position = newPosition;
@@ -249,7 +249,7 @@ public class MimicBoxco : MonoBehaviour
 
 
 
->>>>>>> 51df8e256681a581b6a4c70bc5c369054bfad3cd
+
 
 
         //newPosition.y = ;
