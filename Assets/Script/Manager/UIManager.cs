@@ -59,6 +59,8 @@ public class UIManager : MonoBehaviour
             SetImageAlpha(freezeEdges[i], 0f);
             targetAlphas[i] = 0f;
         }
+
+        QuickSlotUpdate();
     }
 
     private void Update()
