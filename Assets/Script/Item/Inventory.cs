@@ -7,10 +7,12 @@ public class Inventory : MonoBehaviour
 {
     public static Inventory instance;
 
+    public bool isPocket = false;
+
     public List<ItemData> startingItems;
 
     public InventoryItem[] quickSlotItems;
-    private int selectedQuickSlot = 0;
+    public int selectedQuickSlot = 0;
 
     public List<InventoryItem> equipment;
     public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary;
@@ -56,18 +58,9 @@ public class Inventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);
         if (Input.GetKeyDown(KeyCode.Alpha3)) SelectQuickSlot(2);
 
-        Image selcetquickSlot = quickSlot[selectedQuickSlot].gameObject.GetComponent<Image>();
-        Image quickSlot1 = quickSlot[0].gameObject.GetComponent<Image>();
-        Image quickSlot2 = quickSlot[1].gameObject.GetComponent<Image>();
-        Image quickSlot3 = quickSlot[2].gameObject.GetComponent<Image>();
-
-        quickSlot1.color = Color.clear;
-        quickSlot2.color = Color.clear;
-        quickSlot3.color = Color.clear;
-        selcetquickSlot.color = Color.red;
-
-        if (Input.GetAxis("Mouse ScrollWheel") > 0) SelectQuickSlot((selectedQuickSlot + 1) % 3);
-        if (Input.GetAxis("Mouse ScrollWheel") < 0) SelectQuickSlot((selectedQuickSlot + 2) % 3);
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll < 0) SelectQuickSlot((selectedQuickSlot + 1) % quickSlot.Length);
+        if (scroll > 0) SelectQuickSlot((selectedQuickSlot + 2) % quickSlot.Length);
     }
 
     private void AddStartingItems()
@@ -194,11 +187,31 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
+    public bool CanQuickItem()
+    {
+        if (GetFirst_EmptyQuickSlot() != -1)
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private int GetFirst_EmptySlot()
     {
         for (int i = 0; i < inventoryItems.Length; i++)
         {
             if (inventoryItems[i] == null || inventoryItems[i].data == null)
+                return i;
+        }
+        return -1;
+    }
+
+    private int GetFirst_EmptyQuickSlot()
+    {
+        for (int i = 0; i < quickSlotItems.Length; i++)
+        {
+            if (quickSlotItems[i] == null || quickSlotItems[i].data == null)
                 return i;
         }
         return -1;
@@ -255,6 +268,7 @@ public class Inventory : MonoBehaviour
     public void SelectQuickSlot(int index)
     {
         selectedQuickSlot = index;
-        Debug.Log("Quick Slot Selected: " + index);
+        UIManager.instance.QuickSlotUpdate();
+        //Debug.Log("Quick Slot Selected: " + index);
     }
 }

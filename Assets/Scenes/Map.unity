@@ -937,10 +937,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bbb675982942d4fa6acd5ee2f73714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPocket: 0
   startingItems:
   - {fileID: 11400000, guid: 3ea4994195fda904f9378dd114a81b28, type: 2}
   - {fileID: 11400000, guid: c2b3a195dce43e44382656eed1d7ce5f, type: 2}
   quickSlotItems: []
+  selectedQuickSlot: 0
   equipment: []
   inventoryItems: []
   inventorySlotParent: {fileID: 396461596}
@@ -4183,6 +4185,10 @@ MonoBehaviour:
   damageImage: {fileID: 1071256452}
   fadeDuration: 0.3
   inventoryObject: {fileID: 1700269484}
+  quickSlot:
+  - {fileID: 748587761}
+  - {fileID: 1891116068}
+  - {fileID: 1517731335}
 --- !u!114 &852017082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4457,6 +4463,7 @@ MonoBehaviour:
   itemImage: {fileID: 909096969}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   quickslot_Index: 1
 --- !u!1 &982628394
 GameObject:
@@ -10472,6 +10479,7 @@ MonoBehaviour:
   itemImage: {fileID: 1140294149}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   quickslot_Index: 0
 --- !u!1 &1156874114
 GameObject:
@@ -26144,6 +26152,7 @@ MonoBehaviour:
   itemImage: {fileID: 1771789558}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   quickslot_Index: 2
 --- !u!1 &1778064724
 GameObject:
@@ -26889,7 +26898,9 @@ MonoBehaviour:
   itemImage: {fileID: 1838283030}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   slotType: 0
+  equipmentSlot_Index: 0
 --- !u!114 &1838283030
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -28622,7 +28633,9 @@ MonoBehaviour:
   itemImage: {fileID: 8664756592768586081}
   item:
     data: {fileID: 0}
+  inventorySlotIndex: 0
   slotType: 1
+  equipmentSlot_Index: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player_ItemPicker : MonoBehaviour
@@ -44,10 +45,24 @@ public class Player_ItemPicker : MonoBehaviour
     {
         Inventory inventory = Inventory.instance;
 
-        if (inventory.CanAddItem())
+        if (inventory.CanQuickItem())
         {
-            inventory.AddItem(itemPickup.itemData);
-            Destroy(nearestItem);
+            if (inventory.quickSlotItems[inventory.selectedQuickSlot] != null && inventory.quickSlotItems[inventory.selectedQuickSlot].data == null)
+            {
+                inventory.Move_QuickSlot_Item(itemPickup.itemData, inventory.selectedQuickSlot);
+                Destroy(nearestItem);
+            }
+        }
+        else
+        {
+            if (!inventory.isPocket)
+                return;
+
+            if (inventory.CanAddItem())
+            {
+                inventory.AddItem(itemPickup.itemData);
+                Destroy(nearestItem);
+            }
         }
     }
 

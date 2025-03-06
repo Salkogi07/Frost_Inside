@@ -35,6 +35,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Inventory info")]
     [SerializeField] private GameObject inventoryObject;
+    [SerializeField] private Image[] quickSlot;
 
     private void Awake()
     {
@@ -65,6 +66,21 @@ public class UIManager : MonoBehaviour
         UpdateInventory();
         UpdateTime();
         UpdateFreezeEdges();
+    }
+
+    public void QuickSlotUpdate()
+    {
+        for (int i = 0; i < quickSlot.Length; i++)
+        {
+            if (i == Inventory.instance.selectedQuickSlot)
+            {
+                SetImageAlpha(quickSlot[i], 1f);
+            }
+            else
+            {
+                SetImageAlpha(quickSlot[i], 0.5f);
+            }
+        }
     }
 
     private void UpdateInventory()
