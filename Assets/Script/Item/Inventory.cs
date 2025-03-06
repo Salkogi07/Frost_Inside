@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using System;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour

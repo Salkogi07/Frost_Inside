@@ -1,10 +1,6 @@
-using Mirror.Examples.CouchCoop;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.Splines;
-using UnityEngine.UIElements;
-using static UnityEditor.ShaderGraph.Internal.KeywordDependentCollection;
+using System.Collections.Generic;
 
 
 public class MimicBoxco : MonoBehaviour
