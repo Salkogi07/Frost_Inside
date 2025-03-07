@@ -92,7 +92,18 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (draggedSlot == this)
             return;
 
-        SwapItems(draggedSlot);
+        InventoryItem draggedItem = draggedSlot.item;
+        UI_QuickSlot draggedQuickSlot = draggedSlot as UI_QuickSlot;
+
+        if(draggedQuickSlot == null)
+        {
+            SwapItems(draggedSlot);
+        }
+        else
+        {
+            Inventory.instance.Move_Item(draggedItem.data, inventorySlotIndex);
+            Inventory.instance.Remove_QuickSlot_Item(draggedItem.data, draggedQuickSlot.quickslot_Index);
+        }
     }
 
     private void SwapItems(UI_ItemSlot otherSlot)
