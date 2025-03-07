@@ -1918,6 +1918,37 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 3.38, y: 3.5}
   m_EdgeRadius: 0
+--- !u!1 &276579973
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 276579974}
+  m_Layer: 8
+  m_Name: Ground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &276579974
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276579973}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.6, y: -0.05, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 549454453}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &292947673 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7215720939812296226, guid: 19b02c871166adc48992e915e2554356, type: 3}
@@ -2695,6 +2726,7 @@ GameObject:
   - component: {fileID: 395179453}
   - component: {fileID: 395179452}
   - component: {fileID: 395179457}
+  - component: {fileID: 395179458}
   m_Layer: 8
   m_Name: MimicBox
   m_TagString: monster
@@ -2867,6 +2899,7 @@ Transform:
   - {fileID: 266980385}
   - {fileID: 207626779}
   - {fileID: 1858500503}
+  - {fileID: 549454453}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &395179457
@@ -2889,7 +2922,26 @@ MonoBehaviour:
   Hide: 0
   distanceMax: 1.5
   xDistanceThreshold: 2
+  HillDetection: {fileID: 395179458}
   Pattern: 0
+--- !u!114 &395179458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395179450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfbf5d51142dee0458cff3fcb2b998c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxSize: {x: 1.1, y: 1.2}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  pos: {fileID: 276579973}
+  Groundcheck: 0
 --- !u!1 &404576172
 GameObject:
   m_ObjectHideFlags: 0
@@ -3639,6 +3691,38 @@ RectTransform:
   m_AnchoredPosition: {x: -0.5, y: -1500}
   m_SizeDelta: {x: 1484, y: 100}
   m_Pivot: {x: 0, y: 1}
+--- !u!1 &549454452
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 549454453}
+  m_Layer: 8
+  m_Name: Check
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &549454453
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 549454452}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 276579974}
+  m_Father: {fileID: 395179456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &556540152
 GameObject:
   m_ObjectHideFlags: 0
@@ -19507,6 +19591,7 @@ MonoBehaviour:
   damageImage: {fileID: 1044858746}
   fadeDuration: 0.3
   inventoryObject: {fileID: 1457084071}
+  quickSlot: []
 --- !u!114 &1030880062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -19784,8 +19869,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bbb675982942d4fa6acd5ee2f73714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPocket: 0
   startingItems: []
   quickSlotItems: []
+  selectedQuickSlot: 0
   equipment: []
   inventoryItems: []
   inventorySlotParent: {fileID: 406004457}
@@ -29089,6 +29176,7 @@ MonoBehaviour:
     data: {fileID: 0}
   inventorySlotIndex: 0
   slotType: 2
+  equipmentSlot_Index: 0
 --- !u!114 &1864232754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29182,6 +29270,7 @@ MonoBehaviour:
     data: {fileID: 0}
   inventorySlotIndex: 0
   slotType: 1
+  equipmentSlot_Index: 0
 --- !u!114 &1867669459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29353,6 +29442,7 @@ MonoBehaviour:
     data: {fileID: 0}
   inventorySlotIndex: 0
   slotType: 0
+  equipmentSlot_Index: 0
 --- !u!114 &1934015810
 MonoBehaviour:
   m_ObjectHideFlags: 0
