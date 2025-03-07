@@ -97,8 +97,15 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         }
         else
         {
-            Inventory.instance.Move_Item(draggedItem.data, inventorySlotIndex);
-            Inventory.instance.Remove_QuickSlot_Item(draggedItem.data, draggedQuickSlot.quickslot_Index);
+            if(item != null && item.data != null)
+            {
+                Inventory.instance.SwapQuickAndInventoryItems(draggedQuickSlot.inventorySlotIndex, inventorySlotIndex);
+            }
+            else
+            {
+                Inventory.instance.Move_Item(draggedItem.data, inventorySlotIndex);
+                Inventory.instance.Remove_QuickSlot_Item(draggedItem.data, draggedQuickSlot.quickslot_Index);
+            }
         }
     }
 

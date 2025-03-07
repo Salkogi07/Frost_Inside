@@ -49,10 +49,11 @@ public class UI_EquipmentSlot : UI_ItemSlot
                 // 슬롯에 이미 장착된 장비가 있다면 해제하고 인벤토리로 돌려보냄
                 if (item != null && item.data is ItemData_Equipment equippedData)
                 {
-                    Debug.Log(item.data);
                     Inventory.instance.Move_Item(item.data, draggedSlot.inventorySlotIndex);
                     Inventory.instance.UnequipItem(equippedData);
+
                     UpdateSlot(draggedItem);
+                    return;
                 }
 
                 // 인벤토리에서 해당 아이템 제거 후 장착 처리

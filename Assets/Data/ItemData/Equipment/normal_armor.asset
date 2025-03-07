@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 0
   itemName: normal_chest
-  icon: {fileID: 972524890855885471, guid: cd66af76bf75ad24e999ca8920a89d8c, type: 3}
+  icon: {fileID: 21300000, guid: 844553045c47baa428d75564f561a82e, type: 3}
   equipmentType: 1
   itemEffect: []
   mining: 0

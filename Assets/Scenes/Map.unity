@@ -2875,8 +2875,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
   itemList:
-  - {fileID: 11400000, guid: 1afe91a36f8df814f86a867e2bbd53a8, type: 2}
-  - {fileID: 11400000, guid: 7ede445f3327c1d4c9279ba9cf6bc97f, type: 2}
+  - {fileID: 11400000, guid: 9d7c19c19b353ec469b5131df4248624, type: 2}
   - {fileID: 11400000, guid: 3ea4994195fda904f9378dd114a81b28, type: 2}
   - {fileID: 11400000, guid: c2b3a195dce43e44382656eed1d7ce5f, type: 2}
 --- !u!4 &615144008
@@ -24738,7 +24737,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1373853328
 Transform:
   m_ObjectHideFlags: 0

@@ -255,6 +255,26 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
+    public void SwapQuickAndInventoryItems(int quickSlotIndex, int inventoryIndex)
+    {
+        // 인덱스 범위 확인
+        if (quickSlotIndex < 0 || quickSlotIndex >= quickSlotItems.Length ||
+            inventoryIndex < 0 || inventoryIndex >= inventoryItems.Length)
+        {
+            Debug.Log("인덱스 범위를 벗어났습니다.");
+            return;
+        }
+
+        // 아이템 교환
+        InventoryItem temp = quickSlotItems[quickSlotIndex];
+        quickSlotItems[quickSlotIndex] = inventoryItems[inventoryIndex];
+        inventoryItems[inventoryIndex] = temp;
+
+        // UI 업데이트
+        UpdateSlotUI();
+    }
+
+
     public List<InventoryItem> GetEquipmentList() => equipment;
 
     public InventoryItem[] GetInventoryList() => inventoryItems;

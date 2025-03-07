@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 0
   itemName: netherite_chest
-  icon: {fileID: -2108817306257686781, guid: c81a588e618718f4597addeeffea2d14, type: 3}
+  icon: {fileID: 21300000, guid: f4ea2a287a673c94d833143ad78e604d, type: 3}
   equipmentType: 1
   itemEffect: []
   mining: 0

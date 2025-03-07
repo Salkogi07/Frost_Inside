@@ -51,17 +51,19 @@ public class Player_ItemPicker : MonoBehaviour
             {
                 inventory.Move_QuickSlot_Item(itemPickup.itemData, inventory.selectedQuickSlot);
                 Destroy(nearestItem);
+
+                return;
             }
         }
-        else
-        {
-            if (!inventory.isPocket)
-                return;
 
+        if (inventory.isPocket)
+        {
             if (inventory.CanAddItem())
             {
                 inventory.AddItem(itemPickup.itemData);
                 Destroy(nearestItem);
+
+                return;
             }
         }
     }
