@@ -38,7 +38,6 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-
         equipment = new List<InventoryItem>();
         equipmentDictionary = new Dictionary<ItemData_Equipment, InventoryItem>();
 
