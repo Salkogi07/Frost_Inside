@@ -20,9 +20,6 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
             PlayerManager.instance.item_drop.QuickSlot_Throw(item.data, quickslot_Index);
             return;
         }
-
-        Inventory.instance.AddItem(item.data);
-        Inventory.instance.Remove_QuickSlot_Item(item.data,quickslot_Index);
     }
 
     public override void OnDrop(PointerEventData eventData)
@@ -52,10 +49,4 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
             // draggedSlot.CleanUpSlot();
         }
     }
-
-    public override void OnBeginDrag(PointerEventData eventData) { }
-
-    public override void OnDrag(PointerEventData eventData) { }
-
-    public override void OnEndDrag(PointerEventData eventData) { }
 }

@@ -161,6 +161,13 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
+    public void Move_Item(ItemData _item, int index)
+    {
+        InventoryItem newItem = new InventoryItem(_item);
+        inventoryItems[index] = newItem;
+        UpdateSlotUI();
+    }
+
     public void SwapInventoryItems(int index1, int index2)
     {
         if (index1 < 0 || index1 >= inventoryItems.Length ||
