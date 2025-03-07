@@ -42,9 +42,18 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
         }
         else
         {
-            Inventory.instance.Move_QuickSlot_Item(draggedItem.data , this.quickslot_Index);
-            Inventory.instance.RemoveItem(draggedItem.data, draggedSlot.inventorySlotIndex);
-            UpdateSlot(draggedItem);
+            if(item != null && item.data != null)
+            {
+                Inventory.instance.RemoveItem(draggedItem.data, draggedSlot.inventorySlotIndex);
+                Inventory.instance.Move_Item(item.data, draggedSlot.inventorySlotIndex);
+                Inventory.instance.Move_QuickSlot_Item(draggedItem.data, this.quickslot_Index);
+            }
+            else
+            {
+                Inventory.instance.Move_QuickSlot_Item(draggedItem.data , this.quickslot_Index);
+                Inventory.instance.RemoveItem(draggedItem.data, draggedSlot.inventorySlotIndex);
+                UpdateSlot(draggedItem);
+            }
 
             // draggedSlot.CleanUpSlot();
         }

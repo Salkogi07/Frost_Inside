@@ -88,10 +88,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         if (draggedSlot == null || draggedSlot == this) return;
 
-        // 자기 자신에게 드롭하는 경우 무시
-        if (draggedSlot == this)
-            return;
-
         InventoryItem draggedItem = draggedSlot.item;
         UI_QuickSlot draggedQuickSlot = draggedSlot as UI_QuickSlot;
 

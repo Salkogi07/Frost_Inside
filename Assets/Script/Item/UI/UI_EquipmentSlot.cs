@@ -38,7 +38,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
             return;
 
         InventoryItem draggedItem = draggedSlot.item;
-        UI_ItemSlot draggedQuickSlot = draggedSlot;
+        UI_QuickSlot draggedQuickSlot = draggedSlot as UI_QuickSlot;
 
         // 드래그된 아이템이 장비 아이템인지 확인
         if (draggedItem.data is ItemData_Equipment equipmentData)
@@ -49,7 +49,10 @@ public class UI_EquipmentSlot : UI_ItemSlot
                 // 슬롯에 이미 장착된 장비가 있다면 해제하고 인벤토리로 돌려보냄
                 if (item != null && item.data is ItemData_Equipment equippedData)
                 {
+                    Debug.Log(item.data);
+                    Inventory.instance.Move_Item(item.data, draggedSlot.inventorySlotIndex);
                     Inventory.instance.UnequipItem(equippedData);
+                    UpdateSlot(draggedItem);
                 }
 
                 // 인벤토리에서 해당 아이템 제거 후 장착 처리
