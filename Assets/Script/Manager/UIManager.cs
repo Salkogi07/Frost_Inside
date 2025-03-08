@@ -36,6 +36,9 @@ public class UIManager : MonoBehaviour
     [Header("Inventory info")]
     [SerializeField] private GameObject inventoryObject;
     [SerializeField] private Image[] quickSlot;
+    [SerializeField] private Image pocket;
+
+    [SerializeField] private Image[] itemImage;
 
     private void Awake()
     {
@@ -59,7 +62,10 @@ public class UIManager : MonoBehaviour
             SetImageAlpha(freezeEdges[i], 0f);
             targetAlphas[i] = 0f;
         }
+    }
 
+    private void Start()
+    {
         QuickSlotUpdate();
     }
 
@@ -68,6 +74,21 @@ public class UIManager : MonoBehaviour
         UpdateInventory();
         UpdateTime();
         UpdateFreezeEdges();
+        UpdatePocket();
+        UpdateQuickSlot();
+    }
+
+    private void UpdateQuickSlot()
+    {
+        for (int i = 0; i < quickSlot.Length; i++)
+        {
+            UpdateQuickSlo_View(Inventory.instance.quickSlotItems[i], i);
+        }
+    }
+
+    private void UpdatePocket()
+    {
+        pocket.gameObject.SetActive(Inventory.instance.isPocket);
     }
 
     public void QuickSlotUpdate()
@@ -85,10 +106,27 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void UpdateQuickSlo_View(InventoryItem _newItem, int index)
+    {
+        itemImage[index].color = Color.white;
+
+        if (_newItem != null && _newItem.data != null)
+        {
+            itemImage[index].sprite = _newItem.data.icon;
+        }
+        else
+        {
+            itemImage[index].sprite = null;
+            itemImage[index].color = Color.clear;
+        }
+    }
+
     private void UpdateInventory()
     {
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Open Inventory")))
         {
+            Player_Stats stats = PlayerManager.instance.player;
+            stats.isInvenOpen = !stats.isInvenOpen;
             bool isInventory = !inventoryObject.activeSelf;
             inventoryObject.SetActive(isInventory);
         }

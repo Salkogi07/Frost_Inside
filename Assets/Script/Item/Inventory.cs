@@ -53,13 +53,29 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) SelectQuickSlot(0);
-        if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);
-        if (Input.GetKeyDown(KeyCode.Alpha3)) SelectQuickSlot(2);
+        if (!isPocket)
+        {
+            Player_ItemDrop itemDrop = PlayerManager.instance.player.GetComponent<Player_ItemDrop>();
+            for (int i = 0; i < inventoryItems.Length; i++)
+            {
+                if (inventoryItems[i]?.data != null)
+                {
+                    itemDrop.Pocket_Inventory_Drop(inventoryItems[i].data, i);
+                    inventoryItems[i] = null;
+                }
+            }
+        }
 
-        float scroll = Input.GetAxis("Mouse ScrollWheel");
-        if (scroll < 0) SelectQuickSlot((selectedQuickSlot + 1) % quickSlot.Length);
-        if (scroll > 0) SelectQuickSlot((selectedQuickSlot + 2) % quickSlot.Length);
+        if (!PlayerManager.instance.player.isInvenOpen)
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1)) SelectQuickSlot(0);
+            if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);
+            if (Input.GetKeyDown(KeyCode.Alpha3)) SelectQuickSlot(2);
+
+            float scroll = Input.GetAxis("Mouse ScrollWheel");
+            if (scroll < 0) SelectQuickSlot((selectedQuickSlot + 1) % quickSlot.Length);
+            if (scroll > 0) SelectQuickSlot((selectedQuickSlot + 2) % quickSlot.Length);
+        }
     }
 
     private void AddStartingItems()
@@ -221,6 +237,15 @@ public class Inventory : MonoBehaviour
                 return i;
         }
         return -1;
+    }
+
+    public bool GetCheck_QuiSlot_Item()
+    {
+        if (quickSlotItems[selectedQuickSlot]?.data == null)
+        {
+            return true;
+        }
+        return false;
     }
 
     public void Move_QuickSlot_Item(ItemData _item , int index)

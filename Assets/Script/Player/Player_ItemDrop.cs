@@ -34,6 +34,12 @@ public class Player_ItemDrop : ItemDrop
         }
     }
 
+    public void Pocket_Inventory_Drop(ItemData _itemdata, int index)
+    {
+        DropItem(_itemdata);
+        Inventory.instance.RemoveItem(_itemdata, index);
+    }
+
     public void Inventory_Throw(ItemData _itemdata, int index)
     {
         ThrowItem(_itemdata);

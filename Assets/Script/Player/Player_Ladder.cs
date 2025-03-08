@@ -1,3 +1,4 @@
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -5,6 +6,7 @@ public class Player_Ladder : MonoBehaviour
 {
     private Tilemap ladder_Tilemap;
     private Tilemap ladderTop_Tilemap;
+    private Player_Stats stats;
     private Rigidbody2D rb;
 
     [Header("Climing")]
@@ -28,6 +30,7 @@ public class Player_Ladder : MonoBehaviour
         ladder_Tilemap = GameObject.FindGameObjectWithTag("Ladder").GetComponent<Tilemap>();
         //ladderTop_Tilemap = GameObject.FindGameObjectWithTag("LadderTop").GetComponent<Tilemap>();
         rb = GetComponent<Rigidbody2D>();
+        stats = GetComponent<Player_Stats>();
     }
 
     private void Start()
@@ -41,6 +44,9 @@ public class Player_Ladder : MonoBehaviour
         // 쿨타임 타이머 업데이트
         if (ladderCooldownTimer > 0)
             ladderCooldownTimer -= Time.deltaTime;
+
+        if(stats.isDead || stats.isInvenOpen)
+            return;
 
         LadderCheck();
         LadderOut();

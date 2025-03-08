@@ -5,7 +5,6 @@ public class Player_Move : MonoBehaviour
 {
     [Header("Component")]
     public ParticleSystem dust;
-    private SpriteRenderer spriteRenderer;
     private Player_Stats stats;
     private Player_Ladder player_ladder;
     private Player_TileMining player_tileMing;
@@ -64,7 +63,6 @@ public class Player_Move : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         stats = GetComponent<Player_Stats>();
         player_tileMing = GetComponent<Player_TileMining>();
         player_ladder = GetComponent<Player_Ladder>();
@@ -75,10 +73,8 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
-        if (player_tileMing.isMining || stats.isDead  || player_ladder.IsClimbing)
-        {
+        if (player_tileMing.isMining || stats.isDead)
             return;
-        }
 
         Sprint();
         HandleStamina();
@@ -93,6 +89,9 @@ public class Player_Move : MonoBehaviour
 
     void Sprint()
     {
+        if (player_ladder.IsClimbing || stats.isInvenOpen)
+            return;
+
         // Shift를 누르고 있고, 스테미나가 남아있을 경우 달리기
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Sprint")) && moveInput != 0)
         {
@@ -114,15 +113,17 @@ public class Player_Move : MonoBehaviour
         {
             rb.gravityScale = gravityScale;
 
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
+            if (!player_ladder.IsClimbing && !stats.isInvenOpen)
             {
-                moveInput = -1;
+                if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
+                {
+                    moveInput = -1;
+                }
+                if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
+                {
+                    moveInput = 1;
+                }
             }
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
-            {
-                moveInput = 1;
-            }
-
             rb.linearVelocity = new Vector2(moveInput * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
         }
     }

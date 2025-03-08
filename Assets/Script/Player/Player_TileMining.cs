@@ -62,7 +62,7 @@ public class Player_TileMining : MonoBehaviour
 
     private void Update()
     {
-        if (stats.isDead)
+        if (stats.isDead || stats.isInvenOpen)
             return;
         
         // 1) 마우스가 가리키는 타일 좌표 구하기
