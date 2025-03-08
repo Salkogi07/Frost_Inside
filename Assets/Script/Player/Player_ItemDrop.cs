@@ -34,6 +34,11 @@ public class Player_ItemDrop : ItemDrop
         }
     }
 
+    public void Unequipment_ItemDrop(ItemData _itemdata)
+    {
+        DropItem(_itemdata);
+    }
+
     public void Pocket_Inventory_Drop(ItemData _itemdata, int index)
     {
         DropItem(_itemdata);

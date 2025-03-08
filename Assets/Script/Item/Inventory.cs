@@ -55,15 +55,7 @@ public class Inventory : MonoBehaviour
     {
         if (!isPocket)
         {
-            Player_ItemDrop itemDrop = PlayerManager.instance.player.GetComponent<Player_ItemDrop>();
-            for (int i = 0; i < inventoryItems.Length; i++)
-            {
-                if (inventoryItems[i]?.data != null)
-                {
-                    itemDrop.Pocket_Inventory_Drop(inventoryItems[i].data, i);
-                    inventoryItems[i] = null;
-                }
-            }
+            NotPocket_ItemDrop();
         }
 
         if (!PlayerManager.instance.player.isInvenOpen)
@@ -75,6 +67,19 @@ public class Inventory : MonoBehaviour
             float scroll = Input.GetAxis("Mouse ScrollWheel");
             if (scroll < 0) SelectQuickSlot((selectedQuickSlot + 1) % quickSlot.Length);
             if (scroll > 0) SelectQuickSlot((selectedQuickSlot + 2) % quickSlot.Length);
+        }
+    }
+
+    private void NotPocket_ItemDrop()
+    {
+        Player_ItemDrop itemDrop = PlayerManager.instance.player.GetComponent<Player_ItemDrop>();
+        for (int i = 0; i < inventoryItems.Length; i++)
+        {
+            if (inventoryItems[i]?.data != null)
+            {
+                itemDrop.Pocket_Inventory_Drop(inventoryItems[i].data, i);
+                inventoryItems[i] = null;
+            }
         }
     }
 
@@ -110,6 +115,34 @@ public class Inventory : MonoBehaviour
         newEquipment.AddModifiers();
 
         RemoveItem(_item, index);
+
+        UpdateSlotUI();
+    }
+
+    public void EquipItem_ToQuickSlot(ItemData _item, int index)
+    {
+        ItemData_Equipment newEquipment = _item as ItemData_Equipment;
+        InventoryItem newItem = new InventoryItem(newEquipment);
+
+        ItemData_Equipment oldEquipment = null;
+
+        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equipmentType == newEquipment.equipmentType)
+                oldEquipment = item.Key;
+        }
+
+        if (oldEquipment != null)
+        {
+            UnequipItem(oldEquipment);
+            Add_QuickSlot_Item(oldEquipment);
+        }
+
+        equipment.Add(newItem);
+        equipmentDictionary.Add(newEquipment, newItem);
+        newEquipment.AddModifiers();
+
+        Remove_QuickSlot_Item(_item, index);
 
         UpdateSlotUI();
     }
@@ -246,6 +279,19 @@ public class Inventory : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void Add_QuickSlot_Item(ItemData _item)
+    {
+        int index = GetFirst_EmptyQuickSlot();
+        if (index == -1)
+        {
+            Debug.Log("Full Inventory!");
+            return;
+        }
+        InventoryItem newItem = new InventoryItem(_item);
+        quickSlotItems[index] = newItem;
+        UpdateSlotUI();
     }
 
     public void Move_QuickSlot_Item(ItemData _item , int index)
