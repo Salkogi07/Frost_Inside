@@ -11,7 +11,7 @@ public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
 
-    public ItemEffect[] itemEffect;
+    public Item_Equipment_Effect[] itemEffect;
 
     public int mining;
     public int armor;
@@ -20,11 +20,19 @@ public class ItemData_Equipment : ItemData
     public int Hp;
     public int Temperature;
 
-    public void ExecuteItemEffect(Transform _playerPosition)
+    public void ExecuteItemEffect()
     {
         foreach (var item in itemEffect)
         {
-            item.ExecuteEffect(_playerPosition);
+            item.ExecuteEffect();
+        }
+    }
+
+    public void UnExecuteItemEffect()
+    {
+        foreach (var item in itemEffect)
+        {
+            item.UnExecuteEffect();
         }
     }
 

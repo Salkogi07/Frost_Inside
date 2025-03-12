@@ -84,4 +84,13 @@ public class SettingManager : MonoBehaviour
     {
         Time.timeScale = 1;
     }
+
+    public bool IsOpenSetting()
+    {
+        if(currentPage == SettingPage.None)
+        {
+            return false;
+        }
+        return true;
+    }
 }

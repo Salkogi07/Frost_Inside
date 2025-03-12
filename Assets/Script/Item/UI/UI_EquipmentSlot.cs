@@ -73,7 +73,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
                     {
                         Inventory.instance.Move_QuickSlot_Item(item.data, draggedQuickSlot.quickslot_Index);
                         Inventory.instance.UnequipItem(equippedData);
-
+                        Inventory.instance.EquipItem(draggedItem.data);
                         UpdateSlot(draggedItem);
                         return;
                     }
@@ -81,7 +81,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
                     {
                         Inventory.instance.Move_Item(item.data, draggedSlot.inventorySlotIndex);
                         Inventory.instance.UnequipItem(equippedData);
-
+                        Inventory.instance.EquipItem(draggedItem.data);
                         UpdateSlot(draggedItem);
                         return;
                     }
@@ -100,7 +100,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
                     else
                     {
                         // 인벤토리에서 해당 아이템 제거 후 장착 처리
-                        Inventory.instance.EquipItem(equipmentData, draggedSlot.inventorySlotIndex);
+                        Inventory.instance.EquipItem_ToInventory(equipmentData, draggedSlot.inventorySlotIndex);
 
                         // 장비 슬롯 UI 업데이트 및 드래그 슬롯 정리
                         UpdateSlot(draggedItem);

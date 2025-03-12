@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
 
     public bool isPocket = false;
+    public bool isInvenOpen = false;
 
     public List<ItemData> startingItems;
 
@@ -58,7 +59,7 @@ public class Inventory : MonoBehaviour
             NotPocket_ItemDrop();
         }
 
-        if (!PlayerManager.instance.player.isInvenOpen)
+        if (!isInvenOpen && !SettingManager.Instance.IsOpenSetting())
         {
             if (Input.GetKeyDown(KeyCode.Alpha1)) SelectQuickSlot(0);
             if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);
@@ -67,6 +68,15 @@ public class Inventory : MonoBehaviour
             float scroll = Input.GetAxis("Mouse ScrollWheel");
             if (scroll < 0) SelectQuickSlot((selectedQuickSlot + 1) % quickSlot.Length);
             if (scroll > 0) SelectQuickSlot((selectedQuickSlot + 2) % quickSlot.Length);
+
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
+            {
+                if(quickSlotItems[selectedQuickSlot]?.data != null)
+                {
+                    PlayerManager.instance.item_drop.QuickSlot_Throw(quickSlotItems[selectedQuickSlot].data, selectedQuickSlot);
+                    return;
+                }
+            }
         }
     }
 
@@ -91,9 +101,37 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void EquipItem(ItemData _item, int index)
+    public void EquipItem(ItemData _item)
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
+        newEquipment.ExecuteItemEffect();
+        InventoryItem newItem = new InventoryItem(newEquipment);
+
+        ItemData_Equipment oldEquipment = null;
+
+        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equipmentType == newEquipment.equipmentType)
+                oldEquipment = item.Key;
+        }
+
+        if (oldEquipment != null)
+        {
+            UnequipItem(oldEquipment);
+            AddItem(oldEquipment);
+        }
+
+        equipment.Add(newItem);
+        equipmentDictionary.Add(newEquipment, newItem);
+        newEquipment.AddModifiers();
+
+        UpdateSlotUI();
+    }
+
+    public void EquipItem_ToInventory(ItemData _item, int index)
+    {
+        ItemData_Equipment newEquipment = _item as ItemData_Equipment;
+        newEquipment.ExecuteItemEffect();
         InventoryItem newItem = new InventoryItem(newEquipment);
 
         ItemData_Equipment oldEquipment = null;
@@ -123,6 +161,7 @@ public class Inventory : MonoBehaviour
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
         InventoryItem newItem = new InventoryItem(newEquipment);
+        newEquipment?.ExecuteItemEffect();
 
         ItemData_Equipment oldEquipment = null;
 
@@ -154,6 +193,7 @@ public class Inventory : MonoBehaviour
             equipment.Remove(newItem);
             equipmentDictionary.Remove(itemToRemove);
             itemToRemove.RemoveModifiers();
+            itemToRemove?.UnExecuteItemEffect();
         }
     }
 

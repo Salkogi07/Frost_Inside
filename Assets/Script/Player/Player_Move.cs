@@ -88,7 +88,7 @@ public class Player_Move : MonoBehaviour
 
     void Sprint()
     {
-        if (player_ladder.IsClimbing || stats.isInvenOpen)
+        if (player_ladder.IsClimbing || Inventory.instance.isInvenOpen)
             return;
 
         // Shift를 누르고 있고, 스테미나가 남아있을 경우 달리기
@@ -112,7 +112,7 @@ public class Player_Move : MonoBehaviour
         {
             rb.gravityScale = gravityScale;
 
-            if (!player_ladder.IsClimbing && !stats.isInvenOpen)
+            if (!player_ladder.IsClimbing && !Inventory.instance.isInvenOpen)
             {
                 if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
                 {
