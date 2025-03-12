@@ -36,7 +36,6 @@ public class Player_Move : MonoBehaviour
 
     [Header("Ground Check")]
     private bool isGrounded;
-    [SerializeField] private float groundCheckDistance;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
     [SerializeField] private LayerMask groundLayer;
