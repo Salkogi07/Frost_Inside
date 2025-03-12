@@ -5,22 +5,24 @@ using System.Collections.Generic;
 
 public class MimicBoxco : MonoBehaviour
 {
-
+    [Header ("Mimic stats")]
     [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위
     [SerializeField]  private Transform Player; // 플레이어의 위치
     [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
     [SerializeField] public float jumpspeed;
     [SerializeField] public float jumpcooltime;
-    public bool Hide = true;
-    public float distanceMax = 5f;
+                        float move_time = 5f;
 
+
+    public float distanceMax = 5f;
+    public bool Hide = true;
     bool Scoping = false;
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
     float Concealment_time;
     bool Moving =  false;
     float Moving_Time;
     float distance;
-    float move_time = 5f;
+    
 
     public float xDistanceThreshold = 2f;
 
@@ -30,6 +32,7 @@ public class MimicBoxco : MonoBehaviour
 
 
     public HillDetection HillDetection;
+    public Floor_Measurement FloorMeasurement;
 
     private GameObject Floor_Measurement_pos;
 
@@ -211,6 +214,7 @@ public class MimicBoxco : MonoBehaviour
     private void Chase()
     {
         float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
+        FloorMeasurement.direction = moveDirection;
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
 
         if(HillDetection.Groundcheck == true)
