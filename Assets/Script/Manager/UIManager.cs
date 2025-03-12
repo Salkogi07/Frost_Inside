@@ -74,7 +74,6 @@ public class UIManager : MonoBehaviour
         UpdateInventory();
         UpdateTime();
         UpdateFreezeEdges();
-        UpdatePocket();
         UpdateQuickSlot();
     }
 
@@ -86,7 +85,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    private void UpdatePocket()
+    public void UpdatePocket()
     {
         pocket.gameObject.SetActive(Inventory.instance.isPocket);
     }
@@ -125,8 +124,11 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Open Inventory")))
         {
-            Inventory.instance.isInvenOpen = !Inventory.instance.isInvenOpen;
-            inventoryObject.SetActive(Inventory.instance.isInvenOpen);
+            if (!SettingManager.Instance.IsOpenSetting())
+            {
+                Inventory.instance.isInvenOpen = !Inventory.instance.isInvenOpen;
+                inventoryObject.SetActive(Inventory.instance.isInvenOpen);
+            }
         }
     }
 

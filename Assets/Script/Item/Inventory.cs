@@ -101,9 +101,37 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void EquipItem(ItemData _item, int index)
+    public void EquipItem(ItemData _item)
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
+        newEquipment.ExecuteItemEffect();
+        InventoryItem newItem = new InventoryItem(newEquipment);
+
+        ItemData_Equipment oldEquipment = null;
+
+        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        {
+            if (item.Key.equipmentType == newEquipment.equipmentType)
+                oldEquipment = item.Key;
+        }
+
+        if (oldEquipment != null)
+        {
+            UnequipItem(oldEquipment);
+            AddItem(oldEquipment);
+        }
+
+        equipment.Add(newItem);
+        equipmentDictionary.Add(newEquipment, newItem);
+        newEquipment.AddModifiers();
+
+        UpdateSlotUI();
+    }
+
+    public void EquipItem_ToInventory(ItemData _item, int index)
+    {
+        ItemData_Equipment newEquipment = _item as ItemData_Equipment;
+        newEquipment.ExecuteItemEffect();
         InventoryItem newItem = new InventoryItem(newEquipment);
 
         ItemData_Equipment oldEquipment = null;
@@ -133,6 +161,7 @@ public class Inventory : MonoBehaviour
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
         InventoryItem newItem = new InventoryItem(newEquipment);
+        newEquipment?.ExecuteItemEffect();
 
         ItemData_Equipment oldEquipment = null;
 
@@ -164,6 +193,7 @@ public class Inventory : MonoBehaviour
             equipment.Remove(newItem);
             equipmentDictionary.Remove(itemToRemove);
             itemToRemove.RemoveModifiers();
+            itemToRemove?.UnExecuteItemEffect();
         }
     }
 
