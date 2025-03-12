@@ -22,7 +22,7 @@ public class Player_ItemPicker : MonoBehaviour
 
     void Update()
     {
-        if(stats.isDead || stats.isInvenOpen)
+        if(stats.isDead || Inventory.instance.isInvenOpen)
             return;
 
         // 현재 시간과 비교하여 쿨다운이 지났을 때만 실행
@@ -47,7 +47,6 @@ public class Player_ItemPicker : MonoBehaviour
 
         if (inventory.CanQuickItem())
         {
-            Debug.Log(inventory.GetCheck_QuiSlot_Item());
             if (inventory.GetCheck_QuiSlot_Item())
             {
                 inventory.Move_QuickSlot_Item(itemPickup.itemData, inventory.selectedQuickSlot);

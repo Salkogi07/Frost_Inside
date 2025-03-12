@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     public static Inventory instance;
 
     public bool isPocket = false;
+    public bool isInvenOpen = false;
 
     public List<ItemData> startingItems;
 
@@ -58,7 +59,7 @@ public class Inventory : MonoBehaviour
             NotPocket_ItemDrop();
         }
 
-        if (!PlayerManager.instance.player.isInvenOpen)
+        if (!isInvenOpen && !SettingManager.Instance.IsOpenSetting())
         {
             if (Input.GetKeyDown(KeyCode.Alpha1)) SelectQuickSlot(0);
             if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);
@@ -67,6 +68,15 @@ public class Inventory : MonoBehaviour
             float scroll = Input.GetAxis("Mouse ScrollWheel");
             if (scroll < 0) SelectQuickSlot((selectedQuickSlot + 1) % quickSlot.Length);
             if (scroll > 0) SelectQuickSlot((selectedQuickSlot + 2) % quickSlot.Length);
+
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
+            {
+                if(quickSlotItems[selectedQuickSlot]?.data != null)
+                {
+                    PlayerManager.instance.item_drop.QuickSlot_Throw(quickSlotItems[selectedQuickSlot].data, selectedQuickSlot);
+                    return;
+                }
+            }
         }
     }
 

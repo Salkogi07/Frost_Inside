@@ -125,10 +125,8 @@ public class UIManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Open Inventory")))
         {
-            Player_Stats stats = PlayerManager.instance.player;
-            stats.isInvenOpen = !stats.isInvenOpen;
-            bool isInventory = !inventoryObject.activeSelf;
-            inventoryObject.SetActive(isInventory);
+            Inventory.instance.isInvenOpen = !Inventory.instance.isInvenOpen;
+            inventoryObject.SetActive(Inventory.instance.isInvenOpen);
         }
     }
 

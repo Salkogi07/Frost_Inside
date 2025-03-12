@@ -8,7 +8,6 @@ public class Player_Stats : MonoBehaviour
 
     [Header("Player info")]
     [SerializeField] public bool isDead = false;
-    [SerializeField] public bool isInvenOpen = false;
 
     [Header("Item info")]
     [SerializeField] public Stat mining;

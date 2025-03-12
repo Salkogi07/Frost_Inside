@@ -4388,7 +4388,7 @@ MonoBehaviour:
     defaultKey: 101
     keyUI: {fileID: 1868905878}
   - keyName: Throw Item
-    defaultKey: 306
+    defaultKey: 113
     keyUI: {fileID: 1853805977}
   - keyName: Interaction
     defaultKey: 102
@@ -10832,7 +10832,6 @@ MonoBehaviour:
   jumpForce: 13
   coyoteTime: 0.13
   jumpBufferTime: 0.13
-  groundCheckDistance: 0.1
   groundCheck: {fileID: 539113852}
   groundCheckSize: {x: 0.3, y: 0.1}
   groundLayer:

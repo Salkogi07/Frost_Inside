@@ -45,7 +45,7 @@ public class Player_Ladder : MonoBehaviour
         if (ladderCooldownTimer > 0)
             ladderCooldownTimer -= Time.deltaTime;
 
-        if(stats.isDead || stats.isInvenOpen)
+        if(stats.isDead || Inventory.instance.isInvenOpen)
             return;
 
         LadderCheck();
