@@ -2803,7 +2803,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDead: 0
-  isInvenOpen: 0
   mining:
     baseValue: 1
     modifiers: 
@@ -3336,7 +3335,7 @@ MonoBehaviour:
   Hide: 0
   xDistanceThreshold: 2
   HillDetection: {fileID: 395179458}
-  FloorMeasurement: {fileID: 0}
+  FloorMeasurement: {fileID: 1858500504}
   Pattern: 0
 --- !u!114 &395179458
 MonoBehaviour:
@@ -20745,6 +20744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPocket: 0
+  isInvenOpen: 0
   startingItems: []
   quickSlotItems: []
   selectedQuickSlot: 0
@@ -30691,7 +30691,7 @@ Transform:
   m_GameObject: {fileID: 1858500502}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

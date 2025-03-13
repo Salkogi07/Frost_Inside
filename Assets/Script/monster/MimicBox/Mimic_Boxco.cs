@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
 
 
 public class MimicBoxco : MonoBehaviour
@@ -14,6 +15,7 @@ public class MimicBoxco : MonoBehaviour
                         float move_time = 5f;
 
 
+    float moveDirection;
     public float distanceMax = 5f;
     public bool Hide = true;
     bool Scoping = false;
@@ -211,10 +213,29 @@ public class MimicBoxco : MonoBehaviour
 
         
     }
+
+    private void direction()
+    {
+        moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
+
+        if(Pattern == pattern.Chase)
+        {
+            if (moveDirection == -1f) //수정 필요
+        {
+            Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
+
+        }
+        else
+        {
+            Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
+        }
+        }
+        
+    }
     private void Chase()
     {
-        float moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
-        FloorMeasurement.direction = moveDirection;
+        
+        //FloorMeasurement.direction = moveDirection;
         transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
 
         if(HillDetection.Groundcheck == true)
@@ -228,21 +249,24 @@ public class MimicBoxco : MonoBehaviour
 
         Vector3 newFloorPosition = Floor_Measurement.position;
         
+        
+
+        
+        
+
         //Debug.Log(newPosition);
         
         
         //Debug.Log(newPosition.x);
         //bool minus = moveDirection == -1f && newPosition.x > 0f ? true : false;
         //newPosition.x = minus == true ? 1f : 2f;
-
-        
-        
-
-        
-        Vector3 newPosition = Floor_Measurement.transform.position;
         
         /*newPosition = Floor_Measurement.transform.position;*/
-        newPosition.x = moveDirection == -1f && newPosition.x > 0f ? -1f : 1f ;
+        //newPosition.x = moveDirection == -1f && newPosition.x > 0f ? -1f : 1f ;
+        
+        
+
+
         /*Debug.Log(newPosition.x);*/
 
         /*newPosition.y -= 1f;
@@ -255,18 +279,10 @@ public class MimicBoxco : MonoBehaviour
         {
             newPosition.x += 1f;
         }*/
-
-
-        Floor_Measurement.transform.position = newPosition;
-        Debug.Log(newPosition.x);
+        //Floor_Measurement.transform.position = newPosition;
+        //Debug.Log(newPosition.x);
         
         //newPosition.x *= -1f;
-
-
-
-
-
-
         //newPosition.y = ;
         //Floor_Measurement.position = 
         //Vector2 newPosition = moveDirection;

@@ -7,12 +7,14 @@ public class Floor_Measurement : MonoBehaviour
     public LayerMask groundLayer; // Ground 레이어를 설정
     public GameObject pos; // OverlapBox의 중심 위치를 지정할 변수
     private GameObject MimicBox;
+    public Rigidbody2D rb { get; private set; }
 
     public bool Groundcheck = false;
     public float direction = 1f;
 
     void Update()
     {
+
         CheckForHillAhead();
         Change_of_location();
     }
@@ -39,19 +41,19 @@ public class Floor_Measurement : MonoBehaviour
     }
     void Change_of_location()
     {
-        Vector3 newPosition = MimicBox.transform.position;
-        if(direction == 1f)
-        {
-            
+        //Vector3 newPosition = MimicBox.transform.position;
+        //if(direction == 1f)
+        //{
 
-            // X 좌표만 speed에 비례해서 이동시킵니다.
-            newPosition.x *= 1f;
-        }
-        else
-        {
-            newPosition.x *= -1f;
-        }
-        transform.position = newPosition;
+
+        //    // X 좌표만 speed에 비례해서 이동시킵니다.
+        //    newPosition.x *= 1f;
+        //}
+        //else
+        //{
+        //    newPosition.x *= -1f;
+        //}
+        //transform.position = newPosition;
     }
 
 
