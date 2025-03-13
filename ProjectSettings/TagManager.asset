@@ -27,8 +27,8 @@ TagManager:
   - mob
   - LadderTop
   - Item
-  - Minimap
-  - Important_Room
+  - 
+  - 
   - 
   - 
   - 
@@ -55,6 +55,9 @@ TagManager:
     locked: 0
   - name: Ground
     uniqueID: 3122112259
+    locked: 0
+  - name: Effect
+    uniqueID: 3108179205
     locked: 0
   - name: Item
     uniqueID: 2834172771
