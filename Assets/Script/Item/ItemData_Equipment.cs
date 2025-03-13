@@ -11,7 +11,7 @@ public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
 
-    public Item_Equipment_Effect[] itemEffect;
+    public Equipment_Effect[] itemEffect;
 
     public int mining;
     public int armor;

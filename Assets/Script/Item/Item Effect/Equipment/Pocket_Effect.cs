@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Pocket", menuName = "Data/Item Equipment effect/Pocket Effect")]
-public class Pocket_Effect : Item_Equipment_Effect
+public class Pocket_Effect : Equipment_Effect
 {
     public override void ExecuteEffect()
     {
