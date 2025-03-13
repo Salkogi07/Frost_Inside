@@ -12,6 +12,7 @@ TagManager:
   - Item
   - Ladder
   - LadderTop
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -26,8 +27,8 @@ TagManager:
   - mob
   - LadderTop
   - Item
-  - 
-  - 
+  - Minimap
+  - Important_Room
   - 
   - 
   - 
