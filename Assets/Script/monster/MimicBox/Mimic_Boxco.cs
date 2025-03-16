@@ -127,7 +127,7 @@ public class MimicBoxco : MonoBehaviour
                     
                 {
                     moverandomDirection = Random.Range(1, 3) == 1 ? 1 : -1;
-                    //StartCoroutine("Move", move_time);
+                    
                     
                     Moving_Time = 0f;
                     Moving = true;
@@ -152,6 +152,7 @@ public class MimicBoxco : MonoBehaviour
                 //{
                 // 플레이어 방향으로 X축으로만 이동
                 Chase();
+                direction();
                 //Debug.Log("쫓는다!");
                 //Vector3 direction = (player.position - transform.position).normalized;
                 //transform.position += direction * moveSpeed * Time.deltaTime;
@@ -218,8 +219,8 @@ public class MimicBoxco : MonoBehaviour
     {
         moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
 
-        if(Pattern == pattern.Chase)
-        {
+        //if(Pattern == pattern.Chase)
+        //{
             if (moveDirection == -1f) //수정 필요
         {
             Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
@@ -229,7 +230,7 @@ public class MimicBoxco : MonoBehaviour
         {
             Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
         }
-        }
+       //}
         
     }
     private void Chase()
