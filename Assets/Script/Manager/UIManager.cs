@@ -39,6 +39,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Image pocket;
 
     [SerializeField] private Image[] itemImage;
+    public UI_ItemToolTip itemToolTip;
 
     private void Awake()
     {

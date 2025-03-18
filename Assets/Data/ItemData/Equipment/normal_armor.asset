@@ -15,6 +15,7 @@ MonoBehaviour:
   itemType: 0
   itemName: normal_chest
   icon: {fileID: 21300000, guid: 844553045c47baa428d75564f561a82e, type: 3}
+  explanation: "\uC815\uB9D0 \uB300\uB2E8\uD574"
   equipmentType: 1
   itemEffect: []
   mining: 0

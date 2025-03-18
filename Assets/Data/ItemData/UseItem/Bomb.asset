@@ -15,5 +15,6 @@ MonoBehaviour:
   itemType: 1
   itemName: Bomb
   icon: {fileID: 21300000, guid: ca1988bab6c99a44a855b43096ac9633, type: 3}
+  explanation: "\uD3ED\uBC14\uB77C\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\uBC1C"
   itemEffect:
   - {fileID: 11400000, guid: 2672d6f8d18fcc342b13647f8245e0f2, type: 2}

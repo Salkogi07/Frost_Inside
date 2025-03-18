@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image itemImage;
     public InventoryItem item;
@@ -113,5 +113,21 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         InventoryItem tempItem = item;
         Inventory.instance.SwapInventoryItems(inventorySlotIndex, otherSlot.inventorySlotIndex);
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+
+        UIManager.instance.itemToolTip.ShowToolTip(item.data, transform.position);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (item == null)
+            return;
+
+        UIManager.instance.itemToolTip.HideToolTip();
     }
 }
