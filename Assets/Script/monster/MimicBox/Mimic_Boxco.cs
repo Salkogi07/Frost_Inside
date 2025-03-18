@@ -10,9 +10,10 @@ public class MimicBoxco : MonoBehaviour
     [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위
     [SerializeField]  private Transform Player; // 플레이어의 위치
     [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
-    [SerializeField] public float jumpspeed;
+    [SerializeField] public float jumpspeed = 5f;
     [SerializeField] public float jumpcooltime;
-                        float move_time = 5f;
+    [SerializeField] public float jumpingmax;
+    float move_time = 5f;
 
 
     float moveDirection;
@@ -24,14 +25,14 @@ public class MimicBoxco : MonoBehaviour
     bool Moving =  false;
     float Moving_Time;
     float distance;
-    
+    bool jumping = false;
 
     public float xDistanceThreshold = 2f;
 
     private Transform Floor_Measurement;
     private Transform attack;
     private Transform ragne;
-
+    
 
     public HillDetection HillDetection;
     public Floor_Measurement FloorMeasurement;
@@ -194,11 +195,12 @@ public class MimicBoxco : MonoBehaviour
     private void Move()
     {
         
-        if (Moving == true )
+        if (Moving)
         { if(distance < distanceMax)
             {
                 transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
                 distance += Time.deltaTime;
+                direction();
             }
             else 
             {
@@ -217,11 +219,17 @@ public class MimicBoxco : MonoBehaviour
 
     private void direction()
     {
-        moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
+        if (Pattern == pattern.Move)
+        {
+            moveDirection = moverandomDirection == 1 ? 1f : -1f ;
+        }
 
-        //if(Pattern == pattern.Chase)
-        //{
-            if (moveDirection == -1f) //수정 필요
+
+        if (Pattern == pattern.Chase)
+        {
+            moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
+        }
+        if (moveDirection == -1f) //수정 필요
         {
             Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
 
@@ -230,7 +238,20 @@ public class MimicBoxco : MonoBehaviour
         {
             Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
         }
-       //}
+       
+    
+
+
+    }
+    private void jump()
+    {
+        
+        jumping = true;
+        if(jumpingmax >= 1f)
+        {
+            transform.position += new Vector3(0f, jumpspeed, 0f);
+            jumpingmax += Time.deltaTime;
+        }
         
     }
     private void Chase()
