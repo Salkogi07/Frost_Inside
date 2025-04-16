@@ -4379,7 +4379,6 @@ GameObject:
   - component: {fileID: 852017079}
   - component: {fileID: 852017080}
   - component: {fileID: 852017082}
-  - component: {fileID: 852017081}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4431,55 +4430,6 @@ MonoBehaviour:
   MenuPanel: {fileID: 67130461}
   KeyPanel: {fileID: 1968125784}
   currentPage: 0
---- !u!114 &852017081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 852017077}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4082e6d8bd7d7a74688db940f6bb0389, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpImage: {fileID: 1829849391}
-  staminaImage: {fileID: 1812174817}
-  staminaFreezeImage: {fileID: 221035959}
-  staminaFreezeSprite:
-  - {fileID: 21300000, guid: 1a202aefaf9078342b4e91f0bbb30407, type: 3}
-  - {fileID: 21300000, guid: 2ae86fd80278c3b47a0cd92e8595d170, type: 3}
-  temperatureImage: {fileID: 1237943402}
-  weightImage: {fileID: 1918246980}
-  timeImage: {fileID: 1820440501}
-  timeText: {fileID: 629632972}
-  timeSprites:
-  - {fileID: 21300000, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
-  - {fileID: 21300000, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
-  - {fileID: 21300000, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
-  temperatureSprites:
-  - {fileID: 21300000, guid: 06edabf6c9a6fda4993b5c3915dc490f, type: 3}
-  - {fileID: 21300000, guid: 4fb4d03349b05ce449196fe6f357a4b2, type: 3}
-  - {fileID: 21300000, guid: 97882ce62eabc90488b4ad0bac3d7ce7, type: 3}
-  - {fileID: 21300000, guid: b92b7c63129717f46bb887a1036c4fef, type: 3}
-  freezeEdges:
-  - {fileID: 627551751}
-  - {fileID: 1368038534}
-  - {fileID: 226852056}
-  fadeSpeed: 2
-  damageImage: {fileID: 1071256452}
-  fadeDuration: 0.3
-  inventoryObject: {fileID: 1700269484}
-  quickSlot:
-  - {fileID: 976671671}
-  - {fileID: 2058487682}
-  - {fileID: 1906385703}
-  pocket: {fileID: 1820728793}
-  itemImage:
-  - {fileID: 1123449032}
-  - {fileID: 160268071}
-  - {fileID: 1532781586}
-  itemToolTip: {fileID: 1179031041}
 --- !u!114 &852017082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5002,6 +4952,7 @@ GameObject:
   - component: {fileID: 1022042129}
   - component: {fileID: 1022042128}
   - component: {fileID: 1022042127}
+  - component: {fileID: 1022042131}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -5095,6 +5046,56 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1022042131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022042126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4082e6d8bd7d7a74688db940f6bb0389, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hpImage: {fileID: 1829849391}
+  staminaImage: {fileID: 1812174817}
+  staminaFreezeImage: {fileID: 221035959}
+  staminaFreezeSprite:
+  - {fileID: 21300000, guid: 1a202aefaf9078342b4e91f0bbb30407, type: 3}
+  - {fileID: 21300000, guid: 2ae86fd80278c3b47a0cd92e8595d170, type: 3}
+  temperatureImage: {fileID: 1237943402}
+  weightImage: {fileID: 1918246980}
+  timeImage: {fileID: 1820440501}
+  timeText: {fileID: 629632972}
+  timeSprites:
+  - {fileID: 21300000, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
+  - {fileID: 21300000, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
+  - {fileID: 21300000, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
+  temperatureSprites:
+  - {fileID: 21300000, guid: 06edabf6c9a6fda4993b5c3915dc490f, type: 3}
+  - {fileID: 21300000, guid: 4fb4d03349b05ce449196fe6f357a4b2, type: 3}
+  - {fileID: 21300000, guid: 97882ce62eabc90488b4ad0bac3d7ce7, type: 3}
+  - {fileID: 21300000, guid: b92b7c63129717f46bb887a1036c4fef, type: 3}
+  freezeEdges:
+  - {fileID: 627551751}
+  - {fileID: 1368038534}
+  - {fileID: 226852056}
+  fadeSpeed: 2
+  damagePanel: {fileID: 0}
+  damageImage: {fileID: 1071256452}
+  fadeDuration: 0.3
+  inventoryObject: {fileID: 1700269484}
+  quickSlot:
+  - {fileID: 976671671}
+  - {fileID: 2058487682}
+  - {fileID: 1906385703}
+  pocket: {fileID: 1820728793}
+  itemImage:
+  - {fileID: 1123449032}
+  - {fileID: 160268071}
+  - {fileID: 1532781586}
+  itemToolTip: {fileID: 1179031041}
 --- !u!1 &1027099485
 GameObject:
   m_ObjectHideFlags: 0
@@ -12110,6 +12111,7 @@ GameObject:
   - component: {fileID: 1357205983}
   - component: {fileID: 1357205982}
   - component: {fileID: 1357205981}
+  - component: {fileID: 1357205984}
   m_Layer: 3
   m_Name: ground
   m_TagString: Ground
@@ -25376,6 +25378,22 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!114 &1357205984
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1357205979}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65f3aeeac77ab684fbcab755c87c969f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 1357205983}
+  maskTexture: {fileID: 0}
+  textureWidth: 16
+  textureHeight: 16
 --- !u!1 &1368038532
 GameObject:
   m_ObjectHideFlags: 0
