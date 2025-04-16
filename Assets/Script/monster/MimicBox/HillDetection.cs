@@ -37,7 +37,7 @@ public class HillDetection : MonoBehaviour
     // 디버그를 위한 시각적 박스 그리기
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(pos.transform.position, boxSize); // pos를 중심으로 OverlapBox 위치와 크기를 시각적으로 확인
     }
 }

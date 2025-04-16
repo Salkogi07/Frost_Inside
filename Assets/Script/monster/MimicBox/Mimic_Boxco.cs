@@ -32,8 +32,9 @@ public class MimicBoxco : MonoBehaviour
     private Transform Floor_Measurement;
     private Transform attack;
     private Transform ragne;
-    
 
+
+    public Mimic_attack Mimic_Attack;
     public HillDetection HillDetection;
     public Floor_Measurement FloorMeasurement;
 
@@ -61,6 +62,8 @@ public class MimicBoxco : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         attack = transform.Find("Attack");
         ragne = transform.Find("GameObjeck");
+        FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
+        //attack = attack.GetComponent<Mimic_attack>();
         //Player = GameObject.FindWithTag("Player").transform; 
     }
     
@@ -231,12 +234,13 @@ public class MimicBoxco : MonoBehaviour
         }
         if (moveDirection == -1f) //수정 필요
         {
-            Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
-
+            Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
+            attack.position = new Vector3(transform.position.x - 1f, attack.position.y, 0f);
         }
         else
         {
-            Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, Floor_Measurement.position.z);
+            Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, 0f);
+            attack.position = new Vector3(transform.position.x + 1f, attack.position.y, 0f);
         }
        
     
