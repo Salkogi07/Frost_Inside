@@ -27,6 +27,7 @@ public class UIManager : MonoBehaviour
     private Coroutine damageCoroutine; // 현재 실행 중인 데미지 효과 코루틴 저장 변수
 
     [Header("Player Damage")]
+    [SerializeField] private Image damagePanel;
     [SerializeField] private Image damageImage;
     public float fadeDuration = 0.5f; // 페이드 아웃 지속 시간
 
@@ -174,6 +175,7 @@ public class UIManager : MonoBehaviour
 
         // 데미지 효과 초기화
         damageImage.color = new Color(1, 1, 1, 1); // 완전 불투명 흰색
+
         damageImage.gameObject.SetActive(true);
 
         float elapsed = 0f;

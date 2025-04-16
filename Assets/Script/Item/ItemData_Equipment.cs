@@ -6,7 +6,7 @@ public enum EquipmentType
     Tool
 }
 
-[CreateAssetMenu(fileName = "New ItemDatat", menuName = "Data/Equipment")]
+[CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Equipment")]
 public class ItemData_Equipment : ItemData
 {
     public EquipmentType equipmentType;
