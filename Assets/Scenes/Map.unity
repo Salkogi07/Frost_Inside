@@ -12111,7 +12111,6 @@ GameObject:
   - component: {fileID: 1357205983}
   - component: {fileID: 1357205982}
   - component: {fileID: 1357205981}
-  - component: {fileID: 1357205984}
   m_Layer: 3
   m_Name: ground
   m_TagString: Ground
@@ -25378,22 +25377,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1357205984
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1357205979}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65f3aeeac77ab684fbcab755c87c969f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemap: {fileID: 1357205983}
-  maskTexture: {fileID: 0}
-  textureWidth: 16
-  textureHeight: 16
 --- !u!1 &1368038532
 GameObject:
   m_ObjectHideFlags: 0
