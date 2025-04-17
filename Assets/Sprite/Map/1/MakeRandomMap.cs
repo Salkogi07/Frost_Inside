@@ -1,17 +1,28 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
 public class MakeRandomMap : MonoBehaviour
 {
+    [Header("=== 방 프리팹 및 플레이어 설정 ===")]
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
     [SerializeField] private SpreadTilemap spreadTilemap;
     [SerializeField] private GameObject player;
 
+    [Header("=== 시드 설정 ===")]
     [SerializeField] private int seed;
     [SerializeField] private bool useRandomSeed = true;
+
+    [Header("=== 맵 생성 허용 범위 ===")]
+    [Tooltip("맵 생성이 허용되는 최소 좌표 (x,y)")]
+    [SerializeField] private Vector2Int mapMin;
+    [Tooltip("맵 생성이 허용되는 최대 좌표 (x,y)")]
+    [SerializeField] private Vector2Int mapMax;
+
+    [Header("=== 벽 제거 시 채울 바닥 타일 ===")]
+    [Tooltip("벽이 제거된 위치에 채울 바닥 타일을 할당하세요.")]
+    [SerializeField] private TileBase fillerFloorTile;
 
     private HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
@@ -26,57 +37,59 @@ public class MakeRandomMap : MonoBehaviour
         if (useRandomSeed)
             seed = System.Environment.TickCount;
         Random.InitState(seed);
-        Debug.Log("Using seed: " + seed);
+        Debug.Log($"[MakeRandomMap] Using seed: {seed}");
+
+        // ★ mapMin/mapMax 자동 보정
+        int minX = Mathf.Min(mapMin.x, mapMax.x);
+        int maxX = Mathf.Max(mapMin.x, mapMax.x);
+        int minY = Mathf.Min(mapMin.y, mapMax.y);
+        int maxY = Mathf.Max(mapMin.y, mapMax.y);
+        mapMin = new Vector2Int(minX, minY);
+        mapMax = new Vector2Int(maxX, maxY);
 
         GenerateMap();
     }
 
+
     public void GenerateMap()
     {
+        // 초기화
         spreadTilemap.ClearAllTiles();
-        floorTiles.Clear();
-        wallTiles.Clear();
-        corridorTiles.Clear();
-        floorTileDict.Clear();
-        wallTileDict.Clear();
-        corridorTileDict.Clear();
+        floorTiles.Clear(); floorTileDict.Clear();
+        wallTiles.Clear(); wallTileDict.Clear();
+        corridorTiles.Clear(); corridorTileDict.Clear();
 
         // 첫 방 배치
         PlaceRoom(roomPrefabs[0], Vector2Int.zero);
 
-        // 이후 방 배치
+        // 나머지 방 배치
         for (int i = 1; i < maxRooms; i++)
         {
             GameObject nextRoom = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
             if (TryFindPlacementForRoom(nextRoom, out Vector2Int offset, out List<Vector2Int> connPoints))
             {
-                // 신규 방 추가
                 PlaceRoom(nextRoom, offset);
-
-                // 양쪽 벽 삭제
                 foreach (var pos in connPoints)
-                    RemoveWallAtPosition(pos);
+                    RemoveWallAndFillFloor(pos);
             }
             else
             {
-                Debug.Log("더 이상 배치 불가하여 중단");
+                Debug.Log("[MakeRandomMap] 더 이상 배치 불가, 생성 종료");
                 break;
             }
         }
 
-        // 최종 타일맵 반영
+        // 타일맵 반영
         spreadTilemap.SpreadFloorTilemapWithTiles(floorTileDict);
         spreadTilemap.SpreadCorridorTilemapWithTiles(corridorTileDict);
         spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
 
-        // 플레이어 위치 초기화
         player.transform.position = Vector3.zero;
     }
 
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)
     {
         GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
-
         CopyTilemapWithTiles(floorTM, offset, floorTiles, floorTileDict);
         CopyTilemapWithTiles(wallTM, offset, wallTiles, wallTileDict);
         CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
@@ -91,41 +104,45 @@ public class MakeRandomMap : MonoBehaviour
         connectionPoints = new List<Vector2Int>();
 
         GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
-        List<Vector2Int> newRoomCorridors = GetLocalCorridorPositions(corridorTM);
-        if (newRoomCorridors.Count == 0) return false;
+        var newCorridors = GetLocalCorridorPositions(corridorTM);
+        if (newCorridors.Count == 0) return false;
 
-        List<Vector2Int> existingCorridors = new List<Vector2Int>(corridorTiles);
-        if (existingCorridors.Count == 0)
-            existingCorridors.Add(Vector2Int.zero);
+        var existCorridors = new List<Vector2Int>(corridorTiles);
+        if (existCorridors.Count == 0)
+            existCorridors.Add(Vector2Int.zero);
 
-        existingCorridors.Shuffle();
-        newRoomCorridors.Shuffle();
+        existCorridors.Shuffle();
+        newCorridors.Shuffle();
 
-        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-        foreach (var exist in existingCorridors)
+        foreach (var exist in existCorridors)
         {
-            foreach (var local in newRoomCorridors)
+            foreach (var local in newCorridors)
             {
-                foreach (var dir in directions)
+                foreach (var dir in dirs)
                 {
-                    int req = (dir.y != 0) ? 1 : 2;
-                    Vector2Int offset = (exist + dir) - local;
+                    var offset = (exist + dir) - local;
 
+                    // 영역 제한
+                    if (!IsWithinMapBounds(floorTM, offset) ||
+                        !IsWithinMapBounds(wallTM, offset) ||
+                        !IsWithinMapBounds(corridorTM, offset))
+                        continue;
+
+                    // 충돌 검사
                     if (OverlapsExistingTiles(floorTM, offset, floorTiles)) continue;
                     if (OverlapsExistingTiles(wallTM, offset, wallTiles)) continue;
 
-                    int connCount = CountCorridorConnections(newRoomCorridors, offset, existingCorridors);
-                    if (connCount < req) continue;
+                    // 연결 개수 검사
+                    int req = (dir.y != 0) ? 1 : 2;
+                    if (CountCorridorConnections(newCorridors, offset, existCorridors) < req) continue;
+                    if (dir.y == 0 &&
+                        CountCorridorPairConnections(newCorridors, offset, existCorridors) == 0)
+                        continue;
 
-                    if (dir.y == 0)
-                    {
-                        int pairCount = CountCorridorPairConnections(newRoomCorridors, offset, existingCorridors);
-                        if (pairCount == 0) continue;
-                    }
-
-                    // 연결 지점 계산
-                    var points = FindConnectionPoints(newRoomCorridors, offset, existingCorridors);
+                    // 연결 지점 찾기
+                    var points = FindConnectionPoints(newCorridors, offset, existCorridors);
                     if (points.Count > 0)
                     {
                         foundOffset = offset;
@@ -139,13 +156,17 @@ public class MakeRandomMap : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// 새 방 통로(newLocal)와 기존 통로(existing)의 인접점을 찾아,
+    /// 제거할 벽 좌표(양쪽) 리스트로 반환
+    /// </summary>
     private List<Vector2Int> FindConnectionPoints(
         List<Vector2Int> newLocal,
         Vector2Int offset,
         List<Vector2Int> existing)
     {
         var result = new List<Vector2Int>();
-        var existingSet = new HashSet<Vector2Int>(existing);
+        var existSet = new HashSet<Vector2Int>(existing);
         Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
         foreach (var local in newLocal)
@@ -153,12 +174,12 @@ public class MakeRandomMap : MonoBehaviour
             Vector2Int world = local + offset;
             foreach (var d in dirs)
             {
-                var neigh = world + d;
-                if (existingSet.Contains(neigh))
+                Vector2Int neighbor = world + d;
+                if (existSet.Contains(neighbor))
                 {
-                    // 벽은 중간 좌표에 위치
+                    // 벽은 양쪽 중간 위치
                     Vector2Int wall1 = world + (d / 2);
-                    Vector2Int wall2 = neigh - (d / 2);
+                    Vector2Int wall2 = neighbor - (d / 2);
                     result.Add(wall1);
                     result.Add(wall2);
                 }
@@ -167,12 +188,28 @@ public class MakeRandomMap : MonoBehaviour
         return result;
     }
 
-    private void RemoveWallAtPosition(Vector2Int pos)
+    private void RemoveWallAndFillFloor(Vector2Int pos)
     {
         if (wallTiles.Remove(pos))
-        {
             wallTileDict.Remove(pos);
+
+        if (fillerFloorTile != null)
+        {
+            floorTiles.Add(pos);
+            floorTileDict[pos] = fillerFloorTile;
         }
+    }
+
+    private bool IsWithinMapBounds(Tilemap source, Vector2Int offset)
+    {
+        foreach (var p in source.cellBounds.allPositionsWithin)
+        {
+            if (!source.HasTile(p)) continue;
+            var wp = (Vector2Int)p + offset;
+            if (wp.x < mapMin.x || wp.x > mapMax.x || wp.y < mapMin.y || wp.y > mapMax.y)
+                return false;
+        }
+        return true;
     }
 
     private List<Vector2Int> GetLocalCorridorPositions(Tilemap tm)
@@ -184,18 +221,14 @@ public class MakeRandomMap : MonoBehaviour
         return list;
     }
 
-    private int CountCorridorConnections(
-        List<Vector2Int> newLocal,
-        Vector2Int offset,
-        List<Vector2Int> existing)
+    private int CountCorridorConnections(List<Vector2Int> newLocal, Vector2Int offset, List<Vector2Int> existing)
     {
         int count = 0;
         var existSet = new HashSet<Vector2Int>(existing);
         Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-
         foreach (var local in newLocal)
         {
-            Vector2Int world = local + offset;
+            var world = local + offset;
             foreach (var d in dirs)
             {
                 if (existSet.Contains(world + d))
@@ -208,36 +241,34 @@ public class MakeRandomMap : MonoBehaviour
         return count;
     }
 
-    private int CountCorridorPairConnections(
-        List<Vector2Int> newLocal,
-        Vector2Int offset,
-        List<Vector2Int> existing)
+    private int CountCorridorPairConnections(List<Vector2Int> newLocal, Vector2Int offset, List<Vector2Int> existing)
     {
+        int pairCount = 0;
         var existSet = new HashSet<Vector2Int>(existing);
         var newSet = new HashSet<Vector2Int>(newLocal);
-        var checkedPairs = new HashSet<Vector2Int>();
-        int pairCount = 0;
+        var checkedSet = new HashSet<Vector2Int>();
 
         foreach (var local in newLocal)
         {
-            Vector2Int world = local + offset;
-            Vector2Int[] checkDirs = { Vector2Int.up, Vector2Int.right };
+            var world = local + offset;
+            Vector2Int[] dirs = { Vector2Int.up, Vector2Int.right };
 
-            foreach (var d in checkDirs)
+            foreach (var d in dirs)
             {
-                Vector2Int adjLocal = local + d;
-                Vector2Int adjWorld = world + d;
-                if (newSet.Contains(adjLocal)
-                    && !checkedPairs.Contains(local)
-                    && !checkedPairs.Contains(adjLocal))
+                var adjLocal = local + d;
+                var adjWorld = world + d;
+                if (!newSet.Contains(adjLocal)) continue;
+                if (checkedSet.Contains(local) || checkedSet.Contains(adjLocal)) continue;
+
+                if (existSet.Contains(world + Vector2Int.up) || existSet.Contains(world + Vector2Int.down) ||
+                    existSet.Contains(world + Vector2Int.left) || existSet.Contains(world + Vector2Int.right))
                 {
-                    bool a = IsAdjacentToCorridor(world, existSet);
-                    bool b = IsAdjacentToCorridor(adjWorld, existSet);
-                    if (a && b)
+                    if (existSet.Contains(adjWorld + Vector2Int.up) || existSet.Contains(adjWorld + Vector2Int.down) ||
+                        existSet.Contains(adjWorld + Vector2Int.left) || existSet.Contains(adjWorld + Vector2Int.right))
                     {
                         pairCount++;
-                        checkedPairs.Add(local);
-                        checkedPairs.Add(adjLocal);
+                        checkedSet.Add(local);
+                        checkedSet.Add(adjLocal);
                     }
                 }
             }
@@ -245,57 +276,61 @@ public class MakeRandomMap : MonoBehaviour
         return pairCount;
     }
 
-    private bool IsAdjacentToCorridor(Vector2Int pos, HashSet<Vector2Int> existSet)
-    {
-        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-        foreach (var d in dirs)
-            if (existSet.Contains(pos + d))
-                return true;
-        return false;
-    }
-
     private bool OverlapsExistingTiles(Tilemap source, Vector2Int offset, HashSet<Vector2Int> target)
     {
         foreach (var p in source.cellBounds.allPositionsWithin)
         {
-            if (source.HasTile(p) && target.Contains((Vector2Int)p + offset))
+            if (!source.HasTile(p)) continue;
+            if (target.Contains((Vector2Int)p + offset))
                 return true;
         }
         return false;
     }
 
-    private void CopyTilemapWithTiles(
-        Tilemap source,
-        Vector2Int offset,
-        HashSet<Vector2Int> targetSet,
-        Dictionary<Vector2Int, TileBase> dict)
+    private void CopyTilemapWithTiles(Tilemap source, Vector2Int offset, HashSet<Vector2Int> targetSet, Dictionary<Vector2Int, TileBase> dict)
     {
         foreach (var p in source.cellBounds.allPositionsWithin)
         {
             if (!source.HasTile(p)) continue;
-            Vector2Int world = (Vector2Int)p + offset;
+            var world = (Vector2Int)p + offset;
             targetSet.Add(world);
             dict[world] = source.GetTile(p);
         }
     }
 
-    private void GetTilemaps(
-        GameObject roomPrefab,
-        out Tilemap floorTM,
-        out Tilemap wallTM,
-        out Tilemap corridorTM)
+    private void GetTilemaps(GameObject roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM)
     {
         var children = roomPrefab.GetComponentsInChildren<Transform>();
-        Transform parent = children[1]; // 프로젝트 구조에 맞게 인덱스 조정
+        Transform parent = children[1];  // 프로젝트 구조에 따라 인덱스를 조정하세요
         floorTM = parent.Find("FloorTilemap").GetComponent<Tilemap>();
         wallTM = parent.Find("WallTilemap").GetComponent<Tilemap>();
         corridorTM = parent.Find("CorridorTilemap").GetComponent<Tilemap>();
     }
+
+    // 맵 생성 허용 범위를 Gizmos로 시각화
+    private void OnDrawGizmos()
+    {
+        // 에디터에서만 실행
+        #if UNITY_EDITOR
+        // 범위의 가운데와 크기 계산
+        Vector3 center = new Vector3(
+            (mapMin.x + mapMax.x + 1) * 0.5f,
+            (mapMin.y + mapMax.y + 1) * 0.5f,
+            0f
+        );
+        Vector3 size = new Vector3(
+            Mathf.Abs(mapMax.x - mapMin.x + 1),
+            Mathf.Abs(mapMax.y - mapMin.y + 1),
+            0f
+        );
+
+        // 선으로만 그리기
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(center, size);  // wireframe box :contentReference[oaicite:0]{index=0}
+        #endif
+    }
 }
 
-/// <summary>
-/// List 셔플 확장 메서드
-/// </summary>
 public static class ListExtensions
 {
     public static void Shuffle<T>(this List<T> list)
