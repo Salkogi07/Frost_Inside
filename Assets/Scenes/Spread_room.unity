@@ -1392,7 +1392,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 483563663
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 10
   m_Sprite: {fileID: -3992869008237178805, guid: 39510b1c08a5b1746b0c438b2aa506af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10068,7 +10068,6 @@ MonoBehaviour:
   jumpForce: 16
   coyoteTime: 0.13
   jumpBufferTime: 0.13
-  groundCheckDistance: 0.1
   groundCheck: {fileID: 539113852}
   groundCheckSize: {x: 0.3, y: 0.1}
   groundLayer:
@@ -10076,7 +10075,6 @@ MonoBehaviour:
     m_Bits: 520
   moveInput: 0
   isAttack: 0
-  isDead: 0
   canDoubleJump: 0
 --- !u!50 &1156874119
 Rigidbody2D:
@@ -23675,8 +23673,8 @@ Transform:
   m_Children:
   - {fileID: 769793046}
   - {fileID: 2047765570}
-  - {fileID: 2034892498}
   - {fileID: 1399778990}
+  - {fileID: 2034892498}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1829130482

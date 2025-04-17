@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
@@ -16,12 +17,14 @@ public class MakeRandomMap : MonoBehaviour
     private HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> corridorTiles = new HashSet<Vector2Int>();
 
+    private Dictionary<Vector2Int, TileBase> floorTileDict = new Dictionary<Vector2Int, TileBase>();
+    private Dictionary<Vector2Int, TileBase> wallTileDict = new Dictionary<Vector2Int, TileBase>();
+    private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
+
     private void Start()
     {
         if (useRandomSeed)
-        {
             seed = System.Environment.TickCount;
-        }
         Random.InitState(seed);
         Debug.Log("Using seed: " + seed);
 
@@ -34,120 +37,101 @@ public class MakeRandomMap : MonoBehaviour
         floorTiles.Clear();
         wallTiles.Clear();
         corridorTiles.Clear();
+        floorTileDict.Clear();
+        wallTileDict.Clear();
+        corridorTileDict.Clear();
 
-        // 첫 방은 (0,0)에 배치
-        Vector2Int startPos = Vector2Int.zero;
-        PlaceRoom(roomPrefabs[0], startPos);
+        // 첫 방 배치
+        PlaceRoom(roomPrefabs[0], Vector2Int.zero);
 
-        // 이후 maxRooms-1개의 방 생성
+        // 이후 방 배치
         for (int i = 1; i < maxRooms; i++)
         {
-            GameObject nextRoomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
-            if (TryFindPlacementForRoom(nextRoomPrefab, out Vector2Int foundOffset))
+            GameObject nextRoom = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
+            if (TryFindPlacementForRoom(nextRoom, out Vector2Int offset, out List<Vector2Int> connPoints))
             {
-                PlaceRoom(nextRoomPrefab, foundOffset);
+                // 신규 방 추가
+                PlaceRoom(nextRoom, offset);
+
+                // 양쪽 벽 삭제
+                foreach (var pos in connPoints)
+                    RemoveWallAtPosition(pos);
             }
             else
             {
-                // 더 이상 배치 불가하면 중단
+                Debug.Log("더 이상 배치 불가하여 중단");
                 break;
             }
         }
 
-        // 실제 타일맵에 Floor, Wall, Corridor 배치
-        spreadTilemap.SpreadFloorTilemap(floorTiles);
-        spreadTilemap.SpreadWallTilemap(wallTiles);
-        spreadTilemap.SpreadCorridorTilemap(corridorTiles);
+        // 최종 타일맵 반영
+        spreadTilemap.SpreadFloorTilemapWithTiles(floorTileDict);
+        spreadTilemap.SpreadCorridorTilemapWithTiles(corridorTileDict);
+        spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
 
-        // 플레이어 위치 설정
-        player.transform.position = Vector2.zero;
+        // 플레이어 위치 초기화
+        player.transform.position = Vector3.zero;
     }
 
-    /// <summary>
-    /// 방(프리팹) 타일맵을 오프셋 위치에 복사
-    /// </summary>
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)
     {
-        Tilemap floorTilemap, wallTilemap, corridorTilemap;
-        GetTilemaps(roomPrefab, out floorTilemap, out wallTilemap, out corridorTilemap);
+        GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
 
-        CopyTilemap(floorTilemap, offset, floorTiles);
-        CopyTilemap(wallTilemap, offset, wallTiles);
-        CopyTilemap(corridorTilemap, offset, corridorTiles);
+        CopyTilemapWithTiles(floorTM, offset, floorTiles, floorTileDict);
+        CopyTilemapWithTiles(wallTM, offset, wallTiles, wallTileDict);
+        CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
     }
 
-    /// <summary>
-    /// 새 방을 기존 맵에 붙일 수 있는 오프셋을 찾는 과정:
-    ///  - 세로 방향(up/down)은 통로 1개 이상 연결이면 OK
-    ///  - 가로 방향(left/right)은 2×2 형태로 통로가 연결되어야 OK
-    ///  - 연결이 성사되면 연결 지점의 벽 타일을 제거
-    /// </summary>
-    private bool TryFindPlacementForRoom(GameObject roomPrefab, out Vector2Int foundOffset)
+    private bool TryFindPlacementForRoom(
+        GameObject roomPrefab,
+        out Vector2Int foundOffset,
+        out List<Vector2Int> connectionPoints)
     {
         foundOffset = Vector2Int.zero;
+        connectionPoints = new List<Vector2Int>();
 
-        // 새 방(프리팹)의 Tilemap들 가져오기
-        Tilemap floorTilemap, wallTilemap, corridorTilemap;
-        GetTilemaps(roomPrefab, out floorTilemap, out wallTilemap, out corridorTilemap);
+        GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
+        List<Vector2Int> newRoomCorridors = GetLocalCorridorPositions(corridorTM);
+        if (newRoomCorridors.Count == 0) return false;
 
-        // 새 방 통로 타일 (로컬 좌표)
-        List<Vector2Int> newRoomLocalCorridorTiles = GetLocalCorridorPositions(corridorTilemap);
-        if (newRoomLocalCorridorTiles.Count == 0)
-            return false;
+        List<Vector2Int> existingCorridors = new List<Vector2Int>(corridorTiles);
+        if (existingCorridors.Count == 0)
+            existingCorridors.Add(Vector2Int.zero);
 
-        // 기존 통로 타일 목록
-        List<Vector2Int> existingCorridorList = new List<Vector2Int>(corridorTiles);
-        if (existingCorridorList.Count == 0)
-        {
-            // 아직 통로가 없다면 (0,0) 가상 통로라고 가정
-            existingCorridorList.Add(Vector2Int.zero);
-        }
+        existingCorridors.Shuffle();
+        newRoomCorridors.Shuffle();
 
-        // 무작위 순회(셔플)
-        existingCorridorList.Shuffle();
-        newRoomLocalCorridorTiles.Shuffle();
-
-        // 상하좌우 방향
         Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-        foreach (Vector2Int existingCorridor in existingCorridorList)
+        foreach (var exist in existingCorridors)
         {
-            foreach (Vector2Int localCorridorPos in newRoomLocalCorridorTiles)
+            foreach (var local in newRoomCorridors)
             {
-                foreach (Vector2Int dir in directions)
+                foreach (var dir in directions)
                 {
-                    // 세로 방향이면 1개 연결, 가로 방향이면 2개 연결
-                    int requiredConnections = (dir.y != 0) ? 1 : 2;
+                    int req = (dir.y != 0) ? 1 : 2;
+                    Vector2Int offset = (exist + dir) - local;
 
-                    // 배치 오프셋 계산
-                    Vector2Int offset = (existingCorridor + dir) - localCorridorPos;
+                    if (OverlapsExistingTiles(floorTM, offset, floorTiles)) continue;
+                    if (OverlapsExistingTiles(wallTM, offset, wallTiles)) continue;
 
-                    // Floor/Wall 겹침 검사
-                    if (OverlapsExistingTiles(floorTilemap, offset, floorTiles)) continue;
-                    if (OverlapsExistingTiles(wallTilemap, offset, wallTiles)) continue;
+                    int connCount = CountCorridorConnections(newRoomCorridors, offset, existingCorridors);
+                    if (connCount < req) continue;
 
-                    // 먼저 기존 방식대로 연결 수 검사
-                    int connectedCount = CountCorridorConnections(newRoomLocalCorridorTiles, offset, existingCorridorList);
-                    if (connectedCount < requiredConnections)
-                    {
-                        continue;
-                    }
-
-                    // 가로 방향(Left/Right)일 경우, 2×2 형태 연결도 추가 확인
                     if (dir.y == 0)
                     {
-                        int pairCount = CountCorridorPairConnections(newRoomLocalCorridorTiles, offset, existingCorridorList);
-                        if (pairCount == 0)
-                        {
-                            // 2×2 형태가 하나도 없으면 실패
-                            continue;
-                        }
+                        int pairCount = CountCorridorPairConnections(newRoomCorridors, offset, existingCorridors);
+                        if (pairCount == 0) continue;
                     }
 
-                    // 연결 성사!
-                    foundOffset = offset;
-                    RemoveWallAtConnection(existingCorridor, dir);
-                    return true;
+                    // 연결 지점 계산
+                    var points = FindConnectionPoints(newRoomCorridors, offset, existingCorridors);
+                    if (points.Count > 0)
+                    {
+                        foundOffset = offset;
+                        connectionPoints = points;
+                        return true;
+                    }
                 }
             }
         }
@@ -155,46 +139,68 @@ public class MakeRandomMap : MonoBehaviour
         return false;
     }
 
-    /// <summary>
-    /// corridorTilemap 내의 모든 타일 좌표를 리스트로 반환
-    /// </summary>
-    private List<Vector2Int> GetLocalCorridorPositions(Tilemap corridorTilemap)
+    private List<Vector2Int> FindConnectionPoints(
+        List<Vector2Int> newLocal,
+        Vector2Int offset,
+        List<Vector2Int> existing)
     {
-        List<Vector2Int> result = new List<Vector2Int>();
-        BoundsInt bounds = corridorTilemap.cellBounds;
-        foreach (var pos in bounds.allPositionsWithin)
+        var result = new List<Vector2Int>();
+        var existingSet = new HashSet<Vector2Int>(existing);
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+        foreach (var local in newLocal)
         {
-            if (corridorTilemap.HasTile(pos))
+            Vector2Int world = local + offset;
+            foreach (var d in dirs)
             {
-                result.Add((Vector2Int)pos);
+                var neigh = world + d;
+                if (existingSet.Contains(neigh))
+                {
+                    // 벽은 중간 좌표에 위치
+                    Vector2Int wall1 = world + (d / 2);
+                    Vector2Int wall2 = neigh - (d / 2);
+                    result.Add(wall1);
+                    result.Add(wall2);
+                }
             }
         }
         return result;
     }
 
-    /// <summary>
-    /// 새 방 corridor 타일들을 offset만큼 옮겼을 때,
-    /// 기존 corridor 타일들과 상하좌우로 인접한(= 연결된) 타일 개수를 센다.
-    /// </summary>
+    private void RemoveWallAtPosition(Vector2Int pos)
+    {
+        if (wallTiles.Remove(pos))
+        {
+            wallTileDict.Remove(pos);
+        }
+    }
+
+    private List<Vector2Int> GetLocalCorridorPositions(Tilemap tm)
+    {
+        var list = new List<Vector2Int>();
+        foreach (var p in tm.cellBounds.allPositionsWithin)
+            if (tm.HasTile(p))
+                list.Add((Vector2Int)p);
+        return list;
+    }
+
     private int CountCorridorConnections(
-        List<Vector2Int> newRoomLocalCorridorTiles,
+        List<Vector2Int> newLocal,
         Vector2Int offset,
-        List<Vector2Int> existingCorridorList)
+        List<Vector2Int> existing)
     {
         int count = 0;
-        HashSet<Vector2Int> existingCorridorSet = new HashSet<Vector2Int>(existingCorridorList);
-        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+        var existSet = new HashSet<Vector2Int>(existing);
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
 
-        foreach (var localPos in newRoomLocalCorridorTiles)
+        foreach (var local in newLocal)
         {
-            Vector2Int worldPos = localPos + offset;
-            foreach (var dir in directions)
+            Vector2Int world = local + offset;
+            foreach (var d in dirs)
             {
-                Vector2Int neighbor = worldPos + dir;
-                if (existingCorridorSet.Contains(neighbor))
+                if (existSet.Contains(world + d))
                 {
                     count++;
-                    // 한 타일이 여러 방향으로 연결되어도 '1번'으로만 세려면 break
                     break;
                 }
             }
@@ -202,119 +208,93 @@ public class MakeRandomMap : MonoBehaviour
         return count;
     }
 
-    /// <summary>
-    /// 가로 방향 연결 시, 실제로 세로 2칸(2×2)이 함께 연결되는지 검사
-    /// </summary>
     private int CountCorridorPairConnections(
-        List<Vector2Int> newRoomLocalCorridorTiles,
+        List<Vector2Int> newLocal,
         Vector2Int offset,
-        List<Vector2Int> existingCorridorList)
+        List<Vector2Int> existing)
     {
-        HashSet<Vector2Int> existingCorridorSet = new HashSet<Vector2Int>(existingCorridorList);
-        HashSet<Vector2Int> newRoomLocalCorridorSet = new HashSet<Vector2Int>(newRoomLocalCorridorTiles);
+        var existSet = new HashSet<Vector2Int>(existing);
+        var newSet = new HashSet<Vector2Int>(newLocal);
+        var checkedPairs = new HashSet<Vector2Int>();
+        int pairCount = 0;
 
-        int pairConnectionCount = 0;
-        foreach (var localPos in newRoomLocalCorridorTiles)
+        foreach (var local in newLocal)
         {
-            Vector2Int worldPos = localPos + offset;
-            Vector2Int aboveWorldPos = worldPos + Vector2Int.up;
+            Vector2Int world = local + offset;
+            Vector2Int[] checkDirs = { Vector2Int.up, Vector2Int.right };
 
-            // 새 방 통로가 worldPos와 그 바로 위(aboveWorldPos) 모두 Corridor인지 확인
-            Vector2Int aboveLocalPos = localPos + Vector2Int.up;
-            if (newRoomLocalCorridorSet.Contains(aboveLocalPos))
+            foreach (var d in checkDirs)
             {
-                // 두 칸 모두 기존 맵의 통로에 인접하면(상하좌우로) 2칸 연결이 성립
-                bool firstConnected = IsAdjacentToCorridor(worldPos, existingCorridorSet);
-                bool secondConnected = IsAdjacentToCorridor(aboveWorldPos, existingCorridorSet);
-                if (firstConnected && secondConnected)
+                Vector2Int adjLocal = local + d;
+                Vector2Int adjWorld = world + d;
+                if (newSet.Contains(adjLocal)
+                    && !checkedPairs.Contains(local)
+                    && !checkedPairs.Contains(adjLocal))
                 {
-                    pairConnectionCount++;
+                    bool a = IsAdjacentToCorridor(world, existSet);
+                    bool b = IsAdjacentToCorridor(adjWorld, existSet);
+                    if (a && b)
+                    {
+                        pairCount++;
+                        checkedPairs.Add(local);
+                        checkedPairs.Add(adjLocal);
+                    }
                 }
             }
         }
-        return pairConnectionCount;
+        return pairCount;
     }
 
-    private bool IsAdjacentToCorridor(Vector2Int pos, HashSet<Vector2Int> existingCorridorSet)
+    private bool IsAdjacentToCorridor(Vector2Int pos, HashSet<Vector2Int> existSet)
     {
-        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-        foreach (var dir in directions)
-        {
-            Vector2Int neighbor = pos + dir;
-            if (existingCorridorSet.Contains(neighbor))
-            {
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+        foreach (var d in dirs)
+            if (existSet.Contains(pos + d))
                 return true;
-            }
+        return false;
+    }
+
+    private bool OverlapsExistingTiles(Tilemap source, Vector2Int offset, HashSet<Vector2Int> target)
+    {
+        foreach (var p in source.cellBounds.allPositionsWithin)
+        {
+            if (source.HasTile(p) && target.Contains((Vector2Int)p + offset))
+                return true;
         }
         return false;
     }
 
-    /// <summary>
-    /// 기존 통로와 새 통로가 연결되는 지점(벽)을 제거
-    /// </summary>
-    private void RemoveWallAtConnection(Vector2Int existingCorridor, Vector2Int dir)
+    private void CopyTilemapWithTiles(
+        Tilemap source,
+        Vector2Int offset,
+        HashSet<Vector2Int> targetSet,
+        Dictionary<Vector2Int, TileBase> dict)
     {
-        Vector2Int connectingPos = existingCorridor + dir;
-        if (wallTiles.Contains(connectingPos))
+        foreach (var p in source.cellBounds.allPositionsWithin)
         {
-            wallTiles.Remove(connectingPos);
+            if (!source.HasTile(p)) continue;
+            Vector2Int world = (Vector2Int)p + offset;
+            targetSet.Add(world);
+            dict[world] = source.GetTile(p);
         }
     }
 
-    /// <summary>
-    /// sourceTilemap을 offset만큼 옮겼을 때, targetSet과 겹치는지 검사
-    /// </summary>
-    private bool OverlapsExistingTiles(Tilemap sourceTilemap, Vector2Int offset, HashSet<Vector2Int> targetSet)
+    private void GetTilemaps(
+        GameObject roomPrefab,
+        out Tilemap floorTM,
+        out Tilemap wallTM,
+        out Tilemap corridorTM)
     {
-        BoundsInt bounds = sourceTilemap.cellBounds;
-        foreach (var pos in bounds.allPositionsWithin)
-        {
-            if (sourceTilemap.HasTile(pos))
-            {
-                Vector2Int adjustedPos = new Vector2Int(pos.x + offset.x, pos.y + offset.y);
-                if (targetSet.Contains(adjustedPos))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    /// <summary>
-    /// sourceTilemap 내 모든 타일을 offset만큼 평행 이동하여 targetSet에 복사
-    /// </summary>
-    private void CopyTilemap(Tilemap sourceTilemap, Vector2Int offset, HashSet<Vector2Int> targetSet)
-    {
-        BoundsInt bounds = sourceTilemap.cellBounds;
-        foreach (var pos in bounds.allPositionsWithin)
-        {
-            if (sourceTilemap.HasTile(pos))
-            {
-                Vector2Int adjustedPos = new Vector2Int(pos.x + offset.x, pos.y + offset.y);
-                targetSet.Add(adjustedPos);
-            }
-        }
-    }
-
-    /// <summary>
-    /// roomPrefab에서 FloorTilemap, WallTilemap, CorridorTilemap 찾기
-    /// (프로젝트 구조에 맞춰 수정 필요)
-    /// </summary>
-    private void GetTilemaps(GameObject roomPrefab, out Tilemap floorTilemap, out Tilemap wallTilemap, out Tilemap corridorTilemap)
-    {
-        Transform[] gridTransforms = roomPrefab.transform.GetComponentsInChildren<Transform>();
-        // 예시로 1번 인덱스 자식이 타일맵 부모라고 가정
-        Transform tilemapParent = gridTransforms[1].transform;
-
-        floorTilemap = tilemapParent.Find("FloorTilemap").GetComponent<Tilemap>();
-        wallTilemap = tilemapParent.Find("WallTilemap").GetComponent<Tilemap>();
-        corridorTilemap = tilemapParent.Find("CorridorTilemap").GetComponent<Tilemap>();
+        var children = roomPrefab.GetComponentsInChildren<Transform>();
+        Transform parent = children[1]; // 프로젝트 구조에 맞게 인덱스 조정
+        floorTM = parent.Find("FloorTilemap").GetComponent<Tilemap>();
+        wallTM = parent.Find("WallTilemap").GetComponent<Tilemap>();
+        corridorTM = parent.Find("CorridorTilemap").GetComponent<Tilemap>();
     }
 }
 
 /// <summary>
-/// List Shuffle 확장 메서드
+/// List 셔플 확장 메서드
 /// </summary>
 public static class ListExtensions
 {
