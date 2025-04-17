@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
@@ -41,35 +41,35 @@ public class MakeRandomMap : MonoBehaviour
         wallTileDict.Clear();
         corridorTileDict.Clear();
 
-        // Ã¹ ¹æ ¹èÄ¡
+        // ì²« ë°© ë°°ì¹˜
         PlaceRoom(roomPrefabs[0], Vector2Int.zero);
 
-        // ÀÌÈÄ ¹æ ¹èÄ¡
+        // ì´í›„ ë°© ë°°ì¹˜
         for (int i = 1; i < maxRooms; i++)
         {
             GameObject nextRoom = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
             if (TryFindPlacementForRoom(nextRoom, out Vector2Int offset, out List<Vector2Int> connPoints))
             {
-                // ½Å±Ô ¹æ Ãß°¡
+                // ì‹ ê·œ ë°© ì¶”ê°€
                 PlaceRoom(nextRoom, offset);
 
-                // ¾çÂÊ º® »èÁ¦
+                // ì–‘ìª½ ë²½ ì‚­ì œ
                 foreach (var pos in connPoints)
                     RemoveWallAtPosition(pos);
             }
             else
             {
-                Debug.Log("´õ ÀÌ»ó ¹èÄ¡ ºÒ°¡ÇÏ¿© Áß´Ü");
+                Debug.Log("ë” ì´ìƒ ë°°ì¹˜ ë¶ˆê°€í•˜ì—¬ ì¤‘ë‹¨");
                 break;
             }
         }
 
-        // ÃÖÁ¾ Å¸ÀÏ¸Ê ¹İ¿µ
+        // ìµœì¢… íƒ€ì¼ë§µ ë°˜ì˜
         spreadTilemap.SpreadFloorTilemapWithTiles(floorTileDict);
         spreadTilemap.SpreadCorridorTilemapWithTiles(corridorTileDict);
         spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
 
-        // ÇÃ·¹ÀÌ¾î À§Ä¡ ÃÊ±âÈ­
+        // í”Œë ˆì´ì–´ ìœ„ì¹˜ ì´ˆê¸°í™”
         player.transform.position = Vector3.zero;
     }
 
@@ -124,7 +124,7 @@ public class MakeRandomMap : MonoBehaviour
                         if (pairCount == 0) continue;
                     }
 
-                    // ¿¬°á ÁöÁ¡ °è»ê
+                    // ì—°ê²° ì§€ì  ê³„ì‚°
                     var points = FindConnectionPoints(newRoomCorridors, offset, existingCorridors);
                     if (points.Count > 0)
                     {
@@ -156,7 +156,7 @@ public class MakeRandomMap : MonoBehaviour
                 var neigh = world + d;
                 if (existingSet.Contains(neigh))
                 {
-                    // º®Àº Áß°£ ÁÂÇ¥¿¡ À§Ä¡
+                    // ë²½ì€ ì¤‘ê°„ ì¢Œí‘œì— ìœ„ì¹˜
                     Vector2Int wall1 = world + (d / 2);
                     Vector2Int wall2 = neigh - (d / 2);
                     result.Add(wall1);
@@ -286,7 +286,7 @@ public class MakeRandomMap : MonoBehaviour
         out Tilemap corridorTM)
     {
         var children = roomPrefab.GetComponentsInChildren<Transform>();
-        Transform parent = children[1]; // ÇÁ·ÎÁ§Æ® ±¸Á¶¿¡ ¸Â°Ô ÀÎµ¦½º Á¶Á¤
+        Transform parent = children[1]; // í”„ë¡œì íŠ¸ êµ¬ì¡°ì— ë§ê²Œ ì¸ë±ìŠ¤ ì¡°ì •
         floorTM = parent.Find("FloorTilemap").GetComponent<Tilemap>();
         wallTM = parent.Find("WallTilemap").GetComponent<Tilemap>();
         corridorTM = parent.Find("CorridorTilemap").GetComponent<Tilemap>();
@@ -294,7 +294,7 @@ public class MakeRandomMap : MonoBehaviour
 }
 
 /// <summary>
-/// List ¼ÅÇÃ È®Àå ¸Ş¼­µå
+/// List ì…”í”Œ í™•ì¥ ë©”ì„œë“œ
 /// </summary>
 public static class ListExtensions
 {
