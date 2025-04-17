@@ -1,153 +1,154 @@
-using UnityEngine;
+Ôªøusing UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 
 public class MakeRandomMap : MonoBehaviour
 {
+    [Header("=== Î∞© ÌîÑÎ¶¨Ìåπ Î∞è ÌîåÎ†àÏù¥Ïñ¥ ÏÑ§Ï†ï ===")]
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
     [SerializeField] private SpreadTilemap spreadTilemap;
     [SerializeField] private GameObject player;
 
+    [Header("=== ÏãúÎìú ÏÑ§Ï†ï ===")]
     [SerializeField] private int seed;
     [SerializeField] private bool useRandomSeed = true;
+
+    [Header("=== Îßµ ÏÉùÏÑ± ÌóàÏö© Î≤îÏúÑ ===")]
+    [Tooltip("Îßµ ÏÉùÏÑ±Ïù¥ ÌóàÏö©ÎêòÎäî ÏµúÏÜå Ï¢åÌëú (x,y)")]
+    [SerializeField] private Vector2Int mapMin;
+    [Tooltip("Îßµ ÏÉùÏÑ±Ïù¥ ÌóàÏö©ÎêòÎäî ÏµúÎåÄ Ï¢åÌëú (x,y)")]
+    [SerializeField] private Vector2Int mapMax;
+
+    [Header("=== Î≤Ω Ï†úÍ±∞ Ïãú Ï±ÑÏö∏ Î∞îÎã• ÌÉÄÏùº ===")]
+    [Tooltip("Î≤ΩÏù¥ Ï†úÍ±∞Îêú ÏúÑÏπòÏóê Ï±ÑÏö∏ Î∞îÎã• ÌÉÄÏùºÏùÑ Ìï†ÎãπÌïòÏÑ∏Ïöî.")]
+    [SerializeField] private TileBase fillerFloorTile;
 
     private HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> corridorTiles = new HashSet<Vector2Int>();
 
+    private Dictionary<Vector2Int, TileBase> floorTileDict = new Dictionary<Vector2Int, TileBase>();
+    private Dictionary<Vector2Int, TileBase> wallTileDict = new Dictionary<Vector2Int, TileBase>();
+    private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
+
     private void Start()
     {
         if (useRandomSeed)
-        {
             seed = System.Environment.TickCount;
-        }
         Random.InitState(seed);
-        Debug.Log("Using seed: " + seed);
+        Debug.Log($"[MakeRandomMap] Using seed: {seed}");
+
+        // ‚òÖ mapMin/mapMax ÏûêÎèô Î≥¥Ï†ï
+        int minX = Mathf.Min(mapMin.x, mapMax.x);
+        int maxX = Mathf.Max(mapMin.x, mapMax.x);
+        int minY = Mathf.Min(mapMin.y, mapMax.y);
+        int maxY = Mathf.Max(mapMin.y, mapMax.y);
+        mapMin = new Vector2Int(minX, minY);
+        mapMax = new Vector2Int(maxX, maxY);
 
         GenerateMap();
     }
 
+
     public void GenerateMap()
     {
+        // Ï¥àÍ∏∞Ìôî
         spreadTilemap.ClearAllTiles();
-        floorTiles.Clear();
-        wallTiles.Clear();
-        corridorTiles.Clear();
+        floorTiles.Clear(); floorTileDict.Clear();
+        wallTiles.Clear(); wallTileDict.Clear();
+        corridorTiles.Clear(); corridorTileDict.Clear();
 
-        // √π πÊ¿∫ (0,0)ø° πËƒ°
-        Vector2Int startPos = Vector2Int.zero;
-        PlaceRoom(roomPrefabs[0], startPos);
+        // Ï≤´ Î∞© Î∞∞Ïπò
+        PlaceRoom(roomPrefabs[0], Vector2Int.zero);
 
-        // ¿Ã»ƒ maxRooms-1∞≥¿« πÊ ª˝º∫
+        // ÎÇòÎ®∏ÏßÄ Î∞© Î∞∞Ïπò
         for (int i = 1; i < maxRooms; i++)
         {
-            GameObject nextRoomPrefab = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
-            if (TryFindPlacementForRoom(nextRoomPrefab, out Vector2Int foundOffset))
+            GameObject nextRoom = roomPrefabs[Random.Range(0, roomPrefabs.Count)];
+            if (TryFindPlacementForRoom(nextRoom, out Vector2Int offset, out List<Vector2Int> connPoints))
             {
-                PlaceRoom(nextRoomPrefab, foundOffset);
+                PlaceRoom(nextRoom, offset);
+                foreach (var pos in connPoints)
+                    RemoveWallAndFillFloor(pos);
             }
             else
             {
-                // ¥ı ¿ÃªÛ πËƒ° ∫“∞°«œ∏È ¡ﬂ¥‹
+                Debug.Log("[MakeRandomMap] Îçî Ïù¥ÏÉÅ Î∞∞Ïπò Î∂àÍ∞Ä, ÏÉùÏÑ± Ï¢ÖÎ£å");
                 break;
             }
         }
 
-        // Ω«¡¶ ≈∏¿œ∏ ø° Floor, Wall, Corridor πËƒ°
-        spreadTilemap.SpreadFloorTilemap(floorTiles);
-        spreadTilemap.SpreadWallTilemap(wallTiles);
-        spreadTilemap.SpreadCorridorTilemap(corridorTiles);
+        // ÌÉÄÏùºÎßµ Î∞òÏòÅ
+        spreadTilemap.SpreadFloorTilemapWithTiles(floorTileDict);
+        spreadTilemap.SpreadCorridorTilemapWithTiles(corridorTileDict);
+        spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
 
-        // «√∑π¿ÃæÓ ¿ßƒ° º≥¡§
-        player.transform.position = Vector2.zero;
+        player.transform.position = Vector3.zero;
     }
 
-    /// <summary>
-    /// πÊ(«¡∏Æ∆’) ≈∏¿œ∏ ¿ª ø¿«¡º¬ ¿ßƒ°ø° ∫πªÁ
-    /// </summary>
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)
     {
-        Tilemap floorTilemap, wallTilemap, corridorTilemap;
-        GetTilemaps(roomPrefab, out floorTilemap, out wallTilemap, out corridorTilemap);
-
-        CopyTilemap(floorTilemap, offset, floorTiles);
-        CopyTilemap(wallTilemap, offset, wallTiles);
-        CopyTilemap(corridorTilemap, offset, corridorTiles);
+        GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
+        CopyTilemapWithTiles(floorTM, offset, floorTiles, floorTileDict);
+        CopyTilemapWithTiles(wallTM, offset, wallTiles, wallTileDict);
+        CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
     }
 
-    /// <summary>
-    /// ªı πÊ¿ª ±‚¡∏ ∏ ø° ∫Ÿ¿œ ºˆ ¿÷¥¬ ø¿«¡º¬¿ª √£¥¬ ∞˙¡§:
-    ///  - ºº∑Œ πÊ«‚(up/down)¿∫ ≈Î∑Œ 1∞≥ ¿ÃªÛ ø¨∞·¿Ã∏È OK
-    ///  - ∞°∑Œ πÊ«‚(left/right)¿∫ 2°ø2 «¸≈¬∑Œ ≈Î∑Œ∞° ø¨∞·µ«æÓæﬂ OK
-    ///  - ø¨∞·¿Ã º∫ªÁµ«∏È ø¨∞· ¡ˆ¡°¿« ∫Æ ≈∏¿œ¿ª ¡¶∞≈
-    /// </summary>
-    private bool TryFindPlacementForRoom(GameObject roomPrefab, out Vector2Int foundOffset)
+    private bool TryFindPlacementForRoom(
+        GameObject roomPrefab,
+        out Vector2Int foundOffset,
+        out List<Vector2Int> connectionPoints)
     {
         foundOffset = Vector2Int.zero;
+        connectionPoints = new List<Vector2Int>();
 
-        // ªı πÊ(«¡∏Æ∆’)¿« TilemapµÈ ∞°¡Æø¿±‚
-        Tilemap floorTilemap, wallTilemap, corridorTilemap;
-        GetTilemaps(roomPrefab, out floorTilemap, out wallTilemap, out corridorTilemap);
+        GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
+        var newCorridors = GetLocalCorridorPositions(corridorTM);
+        if (newCorridors.Count == 0) return false;
 
-        // ªı πÊ ≈Î∑Œ ≈∏¿œ (∑Œƒ√ ¡¬«•)
-        List<Vector2Int> newRoomLocalCorridorTiles = GetLocalCorridorPositions(corridorTilemap);
-        if (newRoomLocalCorridorTiles.Count == 0)
-            return false;
+        var existCorridors = new List<Vector2Int>(corridorTiles);
+        if (existCorridors.Count == 0)
+            existCorridors.Add(Vector2Int.zero);
 
-        // ±‚¡∏ ≈Î∑Œ ≈∏¿œ ∏Ò∑œ
-        List<Vector2Int> existingCorridorList = new List<Vector2Int>(corridorTiles);
-        if (existingCorridorList.Count == 0)
+        existCorridors.Shuffle();
+        newCorridors.Shuffle();
+
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+        foreach (var exist in existCorridors)
         {
-            // æ∆¡˜ ≈Î∑Œ∞° æ¯¥Ÿ∏È (0,0) ∞°ªÛ ≈Î∑Œ∂Û∞Ì ∞°¡§
-            existingCorridorList.Add(Vector2Int.zero);
-        }
-
-        // π´¿€¿ß º¯»∏(º≈«√)
-        existingCorridorList.Shuffle();
-        newRoomLocalCorridorTiles.Shuffle();
-
-        // ªÛ«œ¡¬øÏ πÊ«‚
-        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-
-        foreach (Vector2Int existingCorridor in existingCorridorList)
-        {
-            foreach (Vector2Int localCorridorPos in newRoomLocalCorridorTiles)
+            foreach (var local in newCorridors)
             {
-                foreach (Vector2Int dir in directions)
+                foreach (var dir in dirs)
                 {
-                    // ºº∑Œ πÊ«‚¿Ã∏È 1∞≥ ø¨∞·, ∞°∑Œ πÊ«‚¿Ã∏È 2∞≥ ø¨∞·
-                    int requiredConnections = (dir.y != 0) ? 1 : 2;
+                    var offset = (exist + dir) - local;
 
-                    // πËƒ° ø¿«¡º¬ ∞ËªÍ
-                    Vector2Int offset = (existingCorridor + dir) - localCorridorPos;
-
-                    // Floor/Wall ∞„ƒß ∞ÀªÁ
-                    if (OverlapsExistingTiles(floorTilemap, offset, floorTiles)) continue;
-                    if (OverlapsExistingTiles(wallTilemap, offset, wallTiles)) continue;
-
-                    // ∏’¿˙ ±‚¡∏ πÊΩƒ¥Î∑Œ ø¨∞· ºˆ ∞ÀªÁ
-                    int connectedCount = CountCorridorConnections(newRoomLocalCorridorTiles, offset, existingCorridorList);
-                    if (connectedCount < requiredConnections)
-                    {
+                    // ÏòÅÏó≠ Ï†úÌïú
+                    if (!IsWithinMapBounds(floorTM, offset) ||
+                        !IsWithinMapBounds(wallTM, offset) ||
+                        !IsWithinMapBounds(corridorTM, offset))
                         continue;
-                    }
 
-                    // ∞°∑Œ πÊ«‚(Left/Right)¿œ ∞ÊøÏ, 2°ø2 «¸≈¬ ø¨∞·µµ √ﬂ∞° »Æ¿Œ
-                    if (dir.y == 0)
+                    // Ï∂©Îèå Í≤ÄÏÇ¨
+                    if (OverlapsExistingTiles(floorTM, offset, floorTiles)) continue;
+                    if (OverlapsExistingTiles(wallTM, offset, wallTiles)) continue;
+
+                    // Ïó∞Í≤∞ Í∞úÏàò Í≤ÄÏÇ¨
+                    int req = (dir.y != 0) ? 1 : 2;
+                    if (CountCorridorConnections(newCorridors, offset, existCorridors) < req) continue;
+                    if (dir.y == 0 &&
+                        CountCorridorPairConnections(newCorridors, offset, existCorridors) == 0)
+                        continue;
+
+                    // Ïó∞Í≤∞ ÏßÄÏ†ê Ï∞æÍ∏∞
+                    var points = FindConnectionPoints(newCorridors, offset, existCorridors);
+                    if (points.Count > 0)
                     {
-                        int pairCount = CountCorridorPairConnections(newRoomLocalCorridorTiles, offset, existingCorridorList);
-                        if (pairCount == 0)
-                        {
-                            // 2°ø2 «¸≈¬∞° «œ≥™µµ æ¯¿∏∏È Ω«∆–
-                            continue;
-                        }
+                        foundOffset = offset;
+                        connectionPoints = points;
+                        return true;
                     }
-
-                    // ø¨∞· º∫ªÁ!
-                    foundOffset = offset;
-                    RemoveWallAtConnection(existingCorridor, dir);
-                    return true;
                 }
             }
         }
@@ -156,45 +157,83 @@ public class MakeRandomMap : MonoBehaviour
     }
 
     /// <summary>
-    /// corridorTilemap ≥ª¿« ∏µÁ ≈∏¿œ ¡¬«•∏¶ ∏ÆΩ∫∆Æ∑Œ π›»Ø
+    /// ÏÉà Î∞© ÌÜµÎ°ú(newLocal)ÏôÄ Í∏∞Ï°¥ ÌÜµÎ°ú(existing)Ïùò Ïù∏Ï†ëÏ†êÏùÑ Ï∞æÏïÑ,
+    /// Ï†úÍ±∞Ìï† Î≤Ω Ï¢åÌëú(ÏñëÏ™Ω) Î¶¨Ïä§Ìä∏Î°ú Î∞òÌôò
     /// </summary>
-    private List<Vector2Int> GetLocalCorridorPositions(Tilemap corridorTilemap)
+    private List<Vector2Int> FindConnectionPoints(
+        List<Vector2Int> newLocal,
+        Vector2Int offset,
+        List<Vector2Int> existing)
     {
-        List<Vector2Int> result = new List<Vector2Int>();
-        BoundsInt bounds = corridorTilemap.cellBounds;
-        foreach (var pos in bounds.allPositionsWithin)
+        var result = new List<Vector2Int>();
+        var existSet = new HashSet<Vector2Int>(existing);
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+        foreach (var local in newLocal)
         {
-            if (corridorTilemap.HasTile(pos))
+            Vector2Int world = local + offset;
+            foreach (var d in dirs)
             {
-                result.Add((Vector2Int)pos);
+                Vector2Int neighbor = world + d;
+                if (existSet.Contains(neighbor))
+                {
+                    // Î≤ΩÏùÄ ÏñëÏ™Ω Ï§ëÍ∞Ñ ÏúÑÏπò
+                    Vector2Int wall1 = world + (d / 2);
+                    Vector2Int wall2 = neighbor - (d / 2);
+                    result.Add(wall1);
+                    result.Add(wall2);
+                }
             }
         }
         return result;
     }
 
-    /// <summary>
-    /// ªı πÊ corridor ≈∏¿œµÈ¿ª offset∏∏≈≠ ø≈∞Â¿ª ∂ß,
-    /// ±‚¡∏ corridor ≈∏¿œµÈ∞˙ ªÛ«œ¡¬øÏ∑Œ ¿Œ¡¢«—(= ø¨∞·µ») ≈∏¿œ ∞≥ºˆ∏¶ ºæ¥Ÿ.
-    /// </summary>
-    private int CountCorridorConnections(
-        List<Vector2Int> newRoomLocalCorridorTiles,
-        Vector2Int offset,
-        List<Vector2Int> existingCorridorList)
+    private void RemoveWallAndFillFloor(Vector2Int pos)
+    {
+        if (wallTiles.Remove(pos))
+            wallTileDict.Remove(pos);
+
+        if (fillerFloorTile != null)
+        {
+            floorTiles.Add(pos);
+            floorTileDict[pos] = fillerFloorTile;
+        }
+    }
+
+    private bool IsWithinMapBounds(Tilemap source, Vector2Int offset)
+    {
+        foreach (var p in source.cellBounds.allPositionsWithin)
+        {
+            if (!source.HasTile(p)) continue;
+            var wp = (Vector2Int)p + offset;
+            if (wp.x < mapMin.x || wp.x > mapMax.x || wp.y < mapMin.y || wp.y > mapMax.y)
+                return false;
+        }
+        return true;
+    }
+
+    private List<Vector2Int> GetLocalCorridorPositions(Tilemap tm)
+    {
+        var list = new List<Vector2Int>();
+        foreach (var p in tm.cellBounds.allPositionsWithin)
+            if (tm.HasTile(p))
+                list.Add((Vector2Int)p);
+        return list;
+    }
+
+    private int CountCorridorConnections(List<Vector2Int> newLocal, Vector2Int offset, List<Vector2Int> existing)
     {
         int count = 0;
-        HashSet<Vector2Int> existingCorridorSet = new HashSet<Vector2Int>(existingCorridorList);
-        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-
-        foreach (var localPos in newRoomLocalCorridorTiles)
+        var existSet = new HashSet<Vector2Int>(existing);
+        Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+        foreach (var local in newLocal)
         {
-            Vector2Int worldPos = localPos + offset;
-            foreach (var dir in directions)
+            var world = local + offset;
+            foreach (var d in dirs)
             {
-                Vector2Int neighbor = worldPos + dir;
-                if (existingCorridorSet.Contains(neighbor))
+                if (existSet.Contains(world + d))
                 {
                     count++;
-                    // «— ≈∏¿œ¿Ã ø©∑Ø πÊ«‚¿∏∑Œ ø¨∞·µ«æÓµµ '1π¯'¿∏∑Œ∏∏ ºº∑¡∏È break
                     break;
                 }
             }
@@ -202,120 +241,96 @@ public class MakeRandomMap : MonoBehaviour
         return count;
     }
 
-    /// <summary>
-    /// ∞°∑Œ πÊ«‚ ø¨∞· Ω√, Ω«¡¶∑Œ ºº∑Œ 2ƒ≠(2°ø2)¿Ã «‘≤≤ ø¨∞·µ«¥¬¡ˆ ∞ÀªÁ
-    /// </summary>
-    private int CountCorridorPairConnections(
-        List<Vector2Int> newRoomLocalCorridorTiles,
-        Vector2Int offset,
-        List<Vector2Int> existingCorridorList)
+    private int CountCorridorPairConnections(List<Vector2Int> newLocal, Vector2Int offset, List<Vector2Int> existing)
     {
-        HashSet<Vector2Int> existingCorridorSet = new HashSet<Vector2Int>(existingCorridorList);
-        HashSet<Vector2Int> newRoomLocalCorridorSet = new HashSet<Vector2Int>(newRoomLocalCorridorTiles);
+        int pairCount = 0;
+        var existSet = new HashSet<Vector2Int>(existing);
+        var newSet = new HashSet<Vector2Int>(newLocal);
+        var checkedSet = new HashSet<Vector2Int>();
 
-        int pairConnectionCount = 0;
-        foreach (var localPos in newRoomLocalCorridorTiles)
+        foreach (var local in newLocal)
         {
-            Vector2Int worldPos = localPos + offset;
-            Vector2Int aboveWorldPos = worldPos + Vector2Int.up;
+            var world = local + offset;
+            Vector2Int[] dirs = { Vector2Int.up, Vector2Int.right };
 
-            // ªı πÊ ≈Î∑Œ∞° worldPosøÕ ±◊ πŸ∑Œ ¿ß(aboveWorldPos) ∏µŒ Corridor¿Œ¡ˆ »Æ¿Œ
-            Vector2Int aboveLocalPos = localPos + Vector2Int.up;
-            if (newRoomLocalCorridorSet.Contains(aboveLocalPos))
+            foreach (var d in dirs)
             {
-                // µŒ ƒ≠ ∏µŒ ±‚¡∏ ∏ ¿« ≈Î∑Œø° ¿Œ¡¢«œ∏È(ªÛ«œ¡¬øÏ∑Œ) 2ƒ≠ ø¨∞·¿Ã º∫∏≥
-                bool firstConnected = IsAdjacentToCorridor(worldPos, existingCorridorSet);
-                bool secondConnected = IsAdjacentToCorridor(aboveWorldPos, existingCorridorSet);
-                if (firstConnected && secondConnected)
+                var adjLocal = local + d;
+                var adjWorld = world + d;
+                if (!newSet.Contains(adjLocal)) continue;
+                if (checkedSet.Contains(local) || checkedSet.Contains(adjLocal)) continue;
+
+                if (existSet.Contains(world + Vector2Int.up) || existSet.Contains(world + Vector2Int.down) ||
+                    existSet.Contains(world + Vector2Int.left) || existSet.Contains(world + Vector2Int.right))
                 {
-                    pairConnectionCount++;
+                    if (existSet.Contains(adjWorld + Vector2Int.up) || existSet.Contains(adjWorld + Vector2Int.down) ||
+                        existSet.Contains(adjWorld + Vector2Int.left) || existSet.Contains(adjWorld + Vector2Int.right))
+                    {
+                        pairCount++;
+                        checkedSet.Add(local);
+                        checkedSet.Add(adjLocal);
+                    }
                 }
             }
         }
-        return pairConnectionCount;
+        return pairCount;
     }
 
-    private bool IsAdjacentToCorridor(Vector2Int pos, HashSet<Vector2Int> existingCorridorSet)
+    private bool OverlapsExistingTiles(Tilemap source, Vector2Int offset, HashSet<Vector2Int> target)
     {
-        Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
-        foreach (var dir in directions)
+        foreach (var p in source.cellBounds.allPositionsWithin)
         {
-            Vector2Int neighbor = pos + dir;
-            if (existingCorridorSet.Contains(neighbor))
-            {
+            if (!source.HasTile(p)) continue;
+            if (target.Contains((Vector2Int)p + offset))
                 return true;
-            }
         }
         return false;
     }
 
-    /// <summary>
-    /// ±‚¡∏ ≈Î∑ŒøÕ ªı ≈Î∑Œ∞° ø¨∞·µ«¥¬ ¡ˆ¡°(∫Æ)¿ª ¡¶∞≈
-    /// </summary>
-    private void RemoveWallAtConnection(Vector2Int existingCorridor, Vector2Int dir)
+    private void CopyTilemapWithTiles(Tilemap source, Vector2Int offset, HashSet<Vector2Int> targetSet, Dictionary<Vector2Int, TileBase> dict)
     {
-        Vector2Int connectingPos = existingCorridor + dir;
-        if (wallTiles.Contains(connectingPos))
+        foreach (var p in source.cellBounds.allPositionsWithin)
         {
-            wallTiles.Remove(connectingPos);
+            if (!source.HasTile(p)) continue;
+            var world = (Vector2Int)p + offset;
+            targetSet.Add(world);
+            dict[world] = source.GetTile(p);
         }
     }
 
-    /// <summary>
-    /// sourceTilemap¿ª offset∏∏≈≠ ø≈∞Â¿ª ∂ß, targetSet∞˙ ∞„ƒ°¥¬¡ˆ ∞ÀªÁ
-    /// </summary>
-    private bool OverlapsExistingTiles(Tilemap sourceTilemap, Vector2Int offset, HashSet<Vector2Int> targetSet)
+    private void GetTilemaps(GameObject roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM)
     {
-        BoundsInt bounds = sourceTilemap.cellBounds;
-        foreach (var pos in bounds.allPositionsWithin)
-        {
-            if (sourceTilemap.HasTile(pos))
-            {
-                Vector2Int adjustedPos = new Vector2Int(pos.x + offset.x, pos.y + offset.y);
-                if (targetSet.Contains(adjustedPos))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
+        var children = roomPrefab.GetComponentsInChildren<Transform>();
+        Transform parent = children[1];  // ÌîÑÎ°úÏ†ùÌä∏ Íµ¨Ï°∞Ïóê Îî∞Îùº Ïù∏Îç±Ïä§Î•º Ï°∞Ï†ïÌïòÏÑ∏Ïöî
+        floorTM = parent.Find("FloorTilemap").GetComponent<Tilemap>();
+        wallTM = parent.Find("WallTilemap").GetComponent<Tilemap>();
+        corridorTM = parent.Find("CorridorTilemap").GetComponent<Tilemap>();
     }
 
-    /// <summary>
-    /// sourceTilemap ≥ª ∏µÁ ≈∏¿œ¿ª offset∏∏≈≠ ∆Ú«‡ ¿Ãµø«œø© targetSetø° ∫πªÁ
-    /// </summary>
-    private void CopyTilemap(Tilemap sourceTilemap, Vector2Int offset, HashSet<Vector2Int> targetSet)
+    // Îßµ ÏÉùÏÑ± ÌóàÏö© Î≤îÏúÑÎ•º GizmosÎ°ú ÏãúÍ∞ÅÌôî
+    private void OnDrawGizmos()
     {
-        BoundsInt bounds = sourceTilemap.cellBounds;
-        foreach (var pos in bounds.allPositionsWithin)
-        {
-            if (sourceTilemap.HasTile(pos))
-            {
-                Vector2Int adjustedPos = new Vector2Int(pos.x + offset.x, pos.y + offset.y);
-                targetSet.Add(adjustedPos);
-            }
-        }
-    }
+        // ÏóêÎîîÌÑ∞ÏóêÏÑúÎßå Ïã§Ìñâ
+        #if UNITY_EDITOR
+        // Î≤îÏúÑÏùò Í∞ÄÏö¥Îç∞ÏôÄ ÌÅ¨Í∏∞ Í≥ÑÏÇ∞
+        Vector3 center = new Vector3(
+            (mapMin.x + mapMax.x + 1) * 0.5f,
+            (mapMin.y + mapMax.y + 1) * 0.5f,
+            0f
+        );
+        Vector3 size = new Vector3(
+            Mathf.Abs(mapMax.x - mapMin.x + 1),
+            Mathf.Abs(mapMax.y - mapMin.y + 1),
+            0f
+        );
 
-    /// <summary>
-    /// roomPrefabø°º≠ FloorTilemap, WallTilemap, CorridorTilemap √£±‚
-    /// («¡∑Œ¡ß∆Æ ±∏¡∂ø° ∏¬√Á ºˆ¡§ « ø‰)
-    /// </summary>
-    private void GetTilemaps(GameObject roomPrefab, out Tilemap floorTilemap, out Tilemap wallTilemap, out Tilemap corridorTilemap)
-    {
-        Transform[] gridTransforms = roomPrefab.transform.GetComponentsInChildren<Transform>();
-        // øπΩ√∑Œ 1π¯ ¿Œµ¶Ω∫ ¿⁄Ωƒ¿Ã ≈∏¿œ∏  ∫Œ∏∂Û∞Ì ∞°¡§
-        Transform tilemapParent = gridTransforms[1].transform;
-
-        floorTilemap = tilemapParent.Find("FloorTilemap").GetComponent<Tilemap>();
-        wallTilemap = tilemapParent.Find("WallTilemap").GetComponent<Tilemap>();
-        corridorTilemap = tilemapParent.Find("CorridorTilemap").GetComponent<Tilemap>();
+        // ÏÑ†ÏúºÎ°úÎßå Í∑∏Î¶¨Í∏∞
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(center, size);  // wireframe box :contentReference[oaicite:0]{index=0}
+        #endif
     }
 }
 
-/// <summary>
-/// List Shuffle »Æ¿Â ∏ﬁº≠µÂ
-/// </summary>
 public static class ListExtensions
 {
     public static void Shuffle<T>(this List<T> list)
