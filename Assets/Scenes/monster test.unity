@@ -4830,6 +4830,7 @@ MonoBehaviour:
   - {fileID: 1368038534}
   - {fileID: 226852056}
   fadeSpeed: 2
+  damagePanel: {fileID: 0}
   damageImage: {fileID: 1071256452}
   fadeDuration: 0.3
   inventoryObject: {fileID: 1700269484}
@@ -30258,6 +30259,7 @@ GameObject:
   - component: {fileID: 2081405530}
   - component: {fileID: 2081405529}
   - component: {fileID: 2081405536}
+  - component: {fileID: 2081405537}
   m_Layer: 8
   m_Name: MimicBox
   m_TagString: monster
@@ -30493,6 +30495,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   pos: {fileID: 1012120736}
+--- !u!114 &2081405537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081405528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995a1ca4ad54748449d6ecf7b7b50e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
+  MaxHealth: 0
+  Damage: 0
+  Armor: 0
+  Groggy: 0
+  speed: 1
 --- !u!1 &2094711149
 GameObject:
   m_ObjectHideFlags: 0
