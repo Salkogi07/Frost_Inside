@@ -5,47 +5,54 @@ using UnityEngine.Tilemaps;
 public class Player_Ladder : MonoBehaviour
 {
     private Tilemap ladder_Tilemap;
-    private Tilemap ladderTop_Tilemap;
     private Player_Stats stats;
     private Rigidbody2D rb;
+    private Collider2D col;
 
-    [Header("Climing")]
+    [Header("Climbing")]
     [SerializeField] public float climbSpeed;
-    [SerializeField] private float climbDirection;
+    private float climbDirection;
     public bool IsLadder = false;
     public bool IsClimbing = false;
 
-    [Header("Layer")]
+    [Header("Detection")]
     public Transform pos;
     public Vector2 boxSize;
 
     [Header("Cooldown")]
-    [SerializeField] public float ladderCooldownDuration = 0.5f; // ÄðÅ¸ÀÓ Áö¼Ó½Ã°£ (ÃÊ)
-    private float ladderCooldownTimer = 0f; // ³²Àº ÄðÅ¸ÀÓ
+    [SerializeField] public float ladderCooldownDuration = 0.5f;
+    private float ladderCooldownTimer = 0f;
 
-    private float gravityScale = 0f;
+    private float gravityScale;
+    private float tileHalfHeight;        // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    private float colliderHalfHeight;    // ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
     private void Awake()
     {
         ladder_Tilemap = GameObject.FindGameObjectWithTag("Ladder").GetComponent<Tilemap>();
-        //ladderTop_Tilemap = GameObject.FindGameObjectWithTag("LadderTop").GetComponent<Tilemap>();
         rb = GetComponent<Rigidbody2D>();
         stats = GetComponent<Player_Stats>();
+        col = GetComponent<Collider2D>();
+
+        // Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (Grid cellSizeï¿½ï¿½ y/2) :contentReference[oaicite:0]{index=0}
+        tileHalfHeight = ladder_Tilemap.layoutGrid.cellSize.y * 0.5f;
+
+        // ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ (Bounds.extents.yï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½/2) :contentReference[oaicite:1]{index=1}
+        if (col != null)
+            colliderHalfHeight = col.bounds.extents.y;
     }
 
     private void Start()
     {
-        if(rb != null)
-            gravityScale = rb.gravityScale;
+        gravityScale = rb.gravityScale;
     }
 
     private void Update()
     {
-        // ÄðÅ¸ÀÓ Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®
-        if (ladderCooldownTimer > 0)
+        if (ladderCooldownTimer > 0f)
             ladderCooldownTimer -= Time.deltaTime;
 
-        if(stats.isDead || Inventory.instance.isInvenOpen)
+        if (stats.isDead || Inventory.instance.isInvenOpen)
             return;
 
         LadderCheck();
@@ -56,118 +63,120 @@ public class Player_Ladder : MonoBehaviour
 
     void LadderCheck()
     {
-        if (pos != null)
-        {
-            bool ladderFound = false;
-            Collider2D[] collider2Ds = Physics2D.OverlapBoxAll(pos.position, boxSize, 0);
-            foreach (Collider2D collider in collider2Ds)
-            {
-                if (collider.gameObject.CompareTag("Ladder"))
-                {
-                    ladderFound = true;
-                    break;
-                }
-            }
-            IsLadder = ladderFound;
+        Collider2D[] hits = Physics2D.OverlapBoxAll(pos.position, boxSize, 0f);
+        IsLadder = false;
+        foreach (var c in hits)
+            if (c.CompareTag("Ladder"))
+                IsLadder = true;
 
-            // »ç´Ù¸® ¿µ¿ª¿¡ ¾ø´Âµ¥ Å¬¶óÀÌ¹Ö »óÅÂ¶ó¸é, ÀÚµ¿À¸·Î Å¬¶óÀÌ¹Ö ¸ðµå Á¾·á
-            if (!IsLadder && IsClimbing)
-            {
-                LadderExit();
-            }
-        }
+        if (!IsLadder && IsClimbing)
+            ExitLadder();
     }
 
     void LadderOut()
     {
-        if (IsClimbing)
-        {
-            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
-            {
-                LadderExit();
-            }
-        }
+        if (IsClimbing && Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
+            ExitLadder();
     }
 
-    void LadderExit()
+    void ExitLadder()
     {
         IsClimbing = false;
         rb.gravityScale = gravityScale;
-        // »ç´Ù¸® Å»Ãâ ½Ã ÄðÅ¸ÀÓ ½ÃÀÛ
+        rb.linearVelocity = Vector2.zero;  // Æ¨ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         ladderCooldownTimer = ladderCooldownDuration;
     }
 
     void Climbing()
     {
-        climbDirection = 0;
+        if (!IsClimbing) return;
 
-        if (IsClimbing)
+        rb.gravityScale = 0f;
+
+        climbDirection = 0f;
+        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Ladder Move Up")))
+            climbDirection = 1f;
+        else if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Ladder Move Down")))
+            climbDirection = -1f;
+
+        rb.linearVelocity = new Vector2(0f, climbDirection * climbSpeed);
+
+        AlignToLadderTopIfNeeded();
+    }
+
+    void AlignToLadderTopIfNeeded()
+    {
+        Vector3 playerPos = transform.position;
+        BoundsInt bounds = ladder_Tilemap.cellBounds;
+
+        float minXDiff = float.MaxValue;
+        int topCellY = int.MinValue;
+        Vector3Int topCell = Vector3Int.zero;
+
+        foreach (var cell in bounds.allPositionsWithin)
         {
-            rb.gravityScale = 0;
+            if (!ladder_Tilemap.HasTile(cell)) continue;
+            Vector3 center = ladder_Tilemap.GetCellCenterWorld(cell);
+            float dx = Mathf.Abs(playerPos.x - center.x);
 
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Down")))
+            if (dx < minXDiff || (Mathf.Approximately(dx, minXDiff) && cell.y > topCellY))
             {
-                climbDirection = -1;
+                minXDiff = dx;
+                topCellY = cell.y;
+                topCell = cell;
             }
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Up")))
-            {
-                climbDirection = 1;
-            }
+        }
 
-            rb.linearVelocity = new Vector2(0, climbDirection * climbSpeed);
+        if (minXDiff < Mathf.Infinity)
+        {
+            Vector3 topWorld = ladder_Tilemap.GetCellCenterWorld(topCell);
+            // ï¿½ï¿½ ï¿½ï¿½ï¿½ Y ï¿½ï¿½Ç¥
+            float footTargetY = topWorld.y + tileHalfHeight;
+            // ï¿½ß¹Ù´ï¿½ ï¿½ï¿½ï¿½ï¿½: ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ß½ï¿½ Y = ï¿½ï¿½Ç¥ ï¿½ß¹Ù´ï¿½ Y + ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ ï¿½Ý³ï¿½ï¿½ï¿½
+            float centerTargetY = footTargetY + colliderHalfHeight;
+
+            if (playerPos.y >= centerTargetY)
+            {
+                transform.position = new Vector3(playerPos.x, centerTargetY, playerPos.z);
+                ExitLadder();
+            }
         }
     }
 
     void LadderActiveCheck()
     {
-        // ÄðÅ¸ÀÓÀÌ ÁøÇà ÁßÀÌ¸é »ç´Ù¸® È°¼ºÈ­ ½ÇÇà ¾È ÇÔ
-        if (ladderCooldownTimer > 0)
-            return;
+        if (ladderCooldownTimer > 0f || IsClimbing) return;
 
-        if (IsLadder && !IsClimbing)
+        if (IsLadder && Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Interaction")))
         {
-            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Interaction")))
+            Vector3 p = transform.position;
+            BoundsInt b = ladder_Tilemap.cellBounds;
+            float minDX = float.MaxValue;
+            float targetX = p.x;
+
+            foreach (var cell in b.allPositionsWithin)
             {
-                if (ladder_Tilemap == null)
+                if (!ladder_Tilemap.HasTile(cell)) continue;
+                Vector3 c = ladder_Tilemap.GetCellCenterWorld(cell);
+                float dx = Mathf.Abs(p.x - c.x);
+                if (dx < minDX)
                 {
-                    Debug.LogError("Ladder TilemapÀÌ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
-                    return;
+                    minDX = dx;
+                    targetX = c.x;
                 }
-
-                Vector3 playerPos = transform.position;
-                float minXDistance = Mathf.Infinity;
-                float targetX = playerPos.x;
-
-                // Å¸ÀÏ¸ÊÀÇ ÀüÃ¼ ¼¿ ¹üÀ§¸¦ ¼øÈ¸ÇÏ¸ç ½ÇÁ¦ Å¸ÀÏÀÌ ÀÖ´Â ¼¿ Áß °¡Àå °¡±î¿î x ÁÂÇ¥ Ã£±â
-                BoundsInt bounds = ladder_Tilemap.cellBounds;
-                foreach (Vector3Int cellPos in bounds.allPositionsWithin)
-                {
-                    if (ladder_Tilemap.HasTile(cellPos))
-                    {
-                        Vector3 cellCenter = ladder_Tilemap.GetCellCenterWorld(cellPos);
-                        float xDistance = Mathf.Abs(playerPos.x - cellCenter.x);
-                        if (xDistance < minXDistance)
-                        {
-                            minXDistance = xDistance;
-                            targetX = cellCenter.x;
-                        }
-                    }
-                }
-
-                // x ÁÂÇ¥¸¸ Å¸ÀÏÀÇ Áß¾ÓÀ¸·Î ¸ÂÃß°í y, z ÁÂÇ¥´Â ±×´ë·Î À¯Áö
-                transform.position = new Vector3(targetX, playerPos.y, playerPos.z);
-                IsClimbing = true;
             }
+
+            transform.position = new Vector3(targetX, p.y, p.z);
+            IsClimbing = true;
         }
     }
 
-
     private void OnDrawGizmos()
     {
-        if(pos != null)
+        if (pos != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(pos.position, boxSize);
-        }   
+        }
     }
 }

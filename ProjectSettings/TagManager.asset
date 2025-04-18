@@ -13,6 +13,7 @@ TagManager:
   - Ladder
   - LadderTop
   - Bullet
+  - Mining_Tile
   layers:
   - Default
   - TransparentFX
