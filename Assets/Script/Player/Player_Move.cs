@@ -351,7 +351,7 @@ public class Player_Move : MonoBehaviour
         }
     }*/
 
-    void OnDrawGizmos()
+    private void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);

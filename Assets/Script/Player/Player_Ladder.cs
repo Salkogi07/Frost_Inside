@@ -20,8 +20,8 @@ public class Player_Ladder : MonoBehaviour
     public Vector2 boxSize;
 
     [Header("Cooldown")]
-    [SerializeField] public float ladderCooldownDuration = 0.5f; // ÄğÅ¸ÀÓ Áö¼Ó½Ã°£ (ÃÊ)
-    private float ladderCooldownTimer = 0f; // ³²Àº ÄğÅ¸ÀÓ
+    [SerializeField] public float ladderCooldownDuration = 0.5f; // ì¿¨íƒ€ì„ ì§€ì†ì‹œê°„ (ì´ˆ)
+    private float ladderCooldownTimer = 0f; // ë‚¨ì€ ì¿¨íƒ€ì„
 
     private float gravityScale = 0f;
 
@@ -41,7 +41,7 @@ public class Player_Ladder : MonoBehaviour
 
     private void Update()
     {
-        // ÄğÅ¸ÀÓ Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®
+        // ì¿¨íƒ€ì„ íƒ€ì´ë¨¸ ì—…ë°ì´íŠ¸
         if (ladderCooldownTimer > 0)
             ladderCooldownTimer -= Time.deltaTime;
 
@@ -70,7 +70,7 @@ public class Player_Ladder : MonoBehaviour
             }
             IsLadder = ladderFound;
 
-            // »ç´Ù¸® ¿µ¿ª¿¡ ¾ø´Âµ¥ Å¬¶óÀÌ¹Ö »óÅÂ¶ó¸é, ÀÚµ¿À¸·Î Å¬¶óÀÌ¹Ö ¸ğµå Á¾·á
+            // ì‚¬ë‹¤ë¦¬ ì˜ì—­ì— ì—†ëŠ”ë° í´ë¼ì´ë° ìƒíƒœë¼ë©´, ìë™ìœ¼ë¡œ í´ë¼ì´ë° ëª¨ë“œ ì¢…ë£Œ
             if (!IsLadder && IsClimbing)
             {
                 LadderExit();
@@ -93,7 +93,7 @@ public class Player_Ladder : MonoBehaviour
     {
         IsClimbing = false;
         rb.gravityScale = gravityScale;
-        // »ç´Ù¸® Å»Ãâ ½Ã ÄğÅ¸ÀÓ ½ÃÀÛ
+        // ì‚¬ë‹¤ë¦¬ íƒˆì¶œ ì‹œ ì¿¨íƒ€ì„ ì‹œì‘
         ladderCooldownTimer = ladderCooldownDuration;
     }
 
@@ -105,11 +105,11 @@ public class Player_Ladder : MonoBehaviour
         {
             rb.gravityScale = 0;
 
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Down")))
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Ladder Move Down")))
             {
                 climbDirection = -1;
             }
-            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Up")))
+            if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Ladder Move Up")))
             {
                 climbDirection = 1;
             }
@@ -120,7 +120,7 @@ public class Player_Ladder : MonoBehaviour
 
     void LadderActiveCheck()
     {
-        // ÄğÅ¸ÀÓÀÌ ÁøÇà ÁßÀÌ¸é »ç´Ù¸® È°¼ºÈ­ ½ÇÇà ¾È ÇÔ
+        // ì¿¨íƒ€ì„ì´ ì§„í–‰ ì¤‘ì´ë©´ ì‚¬ë‹¤ë¦¬ í™œì„±í™” ì‹¤í–‰ ì•ˆ í•¨
         if (ladderCooldownTimer > 0)
             return;
 
@@ -130,7 +130,7 @@ public class Player_Ladder : MonoBehaviour
             {
                 if (ladder_Tilemap == null)
                 {
-                    Debug.LogError("Ladder TilemapÀÌ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+                    Debug.LogError("Ladder Tilemapì´ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!");
                     return;
                 }
 
@@ -138,7 +138,7 @@ public class Player_Ladder : MonoBehaviour
                 float minXDistance = Mathf.Infinity;
                 float targetX = playerPos.x;
 
-                // Å¸ÀÏ¸ÊÀÇ ÀüÃ¼ ¼¿ ¹üÀ§¸¦ ¼øÈ¸ÇÏ¸ç ½ÇÁ¦ Å¸ÀÏÀÌ ÀÖ´Â ¼¿ Áß °¡Àå °¡±î¿î x ÁÂÇ¥ Ã£±â
+                // íƒ€ì¼ë§µì˜ ì „ì²´ ì…€ ë²”ìœ„ë¥¼ ìˆœíšŒí•˜ë©° ì‹¤ì œ íƒ€ì¼ì´ ìˆëŠ” ì…€ ì¤‘ ê°€ì¥ ê°€ê¹Œìš´ x ì¢Œí‘œ ì°¾ê¸°
                 BoundsInt bounds = ladder_Tilemap.cellBounds;
                 foreach (Vector3Int cellPos in bounds.allPositionsWithin)
                 {
@@ -154,7 +154,7 @@ public class Player_Ladder : MonoBehaviour
                     }
                 }
 
-                // x ÁÂÇ¥¸¸ Å¸ÀÏÀÇ Áß¾ÓÀ¸·Î ¸ÂÃß°í y, z ÁÂÇ¥´Â ±×´ë·Î À¯Áö
+                // x ì¢Œí‘œë§Œ íƒ€ì¼ì˜ ì¤‘ì•™ìœ¼ë¡œ ë§ì¶”ê³  y, z ì¢Œí‘œëŠ” ê·¸ëŒ€ë¡œ ìœ ì§€
                 transform.position = new Vector3(targetX, playerPos.y, playerPos.z);
                 IsClimbing = true;
             }
