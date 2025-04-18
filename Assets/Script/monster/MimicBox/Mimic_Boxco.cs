@@ -4,12 +4,11 @@ using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
 
-public class MimicBoxco : MonoBehaviour
+public class MimicBoxDirector : MonoBehaviour
 {
     [Header ("Mimic stats")]
     [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위
     [SerializeField]  private Transform Player; // 플레이어의 위치
-    [SerializeField]  public float moveSpeed = 3f; // 적의 이동 속도
     [SerializeField] public float jumpspeed = 5f;
     [SerializeField] public float jumpcooltime;
     [SerializeField] public float jumpingmax;
@@ -28,6 +27,7 @@ public class MimicBoxco : MonoBehaviour
     bool jumping = false;
 
     public float xDistanceThreshold = 2f;
+    float yDistance;
 
     private Transform Floor_Measurement;
     private Transform attack;
@@ -39,8 +39,11 @@ public class MimicBoxco : MonoBehaviour
     public Floor_Measurement FloorMeasurement;
 
     private GameObject Floor_Measurement_pos;
+    private Monster_stat stat;
+    private Monster_Jump Monster_Jump;
 
     public Rigidbody2D rb { get; private set; }
+
     public enum pattern
     {
         Move,
@@ -54,17 +57,31 @@ public class MimicBoxco : MonoBehaviour
     }
     public pattern Pattern = pattern.Concealment;
 
-
-    void Start()
+    private void Awake()
     {
-        /*Floor_Measurement_pos = GetComponent<Rigidbody2D>();*/
+        stat = GetComponent<Monster_stat>();
         Floor_Measurement = transform.Find("Floor Measurement");
         rb = GetComponent<Rigidbody2D>();
         attack = transform.Find("Attack");
         ragne = transform.Find("GameObjeck");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
+
+        
+            Monster_Jump = GetComponent<Monster_Jump>();
+            Debug.Log("해냇따");
+        
+    }
+    void Start()
+    {
+        
         //attack = attack.GetComponent<Mimic_attack>();
         //Player = GameObject.FindWithTag("Player").transform; 
+
+        //if(Monster_Jump != null)
+        //{
+        //Monster_Jump.OnJump();
+        //}
+        
     }
     
 
@@ -78,7 +95,13 @@ public class MimicBoxco : MonoBehaviour
 
     // 매 프레임마다 플레이어와의 거리 체크
     private void Update()
-    {
+    {   
+        yDistance = Player.position.y - transform.position.y;
+        if(yDistance> 2f && Monster_Jump.jump_cooltime <= 0f)
+        {
+            Monster_Jump.OnJump();
+            Monster_Jump.jump_cooltime = 5f;
+        }// 수정,정리 필요
 
         if(Scoping == false && Pattern != pattern.Concealment)
         {
@@ -149,18 +172,10 @@ public class MimicBoxco : MonoBehaviour
                 break;
 
             case pattern.Chase:
-                //float distanceX = Mathf.Abs(player.position.x - transform.position.x);
-
-                //// X축 기준으로 일정 거리 이상 차이날 때만 이동
-                //if (distanceX > xDistanceThreshold)
-                //{
-                // 플레이어 방향으로 X축으로만 이동
+                
                 Chase();
                 direction();
-                //Debug.Log("쫓는다!");
-                //Vector3 direction = (player.position - transform.position).normalized;
-                //transform.position += direction * moveSpeed * Time.deltaTime;
-
+                
 
 
                 break;
@@ -181,6 +196,7 @@ public class MimicBoxco : MonoBehaviour
         {
             if (other.CompareTag("Player") && Hide == false ) // 플레이어 태그를 가진 객체 감지
             {
+            
                 Pattern = pattern.Chase;
                 Scoping = true;
         }
@@ -201,7 +217,7 @@ public class MimicBoxco : MonoBehaviour
         if (Moving)
         { if(distance < distanceMax)
             {
-                transform.position += new Vector3(moverandomDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+                transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                 distance += Time.deltaTime;
                 direction();
             }
@@ -235,12 +251,12 @@ public class MimicBoxco : MonoBehaviour
         if (moveDirection == -1f) //수정 필요
         {
             Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
-            attack.position = new Vector3(transform.position.x - 1f, attack.position.y, 0f);
+            attack.position = new Vector3(transform.position.x - stat.range[0], attack.position.y, 0f);
         }
         else
         {
             Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, 0f);
-            attack.position = new Vector3(transform.position.x + 1f, attack.position.y, 0f);
+            attack.position = new Vector3(transform.position.x + stat.range[0], attack.position.y, 0f);
         }
        
     
@@ -262,7 +278,7 @@ public class MimicBoxco : MonoBehaviour
     {
         
         //FloorMeasurement.direction = moveDirection;
-        transform.position += new Vector3(moveDirection * moveSpeed * Time.deltaTime, 0f, 0f);
+        transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
 
         if(HillDetection.Groundcheck == true)
         {

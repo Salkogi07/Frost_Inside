@@ -8,13 +8,15 @@ public class Mimic_attack : MonoBehaviour
 
 
 
-
+    private Monster_stat stat;
     float Coll;
     //public 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        stat = GetComponent<Monster_stat>();
+        // Boxsize = new Vector2(stat.range.x, stat.range.y);
+        Boxsize = new Vector2(stat.range[0], stat.range[1]);
     }
 
     // Update is called once per frame

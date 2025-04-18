@@ -11,6 +11,10 @@ public class Monster_stat : MonoBehaviour
     [SerializeField] public float Groggy = 0f;
     [SerializeField] public float speed = 1f;
 
+    [Header("s")]
+    //[SerializeField] public Vector2 range = new Vector2(1f, 1f);
+    [SerializeField] public float[] range = { 1f, 1f };
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

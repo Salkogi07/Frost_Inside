@@ -30260,6 +30260,7 @@ GameObject:
   - component: {fileID: 2081405529}
   - component: {fileID: 2081405536}
   - component: {fileID: 2081405537}
+  - component: {fileID: 2081405538}
   m_Layer: 8
   m_Name: MimicBox
   m_TagString: monster
@@ -30299,7 +30300,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectionRadius: 1
   Player: {fileID: 1156874121}
-  moveSpeed: 3
   jumpspeed: 0
   jumpcooltime: 0
   jumpingmax: 0
@@ -30343,7 +30343,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 1
@@ -30490,7 +30490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6b9d44ff9998ca4d8883825251fc39c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Boxsize: {x: 1.75, y: 1.6}
+  Boxsize: {x: 1, y: 1}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -30512,7 +30512,26 @@ MonoBehaviour:
   Damage: 0
   Armor: 0
   Groggy: 0
-  speed: 1
+  speed: 1.75
+  range:
+  - 1
+  - 1.4
+--- !u!114 &2081405538
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081405528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7cdd91486886542b25d9d4084ce6fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpspeed: 8
+  jump_cooltime: 0
+  jump_height: 0.4
+  jumping: 0
 --- !u!1 &2094711149
 GameObject:
   m_ObjectHideFlags: 0
