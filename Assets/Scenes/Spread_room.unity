@@ -10765,7 +10765,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1223576614
 Transform:
   m_ObjectHideFlags: 0
@@ -12197,7 +12197,7 @@ MonoBehaviour:
   seed: 1
   useRandomSeed: 1
   mapMin: {x: -50, y: -50}
-  mapMax: {x: 50, y: 50}
+  mapMax: {x: 50, y: 30}
   fillerFloorTile: {fileID: 11400000, guid: ceb1ac0255430b143bb389740d5ba0d5, type: 2}
 --- !u!1 &1409514378
 GameObject:
