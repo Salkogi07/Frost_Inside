@@ -84,6 +84,15 @@ public class MakeRandomMap : MonoBehaviour
         spreadTilemap.SpreadCorridorTilemapWithTiles(corridorTileDict);
         spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
 
+        // 1) Corridor 숨기기
+        spreadTilemap.HideCorridorRenderer();
+
+        // 2) Ground 채우기 (방·벽 제외)
+        spreadTilemap.FillGroundWithinBounds(
+            mapMin, mapMax,
+            floorTiles, wallTiles
+        );
+
         player.transform.position = Vector3.zero;
     }
 
