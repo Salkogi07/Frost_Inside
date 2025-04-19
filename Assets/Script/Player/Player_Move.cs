@@ -73,7 +73,10 @@ public class Player_Move : MonoBehaviour
     void Update()
     {
         if (player_tileMing.isMining || stats.isDead)
+        {
+            rb.linearVelocityX = 0;
             return;
+        }
 
         Sprint();
         HandleStamina();

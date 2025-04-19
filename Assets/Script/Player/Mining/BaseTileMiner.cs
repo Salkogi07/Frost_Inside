@@ -17,6 +17,10 @@ public abstract class BaseTileMiner : MonoBehaviour
     public float miningRange = 5f;
     public float miningTime = 2f;
 
+    [Header("Strength Settings")]
+    [Tooltip("각 타일별 방어력 및 채굴 가능 여부를 관리하는 SO")]
+    public TileStrengthSettings miningSettings;   // ← 추가
+
     [Header("Highlight Settings")]
     public Tilemap highlightTilemap;
     public Tile borderTile;
@@ -118,8 +122,18 @@ public abstract class BaseTileMiner : MonoBehaviour
     protected virtual void HandleMining(Vector3Int tilePos, bool inRange, bool canSee)
     {
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Mining"))
-            && inRange && canSee)
+        && inRange && canSee)
         {
+            var map = GetTilemapAt(tilePos);
+            var tile = map?.GetTile(tilePos);
+            // ▶ 채굴 불가 타일이면 즉시 종료
+            if (tile == null || !miningSettings.IsMineable(tile))
+            {
+                // TODO: 불가 이펙트/사운드 재생
+                StopMining();
+                return;
+            }
+
             isMining = true;
             currentMiningTile = tilePos;
             UpdateMining(tilePos);

@@ -10489,6 +10489,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   climbSpeed: 10
+  climbDirection: 0
   IsLadder: 0
   IsClimbing: 0
   pos: {fileID: 1113430022}
@@ -10510,11 +10511,12 @@ MonoBehaviour:
   player: {fileID: 1197166228}
   miningRange: 5
   miningTime: 0.1
+  miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
   highlightTilemap: {fileID: 0}
   borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
   blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
   isMining: 0
-  toolPower: 10
+  toolPower: 5
 --- !u!114 &1197166225
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14374,7 +14376,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1807826282
 Transform:
   m_ObjectHideFlags: 0

@@ -18,20 +18,25 @@ public class Player_TileMining : BaseTileMiner
         if (!tileAlphaDict.ContainsKey(tilePos))
             tileAlphaDict[tilePos] = 1f;
 
-        // 방어력(defense)은 ScriptableObject나 다른 설정에서 가져온다고 가정
-        float defense = 0f; // 예: miningSettings.GetDefense(tilemap.GetTile(tilePos));
-        float effectivePower = Mathf.Max(toolPower - defense, 0f);
+        var map = GetTilemapAt(tilePos);
+        var tileBase = map.GetTile(tilePos);
 
-        float decrease = (effectivePower / miningTime) * Time.deltaTime;
+        // 방어력 조회
+        float defense = miningSettings.GetDefense(tileBase);
+        // 채굴 시간 = miningTime × (defense ÷ toolPower)
+        float timeToMine = miningTime * (defense / Mathf.Max(toolPower, 0.0001f));
+        // alpha 감소량 = 1 ÷ timeToMine 초 만큼 줄어들도록
+        float decrease = Time.deltaTime / timeToMine;
+
         tileAlphaDict[tilePos] -= decrease;
 
-        float alpha = tileAlphaDict[tilePos];
-        ApplyTileAlpha(tilePos, alpha);
+        // 색상 적용 (투명도 조절)  
+        ApplyTileAlpha(tilePos, Mathf.Clamp01(tileAlphaDict[tilePos]));
 
-        if (alpha <= 0f)
+        if (tileAlphaDict[tilePos] <= 0f)
             FinishMining(tilePos);
 
-        // 추가: 이펙트나 사운드 재생
+        // TODO: 채굴 이펙트·사운드 재생
     }
 
     // 필요 시 HandleMining, ApplyTileAlpha 등을 오버라이드하여 확장 가능

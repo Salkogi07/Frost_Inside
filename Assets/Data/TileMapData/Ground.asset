@@ -12,6 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bf2f3cd6c63d624fb182aa7bc9a59d0, type: 3}
   m_Name: Ground
   m_EditorClassIdentifier: 
-  tileConfigs:
+  strengths:
   - tile: {fileID: 11400000, guid: 1f007b85c38752f428d1c4bfb422771d, type: 2}
-    defense: 5
+    defense: 30
+    canMine: 1
+  - tile: {fileID: 11400000, guid: b0a9aca525793ae4cab15e93eda3fb9d, type: 2}
+    defense: 50
+    canMine: 1
+  - tile: {fileID: 11400000, guid: ae8f37f6dad203340b5e6fedf9f9e49f, type: 2}
+    defense: 10000
+    canMine: 1
