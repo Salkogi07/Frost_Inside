@@ -14,7 +14,11 @@ public class PlayerManager : MonoBehaviour
             Destroy(instance.gameObject);
         else
             instance = this;
+    }
 
+    private void Start()
+    {
+        player = GameObject.FindGameObjectWithTag("Player")?.GetComponent<Player_Stats>();
         item_drop = player.gameObject.GetComponent<Player_ItemDrop>();
     }
 }

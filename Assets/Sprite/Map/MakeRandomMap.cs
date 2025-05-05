@@ -8,7 +8,8 @@ public class MakeRandomMap : MonoBehaviour
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
     [SerializeField] private SpreadTilemap spreadTilemap;
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private Transform player_SpawnPos;
 
     [Header("=== 시드 설정 ===")]
     [SerializeField] private int seed;
@@ -31,6 +32,12 @@ public class MakeRandomMap : MonoBehaviour
     private Dictionary<Vector2Int, TileBase> floorTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> wallTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
+
+    private void Awake()
+    {
+        GameObject player = Instantiate(playerPrefab, player_SpawnPos.position, Quaternion.identity);
+        player.transform.position = player_SpawnPos.position;
+    }
 
     private void Start()
     {
@@ -92,8 +99,6 @@ public class MakeRandomMap : MonoBehaviour
             mapMin, mapMax,
             floorTiles, wallTiles
         );
-
-        player.transform.position = Vector3.zero;
     }
 
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)

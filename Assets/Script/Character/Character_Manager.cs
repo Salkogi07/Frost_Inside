@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Character_Manager : MonoBehaviour
 {
@@ -13,4 +14,9 @@ public class Character_Manager : MonoBehaviour
 
     public Character_Data currentCharacter;
     public Select_Character selectedCharacter; // 선택된 캐릭터 저장
+
+    public void LoadingScenes()
+    {
+        SceneManager.LoadScene("LoadingScene");
+    }
 }
