@@ -12,11 +12,14 @@ public class GameManager : MonoBehaviour
     public delegate void OnTimeChanged(int hours, int minutes);
     public event OnTimeChanged onTimeChanged; // UI 업데이트 이벤트
 
+    public bool isSetting = false;
+
     private void Awake()
     {
         if (instance == null)
         {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {

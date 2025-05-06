@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
+using Unity.Cinemachine;
 
 public class MakeRandomMap : MonoBehaviour
 {
@@ -32,12 +33,6 @@ public class MakeRandomMap : MonoBehaviour
     private Dictionary<Vector2Int, TileBase> floorTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> wallTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
-
-    private void Awake()
-    {
-        GameObject player = Instantiate(playerPrefab, player_SpawnPos.position, Quaternion.identity);
-        player.transform.position = player_SpawnPos.position;
-    }
 
     private void Start()
     {
@@ -99,6 +94,35 @@ public class MakeRandomMap : MonoBehaviour
             mapMin, mapMax,
             floorTiles, wallTiles
         );
+
+        // 3) 아이템 생성
+
+        // 4) 몬스터 생성
+
+        // 5) 플레이어 생성
+        Instantiate_Player();
+
+        // 6) 변수 세팅
+        SettingManager();
+    }
+
+    private void Instantiate_Player()
+    {
+        GameObject player = Instantiate(playerPrefab, player_SpawnPos.position, Quaternion.identity);
+        player.transform.position = player_SpawnPos.position;
+    }
+
+    private void SettingManager()
+    {
+        PlayerManager manager = PlayerManager.instance;
+        manager.playerObject = GameObject.FindGameObjectWithTag("Player");
+        manager.playerStats = manager.playerObject.GetComponent<Player_Stats>();
+        manager.playerMove = manager.playerObject.GetComponent<Player_Move>();
+        manager.cam = GameObject.FindGameObjectWithTag("CinemachineCamera").GetComponent<CinemachineCamera>();
+        manager.SettingCam();
+
+        GameManager.instance.isSetting = true;
+
     }
 
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)

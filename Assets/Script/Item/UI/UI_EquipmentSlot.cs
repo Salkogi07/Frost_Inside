@@ -44,7 +44,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
             else
             {
                 Inventory.instance.UnequipItem(item.data as ItemData_Equipment);
-                Player_ItemDrop itemDrop = PlayerManager.instance.player.GetComponent<Player_ItemDrop>();
+                Player_ItemDrop itemDrop = PlayerManager.instance.playerStats.GetComponent<Player_ItemDrop>();
                 itemDrop.Unequipment_ItemDrop(item.data);
                 CleanUpSlot();
             }

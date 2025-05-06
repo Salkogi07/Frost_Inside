@@ -1821,10 +1821,9 @@ GameObject:
   - component: {fileID: 299409898}
   - component: {fileID: 299409897}
   - component: {fileID: 299409896}
-  - component: {fileID: 299409899}
   m_Layer: 0
   m_Name: CinemachineCamera
-  m_TagString: Untagged
+  m_TagString: CinemachineCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1918,19 +1917,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &299409899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 299409895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd01a667b8c0b514f962b70231b3d452, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cam: {fileID: 0}
 --- !u!1 &344991975
 GameObject:
   m_ObjectHideFlags: 0
@@ -118514,6 +118500,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hours: 8
   minutes: 0
+  isSetting: 0
 --- !u!114 &1226288858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -118526,8 +118513,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee27851c40b35714d894586e442c82c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  playerObject: {fileID: 0}
+  playerStats: {fileID: 0}
+  playerMove: {fileID: 0}
   item_drop: {fileID: 0}
+  cam: {fileID: 0}
+  temperatureDropRate: 1
+  hpDropRate: 2
+  isNearHeatSource: 0
+  isInColdZone: 0
 --- !u!4 &1226288859
 Transform:
   m_ObjectHideFlags: 0

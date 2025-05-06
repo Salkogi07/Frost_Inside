@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player_Stats : MonoBehaviour
 {
-    Player_Move player_move;
+    private Player_Move player_move;
 
     [Header("Player info")]
     [SerializeField] public bool isDead = false;
@@ -30,11 +30,7 @@ public class Player_Stats : MonoBehaviour
     [Header("Temperature info")]
     [SerializeField] public float temperature = 100;
     [SerializeField] public Stat maxTemperature;
-    [SerializeField] private float temperatureDropRate = 1f;
-    [SerializeField] private int hpDropRate = 2;
-    private float damageTimer = 0f;
-    private bool isNearHeatSource = false; // 불 근처에 있는지 체크
-    private bool isInColdZone = false; // 추운 지역인지 체크
+    
 
     private void Awake()
     {
@@ -49,53 +45,27 @@ public class Player_Stats : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.isSetting)
+            return;
+
         float hpValue = hp / maxHp.GetValue();
         float staminaValue = stamina / maxStamina.GetValue();
         float temperatureValue = temperature / maxTemperature.GetValue();
         UIManager.instance.UpdateHp(hpValue);
         UIManager.instance.UpdateStamina(staminaValue);
         UIManager.instance.UpdateTemperatureState(temperatureValue);
-
-        HandleTemperature();
-        HandleHp();
     }
 
-    void HandleTemperature()
-    {
-        float dropRate = temperatureDropRate;
 
-        if (player_move.moveInput != 0)
-            dropRate *= 0.5f; // 움직이면 감소율 줄이기
+    public int GetMining() => mining.GetValue();
+    public int GetDamage() => damage.GetValue();
+    public int GetArmor() => armor.GetValue();
+    public int GetLagging() => lagging.GetValue();
 
-        if (player_move.isSprinting)
-            dropRate *= 0.25f; // 뛰고 있으면 온도 감소율 더 낮추기
-
-        if (player_move.isAttack)
-            dropRate *= 0.5f; // 공격 중에는 감소율 반으로
-
-        temperature -= dropRate * Time.deltaTime;
-        temperature = Mathf.Max(temperature, 0f);
-    }
-
-    void HandleHp()
-    {
-        float tempRatio = temperature;
-
-        if (tempRatio == 0)
-        {
-            damageTimer += Time.deltaTime;
-
-            if (damageTimer >= 1f)
-            {
-                TakeDamage(hpDropRate);
-                damageTimer = 0f;
-            }
-        }
-        else
-        {
-            damageTimer = 0f;
-        }
-    }
+    public float GetHp() => hp;
+    public float GetStamina() => stamina;
+    public float GetWeight() => weight;
+    public float GetTemperature() => temperature;
 
     public void TakeDamage(int _damage)
     {
@@ -107,7 +77,6 @@ public class Player_Stats : MonoBehaviour
         {
             hp = 0;
             Die();
-            
         }
         else
         {
@@ -121,25 +90,5 @@ public class Player_Stats : MonoBehaviour
 
         GetComponent<Player_ItemDrop>()?.GenerateDrop();
         Debug.Log("사망했습니다.");
-    }
-
-    public int GetMining()
-    {
-        return mining.GetValue();
-    }
-
-    public int GetDamage()
-    {
-        return damage.GetValue();
-    }
-
-    public int GetArmor()
-    {
-        return armor.GetValue();
-    }
-
-    public int GetLagging()
-    {
-        return lagging.GetValue();
     }
 }

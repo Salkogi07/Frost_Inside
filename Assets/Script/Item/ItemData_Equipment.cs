@@ -38,7 +38,7 @@ public class ItemData_Equipment : ItemData
 
     public void AddModifiers()
     {
-        Player_Stats playerStats = PlayerManager.instance.player;
+        Player_Stats playerStats = PlayerManager.instance.playerStats;
 
         playerStats.mining.AddModifier(mining);
         playerStats.armor.AddModifier(armor);
@@ -49,7 +49,7 @@ public class ItemData_Equipment : ItemData
 
     public void RemoveModifiers()
     {
-        Player_Stats playerStats = PlayerManager.instance.player;
+        Player_Stats playerStats = PlayerManager.instance.playerStats;
 
         playerStats.mining.RemoveModifier(mining);
         playerStats.armor.RemoveModifier(armor);

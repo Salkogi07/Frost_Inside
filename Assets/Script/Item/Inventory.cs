@@ -32,7 +32,10 @@ public class Inventory : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
+        {
             instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
         else
             Destroy(instance);
     }
@@ -54,6 +57,9 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
+        if (!GameManager.instance.isSetting)
+            return;
+
         if (!isPocket)
         {
             NotPocket_ItemDrop();
@@ -82,7 +88,7 @@ public class Inventory : MonoBehaviour
 
     private void NotPocket_ItemDrop()
     {
-        Player_ItemDrop itemDrop = PlayerManager.instance.player.GetComponent<Player_ItemDrop>();
+        Player_ItemDrop itemDrop = PlayerManager.instance.playerStats.GetComponent<Player_ItemDrop>();
         for (int i = 0; i < inventoryItems.Length; i++)
         {
             if (inventoryItems[i]?.data != null)
