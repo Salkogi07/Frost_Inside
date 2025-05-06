@@ -3142,10 +3142,10 @@ MonoBehaviour:
   Damage: 0
   Armor: 0
   Groggy: 0
-  speed: 1
+  speed: 2
   range:
-  - 1.75
-  - 1.5
+  - 2
+  - 1.25
 --- !u!114 &395179461
 MonoBehaviour:
   m_ObjectHideFlags: 0
