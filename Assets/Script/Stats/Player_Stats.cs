@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Player_Stats : MonoBehaviour
 {
-    private Player_Move player_move;
 
     [Header("Player info")]
     [SerializeField] public bool isDead = false;
@@ -30,32 +29,12 @@ public class Player_Stats : MonoBehaviour
     [Header("Temperature info")]
     [SerializeField] public float temperature = 100;
     [SerializeField] public Stat maxTemperature;
-    
-
-    private void Awake()
-    {
-        player_move = GetComponent<Player_Move>();
-    }
 
     private void Start()
     {
         hp = maxHp.GetValue();
         stamina = maxStamina.GetValue();
     }
-
-    private void Update()
-    {
-        if (!GameManager.instance.isSetting)
-            return;
-
-        float hpValue = hp / maxHp.GetValue();
-        float staminaValue = stamina / maxStamina.GetValue();
-        float temperatureValue = temperature / maxTemperature.GetValue();
-        UIManager.instance.UpdateHp(hpValue);
-        UIManager.instance.UpdateStamina(staminaValue);
-        UIManager.instance.UpdateTemperatureState(temperatureValue);
-    }
-
 
     public int GetMining() => mining.GetValue();
     public int GetDamage() => damage.GetValue();

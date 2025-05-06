@@ -77,6 +77,11 @@ public class UIManager : MonoBehaviour
         UpdateTime();
         UpdateFreezeEdges();
         UpdateQuickSlot();
+
+        UpdateHp();
+        UpdateStamina();
+        UpdateTemperature();
+        UpdateTemperatureState();
     }
 
     private void UpdateQuickSlot()
@@ -150,7 +155,6 @@ public class UIManager : MonoBehaviour
         {
             timeImage.sprite = timeSprites[2];
         }
-
     }
 
     public void ShowDamageEffect()
@@ -191,19 +195,31 @@ public class UIManager : MonoBehaviour
         damageCoroutine = null; // 코루틴 종료 후 변수 초기화
     }
 
-    public void UpdateHp(float value)
+    public void UpdateHp()
     {
-        hpImage.fillAmount = value;
+        Player_Stats stats = PlayerManager.instance.playerStats;
+        float hpValue = stats.GetHp() / stats.maxHp.GetValue();
+        hpImage.fillAmount = hpValue;
     }
 
-    public void UpdateStamina(float value)
+    public void UpdateStamina()
     {
-        staminaImage.fillAmount = value;
+        Player_Stats stats = PlayerManager.instance.playerStats;
+        float staminaValue = stats.GetStamina() / stats.maxStamina.GetValue();
+        staminaImage.fillAmount = staminaValue;
     }
 
-    public void UpdateTemperatureState(float value)
+    public void UpdateTemperature()
     {
-        float tempRatio = value;
+        Player_Stats stats = PlayerManager.instance.playerStats;
+        float temperatureValue = stats.GetTemperature() / stats.maxTemperature.GetValue();
+        temperatureImage.fillAmount = temperatureValue;
+    }
+
+    public void UpdateTemperatureState()
+    {
+        Player_Stats stats = PlayerManager.instance.playerStats;
+        float tempRatio = stats.GetTemperature();
         int tempState = 0;
 
         // 체온 구간에 따라 상태 구분
@@ -251,7 +267,6 @@ public class UIManager : MonoBehaviour
         }
 
         temperatureImage.sprite = temperatureSprites[tempState];
-        temperatureImage.fillAmount = tempRatio;
     }
 
     private void SetImageAlpha(Image image, float alpha)
