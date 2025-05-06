@@ -65,9 +65,9 @@ public class MimicBoxDirector : MonoBehaviour
         attack = transform.Find("Attack");
         ragne = transform.Find("GameObjeck");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
+        Player = GameObject.FindWithTag("Player").transform;
 
-        
-            Monster_Jump = GetComponent<Monster_Jump>();
+        Monster_Jump = GetComponent<Monster_Jump>();
             Debug.Log("ÇØ³Áµû");
         
     }

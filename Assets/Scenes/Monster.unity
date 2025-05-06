@@ -2888,6 +2888,9 @@ GameObject:
   - component: {fileID: 395179452}
   - component: {fileID: 395179457}
   - component: {fileID: 395179458}
+  - component: {fileID: 395179459}
+  - component: {fileID: 395179460}
+  - component: {fileID: 395179461}
   m_Layer: 8
   m_Name: MimicBox
   m_TagString: monster
@@ -3083,7 +3086,7 @@ MonoBehaviour:
   distanceMax: 1.5
   Hide: 0
   xDistanceThreshold: 2
-  Mimic_Attack: {fileID: 0}
+  Mimic_Attack: {fileID: 395179459}
   HillDetection: {fileID: 395179458}
   FloorMeasurement: {fileID: 1858500504}
   Pattern: 0
@@ -3105,6 +3108,60 @@ MonoBehaviour:
     m_Bits: 8
   pos: {fileID: 395179450}
   Groundcheck: 0
+--- !u!114 &395179459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395179450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6b9d44ff9998ca4d8883825251fc39c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Boxsize: {x: 3, y: 1.25}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  pos: {fileID: 207626778}
+--- !u!114 &395179460
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395179450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995a1ca4ad54748449d6ecf7b7b50e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Health: 0
+  MaxHealth: 0
+  Damage: 0
+  Armor: 0
+  Groggy: 0
+  speed: 1
+  range:
+  - 1.75
+  - 1.5
+--- !u!114 &395179461
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395179450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d7cdd91486886542b25d9d4084ce6fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jumpspeed: 0.1
+  jump_cooltime: 0
+  jump_height: 0.4
+  jumping: 0
 --- !u!1 &422294740
 GameObject:
   m_ObjectHideFlags: 0
