@@ -13,12 +13,15 @@ public class SpreadTilemap : MonoBehaviour
     [SerializeField] private TileBase floorTile;
     [SerializeField] private TileBase wallTile;
     [SerializeField] private TileBase corridorTile;
-
-    [Header("=== Ground Tilemap ===")]
+    
+    [Header("=== Ground Noise 설정 ===")]
     [Tooltip("방·벽 제외한 영역에 채울 Tilemap")]
     [SerializeField] private Tilemap groundTilemap;
-    [Tooltip("방·벽 제외한 빈 공간에 채울 타일")]
-    [SerializeField] private TileBase groundTile;
+
+    [Tooltip("Perlin Noise로 채울 Ground 타일 종류")]
+    [SerializeField] private List<TileBase> groundVariants;
+    [Tooltip("Noise 빈도 (작게 할수록 넓은 패치)")]
+    [SerializeField, Range(0.01f, 1f)] private float noiseScale = 0.1f;
 
     // 단일 Tile 스프레드
     public void SpreadFloorTilemap(HashSet<Vector2Int> positions)
@@ -73,20 +76,38 @@ public class SpreadTilemap : MonoBehaviour
     }
 
     /// <summary>
-    /// mapMin~mapMax 범위 내에서 floor·wall 제외한 영역을 groundTile로 채운다.
+    /// mapMin~mapMax 범위 내에서 floor·wall 제외한 영역을
+    /// Perlin Noise 기반으로 variants 중 하나를 골라 채웁니다.
     /// </summary>
-    public void FillGroundWithinBounds(Vector2Int mapMin, Vector2Int mapMax,
-                                       HashSet<Vector2Int> floorTiles,
-                                       HashSet<Vector2Int> wallTiles)
+    public void FillGroundWithNoise(
+        Vector2Int mapMin,
+        Vector2Int mapMax,
+        HashSet<Vector2Int> floorTiles,
+        HashSet<Vector2Int> wallTiles,
+        int seed
+    )
     {
+        // 0.0000~0.9999 구간의 소수 오프셋 생성
+        float seedOffset = (seed % 10000) * 0.0001f;
+
         for (int x = mapMin.x; x <= mapMax.x; x++)
         {
             for (int y = mapMin.y; y <= mapMax.y; y++)
             {
-                var pos = new Vector2Int(x, y);
+                Vector2Int pos = new Vector2Int(x, y);
                 if (floorTiles.Contains(pos) || wallTiles.Contains(pos))
                     continue;
-                groundTilemap.SetTile((Vector3Int)pos, groundTile);  // Tilemap.SetTile API :contentReference[oaicite:1]{index=1}
+
+                // 샘플 좌표 계산
+                float sampleX = x * noiseScale + seedOffset;
+                float sampleY = y * noiseScale + seedOffset;
+                float n = Mathf.PerlinNoise(sampleX, sampleY);
+
+                // 노이즈 값에 따라 variants 인덱스 선택
+                int idx = Mathf.FloorToInt(n * groundVariants.Count);
+                idx = Mathf.Clamp(idx, 0, groundVariants.Count - 1);
+
+                groundTilemap.SetTile((Vector3Int)pos, groundVariants[idx]);
             }
         }
     }

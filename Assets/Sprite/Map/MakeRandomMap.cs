@@ -90,9 +90,9 @@ public class MakeRandomMap : MonoBehaviour
         spreadTilemap.HideCorridorRenderer();
 
         // 2) Ground 채우기 (방·벽 제외)
-        spreadTilemap.FillGroundWithinBounds(
+        spreadTilemap.FillGroundWithNoise(
             mapMin, mapMax,
-            floorTiles, wallTiles
+            floorTiles, wallTiles, seed
         );
 
         // 3) 아이템 생성
