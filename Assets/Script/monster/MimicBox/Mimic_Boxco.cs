@@ -65,7 +65,7 @@ public class MimicBoxDirector : MonoBehaviour
         attack = transform.Find("Attack");
         ragne = transform.Find("GameObjeck");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
-        Player = GameObject.FindWithTag("Player").transform;
+        //Player = GameObject.FindWithTag("Player").transform;
 
         Monster_Jump = GetComponent<Monster_Jump>();
             Debug.Log("해냇따");
@@ -75,7 +75,7 @@ public class MimicBoxDirector : MonoBehaviour
     {
         
         //attack = attack.GetComponent<Mimic_attack>();
-        //Player = GameObject.FindWithTag("Player").transform; 
+        Player = GameObject.FindWithTag("Player").transform; 
 
         //if(Monster_Jump != null)
         //{
@@ -96,12 +96,7 @@ public class MimicBoxDirector : MonoBehaviour
     // 매 프레임마다 플레이어와의 거리 체크
     private void Update()
     {   
-        yDistance = Player.position.y - transform.position.y;
-        if(yDistance> 2f && Monster_Jump.jump_cooltime <= 0f)
-        {
-            Monster_Jump.OnJump();
-            Monster_Jump.jump_cooltime = 5f;
-        }// 수정,정리 필요
+        
 
         if(Scoping == false && Pattern != pattern.Concealment)
         {
@@ -194,17 +189,31 @@ public class MimicBoxDirector : MonoBehaviour
     } 
     private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player") && Hide == false ) // 플레이어 태그를 가진 객체 감지
+            if (other.CompareTag("Player") && !Hide ) // 플레이어 태그를 가진 객체 감지
             {
             
                 Pattern = pattern.Chase;
                 Scoping = true;
+                Moving = false;
         }
 
         }
+    private void OnTriggerStay2D(Collider2D other)
+    {
+        if(other.CompareTag("Player") && !Hide)
+        {
+            yDistance = Player.position.y - transform.position.y;
+            if (yDistance > 2f && Monster_Jump.jump_cooltime <= 0f)
+            {
+                Monster_Jump.OnJump();
+                Monster_Jump.jump_cooltime = 5f;
+            }// 수정,정리 필요
+        }
+    }
+
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && Hide == false)
+        if (other.CompareTag("Player") && !Hide)
         {
             Scoping = false;
             Pattern = pattern.Move;
@@ -220,6 +229,12 @@ public class MimicBoxDirector : MonoBehaviour
                 transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                 distance += Time.deltaTime;
                 direction();
+                if(!FloorMeasurement.Groundcheck)
+                {
+                    moverandomDirection = -moverandomDirection;
+                }
+                    
+                
             }
             else 
             {
@@ -282,7 +297,7 @@ public class MimicBoxDirector : MonoBehaviour
 
         if(HillDetection.Groundcheck == true)
         {
-            transform.position += new Vector3(0f, 0.1f, 0f);
+            //transform.position += new Vector3(0f, 0.1f, 0f);
         }
         else
         {
@@ -296,39 +311,6 @@ public class MimicBoxDirector : MonoBehaviour
         
         
 
-        //Debug.Log(newPosition);
         
-        
-        //Debug.Log(newPosition.x);
-        //bool minus = moveDirection == -1f && newPosition.x > 0f ? true : false;
-        //newPosition.x = minus == true ? 1f : 2f;
-        
-        /*newPosition = Floor_Measurement.transform.position;*/
-        //newPosition.x = moveDirection == -1f && newPosition.x > 0f ? -1f : 1f ;
-        
-        
-
-
-        /*Debug.Log(newPosition.x);*/
-
-        /*newPosition.y -= 1f;
-        if (moveDirection == -1f)
-        {
-
-            newPosition.x -= 1f;
-        }
-        else
-        {
-            newPosition.x += 1f;
-        }*/
-        //Floor_Measurement.transform.position = newPosition;
-        //Debug.Log(newPosition.x);
-        
-        //newPosition.x *= -1f;
-        //newPosition.y = ;
-        //Floor_Measurement.position = 
-        //Vector2 newPosition = moveDirection;
-        //Floor_Measurement.position = Vector3(newPosition, transform.position);
-        //rb.Floor_Measurement = new Vector2(moveDirection * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
     }
 }
