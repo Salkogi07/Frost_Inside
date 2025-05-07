@@ -16,6 +16,12 @@ public class MakeRandomMap : MonoBehaviour
     [SerializeField] private int seed;
     [SerializeField] private bool useRandomSeed = true;
 
+    [Header("=== 방 생성 허용 범위 ===")]
+    [Tooltip("방 생성이 허용되는 최소 좌표 (x,y)")]
+    [SerializeField] private Vector2Int roomMin;
+    [Tooltip("방 생성이 허용되는 최대 좌표 (x,y)")]
+    [SerializeField] private Vector2Int roomMax;
+
     [Header("=== 맵 생성 허용 범위 ===")]
     [Tooltip("맵 생성이 허용되는 최소 좌표 (x,y)")]
     [SerializeField] private Vector2Int mapMin;
@@ -41,13 +47,21 @@ public class MakeRandomMap : MonoBehaviour
         Random.InitState(seed);
         Debug.Log($"[MakeRandomMap] Using seed: {seed}");
 
-        // ★ mapMin/mapMax 자동 보정
-        int minX = Mathf.Min(mapMin.x, mapMax.x);
-        int maxX = Mathf.Max(mapMin.x, mapMax.x);
-        int minY = Mathf.Min(mapMin.y, mapMax.y);
-        int maxY = Mathf.Max(mapMin.y, mapMax.y);
-        mapMin = new Vector2Int(minX, minY);
-        mapMax = new Vector2Int(maxX, maxY);
+        // ★ roomMin/roomMax 자동 보정
+        int RoomMinX = Mathf.Min(roomMin.x, roomMax.x);
+        int RoomMaxX = Mathf.Max(roomMin.x, roomMax.x);
+        int RoomMinY = Mathf.Min(roomMin.y, roomMax.y);
+        int RoomMaxY = Mathf.Max(roomMin.y, roomMax.y);
+        roomMin = new Vector2Int(RoomMinX, RoomMinY);
+        roomMax = new Vector2Int(RoomMaxX, RoomMaxY);
+
+        // ★ roomMin/roomMax 자동 보정
+        int mapMinX = Mathf.Min(roomMin.x, roomMax.x);
+        int mapMaxX = Mathf.Max(roomMin.x, roomMax.x);
+        int mapMinY = Mathf.Min(roomMin.y, roomMax.y);
+        int mapMaxY = Mathf.Max(roomMin.y, roomMax.y);
+        roomMin = new Vector2Int(mapMinX, mapMinY);
+        roomMax = new Vector2Int(mapMaxX, mapMaxY);
 
         GenerateMap();
     }
@@ -90,9 +104,9 @@ public class MakeRandomMap : MonoBehaviour
         spreadTilemap.HideCorridorRenderer();
 
         // 2) Ground 채우기 (방·벽 제외)
-        spreadTilemap.FillGroundWithinBounds(
+        spreadTilemap.FillGroundWithNoise(
             mapMin, mapMax,
-            floorTiles, wallTiles
+            floorTiles, wallTiles, seed
         );
 
         // 3) 아이템 생성
@@ -244,7 +258,7 @@ public class MakeRandomMap : MonoBehaviour
         {
             if (!source.HasTile(p)) continue;
             var wp = (Vector2Int)p + offset;
-            if (wp.x < mapMin.x || wp.x > mapMax.x || wp.y < mapMin.y || wp.y > mapMax.y)
+            if (wp.x < roomMin.x || wp.x > roomMax.x || wp.y < roomMin.y || wp.y > roomMax.y)
                 return false;
         }
         return true;
@@ -351,20 +365,39 @@ public class MakeRandomMap : MonoBehaviour
         // 에디터에서만 실행
         #if UNITY_EDITOR
         // 범위의 가운데와 크기 계산
-        Vector3 center = new Vector3(
+        Vector3 roomCenter = new Vector3(
+            (roomMin.x + roomMax.x + 1) * 0.5f,
+            (roomMin.y + roomMax.y + 1) * 0.5f,
+            0f
+        );
+        Vector3 roomSize = new Vector3(
+            Mathf.Abs(roomMax.x - roomMin.x + 1),
+            Mathf.Abs(roomMax.y - roomMin.y + 1),
+            0f
+        );
+
+        // 선으로만 그리기
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(roomCenter, roomSize);  // wireframe box :contentReference[oaicite:0]{index=0}
+        #endif
+
+        // 에디터에서만 실행
+        #if UNITY_EDITOR
+        // 범위의 가운데와 크기 계산
+        Vector3 mapCenter = new Vector3(
             (mapMin.x + mapMax.x + 1) * 0.5f,
             (mapMin.y + mapMax.y + 1) * 0.5f,
             0f
         );
-        Vector3 size = new Vector3(
+        Vector3 mapSize = new Vector3(
             Mathf.Abs(mapMax.x - mapMin.x + 1),
             Mathf.Abs(mapMax.y - mapMin.y + 1),
             0f
         );
 
         // 선으로만 그리기
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(center, size);  // wireframe box :contentReference[oaicite:0]{index=0}
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(mapCenter, mapSize);  // wireframe box :contentReference[oaicite:0]{index=0}
         #endif
     }
 }
