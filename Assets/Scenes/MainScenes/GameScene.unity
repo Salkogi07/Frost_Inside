@@ -10792,7 +10792,7 @@ MonoBehaviour:
   groundVariants:
   - {fileID: 11400000, guid: 1f007b85c38752f428d1c4bfb422771d, type: 2}
   - {fileID: 11400000, guid: b0a9aca525793ae4cab15e93eda3fb9d, type: 2}
-  noiseScale: 0.2
+  noiseScale: 0.15
   backgroundTilemap: {fileID: 1150939952}
   backgroundTint: {r: 0.5943396, g: 0.5943396, b: 0.5943396, a: 1}
 --- !u!1 &2060972783

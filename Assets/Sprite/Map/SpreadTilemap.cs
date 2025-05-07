@@ -83,6 +83,8 @@ public class SpreadTilemap : MonoBehaviour
     /// <summary>
     /// mapMin~mapMax 범위 내에서 floor·wall 제외한 영역을
     /// Perlin Noise 기반으로 variants 중 하나를 골라 채웁니다.
+    /// 좌우·상하 대칭 현상을 완화하기 위해 입력 좌표를 회전하고
+    /// x, y 축에 서로 다른 시드 오프셋을 적용합니다.
     /// </summary>
     public void FillGroundWithNoise(
         Vector2Int mapMin,
@@ -90,10 +92,16 @@ public class SpreadTilemap : MonoBehaviour
         HashSet<Vector2Int> floorTiles,
         HashSet<Vector2Int> wallTiles,
         int seed
-)
+    )
     {
-        // seed를 기반으로 Perlin Noise 오프셋 계산
-        float seedOffset = (seed % 10000) * 0.0001f;
+        // 1) x, y축 오프셋 분리 (seed 값을 다르게 사용)
+        float seedOffsetX = (seed % 10000) * 0.0001f;
+        float seedOffsetY = ((seed / 10000) % 10000) * 0.0001f;
+
+        // 2) 임의 각도로 입력 좌표 회전 (0~359도)
+        float angle = (seed % 360) * Mathf.Deg2Rad;
+        float cosAngle = Mathf.Cos(angle);
+        float sinAngle = Mathf.Sin(angle);
 
         for (int x = mapMin.x; x <= mapMax.x; x++)
         {
@@ -101,16 +109,18 @@ public class SpreadTilemap : MonoBehaviour
             {
                 Vector2Int pos = new Vector2Int(x, y);
 
-                // 방(floor)이나 벽(wall) 타일은 건너뜀
+                // floor 또는 wall 타일은 건너뜀
                 if (floorTiles.Contains(pos) || wallTiles.Contains(pos))
                     continue;
 
-                // Perlin Noise 샘플링
-                float sampleX = x * noiseScale + seedOffset;
-                float sampleY = y * noiseScale + seedOffset;
-                float n = Mathf.PerlinNoise(sampleX, sampleY);
+                // 회전된 좌표 + 스케일 + 축별 오프셋
+                float nx = (x * cosAngle - y * sinAngle) * noiseScale + seedOffsetX;
+                float ny = (x * sinAngle + y * cosAngle) * noiseScale + seedOffsetY;
 
-                // groundVariants 리스트 중 하나를 선택
+                // Perlin Noise 샘플링
+                float n = Mathf.PerlinNoise(nx, ny);
+
+                // variants 중 인덱스 선택
                 int idx = Mathf.Clamp(
                     Mathf.FloorToInt(n * groundVariants.Count),
                     0,
@@ -119,22 +129,19 @@ public class SpreadTilemap : MonoBehaviour
 
                 Vector3Int cellPos = (Vector3Int)pos;
 
-                // 1) Ground 타일맵에 기본 타일 배치
+                // 1) Ground 타일 배치
                 groundTilemap.SetTile(cellPos, groundVariants[idx]);
 
-                // 2) Background 타일맵에 동일한 타일을 어둡게 배치
+                // 2) Background 타일에 어둡게 처리
                 if (backgroundTilemap != null)
                 {
                     backgroundTilemap.SetTile(cellPos, groundVariants[idx]);
-                    // 색상 변경을 위해 Lock 해제
                     backgroundTilemap.SetTileFlags(cellPos, TileFlags.None);
-                    // 어두운 색조 적용
                     backgroundTilemap.SetColor(cellPos, backgroundTint);
                 }
             }
         }
     }
-
 
     // 내부 헬퍼: 단일 타일 스프레드
     private void SpreadTile(HashSet<Vector2Int> positions, Tilemap tilemap, TileBase tile)
