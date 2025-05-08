@@ -226,14 +226,18 @@ public class MimicBoxDirector : MonoBehaviour
         if (Moving)
         { if(distance < distanceMax)
             {
-                transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
-                distance += Time.deltaTime;
-                direction();
-                if(!FloorMeasurement.Groundcheck)
+                
+                if(FloorMeasurement.Groundcheck)
                 {
-                    moverandomDirection = -moverandomDirection;
+                    transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
+                distance += Time.deltaTime;
+                
                 }
-                    
+                else { 
+                    moverandomDirection = -moverandomDirection;
+
+                }
+                   direction(); 
                 
             }
             else 

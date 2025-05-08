@@ -17,6 +17,7 @@ public class Monster_Jump : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+
     }
 
     // Update is called once per frame
@@ -30,6 +31,8 @@ public class Monster_Jump : MonoBehaviour
         {
             rb.linearVelocity = new Vector2(rb.linearVelocityX, jumpspeed);
 
+            float expectedJumpY = jumpspeed * jump_height;
+            Debug.Log("예상 점프 y 이동량: " + expectedJumpY.ToString("F2"));
             StartCoroutine(Jumping());
         }
     }

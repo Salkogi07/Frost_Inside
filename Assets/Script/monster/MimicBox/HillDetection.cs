@@ -8,9 +8,27 @@ public class HillDetection : MonoBehaviour
 
     public bool Groundcheck = false;
 
+
+    private Monster_Jump monster_Jump;
+    //private monster
+
+    private void Start()
+    {
+        monster_Jump = GetComponent<Monster_Jump>();
+
+    }
     void Update()
     {   
         CheckForHillAhead();
+
+        if()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+
+            }
+
+        }
     }
 
     void CheckForHillAhead()
