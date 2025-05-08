@@ -35,10 +35,12 @@ public class MakeRandomMap : MonoBehaviour
     private HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> corridorTiles = new HashSet<Vector2Int>();
+    private HashSet<Vector2Int> itemSpawnTiles = new HashSet<Vector2Int>();
 
     private Dictionary<Vector2Int, TileBase> floorTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> wallTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
+    private Dictionary<Vector2Int, TileBase> itemSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
 
     private void Start()
     {
@@ -74,6 +76,7 @@ public class MakeRandomMap : MonoBehaviour
         floorTiles.Clear(); floorTileDict.Clear();
         wallTiles.Clear(); wallTileDict.Clear();
         corridorTiles.Clear(); corridorTileDict.Clear();
+        itemSpawnTiles.Clear(); itemSpawnTileDict.Clear();
 
         // 첫 방 배치
         PlaceRoom(roomPrefabs[0], Vector2Int.zero);
@@ -98,10 +101,12 @@ public class MakeRandomMap : MonoBehaviour
         // 타일맵 반영
         spreadTilemap.SpreadFloorTilemapWithTiles(floorTileDict);
         spreadTilemap.SpreadCorridorTilemapWithTiles(corridorTileDict);
+        spreadTilemap.SpreadItemSpawnTilemapWithTiles(itemSpawnTileDict);
         spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
 
         // 1) Corridor 숨기기
         spreadTilemap.HideCorridorRenderer();
+        spreadTilemap.HideItemSpawnRenderer();
 
         // 2) Ground 채우기 (방·벽 제외)
         spreadTilemap.FillGroundWithNoise(
@@ -141,10 +146,15 @@ public class MakeRandomMap : MonoBehaviour
 
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)
     {
-        GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
+        GetTilemaps(roomPrefab,
+                out Tilemap floorTM,
+                out Tilemap wallTM,
+                out Tilemap corridorTM,
+                out Tilemap itemSpawnTM);
         CopyTilemapWithTiles(floorTM, offset, floorTiles, floorTileDict);
         CopyTilemapWithTiles(wallTM, offset, wallTiles, wallTileDict);
         CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
+        CopyTilemapWithTiles(itemSpawnTM, offset, itemSpawnTiles, itemSpawnTileDict);
     }
 
     private bool TryFindPlacementForRoom(
@@ -155,7 +165,7 @@ public class MakeRandomMap : MonoBehaviour
         foundOffset = Vector2Int.zero;
         connectionPoints = new List<Vector2Int>();
 
-        GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM);
+        GetTilemaps(roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM);
         var newCorridors = GetLocalCorridorPositions(corridorTM);
         if (newCorridors.Count == 0) return false;
 
@@ -350,13 +360,14 @@ public class MakeRandomMap : MonoBehaviour
         }
     }
 
-    private void GetTilemaps(GameObject roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM)
+    private void GetTilemaps(GameObject roomPrefab, out Tilemap floorTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM)
     {
         var children = roomPrefab.GetComponentsInChildren<Transform>();
         Transform parent = children[1];  // 프로젝트 구조에 따라 인덱스를 조정하세요
         floorTM = parent.Find("FloorTilemap").GetComponent<Tilemap>();
         wallTM = parent.Find("WallTilemap").GetComponent<Tilemap>();
         corridorTM = parent.Find("CorridorTilemap").GetComponent<Tilemap>();
+        itemSpawnTM = parent.Find("ItemSpawnTilemap").GetComponent<Tilemap>();
     }
 
     // 맵 생성 허용 범위를 Gizmos로 시각화
