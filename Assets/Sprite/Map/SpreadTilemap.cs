@@ -9,6 +9,7 @@ public class SpreadTilemap : MonoBehaviour
     [SerializeField] private Tilemap wall;
     [SerializeField] private Tilemap corridor;
     [SerializeField] private Tilemap itemSpawn;
+    public Tilemap ItemSpawnTilemap => itemSpawn;
 
     [Header("=== ±âº» Tile ===")]
     [SerializeField] private TileBase floorTile;

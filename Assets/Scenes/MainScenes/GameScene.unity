@@ -7149,12 +7149,19 @@ MonoBehaviour:
   playerPrefab: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
   player_SpawnPos: {fileID: 416645220}
   seed: 1
-  useRandomSeed: 1
+  useRandomSeed: 0
   roomMin: {x: -50, y: -30}
   roomMax: {x: 50, y: 30}
   mapMin: {x: -70, y: -40}
   mapMax: {x: 70, y: 50}
   fillerFloorTile: {fileID: 11400000, guid: ceb1ac0255430b143bb389740d5ba0d5, type: 2}
+  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
+  itemList:
+  - {fileID: 11400000, guid: 9d7c19c19b353ec469b5131df4248624, type: 2}
+  - {fileID: 11400000, guid: 3ea4994195fda904f9378dd114a81b28, type: 2}
+  - {fileID: 11400000, guid: c2b3a195dce43e44382656eed1d7ce5f, type: 2}
+  - {fileID: 11400000, guid: c2b3a195dce43e44382656eed1d7ce5f, type: 2}
+  - {fileID: 11400000, guid: 2e966b2364cb3924cb47e8b5b3de5008, type: 2}
 --- !u!1 &1409514378
 GameObject:
   m_ObjectHideFlags: 0

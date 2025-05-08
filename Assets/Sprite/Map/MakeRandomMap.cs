@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using Unity.Cinemachine;
+using System.Linq;
 
 public class MakeRandomMap : MonoBehaviour
 {
@@ -31,6 +32,14 @@ public class MakeRandomMap : MonoBehaviour
     [Header("=== 벽 제거 시 채울 바닥 타일 ===")]
     [Tooltip("벽이 제거된 위치에 채울 바닥 타일을 할당하세요.")]
     [SerializeField] private TileBase fillerFloorTile;
+
+    private List<List<Vector2Int>> roomItemSpawnPositions = new List<List<Vector2Int>>();
+    [Header("=== 아이템 드롭 설정 ===")]
+    [Tooltip("드롭할 프리팹을 할당하세요.")]
+    [SerializeField] private GameObject dropPrefab;
+
+    [Tooltip("드롭 가능한 아이템 데이터 리스트")]
+    [SerializeField] private List<ItemData> itemList;
 
     private HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
@@ -115,6 +124,8 @@ public class MakeRandomMap : MonoBehaviour
         );
 
         // 3) 아이템 생성
+        DropItems();
+
 
         // 4) 몬스터 생성
 
@@ -123,6 +134,44 @@ public class MakeRandomMap : MonoBehaviour
 
         // 6) 변수 세팅
         SettingManager();
+    }
+
+    /// <summary>
+    /// 각 방마다 2~3개의 아이템을 랜덤 드롭합니다.
+    /// </summary>
+    private void DropItems()
+    {
+        if (itemList == null || itemList.Count == 0) return;
+
+        for (int i = 0; i < roomItemSpawnPositions.Count; i++)
+        {
+            var spawnPositions = roomItemSpawnPositions[i];
+            if (spawnPositions.Count == 0) continue;
+
+            // 방당 드롭 개수: 2~3개 (maxExclusive 뺌) :contentReference[oaicite:0]{index=0}
+            int dropCount = Random.Range(2, 4);
+
+            for (int j = 0; j < dropCount; j++)
+            {
+                // 랜덤 셀 선택
+                int idx = Random.Range(0, spawnPositions.Count);
+                Vector3Int cellPos = (Vector3Int)spawnPositions[idx];
+                Vector3 worldPos = spreadTilemap.ItemSpawnTilemap
+                    .CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0f);
+
+                // 드롭 프리팹 인스턴스화 :contentReference[oaicite:1]{index=1}
+                GameObject drop = Instantiate(dropPrefab, worldPos, Quaternion.identity);
+
+                // 랜덤 아이템 데이터 & 속도 설정
+                ItemData data = itemList[Random.Range(0, itemList.Count)];
+                Vector2 velocity = new Vector2(
+                    Random.Range(-5f, 5f),    // X 속도 :contentReference[oaicite:2]{index=2}
+                    Random.Range(15f, 20f)    // Y 속도 :contentReference[oaicite:3]{index=3}
+                );
+
+                drop.GetComponent<ItemObject>().SetupItem(data, velocity);
+            }
+        }
     }
 
     private void Instantiate_Player()
@@ -155,6 +204,12 @@ public class MakeRandomMap : MonoBehaviour
         CopyTilemapWithTiles(wallTM, offset, wallTiles, wallTileDict);
         CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
         CopyTilemapWithTiles(itemSpawnTM, offset, itemSpawnTiles, itemSpawnTileDict);
+
+        var localPositions = GetLocalCorridorPositions(itemSpawnTM);
+        var worldPositions = localPositions
+            .Select(p => p + offset)
+            .ToList();
+        roomItemSpawnPositions.Add(worldPositions);
     }
 
     private bool TryFindPlacementForRoom(
