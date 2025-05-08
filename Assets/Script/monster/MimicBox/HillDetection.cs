@@ -21,14 +21,14 @@ public class HillDetection : MonoBehaviour
     {   
         CheckForHillAhead();
 
-        if()
-        {
-            for (int i = 0; i < 10; i++)
-            {
+        //if()
+        //{
+        //    for (int i = 0; i < 10; i++)
+        //    {
 
-            }
+        //    }
 
-        }
+        //}
     }
 
     void CheckForHillAhead()
