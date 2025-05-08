@@ -8,12 +8,15 @@ public class SpreadTilemap : MonoBehaviour
     [SerializeField] private Tilemap floor;
     [SerializeField] private Tilemap wall;
     [SerializeField] private Tilemap corridor;
+    [SerializeField] private Tilemap itemSpawn;
+    public Tilemap ItemSpawnTilemap => itemSpawn;
 
     [Header("=== 기본 Tile ===")]
     [SerializeField] private TileBase floorTile;
     [SerializeField] private TileBase wallTile;
     [SerializeField] private TileBase corridorTile;
-    
+    [SerializeField] private TileBase itemSpawnTile;
+
     [Header("=== Ground Noise 설정 ===")]
     [Tooltip("방·벽 제외한 영역에 채울 Tilemap")]
     [SerializeField] private Tilemap groundTilemap;
@@ -44,6 +47,11 @@ public class SpreadTilemap : MonoBehaviour
         SpreadTile(positions, corridor, corridorTile);
     }
 
+    public void SpreadItemSpawnTilemap(HashSet<Vector2Int> positions)
+    {
+        SpreadTile(positions, itemSpawn, itemSpawnTile);
+    }
+
     // 원본 타일(Dictionary)로 스프레드
     public void SpreadFloorTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
     {
@@ -60,12 +68,19 @@ public class SpreadTilemap : MonoBehaviour
         SpreadTileWithOriginal(tileDict, corridor);
     }
 
+    public void SpreadItemSpawnTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
+    {
+        SpreadTileWithOriginal(tileDict, itemSpawn);
+    }
+
+
     // 모든 Tilemap 초기화
     public void ClearAllTiles()
     {
         floor.ClearAllTiles();
         wall.ClearAllTiles();
         corridor.ClearAllTiles();
+        itemSpawn.ClearAllTiles();
         if (groundTilemap != null)
             groundTilemap.ClearAllTiles();
     }
@@ -76,6 +91,16 @@ public class SpreadTilemap : MonoBehaviour
     public void HideCorridorRenderer()
     {
         var rend = corridor.GetComponent<TilemapRenderer>();
+        if (rend != null)
+            rend.enabled = false;  // TilemapRenderer.enabled 사용 :contentReference[oaicite:0]{index=0}
+    }
+
+    /// <summary>
+    /// ItemSpawn용 TilemapRenderer를 비활성화
+    /// </summary>
+    public void HideItemSpawnRenderer()
+    {
+        var rend = itemSpawn.GetComponent<TilemapRenderer>();
         if (rend != null)
             rend.enabled = false;  // TilemapRenderer.enabled 사용 :contentReference[oaicite:0]{index=0}
     }
