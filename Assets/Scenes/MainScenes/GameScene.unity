@@ -7149,7 +7149,7 @@ MonoBehaviour:
   playerPrefab: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
   player_SpawnPos: {fileID: 416645220}
   seed: 1
-  useRandomSeed: 0
+  useRandomSeed: 1
   roomMin: {x: -50, y: -30}
   roomMax: {x: 50, y: 30}
   mapMin: {x: -70, y: -40}
