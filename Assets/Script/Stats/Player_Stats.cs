@@ -46,6 +46,12 @@ public class Player_Stats : MonoBehaviour
     public float GetWeight() => weight;
     public float GetTemperature() => temperature;
 
+    public void AddStamina(int value)
+    {
+        stamina += value;
+        stamina = Mathf.Clamp(stamina, 0f, maxStamina.GetValue());
+    }
+
     public void TakeDamage(int _damage)
     {
         if(isDead)
