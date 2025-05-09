@@ -27,7 +27,7 @@ public class Floor_Measurement : MonoBehaviour
         if (hit != null)
         {
             // Ground 레이어의 오브젝트를 발견한 경우
-            Debug.Log("앞에 언덕이 있습니다.");
+            //Debug.Log("앞에 언덕이 있습니다.");
             Groundcheck = true;
 
 

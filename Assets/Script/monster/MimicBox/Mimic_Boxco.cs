@@ -32,10 +32,11 @@ public class MimicBoxDirector : MonoBehaviour
     private Transform Floor_Measurement;
     private Transform attack;
     private Transform ragne;
+    private Transform HillDetection;
 
 
     public Mimic_attack Mimic_Attack;
-    public HillDetection HillDetection;
+    public HillDetection hillDetections;
     public Floor_Measurement FloorMeasurement;
 
     private GameObject Floor_Measurement_pos;
@@ -64,6 +65,7 @@ public class MimicBoxDirector : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         attack = transform.Find("Attack");
         ragne = transform.Find("GameObjeck");
+        HillDetection = transform.Find("HillDetection");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
         //Player = GameObject.FindWithTag("Player").transform;
 
@@ -177,6 +179,7 @@ public class MimicBoxDirector : MonoBehaviour
 
             case pattern.Attack:
 
+
                 break;
             default:
 
@@ -203,7 +206,7 @@ public class MimicBoxDirector : MonoBehaviour
         if(other.CompareTag("Player") && !Hide)
         {
             yDistance = Player.position.y - transform.position.y;
-            if (yDistance > 2f && Monster_Jump.jump_cooltime <= 0f)
+            if (yDistance > 1f && Monster_Jump.jump_cooltime <= 0f)
             {
                 Monster_Jump.OnJump();
                 Monster_Jump.jump_cooltime = 5f;
@@ -271,11 +274,13 @@ public class MimicBoxDirector : MonoBehaviour
         {
             Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
             attack.position = new Vector3(transform.position.x - stat.range[0], attack.position.y, 0f);
+            HillDetection.position = new Vector3(transform.position.x - (hillDetections.boxSize[0]* 3f),HillDetection.position.y, 0f);
         }
         else
         {
             Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, 0f);
             attack.position = new Vector3(transform.position.x + stat.range[0], attack.position.y, 0f);
+            HillDetection.position = new Vector3(transform.position.x+ (hillDetections.boxSize[0] *3f), HillDetection.position.y, 0f);
         }
        
     
@@ -299,7 +304,7 @@ public class MimicBoxDirector : MonoBehaviour
         //FloorMeasurement.direction = moveDirection;
         transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
 
-        if(HillDetection.Groundcheck == true)
+        if(hillDetections.Groundcheck == true)
         {
             //transform.position += new Vector3(0f, 0.1f, 0f);
         }

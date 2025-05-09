@@ -52913,6 +52913,7 @@ Transform:
   - {fileID: 266980385}
   - {fileID: 207626779}
   - {fileID: 1858500503}
+  - {fileID: 1052003551}
   - {fileID: 549454453}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52937,7 +52938,7 @@ MonoBehaviour:
   Hide: 0
   xDistanceThreshold: 2
   Mimic_Attack: {fileID: 395179459}
-  HillDetection: {fileID: 395179458}
+  hillDetections: {fileID: 395179458}
   FloorMeasurement: {fileID: 1858500504}
   Pattern: 0
 --- !u!114 &395179458
@@ -52952,11 +52953,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfbf5d51142dee0458cff3fcb2b998c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boxSize: {x: 2.15, y: 1.3}
+  boxSize: {x: 1.1, y: 1}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 8
-  pos: {fileID: 395179450}
+    m_Bits: 72
+  pos: {fileID: 1052003550}
   Groundcheck: 0
 --- !u!114 &395179459
 MonoBehaviour:
@@ -100674,6 +100675,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1036894268}
   m_CullTransparentMesh: 1
+--- !u!1 &1052003550
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1052003551}
+  m_Layer: 8
+  m_Name: HillDetection
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1052003551
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052003550}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 395179456}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054681067
 GameObject:
   m_ObjectHideFlags: 0
@@ -106209,6 +106241,22 @@ PrefabInstance:
     - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
+      propertyPath: jumpCost
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
+      propertyPath: jumpForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
+      propertyPath: walkSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
+      propertyPath: sprintCost
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 3375461312055837039, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: maxHp.baseValue

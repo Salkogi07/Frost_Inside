@@ -10,6 +10,7 @@ public class HillDetection : MonoBehaviour
 
 
     private Monster_Jump monster_Jump;
+    //private Monster   수정필요
     //private monster
 
     private void Start()
@@ -39,9 +40,18 @@ public class HillDetection : MonoBehaviour
         if (hit != null)
         {
             // Ground 레이어의 오브젝트를 발견한 경우
-            Debug.Log("앞에 언덕이 있습니다.");
             Groundcheck = true;
+            //if (hit == )
+            //{
 
+            //    Debug.Log("앞에 언덕이 있습니다.");
+
+            // 예: 몬스터가 점프하도록 명령
+            if (monster_Jump != null )                                      //수정필요
+            {
+                monster_Jump.OnJump(); // Jump()는 Monster_Jump 클래스 내의 함수라고 가정
+            }
+            //}
 
             // 여기서 언덕의 높이나 형태를 체크하여, 플레이어가 올라갈 수 있는지 확인합니다.
             // 예를 들어, hit의 Collider2D에 따라 추가적인 로직을 작성할 수 있습니다.
