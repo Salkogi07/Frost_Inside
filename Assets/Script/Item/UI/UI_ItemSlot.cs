@@ -120,7 +120,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (item == null)
             return;
 
-        UIManager.instance.itemToolTip.ShowToolTip(item.data, transform.position);
+        UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -20,16 +20,15 @@ public class UI_ItemToolTip : MonoBehaviour
     public Vector2 tooltipOffset = new Vector2(50f, 0f);
 
     // 슬롯의 위치(slotPosition)를 받아 그 위치에 오프셋을 적용하여 툴팁을 표시
-    public void ShowToolTip(ItemData item, Vector3 slotPosition)
+    public void ShowToolTip(InventoryItem item, Vector3 slotPosition)
     {
         if (item == null)
             return;
 
         // 텍스트 업데이트
-        itemNameText.text = item.itemName;
-        itemTypeText.text = item.itemType.ToString();
-        itemCoinText.text = item.Price.ToString();
-        itemExplanation.text = item.explanation;
+        itemNameText.text = item?.data.itemName;
+        itemTypeText.text = item?.data.itemType.ToString();
+        itemExplanation.text = item?.data.explanation;
 
         background = GetComponent<RectTransform>();
         originalSize = background.sizeDelta; // 시작 시 배경의 크기를 저장
