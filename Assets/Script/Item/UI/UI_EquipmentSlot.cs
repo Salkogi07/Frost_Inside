@@ -18,7 +18,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
 
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {
-            PlayerManager.instance.item_drop.EquipmentSlot_Throw(item.data);
+            PlayerManager.instance.playerDrop.EquipmentSlot_Throw(item.data);
 
             Inventory.instance.UnequipItem(item.data as ItemData_Equipment);
             CleanUpSlot();

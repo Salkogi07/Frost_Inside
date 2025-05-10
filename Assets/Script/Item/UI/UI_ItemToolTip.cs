@@ -6,6 +6,7 @@ public class UI_ItemToolTip : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI itemNameText;
     [SerializeField] private TextMeshProUGUI itemTypeText;
+    [SerializeField] private TextMeshProUGUI itemCoinText;
     [SerializeField] private TextMeshProUGUI itemExplanation;
 
     private RectTransform background;
@@ -27,6 +28,7 @@ public class UI_ItemToolTip : MonoBehaviour
         // 텍스트 업데이트
         itemNameText.text = item.itemName;
         itemTypeText.text = item.itemType.ToString();
+        itemCoinText.text = item.Price.ToString();
         itemExplanation.text = item.explanation;
 
         background = GetComponent<RectTransform>();

@@ -193,7 +193,8 @@ public class MakeRandomMap : MonoBehaviour
         PlayerManager manager = PlayerManager.instance;
         manager.playerObject = GameObject.FindGameObjectWithTag("Player");
         manager.playerStats = manager.playerObject.GetComponent<Player_Stats>();
-        manager.playerMove = manager.playerObject.GetComponent<Player_Move>();
+        manager.playerMove = manager.playerObject.GetComponent<Player_Move>(); 
+        manager.playerDrop = manager.playerObject.GetComponent<Player_ItemDrop>();
         manager.cam = GameObject.FindGameObjectWithTag("CinemachineCamera").GetComponent<CinemachineCamera>();
         manager.SettingCam();
 
