@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
@@ -79,7 +78,7 @@ public class Inventory : MonoBehaviour
             {
                 if(quickSlotItems[selectedQuickSlot]?.data != null)
                 {
-                    PlayerManager.instance.item_drop.QuickSlot_Throw(quickSlotItems[selectedQuickSlot].data, selectedQuickSlot);
+                    PlayerManager.instance.playerDrop.QuickSlot_Throw(quickSlotItems[selectedQuickSlot].data, selectedQuickSlot);
                     return;
                 }
             }

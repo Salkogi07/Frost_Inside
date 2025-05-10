@@ -9,7 +9,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject playerObject;
     public Player_Stats playerStats;
     public Player_Move playerMove;
-    public Player_ItemDrop item_drop;
+    public Player_ItemDrop playerDrop;
 
     public CinemachineCamera cam;
 

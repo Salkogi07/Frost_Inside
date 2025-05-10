@@ -42,7 +42,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         {
             UI_ItemSlot draggedQuickSlot = draggedSlot;
 
-            PlayerManager.instance.item_drop.Inventory_Throw(item.data, inventorySlotIndex);
+            PlayerManager.instance.playerDrop.Inventory_Throw(item.data, inventorySlotIndex);
             return;
         }
     }

@@ -33,7 +33,10 @@ public class MakeRandomMap : MonoBehaviour
     [Tooltip("벽이 제거된 위치에 채울 바닥 타일을 할당하세요.")]
     [SerializeField] private TileBase fillerFloorTile;
 
+    // ① 방별 스폰 위치 저장
     private List<List<Vector2Int>> roomItemSpawnPositions = new List<List<Vector2Int>>();
+    private List<RoomItemSettings> roomSettings = new List<RoomItemSettings>();
+
     [Header("=== 아이템 드롭 설정 ===")]
     [Tooltip("드롭할 프리팹을 할당하세요.")]
     [SerializeField] private GameObject dropPrefab;
@@ -81,6 +84,9 @@ public class MakeRandomMap : MonoBehaviour
     public void GenerateMap()
     {
         // 초기화
+        roomItemSpawnPositions.Clear();
+        roomSettings.Clear();
+
         spreadTilemap.ClearAllTiles();
         floorTiles.Clear(); floorTileDict.Clear();
         wallTiles.Clear(); wallTileDict.Clear();
@@ -148,8 +154,10 @@ public class MakeRandomMap : MonoBehaviour
             var spawnPositions = roomItemSpawnPositions[i];
             if (spawnPositions.Count == 0) continue;
 
-            // 방당 드롭 개수: 2~3개 (maxExclusive 뺌) :contentReference[oaicite:0]{index=0}
-            int dropCount = Random.Range(2, 4);
+            var settings = roomSettings[i];
+            int minDrops = settings != null ? settings.minDropCount : 2;
+            int maxDrops = settings != null ? settings.maxDropCount : 3;
+            int dropCount = Random.Range(minDrops, maxDrops + 1);
 
             for (int j = 0; j < dropCount; j++)
             {
@@ -185,7 +193,8 @@ public class MakeRandomMap : MonoBehaviour
         PlayerManager manager = PlayerManager.instance;
         manager.playerObject = GameObject.FindGameObjectWithTag("Player");
         manager.playerStats = manager.playerObject.GetComponent<Player_Stats>();
-        manager.playerMove = manager.playerObject.GetComponent<Player_Move>();
+        manager.playerMove = manager.playerObject.GetComponent<Player_Move>(); 
+        manager.playerDrop = manager.playerObject.GetComponent<Player_ItemDrop>();
         manager.cam = GameObject.FindGameObjectWithTag("CinemachineCamera").GetComponent<CinemachineCamera>();
         manager.SettingCam();
 
@@ -210,6 +219,9 @@ public class MakeRandomMap : MonoBehaviour
             .Select(p => p + offset)
             .ToList();
         roomItemSpawnPositions.Add(worldPositions);
+
+        var settings = roomPrefab.GetComponent<RoomItemSettings>();
+        roomSettings.Add(settings);
     }
 
     private bool TryFindPlacementForRoom(

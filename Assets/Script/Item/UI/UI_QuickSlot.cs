@@ -17,7 +17,7 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
 
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {
-            PlayerManager.instance.item_drop.QuickSlot_Throw(item.data, quickslot_Index);
+            PlayerManager.instance.playerDrop.QuickSlot_Throw(item.data, quickslot_Index);
             return;
         }
     }
