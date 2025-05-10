@@ -52039,7 +52039,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 1.25}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -52049,7 +52049,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 5, y: 3.5}
+  m_Size: {x: 5, y: 5}
   m_EdgeRadius: 0
 --- !u!1 &276579973
 GameObject:
@@ -52906,7 +52906,7 @@ Transform:
   m_GameObject: {fileID: 395179450}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.82, y: -0.37, z: 0}
+  m_LocalPosition: {x: -36.67, y: -3.93, z: 0}
   m_LocalScale: {x: 2, y: 1.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -52934,6 +52934,7 @@ MonoBehaviour:
   jumpspeed: 0
   jumpcooltime: 0
   jumpingmax: 0
+  enemies: []
   distanceMax: 3
   Hide: 0
   xDistanceThreshold: 2
@@ -52956,7 +52957,7 @@ MonoBehaviour:
   boxSize: {x: 1.1, y: 1}
   groundLayer:
     serializedVersion: 2
-    m_Bits: 72
+    m_Bits: 8
   pos: {fileID: 1052003550}
   Groundcheck: 0
 --- !u!114 &395179459
@@ -53013,6 +53014,7 @@ MonoBehaviour:
   jump_cooltime: 0
   jump_height: 0.4
   jumping: 0
+  maxHeight: 0
 --- !u!1 &422294740
 GameObject:
   m_ObjectHideFlags: 0
@@ -100687,7 +100689,7 @@ GameObject:
   m_Layer: 8
   m_Name: HillDetection
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -106244,7 +106246,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: jumpCost
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: jumpForce
@@ -106252,11 +106254,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: walkSpeed
-      value: 10
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: sprintCost
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
+      propertyPath: sprintSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3375461312055837039, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: maxHp.baseValue
@@ -107981,7 +107987,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a93c83e6775bad94ebdcbc916a174892, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: {fileID: 2122885891}
+  detectionRadius: 1
+  Player: {fileID: 0}
+  jumpspeed: 5
+  jumpcooltime: 0
+  jumpingmax: 0
+  enemies: []
+  distanceMax: 5
+  Hide: 1
+  xDistanceThreshold: 2
+  Mimic_Attack: {fileID: 0}
+  hillDetections: {fileID: 0}
+  FloorMeasurement: {fileID: 0}
+  Pattern: 2
 --- !u!1 &2125528236
 GameObject:
   m_ObjectHideFlags: 0
