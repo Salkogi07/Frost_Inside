@@ -3,20 +3,20 @@
 public class ItemObject : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
-    [SerializeField] public ItemData itemData;
+    [SerializeField] public InventoryItem item;
 
     private void setupVisuals()
     {
-        if (itemData == null)
+        if (item == null)
             return;
 
-        GetComponent<SpriteRenderer>().sprite = itemData.icon;
-        gameObject.name = "Item object - " + itemData.name;
+        GetComponent<SpriteRenderer>().sprite = item.data.icon;
+        gameObject.name = "Item object - " + item.data.name;
     }
 
-    public void SetupItem(ItemData _itemData, Vector2 _velocity)
+    public void SetupItem(InventoryItem _itemData, Vector2 _velocity)
     {
-        itemData = _itemData;
+        item = _itemData;
         rb.linearVelocity = _velocity;
 
         setupVisuals();

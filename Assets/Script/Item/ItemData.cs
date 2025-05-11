@@ -17,7 +17,6 @@ public class ItemData : ScriptableObject
     public Sprite icon;
     [TextArea(3, 10)]
     public string explanation = "";
-    public ItemInstance price;
 
     [Header("=== 가격 범위 설정 (Inspector) ===")]
     public Vector2Int normalPriceRange = new Vector2Int(50, 80);

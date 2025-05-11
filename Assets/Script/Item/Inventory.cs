@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     public bool isPocket = false;
     public bool isInvenOpen = false;
 
-    public List<ItemData> startingItems;
+    public List<InventoryItem> startingItems;
 
     public InventoryItem[] quickSlotItems;
     public int selectedQuickSlot = 0;
@@ -100,10 +100,8 @@ public class Inventory : MonoBehaviour
 
     private void AddStartingItems()
     {
-        for (int i = 0; i < startingItems.Count; i++)
-        {
-            AddItem(startingItems[i]);
-        }
+        foreach (var item in startingItems)
+            AddItem(item);
     }
 
     public void EquipItem(ItemData _item)
@@ -123,7 +121,7 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            AddItem(oldEquipment);
+            AddItem(new InventoryItem(oldEquipment));
         }
 
         equipment.Add(newItem);
@@ -150,14 +148,14 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            AddItem(oldEquipment);
+            AddItem(new InventoryItem(oldEquipment));
         }
 
         equipment.Add(newItem);
         equipmentDictionary.Add(newEquipment, newItem);
         newEquipment.AddModifiers();
 
-        RemoveItem(_item, index);
+        RemoveItem(index);
 
         UpdateSlotUI();
     }
@@ -179,14 +177,14 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            Add_QuickSlot_Item(oldEquipment);
+            Add_QuickSlot_Item(new InventoryItem(oldEquipment));
         }
 
         equipment.Add(newItem);
         equipmentDictionary.Add(newEquipment, newItem);
         newEquipment.AddModifiers();
 
-        Remove_QuickSlot_Item(_item, index);
+        Remove_QuickSlot_Item(index);
 
         UpdateSlotUI();
     }
@@ -233,31 +231,23 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItem(ItemData _item)
+    public void AddItem(InventoryItem newItem)
     {
         int index = GetFirst_EmptySlot();
-        if (index == -1)
-        {
-            Debug.Log("Full Inventory!");
-            return;
-        }
-        InventoryItem newItem = new InventoryItem(_item);
+        if (index == -1) return;
         inventoryItems[index] = newItem;
         UpdateSlotUI();
     }
 
-
-    public void RemoveItem(ItemData _item, int index)
+    public void RemoveItem(int index)
     {
         inventoryItems[index] = null;
-
         UpdateSlotUI();
     }
 
-    public void Move_Item(ItemData _item, int index)
+    public void Move_Item(InventoryItem item, int index)
     {
-        InventoryItem newItem = new InventoryItem(_item);
-        inventoryItems[index] = newItem;
+        inventoryItems[index] = item;
         UpdateSlotUI();
     }
 
@@ -326,31 +316,23 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void Add_QuickSlot_Item(ItemData _item)
+    public void Add_QuickSlot_Item(InventoryItem newItem)
     {
         int index = GetFirst_EmptyQuickSlot();
-        if (index == -1)
-        {
-            Debug.Log("Full Inventory!");
-            return;
-        }
-        InventoryItem newItem = new InventoryItem(_item);
+        if (index == -1) return;
         quickSlotItems[index] = newItem;
         UpdateSlotUI();
     }
 
-    public void Move_QuickSlot_Item(ItemData _item , int index)
+    public void Move_QuickSlot_Item(InventoryItem item, int index)
     {
-        InventoryItem newItem = new InventoryItem(_item);
-        quickSlotItems[index] = newItem;
+        quickSlotItems[index] = item;
         UpdateSlotUI();
     }
 
-
-    public void Remove_QuickSlot_Item(ItemData _item, int index)
+    public void Remove_QuickSlot_Item(int index)
     {
         quickSlotItems[index] = null;
-    
         UpdateSlotUI();
     }
 

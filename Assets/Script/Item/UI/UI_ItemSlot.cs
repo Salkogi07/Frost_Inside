@@ -86,25 +86,25 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public virtual void OnDrop(PointerEventData eventData)
     {
-        if (draggedSlot == null || draggedSlot == this) return;
+        if (draggedSlot == null || draggedSlot == this || draggedSlot.item == null) return;
 
         InventoryItem draggedItem = draggedSlot.item;
-        UI_QuickSlot draggedQuickSlot = draggedSlot as UI_QuickSlot;
+        UI_QuickSlot draggedQS = draggedSlot as UI_QuickSlot;
 
-        if(draggedQuickSlot == null)
+        if (draggedQS == null)
         {
-            SwapItems(draggedSlot);
+            Inventory.instance.SwapInventoryItems(draggedSlot.inventorySlotIndex, inventorySlotIndex);
         }
         else
         {
-            if(item != null && item.data != null)
+            if (item != null && item.data != null)
             {
-                Inventory.instance.SwapQuickAndInventoryItems(draggedQuickSlot.inventorySlotIndex, inventorySlotIndex);
+                Inventory.instance.SwapQuickAndInventoryItems(draggedQS.quickslot_Index, inventorySlotIndex);
             }
             else
             {
-                Inventory.instance.Move_Item(draggedItem.data, inventorySlotIndex);
-                Inventory.instance.Remove_QuickSlot_Item(draggedItem.data, draggedQuickSlot.quickslot_Index);
+                Inventory.instance.Move_Item(draggedItem, inventorySlotIndex);
+                Inventory.instance.Remove_QuickSlot_Item(draggedQS.quickslot_Index);
             }
         }
     }

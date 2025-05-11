@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player_ItemPicker : MonoBehaviour
@@ -44,27 +43,22 @@ public class Player_ItemPicker : MonoBehaviour
     private void PickupItem(GameObject nearestItem, ItemObject itemPickup)
     {
         Inventory inventory = Inventory.instance;
+        InventoryItem newItem = itemPickup.item;
 
-        if (inventory.CanQuickItem())
+        // 퀵슬롯에 추가 가능한지 확인 후 이동
+        if (inventory.CanQuickItem() && inventory.GetCheck_QuiSlot_Item())
         {
-            if (inventory.GetCheck_QuiSlot_Item())
-            {
-                inventory.Move_QuickSlot_Item(itemPickup.itemData, inventory.selectedQuickSlot);
-                Destroy(nearestItem);
-
-                return;
-            }
+            inventory.Move_QuickSlot_Item(newItem, inventory.selectedQuickSlot);
+            Destroy(nearestItem);
+            return;
         }
 
-        if (inventory.isPocket)
+        // 인벤토리에 추가 가능한지 확인 후 추가
+        if (inventory.isPocket && inventory.CanAddItem())
         {
-            if (inventory.CanAddItem())
-            {
-                inventory.AddItem(itemPickup.itemData);
-                Destroy(nearestItem);
-
-                return;
-            }
+            inventory.AddItem(newItem);
+            Destroy(nearestItem);
+            return;
         }
     }
 

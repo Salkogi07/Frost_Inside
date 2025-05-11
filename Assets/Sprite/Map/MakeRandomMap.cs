@@ -142,9 +142,6 @@ public class MakeRandomMap : MonoBehaviour
         SettingManager();
     }
 
-    /// <summary>
-    /// 각 방마다 2~3개의 아이템을 랜덤 드롭합니다.
-    /// </summary>
     private void DropItems()
     {
         if (itemList == null || itemList.Count == 0) return;
@@ -161,26 +158,40 @@ public class MakeRandomMap : MonoBehaviour
 
             for (int j = 0; j < dropCount; j++)
             {
-                // 랜덤 셀 선택
+                // ➊ 랜덤 위치 선택
                 int idx = Random.Range(0, spawnPositions.Count);
                 Vector3Int cellPos = (Vector3Int)spawnPositions[idx];
                 Vector3 worldPos = spreadTilemap.ItemSpawnTilemap
-                    .CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0f);
+                                   .CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0f);
 
-                // 드롭 프리팹 인스턴스화 :contentReference[oaicite:1]{index=1}
-                GameObject drop = Instantiate(dropPrefab, worldPos, Quaternion.identity);
-
-                // 랜덤 아이템 데이터 & 속도 설정
+                // ➋ 드롭 아이템 데이터 무작위 선택
                 ItemData data = itemList[Random.Range(0, itemList.Count)];
-                Vector2 velocity = new Vector2(
-                    Random.Range(-5f, 5f),    // X 속도 :contentReference[oaicite:2]{index=2}
-                    Random.Range(15f, 20f)    // Y 속도 :contentReference[oaicite:3]{index=3}
-                );
 
-                drop.GetComponent<ItemObject>().SetupItem(data, velocity);
+                // ➌ 아이템 등급에 따라 가격 결정
+                int price = 0;
+                switch (data.itemType)
+                {
+                    case ItemType.Normal:
+                        price = Random.Range(50, 81);    // Normal 등급: 50~80
+                        break;
+                    case ItemType.Special:
+                        price = Random.Range(100, 151); // Special 등급: 100~150
+                        break;
+                    case ItemType.Natural:
+                        price = Random.Range(80, 131);  // Natural 등급: 80~130
+                        break;
+                }
+                Debug.Log(price);
+
+                // ➍ 드롭 프리팹 생성 및 InventoryItem으로 설정
+                GameObject drop = Instantiate(dropPrefab, worldPos, Quaternion.identity);
+                Vector2 velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(15f, 20f));
+                InventoryItem dropItem = new InventoryItem(data, price);
+                drop.GetComponent<ItemObject>().SetupItem(dropItem, velocity);
             }
         }
     }
+
 
     private void Instantiate_Player()
     {

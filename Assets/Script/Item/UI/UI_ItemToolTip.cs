@@ -28,6 +28,7 @@ public class UI_ItemToolTip : MonoBehaviour
         // 텍스트 업데이트
         itemNameText.text = item?.data.itemName;
         itemTypeText.text = item?.data.itemType.ToString();
+        itemCoinText.text = item.price.ToString();
         itemExplanation.text = item?.data.explanation;
 
         background = GetComponent<RectTransform>();

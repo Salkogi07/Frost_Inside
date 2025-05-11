@@ -5,7 +5,7 @@ public class ItemDrop : MonoBehaviour
 {
     [SerializeField] private GameObject dropPrefab;
 
-    protected void DropItem(ItemData _itemData)
+    protected void DropItem(InventoryItem _itemData)
     {
         GameObject newDrop = Instantiate(dropPrefab, transform.position, Quaternion.identity);
 
@@ -14,7 +14,7 @@ public class ItemDrop : MonoBehaviour
         newDrop.GetComponent<ItemObject>().SetupItem(_itemData, randomVelocity);
     }
 
-    protected void ThrowItem(ItemData _itemData)
+    protected void ThrowItem(InventoryItem _itemData)
     {
         GameObject newDrop = Instantiate(dropPrefab, transform.position, Quaternion.identity);
 
