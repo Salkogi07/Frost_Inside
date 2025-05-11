@@ -2060,6 +2060,7 @@ MonoBehaviour:
   itemImage: {fileID: 355910707}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 2
 --- !u!114 &355910707
@@ -3476,6 +3477,7 @@ MonoBehaviour:
   itemImage: {fileID: 731771596}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 1
 --- !u!114 &731771596
@@ -4874,6 +4876,7 @@ MonoBehaviour:
   itemImage: {fileID: 1059216638}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   slotType: 1
   equipmentSlot_Index: 0
@@ -6423,7 +6426,7 @@ MonoBehaviour:
   playerObject: {fileID: 0}
   playerStats: {fileID: 0}
   playerMove: {fileID: 0}
-  item_drop: {fileID: 0}
+  playerDrop: {fileID: 0}
   cam: {fileID: 0}
   temperatureDropRate: 1
   hpDropRate: 2
@@ -7284,8 +7287,8 @@ MonoBehaviour:
   spreadTilemap: {fileID: 2047765571}
   playerPrefab: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
   player_SpawnPos: {fileID: 416645220}
-  seed: 1
-  useRandomSeed: 1
+  seed: 1118484734
+  useRandomSeed: 0
   roomMin: {x: -50, y: -30}
   roomMax: {x: 50, y: 30}
   mapMin: {x: -70, y: -40}
@@ -7809,6 +7812,7 @@ MonoBehaviour:
   itemImage: {fileID: 1516516108}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 0
 --- !u!114 &1516516108
@@ -8420,6 +8424,7 @@ MonoBehaviour:
   itemImage: {fileID: 1640007427}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   slotType: 0
   equipmentSlot_Index: 0
