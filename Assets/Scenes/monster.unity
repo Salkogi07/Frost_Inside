@@ -172,6 +172,7 @@ MonoBehaviour:
   itemImage: {fileID: 9632001}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 0
 --- !u!114 &9632001
@@ -52737,7 +52738,7 @@ GameObject:
   - component: {fileID: 395179453}
   - component: {fileID: 395179452}
   - component: {fileID: 395179457}
-  - component: {fileID: 395179458}
+  - component: {fileID: 395179462}
   - component: {fileID: 395179459}
   - component: {fileID: 395179460}
   - component: {fileID: 395179461}
@@ -52939,27 +52940,9 @@ MonoBehaviour:
   Hide: 0
   xDistanceThreshold: 2
   Mimic_Attack: {fileID: 395179459}
-  hillDetections: {fileID: 395179458}
+  hillDetections: {fileID: 395179462}
   FloorMeasurement: {fileID: 1858500504}
   Pattern: 0
---- !u!114 &395179458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395179450}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfbf5d51142dee0458cff3fcb2b998c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxSize: {x: 1.1, y: 1}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  pos: {fileID: 1052003550}
-  Groundcheck: 0
 --- !u!114 &395179459
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53015,6 +52998,24 @@ MonoBehaviour:
   jump_height: 0.4
   jumping: 0
   maxHeight: 0
+--- !u!114 &395179462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395179450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a2e2fa23cdd0ae498c3d9f368f95424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boxSize: {x: 1, y: 1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  pos: {fileID: 1052003550}
+  Groundcheck: 0
 --- !u!1 &422294740
 GameObject:
   m_ObjectHideFlags: 0
@@ -101352,6 +101353,7 @@ MonoBehaviour:
   itemImage: {fileID: 1136905858}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   slotType: 1
   equipmentSlot_Index: 0
@@ -102289,6 +102291,7 @@ MonoBehaviour:
   itemImage: {fileID: 1282122559}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 2
 --- !u!114 &1282122559
@@ -103464,6 +103467,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNameText: {fileID: 1755782956}
   itemTypeText: {fileID: 460748478}
+  itemCoinText: {fileID: 0}
   itemExplanation: {fileID: 1622567506}
   minWidth: 250
   horizontalPadding: 20
@@ -104919,6 +104923,7 @@ MonoBehaviour:
   itemImage: {fileID: 1651701952}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 1
 --- !u!114 &1651701952
@@ -105088,6 +105093,7 @@ MonoBehaviour:
   itemImage: {fileID: 1681292946}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   slotType: 0
   equipmentSlot_Index: 0
@@ -106282,17 +106288,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
   m_PrefabInstance: {fileID: 1773578583}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1773578585 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4953477730415881772, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-  m_PrefabInstance: {fileID: 1773578583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1773578588}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b80c78004b8b3b4fb62d47e8dd5fe1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1773578586 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
@@ -106361,7 +106356,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1858500502}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d404a218dbc5a244096dc1bff15be231, type: 3}
+  m_Script: {fileID: 11500000, guid: cf0efbf6099a1a84391d679bdafd2fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   boxSize: {x: 1, y: 1}
@@ -106719,7 +106714,7 @@ MonoBehaviour:
   playerObject: {fileID: 1773578588}
   playerStats: {fileID: 1773578587}
   playerMove: {fileID: 1773578586}
-  item_drop: {fileID: 1773578585}
+  playerDrop: {fileID: 0}
   cam: {fileID: 578623935}
   temperatureDropRate: 1
   hpDropRate: 2
