@@ -41,6 +41,12 @@ public class MakeRandomMap : MonoBehaviour
     [SerializeField] private Transform dropParent;
 
     [Header("=== 아이템 드롭 설정 ===")]
+    private static int baselineTotalPriceSum = 0;
+    private const int priceSumRange = 300;
+
+    private const int minTotalPriceSum = 1800;
+    private const int maxTotalPriceSum = 2200;
+
     [Tooltip("드롭할 프리팹을 할당하세요.")]
     [SerializeField] private GameObject dropPrefab;
 
@@ -147,83 +153,79 @@ public class MakeRandomMap : MonoBehaviour
 
     private void DropItems()
     {
-        int useItemCount = 0, normalCount = 0, specialCount = 0;
+        // 1) 드롭 정보 수집용 리스트와 합산 변수
+        var dropInfos = new List<(ItemData data, Vector3 pos, Vector2 vel, int price)>();
         int totalPriceSum = 0;
+        bool reachedMax = false;  // maxTotalPriceSum 초과 플래그
 
-        if (itemList == null || itemList.Count == 0) return;
-
-        for (int i = 0; i < roomItemSpawnPositions.Count; i++)
+        // 방별 스폰 위치 순회
+        for (int i = 0; i < roomItemSpawnPositions.Count && !reachedMax; i++)
         {
             var spawnPositions = roomItemSpawnPositions[i];
             if (spawnPositions.Count == 0) continue;
 
+            // 해당 방의 드롭 설정
             var settings = roomSettings[i];
-            int minDrops = settings != null ? settings.minDropCount : 2;
             int maxDrops = settings != null ? settings.maxDropCount : 3;
-            int dropCount = Random.Range(minDrops, maxDrops + 1);
+            int dropCount = Random.Range(1, maxDrops + 1);
 
+            // 드롭 수만큼 아이템 선택
             for (int j = 0; j < dropCount; j++)
             {
-                // ➊ 랜덤 위치 선택
+                // 위치 선택
                 int idx = Random.Range(0, spawnPositions.Count);
                 Vector3Int cellPos = (Vector3Int)spawnPositions[idx];
                 Vector3 worldPos = spreadTilemap.ItemSpawnTilemap
                                    .CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0f);
+                Vector2 velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(15f, 20f));
 
-                // ➋ 드롭 아이템 데이터 무작위 선택
-                float prob = Random.value;
-                ItemType selectedType;
-                if (prob < 0.10f) selectedType = ItemType.UseItem;
-                else if (prob < 0.80f) selectedType = ItemType.Normal;
-                else selectedType = ItemType.Special;
-                
+                // 타입 결정 (Use 10%, Normal 70%, Special 20%)
+                float p = Random.value;
+                ItemType selectedType = p < 0.10f ? ItemType.UseItem
+                                      : p < 0.80f ? ItemType.Normal
+                                      : ItemType.Special;
+
+                // 후보군 & 가격 산정
                 var candidates = itemList.Where(d => d.itemType == selectedType).ToList();
                 if (candidates.Count == 0) continue;
                 ItemData data = candidates[Random.Range(0, candidates.Count)];
 
-                // ➌ 아이템 등급에 따라 가격 결정
-                int price;
-                switch (data.itemType)
+                int price = selectedType switch
                 {
-                    case ItemType.UseItem:
-                        price = Random.Range(data.useItemPriceRange.x, data.useItemPriceRange.y + 1);
-                        break;
-                    case ItemType.Normal:
-                        price = Random.Range(data.normalPriceRange.x, data.normalPriceRange.y + 1);
-                        break;
-                    case ItemType.Special:
-                        price = Random.Range(data.specialPriceRange.x, data.specialPriceRange.y + 1);
-                        break;
-                    default:
-                        continue;
+                    ItemType.UseItem => Random.Range(data.useItemPriceRange.x, data.useItemPriceRange.y + 1),
+                    ItemType.Normal => Random.Range(data.normalPriceRange.x, data.normalPriceRange.y + 1),
+                    ItemType.Special => Random.Range(data.specialPriceRange.x, data.specialPriceRange.y + 1),
+                    _ => 0
+                };
+
+                // ★ 여기에 합산 후 최대값 초과 시 중단
+                if (totalPriceSum + price > maxTotalPriceSum)
+                {
+                    reachedMax = true;
+                    break;
                 }
 
-                // === 통계 집계 ===
-                switch (selectedType)
-                {
-                    case ItemType.UseItem:
-                        useItemCount++;
-                        break;
-                    case ItemType.Normal:
-                        normalCount++;
-                        break;
-                    case ItemType.Special:
-                        specialCount++;
-                        break;
-                }
+                dropInfos.Add((data, worldPos, velocity, price));
                 totalPriceSum += price;
-
-                // ➍ 드롭 프리팹 생성 및 InventoryItem으로 설정
-                GameObject drop = Instantiate(dropPrefab, worldPos, Quaternion.identity, dropParent);
-                Vector2 velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(15f, 20f));
-                InventoryItem dropItem = new InventoryItem(data, price);
-                drop.GetComponent<ItemObject>().SetupItem(dropItem, velocity);
             }
         }
-        // === 맵 전체 스폰 통계 출력 ===
-        Debug.Log($"Spawned Items → UseItem: {useItemCount}, Normal: {normalCount}, Special: {specialCount}");
-        Debug.Log($"Total Price Sum: {totalPriceSum}");
+
+        // 2) 총합 절대값 보정
+        int targetSum = Mathf.Clamp(totalPriceSum, minTotalPriceSum, maxTotalPriceSum);
+        float adjustRatio = (float)targetSum / Mathf.Max(totalPriceSum, 1);
+
+        // 3) 최종 보정된 가격으로 실제 드롭 생성
+        foreach (var (data, pos, vel, price) in dropInfos)
+        {
+            int adjustedPrice = Mathf.RoundToInt(price * adjustRatio);
+            var invItem = new InventoryItem(data, adjustedPrice);
+            var drop = Instantiate(dropPrefab, pos, Quaternion.identity, dropParent);
+            drop.GetComponent<ItemObject>().SetupItem(invItem, vel);
+        }
+
+        Debug.Log($"[DropItems] OriginalSum: {totalPriceSum}, ClampedSum: {targetSum}");
     }
+
 
 
     private void Instantiate_Player()
