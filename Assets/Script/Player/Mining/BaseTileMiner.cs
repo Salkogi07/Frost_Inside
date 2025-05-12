@@ -179,7 +179,7 @@ public abstract class BaseTileMiner : MonoBehaviour
         if (map != null)
             map.SetTile(tilePos, null);
 
-        // ↓ 추가: 강조 하이라이트 타일 제거
+        // 강조 하이라이트 타일 제거
         highlightTilemap.SetTile(tilePos, null);
         lastHighlightedTile = null;
 

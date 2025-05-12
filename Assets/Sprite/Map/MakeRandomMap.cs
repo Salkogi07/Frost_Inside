@@ -37,6 +37,9 @@ public class MakeRandomMap : MonoBehaviour
     private List<List<Vector2Int>> roomItemSpawnPositions = new List<List<Vector2Int>>();
     private List<RoomItemSettings> roomSettings = new List<RoomItemSettings>();
 
+    [Header("=== 드롭 부모 컨테이너===")]
+    [SerializeField] private Transform dropParent;
+
     [Header("=== 아이템 드롭 설정 ===")]
     [Tooltip("드롭할 프리팹을 할당하세요.")]
     [SerializeField] private GameObject dropPrefab;
@@ -144,6 +147,9 @@ public class MakeRandomMap : MonoBehaviour
 
     private void DropItems()
     {
+        int useItemCount = 0, normalCount = 0, specialCount = 0;
+        int totalPriceSum = 0;
+
         if (itemList == null || itemList.Count == 0) return;
 
         for (int i = 0; i < roomItemSpawnPositions.Count; i++)
@@ -165,31 +171,58 @@ public class MakeRandomMap : MonoBehaviour
                                    .CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0f);
 
                 // ➋ 드롭 아이템 데이터 무작위 선택
-                ItemData data = itemList[Random.Range(0, itemList.Count)];
+                float prob = Random.value;
+                ItemType selectedType;
+                if (prob < 0.10f) selectedType = ItemType.UseItem;
+                else if (prob < 0.80f) selectedType = ItemType.Normal;
+                else selectedType = ItemType.Special;
+                
+                var candidates = itemList.Where(d => d.itemType == selectedType).ToList();
+                if (candidates.Count == 0) continue;
+                ItemData data = candidates[Random.Range(0, candidates.Count)];
 
                 // ➌ 아이템 등급에 따라 가격 결정
-                int price = 0;
+                int price;
                 switch (data.itemType)
                 {
+                    case ItemType.UseItem:
+                        price = Random.Range(data.useItemPriceRange.x, data.useItemPriceRange.y + 1);
+                        break;
                     case ItemType.Normal:
-                        price = Random.Range(50, 81);    // Normal 등급: 50~80
+                        price = Random.Range(data.normalPriceRange.x, data.normalPriceRange.y + 1);
                         break;
                     case ItemType.Special:
-                        price = Random.Range(100, 151); // Special 등급: 100~150
+                        price = Random.Range(data.specialPriceRange.x, data.specialPriceRange.y + 1);
                         break;
-                    case ItemType.Natural:
-                        price = Random.Range(80, 131);  // Natural 등급: 80~130
+                    default:
+                        continue;
+                }
+
+                // === 통계 집계 ===
+                switch (selectedType)
+                {
+                    case ItemType.UseItem:
+                        useItemCount++;
+                        break;
+                    case ItemType.Normal:
+                        normalCount++;
+                        break;
+                    case ItemType.Special:
+                        specialCount++;
                         break;
                 }
-                Debug.Log(price);
+                totalPriceSum += price;
 
                 // ➍ 드롭 프리팹 생성 및 InventoryItem으로 설정
-                GameObject drop = Instantiate(dropPrefab, worldPos, Quaternion.identity);
+                GameObject drop = Instantiate(dropPrefab, worldPos, Quaternion.identity, dropParent);
                 Vector2 velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(15f, 20f));
                 InventoryItem dropItem = new InventoryItem(data, price);
                 drop.GetComponent<ItemObject>().SetupItem(dropItem, velocity);
             }
         }
+        // === 맵 전체 스폰 통계 출력 ===
+        Debug.Log($"Spawned Items → UseItem: {useItemCount}, Normal: {normalCount}, Special: {specialCount}");
+        Debug.Log($"Total Price Sum: {totalPriceSum}");
     }
 
 

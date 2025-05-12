@@ -2101,6 +2101,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 355910704}
   m_CullTransparentMesh: 1
+--- !u!1 &362684116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 362684117}
+  m_Layer: 0
+  m_Name: Items
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &362684117
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362684116}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1819043047}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &386926501
 GameObject:
   m_ObjectHideFlags: 0
@@ -7288,12 +7319,13 @@ MonoBehaviour:
   playerPrefab: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
   player_SpawnPos: {fileID: 416645220}
   seed: 1118484734
-  useRandomSeed: 0
+  useRandomSeed: 1
   roomMin: {x: -50, y: -30}
   roomMax: {x: 50, y: 30}
   mapMin: {x: -70, y: -40}
   mapMax: {x: 70, y: 40}
   fillerFloorTile: {fileID: 11400000, guid: ceb1ac0255430b143bb389740d5ba0d5, type: 2}
+  dropParent: {fileID: 362684117}
   dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
   itemList:
   - {fileID: 11400000, guid: 9d7c19c19b353ec469b5131df4248624, type: 2}
@@ -9667,6 +9699,7 @@ Transform:
   - {fileID: 769793046}
   - {fileID: 2047765570}
   - {fileID: 1399778990}
+  - {fileID: 362684117}
   - {fileID: 416645220}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
