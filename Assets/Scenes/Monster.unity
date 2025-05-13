@@ -53042,6 +53042,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2e2fa23cdd0ae498c3d9f368f95424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxSize: {x: 1, y: 1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  pos: {fileID: 1052003550}
+  Groundcheck: 0
 --- !u!1 &422294740
 GameObject:
   m_ObjectHideFlags: 0
@@ -101404,6 +101410,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a2e2fa23cdd0ae498c3d9f368f95424, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxSize: {x: 1, y: 1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  pos: {fileID: 1486890680}
+  Groundcheck: 0
 --- !u!231 &1119985875
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -106825,6 +106837,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0efbf6099a1a84391d679bdafd2fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxSize: {x: 1, y: 1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  pos: {fileID: 1806376616}
+  Groundcheck: 0
+  direction: 1
 --- !u!4 &1806376618
 Transform:
   m_ObjectHideFlags: 0
@@ -106884,6 +106903,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf0efbf6099a1a84391d679bdafd2fbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  boxSize: {x: 1, y: 1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  pos: {fileID: 1858500502}
+  Groundcheck: 0
+  direction: 1
 --- !u!1 &1860710822
 GameObject:
   m_ObjectHideFlags: 0
