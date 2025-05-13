@@ -47,23 +47,27 @@ public class HillDetection : MonoBehaviour
             // 예: 몬스터가 점프하도록 명령
             if (monster_Jump.jump_cooltime <= 0f)  //수정필요
             {
+
                 monster_Jump.CalculateJumpHeight();
+                Vector3 originalPosition = pos.transform.position;
                 float MaxHeightpercent = monster_Jump.maxHeight - (monster_Jump.maxHeight * 80 / 100);
-                for (float i = 0f; i < monster_Jump.maxHeight; i = monster_Jump.maxHeight + MaxHeightpercent)
+                for (float i = 0f; i < monster_Jump.maxHeight; i += MaxHeightpercent)
                     {
 
                         
-                    //hit.transform.position += new Vector3(0f,monster_Jump.maxHeight,0f);
+                    pos.transform.position += new Vector3(0f,monster_Jump.maxHeight,0f);
                     if (hit != null)
                     {
                         monster_Jump.OnJump(); // Jump()는 Monster_Jump 클래스 내의 함수라고 가정
                         monster_Jump.jump_cooltime = 5f;
+                        break;
                        
                     }
                  
                 
-            }
-                //hit.transform.position = new Vector3(0f, monster_Jump.maxHeight, 0f);
+                    }
+                pos.transform.position = originalPosition;
+
             }
 
                 // 여기서 언덕의 높이나 형태를 체크하여, 플레이어가 올라갈 수 있는지 확인합니다.
