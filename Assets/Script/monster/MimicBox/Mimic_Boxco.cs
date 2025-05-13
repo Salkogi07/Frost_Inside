@@ -1,11 +1,6 @@
 using System.Collections;
 using UnityEngine;
 
-using System.Collections.Generic;
-//using System;
-using UnityEngine.EventSystems;
-using UnityEditor;
-
 
 public class MimicBoxDirector : MonoBehaviour
 {
@@ -16,8 +11,6 @@ public class MimicBoxDirector : MonoBehaviour
     [SerializeField] public float jumpcooltime;
     [SerializeField] public float jumpingmax;
     float move_time = 5f;
-
-    public List<MonoScript> enemies = new List<MonoScript>();
 
     float moveDirection;
     public float distanceMax = 5f;

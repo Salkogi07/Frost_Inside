@@ -41,9 +41,6 @@ public class MakeRandomMap : MonoBehaviour
     [SerializeField] private Transform dropParent;
 
     [Header("=== 아이템 드롭 설정 ===")]
-    private static int baselineTotalPriceSum = 0;
-    private const int priceSumRange = 300;
-
     private const int minTotalPriceSum = 1800;
     private const int maxTotalPriceSum = 2200;
 
