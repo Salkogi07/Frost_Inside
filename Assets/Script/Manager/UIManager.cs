@@ -13,13 +13,13 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image staminaFreezeImage;
     [SerializeField] private Sprite[] staminaFreezeSprite; // 얼음 테두리 3장
     [SerializeField] Image temperatureImage; // 체온 상태 이미지
+    [SerializeField] private Sprite[] temperatureSprites; // 체온 단계별 이미지 (4개 필요)
     [SerializeField] Image weightImage;
     [Space(10)]
     [SerializeField] Image timeImage; //시간 이미지
     [SerializeField] Text timeText; //시간 텍스트
     [SerializeField] private Sprite[] timeSprites; // 시간별 이미지 (3개 필요)
     [Space(10)]
-    [SerializeField] private Sprite[] temperatureSprites; // 체온 단계별 이미지 (4개 필요)
 
     [Header("Freeze Edges")]
     [SerializeField] private Image[] freezeEdges; // 얼음 테두리 3장

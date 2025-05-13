@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: c357ec1a8ae96f740a14c2dc3762fe0b
+guid: 23cdc3771ac64c9488fd7a43e10c2d94
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -982838530873426994
-    second: player_temperature_value_0
+      213: -5148687442625468286
+    second: UInull_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: player_temperature_value_0
+      name: UInull_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 40
-        height: 150
+        width: 150
+        height: 100
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: ecbf8bf30914c52f0800000000000000
-      internalID: -982838530873426994
+      spriteID: 2886bc2cc003c88b0800000000000000
+      internalID: -5148687442625468286
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 4adb56797743f124bb4e853f53a230f8
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      player_temperature_value_0: -982838530873426994
+      UInull_0: -5148687442625468286
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

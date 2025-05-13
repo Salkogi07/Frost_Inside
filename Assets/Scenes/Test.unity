@@ -2060,6 +2060,7 @@ MonoBehaviour:
   itemImage: {fileID: 355910707}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 2
 --- !u!114 &355910707
@@ -3340,6 +3341,7 @@ MonoBehaviour:
   itemImage: {fileID: 731771596}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 1
 --- !u!114 &731771596
@@ -4738,6 +4740,7 @@ MonoBehaviour:
   itemImage: {fileID: 1059216638}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   slotType: 1
   equipmentSlot_Index: 0
@@ -6287,7 +6290,7 @@ MonoBehaviour:
   playerObject: {fileID: 0}
   playerStats: {fileID: 0}
   playerMove: {fileID: 0}
-  item_drop: {fileID: 0}
+  playerDrop: {fileID: 0}
   cam: {fileID: 0}
   temperatureDropRate: 1
   hpDropRate: 2
@@ -7155,6 +7158,7 @@ MonoBehaviour:
   mapMin: {x: -70, y: -40}
   mapMax: {x: 70, y: 50}
   fillerFloorTile: {fileID: 11400000, guid: ceb1ac0255430b143bb389740d5ba0d5, type: 2}
+  dropParent: {fileID: 0}
   dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
   itemList:
   - {fileID: 11400000, guid: 9d7c19c19b353ec469b5131df4248624, type: 2}
@@ -7672,6 +7676,7 @@ MonoBehaviour:
   itemImage: {fileID: 1516516108}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   quickslot_Index: 0
 --- !u!114 &1516516108
@@ -8283,6 +8288,7 @@ MonoBehaviour:
   itemImage: {fileID: 1640007427}
   item:
     data: {fileID: 0}
+    price: 0
   inventorySlotIndex: 0
   slotType: 0
   equipmentSlot_Index: 0
@@ -10710,6 +10716,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemNameText: {fileID: 1542288514}
   itemTypeText: {fileID: 2108692289}
+  itemCoinText: {fileID: 0}
   itemExplanation: {fileID: 194679591}
   minWidth: 250
   horizontalPadding: 20

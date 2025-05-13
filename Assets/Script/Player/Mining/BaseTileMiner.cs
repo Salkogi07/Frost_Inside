@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,16 +10,16 @@ public abstract class BaseTileMiner : MonoBehaviour
     protected Player_Stats stats;
 
     [Header("Mining Settings")]
-    // ´ÜÀÏ Tilemap ¡æ ¿©·¯ Tilemap ¹è¿­·Î º¯°æ
-    [Tooltip("Ã¤±¼ ´ë»óÀÌ µÉ TilemapµéÀ» ¹è¿­·Î ÁöÁ¤ÇÏ¼¼¿ä")]
+    // ë‹¨ì¼ Tilemap â†’ ì—¬ëŸ¬ Tilemap ë°°ì—´ë¡œ ë³€ê²½
+    [Tooltip("ì±„êµ´ ëŒ€ìƒì´ ë  Tilemapë“¤ì„ ë°°ì—´ë¡œ ì§€ì •í•˜ì„¸ìš”")]
     public Tilemap[] tilemaps;
     public Transform player;
     public float miningRange = 5f;
     public float miningTime = 2f;
 
     [Header("Strength Settings")]
-    [Tooltip("°¢ Å¸ÀÏº° ¹æ¾î·Â ¹× Ã¤±¼ °¡´É ¿©ºÎ¸¦ °ü¸®ÇÏ´Â SO")]
-    public TileStrengthSettings miningSettings;   // ¡ç Ãß°¡
+    [Tooltip("ê° íƒ€ì¼ë³„ ë°©ì–´ë ¥ ë° ì±„êµ´ ê°€ëŠ¥ ì—¬ë¶€ë¥¼ ê´€ë¦¬í•˜ëŠ” SO")]
+    public TileStrengthSettings miningSettings;   // â† ì¶”ê°€
 
     [Header("Highlight Settings")]
     public Tilemap highlightTilemap;
@@ -29,10 +29,10 @@ public abstract class BaseTileMiner : MonoBehaviour
     protected Vector3Int? lastHighlightedTile = null;
     protected Vector3Int? currentMiningTile = null;
 
-    // °¢ Å¸ÀÏº° ÇöÀç ¾ËÆÄ°ª(1=ºÒÅõ¸í, 0=¿ÏÀüÅõ¸í)
+    // ê° íƒ€ì¼ë³„ í˜„ì¬ ì•ŒíŒŒê°’(1=ë¶ˆíˆ¬ëª…, 0=ì™„ì „íˆ¬ëª…)
     protected Dictionary<Vector3Int, float> tileAlphaDict = new Dictionary<Vector3Int, float>();
 
-    // Ã¤±¼ Áß ¿©ºÎ
+    // ì±„êµ´ ì¤‘ ì—¬ë¶€
     public bool isMining = false;
 
     protected virtual void Awake()
@@ -58,7 +58,7 @@ public abstract class BaseTileMiner : MonoBehaviour
 
     protected virtual void Start()
     {
-        // ¿©·¯ TilemapÀ» ¼øÈ¸ÇÏ¸ç ¾ËÆÄ°ª ÃÊ±âÈ­
+        // ì—¬ëŸ¬ Tilemapì„ ìˆœíšŒí•˜ë©° ì•ŒíŒŒê°’ ì´ˆê¸°í™”
         foreach (var map in tilemaps)
         {
             foreach (var pos in map.cellBounds.allPositionsWithin)
@@ -76,19 +76,29 @@ public abstract class BaseTileMiner : MonoBehaviour
 
         Vector3Int mouseTilePos = GetMouseTilePosition();
 
-        // ¿©·¯ Tilemap Áß ÇÏ³ª¶óµµ Å¸ÀÏÀÌ ÀÖÀ¸¸é Ã¤±¼ ´ë»ó
-        bool hasAnyTile = tilemaps.Any(tm => tm.HasTile(mouseTilePos));
-        // ¹üÀ§ Ã¼Å© (Ã¹ ¹øÂ° ¸Ê ÁÂÇ¥ »ç¿ë)
-        bool inRange = hasAnyTile &&
+        // âŠ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ì— íƒ€ì¼ì´ ìˆëŠ” ëª¨ë“  ë§µì„ ê³¨ë¼ë‚¸ë‹¤
+        var candidateMaps = tilemaps.Where(tm => tm.HasTile(mouseTilePos)).ToList();
+        bool hasAnyTile = candidateMaps.Count > 0;
+        
+        // â‹ ê·¸ì¤‘ í”Œë ˆì´ì–´ì™€ ê±°ë¦¬ â‰¤ miningRangeì¸ ë§µì´ í•˜ë‚˜ë¼ë„ ìˆëŠ”ì§€
+        bool inRange = candidateMaps.Any(tm =>
             Vector3.Distance(
-                tilemaps[0].GetCellCenterWorld(mouseTilePos),
+                tm.GetCellCenterWorld(mouseTilePos),
                 player.position
-            ) <= miningRange;
-        // ½Ã¾ß Ã¼Å© (Ã¹ ¹øÂ° ¸Ê ÁÂÇ¥ »ç¿ë)
-        bool canSee = inRange && CheckLineOfSight(
-            tilemaps[0],
-            tilemaps[0].WorldToCell(player.position),
-            mouseTilePos
+            ) <= miningRange
+        );
+        
+        // âŒ ê·¸ë¦¬ê³ , ê·¸ì¤‘ í•˜ë‚˜ë¼ë„ ì‹œì•¼ê°€ í™•ë³´ëœ ë§µì´ ìˆëŠ”ì§€ (ê±°ë¦¬+LineOfSight)
+        bool canSee = candidateMaps.Any(tm =>
+            Vector3.Distance(
+                tm.GetCellCenterWorld(mouseTilePos),
+                player.position
+            ) <= miningRange
+            && CheckLineOfSight(
+                tm,
+                tm.WorldToCell(player.position),
+                mouseTilePos
+            )
         );
 
         UpdateHighlight(mouseTilePos, inRange, canSee);
@@ -106,14 +116,14 @@ public abstract class BaseTileMiner : MonoBehaviour
 
     protected virtual void UpdateHighlight(Vector3Int tilePos, bool inRange, bool canSee)
     {
-        // 1) ÀÌÀü °­Á¶ ÇØÁ¦
+        // 1) ì´ì „ ê°•ì¡° í•´ì œ
         if (lastHighlightedTile.HasValue && lastHighlightedTile.Value != tilePos)
         {
             highlightTilemap.SetTile(lastHighlightedTile.Value, null);
             lastHighlightedTile = null;
         }
 
-        // 2) ÇöÀç Å¸ÀÏ À§ & ¹üÀ§ ³»ÀÏ ¶§¸¸ °­Á¶
+        // 2) í˜„ì¬ íƒ€ì¼ ìœ„ & ë²”ìœ„ ë‚´ì¼ ë•Œë§Œ ê°•ì¡°
         if (hasAnyTileAt(tilePos) && inRange)
         {
             Tile toUse = canSee ? borderTile : blockedBorderTile;
@@ -129,10 +139,10 @@ public abstract class BaseTileMiner : MonoBehaviour
         {
             var map = GetTilemapAt(tilePos);
             var tile = map?.GetTile(tilePos);
-            // ¢º Ã¤±¼ ºÒ°¡ Å¸ÀÏÀÌ¸é Áï½Ã Á¾·á
+            // â–¶ ì±„êµ´ ë¶ˆê°€ íƒ€ì¼ì´ë©´ ì¦‰ì‹œ ì¢…ë£Œ
             if (tile == null || !miningSettings.IsMineable(tile))
             {
-                // TODO: ºÒ°¡ ÀÌÆåÆ®/»ç¿îµå Àç»ı
+                // TODO: ë¶ˆê°€ ì´í™íŠ¸/ì‚¬ìš´ë“œ ì¬ìƒ
                 StopMining();
                 return;
             }
@@ -163,7 +173,7 @@ public abstract class BaseTileMiner : MonoBehaviour
 
     protected virtual void ApplyTileAlpha(Vector3Int tilePos, float alpha)
     {
-        // ÇØ´ç ÁÂÇ¥¿¡ Å¸ÀÏÀÌ ÀÖ´Â TilemapÀ» Ã£¾Æ Àû¿ë
+        // í•´ë‹¹ ì¢Œí‘œì— íƒ€ì¼ì´ ìˆëŠ” Tilemapì„ ì°¾ì•„ ì ìš©
         var map = GetTilemapAt(tilePos);
         if (map == null) return;
 
@@ -179,7 +189,7 @@ public abstract class BaseTileMiner : MonoBehaviour
         if (map != null)
             map.SetTile(tilePos, null);
 
-        // °­Á¶ ÇÏÀÌ¶óÀÌÆ® Å¸ÀÏ Á¦°Å
+        // ê°•ì¡° í•˜ì´ë¼ì´íŠ¸ íƒ€ì¼ ì œê±°
         highlightTilemap.SetTile(tilePos, null);
         lastHighlightedTile = null;
 
@@ -195,13 +205,13 @@ public abstract class BaseTileMiner : MonoBehaviour
     }
 
     /// <summary>
-    /// ¿©·¯ Tilemap¿¡¼­ ÇØ´ç ÁÂÇ¥ÀÇ Å¸ÀÏÀÌ ÀÖ´ÂÁö È®ÀÎ
+    /// ì—¬ëŸ¬ Tilemapì—ì„œ í•´ë‹¹ ì¢Œí‘œì˜ íƒ€ì¼ì´ ìˆëŠ”ì§€ í™•ì¸
     /// </summary>
     protected bool hasAnyTileAt(Vector3Int pos)
         => tilemaps.Any(tm => tm.HasTile(pos));
 
     /// <summary>
-    /// ¿©·¯ Tilemap Áß ÇØ´ç ÁÂÇ¥¿¡ Å¸ÀÏÀÌ ÀÖ´Â Ã¹ ¹øÂ° Tilemap ¹İÈ¯
+    /// ì—¬ëŸ¬ Tilemap ì¤‘ í•´ë‹¹ ì¢Œí‘œì— íƒ€ì¼ì´ ìˆëŠ” ì²« ë²ˆì§¸ Tilemap ë°˜í™˜
     /// </summary>
     protected Tilemap GetTilemapAt(Vector3Int pos)
     {
@@ -212,7 +222,7 @@ public abstract class BaseTileMiner : MonoBehaviour
     }
 
     /// <summary>
-    /// Bresenham ¾Ë°í¸®ÁòÀ¸·Î ½Ã¾ß °Ë»ç
+    /// Bresenham ì•Œê³ ë¦¬ì¦˜ìœ¼ë¡œ ì‹œì•¼ ê²€ì‚¬
     /// </summary>
     protected bool CheckLineOfSight(Tilemap map, Vector3Int start, Vector3Int end)
     {
