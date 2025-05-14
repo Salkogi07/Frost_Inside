@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] Image staminaImage;
     [SerializeField] Image staminaFreezeImage;
     [SerializeField] private Sprite[] staminaFreezeSprite; // 얼음 테두리 3장
+    private SteppedFill steppedFill;
     [SerializeField] Image temperatureImage; // 체온 상태 이미지
     [SerializeField] private Sprite[] temperatureSprites; // 체온 단계별 이미지 (4개 필요)
     [SerializeField] Image weightImage;
@@ -53,6 +54,8 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+
+        steppedFill = staminaImage.gameObject.GetComponent<SteppedFill>();
 
         // freezeEdges 개수만큼 targetAlphas 초기화
         targetAlphas = new float[freezeEdges.Length];
@@ -206,7 +209,9 @@ public class UIManager : MonoBehaviour
     {
         Player_Stats stats = PlayerManager.instance.playerStats;
         float staminaValue = stats.GetStamina() / stats.maxStamina.GetValue();
-        staminaImage.fillAmount = staminaValue;
+
+        // quantize 처리된 값으로만 fillAmount 적용
+        steppedFill.SetNormalizedValue(staminaValue);
     }
 
     public void UpdateTemperature()
@@ -219,7 +224,7 @@ public class UIManager : MonoBehaviour
     public void UpdateTemperatureState()
     {
         Player_Stats stats = PlayerManager.instance.playerStats;
-        float tempRatio = stats.GetTemperature();
+        float tempRatio =  stats.GetTemperature() / stats.maxTemperature.GetValue();
         int tempState = 0;
 
         // 체온 구간에 따라 상태 구분
@@ -265,7 +270,7 @@ public class UIManager : MonoBehaviour
             targetAlphas[1] = 1f;
             targetAlphas[2] = 1f;
         }
-
+        
         temperatureImage.sprite = temperatureSprites[tempState];
     }
 
