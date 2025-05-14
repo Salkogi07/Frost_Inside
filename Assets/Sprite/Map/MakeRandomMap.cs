@@ -163,7 +163,7 @@ public class MakeRandomMap : MonoBehaviour
 
             // 해당 방의 드롭 설정
             var settings = roomSettings[i];
-            int maxDrops = settings != null ? settings.maxDropCount : 3;
+            int maxDrops = settings != null ? settings.maxDropCount : 0;
             int dropCount = Random.Range(1, maxDrops + 1);
 
             // 드롭 수만큼 아이템 선택
@@ -178,8 +178,8 @@ public class MakeRandomMap : MonoBehaviour
 
                 // 타입 결정 (Use 10%, Normal 70%, Special 20%)
                 float p = Random.value;
-                ItemType selectedType = p < 0.10f ? ItemType.UseItem
-                                      : p < 0.80f ? ItemType.Normal
+                ItemType selectedType = p < 0.25f ? ItemType.UseItem
+                                      : p < 0.85f ? ItemType.Normal
                                       : ItemType.Special;
 
                 // 후보군 & 가격 산정

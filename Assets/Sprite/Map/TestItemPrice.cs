@@ -33,21 +33,7 @@ public class TestItemPrice : MonoBehaviour
             else
                 typeCounts[data.itemType] = 1;
 
-            Vector2Int range;
-            switch (data.itemType)
-            {
-                case ItemType.UseItem:
-                    range = data.useItemPriceRange;
-                    break;
-                case ItemType.Normal:
-                    range = data.normalPriceRange;
-                    break;
-                case ItemType.Special:
-                    range = data.specialPriceRange;
-                    break;
-                default:
-                    continue;
-            }
+            Vector2Int range = data.priceRange;
 
             if (price < range.x || price > range.y)
                 Debug.LogWarning($"[{data.itemName}] 가격({price})이 유효 범위({range.x}~{range.y})를 벗어났습니다.", io);
