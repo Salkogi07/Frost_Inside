@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
+  m_Name: Circuit_Board
+  m_EditorClassIdentifier: 
+  itemType: 3
+  itemName: "\uD68C\uB85C\uD310"
+  icon: {fileID: 21300000, guid: f4ea2a287a673c94d833143ad78e604d, type: 3}
+  explanation: "\uC804\uC790 \uBD80\uD488 \uAC04\uC758 \uC804\uAE30\uC801 \uC5F0\uACB0\uC744
+    \uC704\uD574 \uB3C4\uCCB4 \uD328\uD134\uC744 \uC0C8\uAE34 \uC808\uC5F0 \uAE30\uD310\uC73C\uB85C,
+    \uC804\uC790 \uD68C\uB85C\uC758 \uD575\uC2EC \uAE30\uBC18\uC744 \uC774\uB8F9\uB2C8\uB2E4."
+  priceRange: {x: 110, y: 130}

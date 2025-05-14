@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
+  m_Name: Laptop
+  m_EditorClassIdentifier: 
+  itemType: 2
+  itemName: "\uB178\uD2B8\uBD81"
+  icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
+  explanation: "\uD734\uB300\uAC00 \uAC00\uB2A5\uD55C \uAC1C\uC778\uC6A9 \uCEF4\uD4E8\uD130\uB85C,
+    \uBC30\uD130\uB9AC \uB0B4\uC7A5\uD615\uC774\uBA70 \uD734\uB300\uC131\uACFC \uC131\uB2A5\uC744
+    \uBAA8\uB450 \uAC16\uCD94\uC5B4 \uC5C5\uBB34\xB7\uD559\uC2B5\xB7\uC5D4\uD130\uD14C\uC778\uBA3C\uD2B8\uC5D0
+    \uC0AC\uC6A9\uB429\uB2C8\uB2E4."
+  priceRange: {x: 60, y: 70}

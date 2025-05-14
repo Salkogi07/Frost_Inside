@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
+  m_Name: Engine
+  m_EditorClassIdentifier: 
+  itemType: 2
+  itemName: "\uC5D4\uC9C4"
+  icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
+  explanation: "\uC5F0\uB8CC\uB97C \uD0DC\uC6CC \uB0B4\uC5F0\uAE30\uAD00 \uB3D9\uB825\uC744
+    \uC5BB\uAC70\uB098 \uC804\uAE30\xB7\uC99D\uAE30 \uB4F1\uC758 \uC5D0\uB108\uC9C0\uC6D0\uC744
+    \uD65C\uC6A9\uD574 \uAE30\uACC4\uC801 \uC5D0\uB108\uC9C0\uB97C \uC0DD\uC131\uD558\uB294
+    \uC7A5\uCE58\uB85C, \uC790\uB3D9\uCC28\xB7\uBC1C\uC804\uAE30 \uB4F1\uC5D0 \uD544\uC218\uC801\uC785\uB2C8\uB2E4."
+  priceRange: {x: 60, y: 70}
