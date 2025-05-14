@@ -187,13 +187,7 @@ public class MakeRandomMap : MonoBehaviour
                 if (candidates.Count == 0) continue;
                 ItemData data = candidates[Random.Range(0, candidates.Count)];
 
-                int price = selectedType switch
-                {
-                    ItemType.UseItem => Random.Range(data.useItemPriceRange.x, data.useItemPriceRange.y + 1),
-                    ItemType.Normal => Random.Range(data.normalPriceRange.x, data.normalPriceRange.y + 1),
-                    ItemType.Special => Random.Range(data.specialPriceRange.x, data.specialPriceRange.y + 1),
-                    _ => 0
-                };
+                int price = Random.Range(data.priceRange.x, data.priceRange.y + 1);
 
                 // ★ 여기에 합산 후 최대값 초과 시 중단
                 if (totalPriceSum + price > maxTotalPriceSum)

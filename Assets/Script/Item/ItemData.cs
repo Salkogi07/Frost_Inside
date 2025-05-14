@@ -18,9 +18,7 @@ public class ItemData : ScriptableObject
     [TextArea(3, 10)]
     public string explanation = "";
 
-    [Header("=== 가격 범위 설정 (Inspector) ===")]
-    public Vector2Int useItemPriceRange = new Vector2Int(100, 180);
-    public Vector2Int normalPriceRange = new Vector2Int(40, 70);
-    public Vector2Int specialPriceRange = new Vector2Int(80, 130);
-    public Vector2Int naturalPriceRange = new Vector2Int(60, 120);
+    [Header("=== 개별 아이템 가격 범위 설정 (Inspector) ===")]
+    [Tooltip("이 아이템의 가격이 랜덤으로 결정될 범위를 지정하세요.")]
+    public Vector2Int priceRange = new Vector2Int(50, 100);
 }
