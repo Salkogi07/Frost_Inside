@@ -58,10 +58,10 @@ public class MimicBoxDirector : MonoBehaviour
     private void Awake()
     {
         stat = GetComponent<Monster_stat>();
-        Floor_Measurement = transform.Find("Floor Measurement");
+        Floor_Measurement = transform.Find("Floor_Measurement");
         rb = GetComponent<Rigidbody2D>();
         attack = transform.Find("Attack");
-        ragne = transform.Find("GameObjeck");
+        ragne = transform.Find("check");
         HillDetection = transform.Find("HillDetection");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
         //Player = GameObject.FindWithTag("Player").transform;
@@ -74,8 +74,9 @@ public class MimicBoxDirector : MonoBehaviour
     {
         
         //attack = attack.GetComponent<Mimic_attack>();
-        Player = GameObject.FindWithTag("Player").transform; 
-
+        //Player = GetComponent<>
+        Player = GameObject.FindWithTag("Player").transform;
+        Player = Player.GetComponent<Transform>();
         //if(Monster_Jump != null)
         //{
         //Monster_Jump.OnJump();
