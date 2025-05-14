@@ -16,6 +16,6 @@ MonoBehaviour:
   itemName: Stamina
   icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
   explanation: "\uC2A4\uD14C\uBBF8\uB098 \uCC44\uC6CC\uC9D0"
-  priceRange: {x: 100, y: 180}
+  priceRange: {x: 50, y: 120}
   itemEffect:
   - {fileID: 11400000, guid: e4279f65bd8000146b29000dee9becd3, type: 2}
