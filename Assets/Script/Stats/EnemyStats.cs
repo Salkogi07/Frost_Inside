@@ -9,6 +9,7 @@ public class EnemyStats : MonoBehaviour
 
     [SerializeField] private int damage;
     [SerializeField] private int armor;
+    public int difficulty = 1;
 
     private void Start()
     {
