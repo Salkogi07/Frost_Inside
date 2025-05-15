@@ -6,7 +6,8 @@ public class Monster_stat : MonoBehaviour
     [Header("¿œπ› Ω∫≈»")]
     [SerializeField] public float Health;
     [SerializeField] public float MaxHealth;
-    [SerializeField] public float Damage;
+    [SerializeField] public int Damage;
+    [SerializeField] public float Attack_speed;
     [SerializeField] public float Armor;
     [SerializeField] public float Groggy = 0f;
     [SerializeField] public float speed = 1f;

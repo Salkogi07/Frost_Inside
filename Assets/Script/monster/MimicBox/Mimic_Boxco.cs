@@ -1,15 +1,17 @@
 using System.Collections;
+using System.Runtime.Serialization;
+using UnityEditor;
 using UnityEngine;
 
 
 public class MimicBoxDirector : MonoBehaviour
 {
     [Header ("Mimic stats")]
-    [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위
-    [SerializeField]  private Transform Player; // 플레이어의 위치
+    [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위 
     [SerializeField] public float jumpspeed = 5f;
     [SerializeField] public float jumpcooltime;
     [SerializeField] public float jumpingmax;
+    [SerializeField] private Transform Player; // 플레이어의 위치
     float move_time = 5f;
 
     float moveDirection;
@@ -22,10 +24,12 @@ public class MimicBoxDirector : MonoBehaviour
     float Moving_Time;
     float distance;
     bool jumping = false;
-
+    bool e = true;
     public float xDistanceThreshold = 2f;
     float yDistance;
-
+    bool attacking;
+    
+    
     private Transform Floor_Measurement;
     private Transform attack;
     private Transform ragne;
@@ -60,7 +64,7 @@ public class MimicBoxDirector : MonoBehaviour
         stat = GetComponent<Monster_stat>();
         Floor_Measurement = transform.Find("Floor_Measurement");
         rb = GetComponent<Rigidbody2D>();
-        attack = transform.Find("Attack");
+        attack = transform.Find("attack");
         ragne = transform.Find("check");
         HillDetection = transform.Find("HillDetection");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
@@ -75,7 +79,7 @@ public class MimicBoxDirector : MonoBehaviour
         
         //attack = attack.GetComponent<Mimic_attack>();
         //Player = GetComponent<>
-        Player = GameObject.FindWithTag("Player").transform;
+        
         Player = Player.GetComponent<Transform>();
         //if(Monster_Jump != null)
         //{
@@ -95,10 +99,15 @@ public class MimicBoxDirector : MonoBehaviour
 
     // 매 프레임마다 플레이어와의 거리 체크
     private void Update()
-    {   
-        
-
-        if(Scoping == false && Pattern != pattern.Concealment)
+    {
+        Debug.Log(attacking);
+        if (e)
+        {
+            Debug.Log("dldi");
+            Player = GameObject.FindWithTag("Player").transform;
+            e = !e;
+        }
+        if (Scoping == false && Pattern != pattern.Concealment)
         {
             
             Concealment_time  += Time.deltaTime;
@@ -176,8 +185,14 @@ public class MimicBoxDirector : MonoBehaviour
                 break;
 
             case pattern.Attack:
+              
+                attacking = true;
+                //애니매이션
+                //Mimic_Attack.hits();
+                StartCoroutine(attackingAnimationToEnd());
+                attacking = false;
 
-
+                //수정필요
                 break;
             default:
 
@@ -190,7 +205,7 @@ public class MimicBoxDirector : MonoBehaviour
     } 
     private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Player") && !Hide ) // 플레이어 태그를 가진 객체 감지
+            if (other.CompareTag("Player") && !Hide && !attacking) // 플레이어 태그를 가진 객체 감지
             {
             
                 Pattern = pattern.Chase;
@@ -201,8 +216,9 @@ public class MimicBoxDirector : MonoBehaviour
         }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if(other.CompareTag("Player") && !Hide)
+        if(other.CompareTag("Player") && !Hide && !attacking)
         {
+            Pattern = pattern.Chase;
             yDistance = Player.position.y - transform.position.y;
             if (yDistance > 1f && Monster_Jump.jump_cooltime <= 0f)
             {
@@ -214,7 +230,7 @@ public class MimicBoxDirector : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !Hide)
+        if (other.CompareTag("Player") && !Hide && !attacking)
         {
             Scoping = false;
             Pattern = pattern.Move;
@@ -312,5 +328,19 @@ public class MimicBoxDirector : MonoBehaviour
 
 
 
+    }
+
+    IEnumerator attackingAnimationToEnd()
+    {
+        //animator.SetTrigger("Attack");
+
+        //// 현재 상태 정보 가져오기
+        //AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+
+        // 애니메이션 길이만큼 대기
+        //yield return new WaitForSeconds(stateInfo.length);
+        yield return new WaitForSeconds(1f);
+        // 이제 다음 코드 실행
+        Debug.Log("애니메이션 끝났다!");
     }
 }
