@@ -6427,6 +6427,7 @@ GameObject:
   - component: {fileID: 1226288857}
   - component: {fileID: 1226288855}
   - component: {fileID: 1226288856}
+  - component: {fileID: 1226288860}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -6533,7 +6534,7 @@ MonoBehaviour:
   playerMove: {fileID: 0}
   playerDrop: {fileID: 0}
   cam: {fileID: 0}
-  temperatureDropRate: 1
+  temperatureDropRate: 0.1
   hpDropRate: 2
   isNearHeatSource: 0
   isInColdZone: 0
@@ -6552,6 +6553,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1226288860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1226288854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8b7ac9b7b0ba4b4cbfa44214da93269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speedUpKey: 282
+  fastTimeScale: 10
+  normalTimeScale: 1
 --- !u!1001 &1229544881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7415,8 +7431,10 @@ MonoBehaviour:
   fillerFloorTile: {fileID: 11400000, guid: ceb1ac0255430b143bb389740d5ba0d5, type: 2}
   dropParent: {fileID: 362684117}
   monsterParent: {fileID: 1860044285}
-  minSpawnInterval: 10
-  maxSpawnInterval: 30
+  minSpawnInterval: 60
+  maxSpawnInterval: 120
+  minSpawnCount: 1
+  maxSpawnCount: 3
   dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
   itemList:
   - {fileID: 11400000, guid: 9d7c19c19b353ec469b5131df4248624, type: 2}

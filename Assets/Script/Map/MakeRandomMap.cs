@@ -57,10 +57,6 @@ public class MakeRandomMap : MonoBehaviour
     [Tooltip("한 사이클당 최대 소환할 몬스터 수")]
     [SerializeField] private int maxSpawnCount = 3;
 
-    private int consecutiveStrongCount = 0;
-    private const int strongThreshold = 2;
-
-
     [Header("=== 아이템 드롭 설정 ===")]
     private const int minTotalPriceSum = 1800;
     private const int maxTotalPriceSum = 2200;
@@ -82,6 +78,8 @@ public class MakeRandomMap : MonoBehaviour
     private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> itemSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> monsterSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
+
+    private List<BoundsInt> roomBounds = new List<BoundsInt>();
 
     private void Start()
     {
@@ -113,6 +111,7 @@ public class MakeRandomMap : MonoBehaviour
     public void GenerateMap()
     {
         // 초기화
+        roomBounds.Clear();
         roomItemSpawnPositions.Clear();
         roomSettings.Clear();
         roomMonsterSpawnPositions.Clear();
@@ -204,7 +203,7 @@ public class MakeRandomMap : MonoBehaviour
                                    .CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0f);
                 Vector2 velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(15f, 20f));
 
-                // 타입 결정 (Use 10%, Normal 70%, Special 20%)
+                // 타입 결정 (Use 25%, Normal 60%, Special 15%)
                 float p = Random.value;
                 ItemType selectedType = p < 0.25f ? ItemType.UseItem
                                       : p < 0.85f ? ItemType.Normal
@@ -252,81 +251,165 @@ public class MakeRandomMap : MonoBehaviour
     {
         while (true)
         {
-            // 10초 ~ 30초 사이 랜덤 대기
-            float waitTime = Random.Range(minSpawnInterval, maxSpawnInterval);
-            yield return new WaitForSeconds(waitTime);
+            float rawHour = GameManager.instance.hours + GameManager.instance.minutes / 60f;
+            // 7시(7)부터 22시(22)까지 정규화
+            float timeNorm = Mathf.Clamp01((rawHour - 7f) / 15f);
 
-            SpawnMonstersOnce();
+            // 동적 스폰 간격 계산
+            // 7시(timeNorm=0) → Min= maxSpawnInterval(30s), Max= maxSpawnInterval+20(50s)
+            // 22시(timeNorm=1) → Min= minSpawnInterval(10s), Max= maxSpawnInterval(30s)
+            float dynamicMin = Mathf.Lerp(maxSpawnInterval, minSpawnInterval, timeNorm);
+            float dynamicMax = Mathf.Lerp(maxSpawnInterval + 20f, maxSpawnInterval, timeNorm);
+
+            float waitTime = Random.Range(dynamicMin, dynamicMax);
+            Debug.Log($"[Spawn Interval] {rawHour:F1}h → {waitTime:F1}s 대기");
+
+            yield return new WaitForSeconds(waitTime);
+            SpawnMonsters();
         }
     }
+
+
 
     /// <summary>
-    /// 실제로 한 사이클마다 각 방에 몬스터를 1마리씩 소환
+    /// 실제로 한 사이클마다 몬스터를 1~3마리 스폰
     /// </summary>
-    private void SpawnMonstersOnce()
+    private void SpawnMonsters()
     {
-        // ▶ 전체 스폰 개수: 1~3마리
-        int totalSpawnCount = Random.Range(minSpawnCount, maxSpawnCount + 1);
+        // 1) 시간 정규화 (8시→0, 22시→1)
+        float rawHour = GameManager.instance.hours + GameManager.instance.minutes / 60f;
+        float timeNorm = Mathf.Clamp01((rawHour - 8f) / 14f);
+        float smoothTime = Mathf.Pow(timeNorm, 2);
 
+        // 2) 스폰 마리 수 가중치 설정
+        //    초반에는 1마리 우세, 말기로 갈수록 3마리 가중치 상승
+        float cw1 = 1f - smoothTime;  // 1마리 가중치
+        float cw2 = 1f;               // 2마리 가중치
+        float cw3 = smoothTime * 2f;  // 3마리 가중치
+
+        // 3) 룰렛으로 스폰 개수 결정
+        float totalCW = cw1 + cw2 + cw3;
+        float rc = Random.value * totalCW;
+        int totalSpawnCount = rc < cw1 ? 1
+                              : rc < cw1 + cw2 ? 2
+                              : 3;
+        Debug.Log(
+            $"[Spawn Count] TimeNorm:{timeNorm:P2} " +
+            $"Weights(1:{cw1:F2},2:{cw2:F2},3:{cw3:F2}) " +
+            $"Selector:{rc:F2} → count:{totalSpawnCount}"
+        );
+
+        // 4) 플레이어 방 인덱스 계산
+        Vector3 playerPos = PlayerManager.instance.playerObject.transform.position;
+        Vector3Int playerCell = spreadTilemap.MonsterSpawnTilemap.WorldToCell(playerPos);
+        int currentRoomIdx = -1;
+        for (int i = 0; i < roomBounds.Count; i++)
+            if (roomBounds[i].Contains(playerCell))
+                currentRoomIdx = i;
+
+        // 5) 실제 소환 루프
+        int spawnedCount = 0;
         for (int s = 0; s < totalSpawnCount; s++)
         {
-            // ▶ 방 하나 랜덤 선택
-            int roomIdx = Random.Range(0, roomMonsterSpawnPositions.Count);
-            var positions = roomMonsterSpawnPositions[roomIdx];
-            var settings = roomSettings[roomIdx];
-            if (positions.Count == 0 || settings.monsterPrefabs.Length == 0)
+            // 후보 방 목록 (플레이어 방 제외)
+            var candidates = new List<int>();
+            for (int i = 0; i < roomMonsterSpawnPositions.Count; i++)
             {
-                // 유효하지 않으면 이번 스폰은 건너뜀
-                continue;
+                if (i == currentRoomIdx) continue;
+                if (roomMonsterSpawnPositions[i].Count > 0 &&
+                    roomSettings[i].monsterPrefabs.Length > 0)
+                    candidates.Add(i);
             }
+            if (candidates.Count == 0) break;
 
-            // ▶ 위치 랜덤 선택
-            int posIdx = Random.Range(0, positions.Count);
-            Vector2Int cell = positions[posIdx];
+            // 무작위 방 선택 및 위치 계산
+            int roomIdx = candidates[Random.Range(0, candidates.Count)];
+            var positions = roomMonsterSpawnPositions[roomIdx];
+            Vector2Int cell = positions[Random.Range(0, positions.Count)];
             Vector3 worldPos = spreadTilemap.MonsterSpawnTilemap
-                                .CellToWorld((Vector3Int)cell)
-                              + new Vector3(0.5f, 0.5f, 0f);
+                .CellToWorld((Vector3Int)cell) + new Vector3(0.5f, 0.5f, 0f);
 
-            // ▶ 프리팹 랜덤 선택 (기존 가중 확률 로직 재사용)
-            GameObject prefab = ChooseWeightedPrefab(settings.monsterPrefabs);
-
-            // ▶ 소환
-            Instantiate(prefab, worldPos, Quaternion.identity, monsterParent);
+            // 가중치 룰렛으로 몬스터 프리팹 선택
+            GameObject chosen = ChooseWeightedPrefab(roomSettings[roomIdx].monsterPrefabs, roomIdx);
+            Instantiate(chosen, worldPos, Quaternion.identity, monsterParent);
+            spawnedCount++;
+            Debug.Log(
+                $"[Spawned] #{spawnedCount} Room:{roomIdx} " +
+                $"→ diff:{chosen.GetComponent<EnemyStats>().difficulty}"
+            );
         }
+
+        Debug.Log(
+            $"[SpawnMonsters] Requested:{totalSpawnCount}, Spawned:{spawnedCount}"
+        );
     }
 
-    private GameObject ChooseWeightedPrefab(GameObject[] prefabs)
+    // 몬스터 프리팹 중 하나를 가중치 룰렛으로 선택
+    private GameObject ChooseWeightedPrefab(GameObject[] prefabs, int roomIdx)
     {
-        // (EnemyStats.difficulty 기반 가중치 매핑 로직은 이전 예시와 동일)
+        // 1) 깊이 정규화 (0 ~ 1)
+        float centerY = roomBounds[roomIdx].min.y + roomBounds[roomIdx].size.y * 0.5f;
+        float depthNorm = Mathf.Clamp01((mapMax.y - centerY) / (float)(mapMax.y - mapMin.y));
+
+        // 2) 시간 정규화 (8시→0, 22시→1)
+        float rawHour = GameManager.instance.hours + GameManager.instance.minutes / 60f;
+        float timeNorm = Mathf.Clamp01((rawHour - 8f) / 14f);
+
+        // 3) 난이도별 기본 가중치 및 보너스 파라미터
+        float baseW1 = 3f;         // difficulty 1 기본
+        float baseW2 = 2f;         // difficulty 2 기본
+        float baseW3 = 0.05f;      // difficulty 3 기본
+
+        // 레벨 2 보너스 (시간·깊이)
+        float timeBonus2 = timeNorm * 1f;    // 최대 +1
+        float depthBonus2 = depthNorm * 0.3f; // 최대 +0.3
+
+        // 레벨 3 보너스 (시간·깊이)
+        float timeBonus3 = timeNorm * 2f;    // 최대 +2
+        float depthBonus3 = depthNorm * 0.5f; // 최대 +0.5
+
+        // 4) 가중치 계산
+        //    - w1: 시간이 흐를수록 줄어들도록
+        //    - w2: 기본 + 시간·깊이 보너스
+        //    - w3: 기본 + 시간·깊이 보너스
+        float w1 = baseW1 * (1f - timeNorm);
+        float w2 = baseW2 + timeBonus2 + depthBonus2;
+        float w3 = baseW3 + timeBonus3 + depthBonus3;
+
+        // 5) 룰렛용 가중치 맵 구성
         var weightMap = new Dictionary<GameObject, float>();
         foreach (var p in prefabs)
         {
             int diff = p.GetComponent<EnemyStats>().difficulty;
-            weightMap[p] = (diff == 2 ? 2f : 1f)
-                          * (consecutiveStrongCount >= strongThreshold && diff == 3 ? 0.5f : 1f);
+            weightMap[p] = (diff == 1 ? w1
+                             : diff == 2 ? w2
+                             : w3);
         }
 
+        // 6) 디버그 로그: 난이도별 확률 계산
         float totalW = weightMap.Values.Sum();
+        float p1 = weightMap.Where(kv => kv.Key.GetComponent<EnemyStats>().difficulty == 1)
+                            .Sum(kv => kv.Value) / totalW;
+        float p2 = weightMap.Where(kv => kv.Key.GetComponent<EnemyStats>().difficulty == 2)
+                            .Sum(kv => kv.Value) / totalW;
+        float p3 = weightMap.Where(kv => kv.Key.GetComponent<EnemyStats>().difficulty == 3)
+                            .Sum(kv => kv.Value) / totalW;
+        Debug.Log($"[Spawn Prob] Room:{roomIdx} Depth:{depthNorm:P2} Time:{timeNorm:P2} → D1:{p1:P2} D2:{p2:P2} D3:{p3:P2}");
+
+        // 7) 룰렛으로 하나 선택
         float roll = Random.value * totalW;
         float acc = 0f;
         foreach (var kv in weightMap)
         {
             acc += kv.Value;
             if (roll < acc)
-            {
-                // 연속 강한 몬스터 카운트 갱신
-                if (kv.Key.GetComponent<EnemyStats>().difficulty == 3)
-                    consecutiveStrongCount++;
-                else
-                    consecutiveStrongCount = 0;
                 return kv.Key;
-            }
         }
 
-        // 안전 장치
-        consecutiveStrongCount = 0;
-        return prefabs[0];
+        // 안전장치: 만약 룰렛이 실패하면 첫번째 리턴
+        return prefabs.Length > 0 ? prefabs[0] : null;
     }
+
 
     private void Instantiate_Player()
     {
@@ -362,7 +445,15 @@ public class MakeRandomMap : MonoBehaviour
         CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
         CopyTilemapWithTiles(itemSpawnTM, offset, itemSpawnTiles, itemSpawnTileDict);
         CopyTilemapWithTiles(monsterSpawnTM, offset, monsterSpawnTiles, monsterSpawnTileDict);
-        
+
+        var localBounds = floorTM.cellBounds;
+        var worldOrigin = new Vector3Int(
+            localBounds.xMin + offset.x,
+            localBounds.yMin + offset.y,
+            localBounds.zMin
+        );
+        roomBounds.Add(new BoundsInt(worldOrigin, localBounds.size));
+
         // 로컬→월드 좌표로 변환해 방별 리스트에 저장
         var localMonPos = GetLocalCorridorPositions(monsterSpawnTM);
         var worldMonPos = localMonPos
@@ -613,7 +704,7 @@ public class MakeRandomMap : MonoBehaviour
 
         // 선으로만 그리기
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(roomCenter, roomSize);  // wireframe box :contentReference[oaicite:0]{index=0}
+        Gizmos.DrawWireCube(roomCenter, roomSize);
         #endif
 
         // 에디터에서만 실행
@@ -632,7 +723,7 @@ public class MakeRandomMap : MonoBehaviour
 
         // 선으로만 그리기
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(mapCenter, mapSize);  // wireframe box :contentReference[oaicite:0]{index=0}
+        Gizmos.DrawWireCube(mapCenter, mapSize);
         #endif
     }
 }
