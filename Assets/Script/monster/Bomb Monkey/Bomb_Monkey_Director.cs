@@ -19,6 +19,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
     float Moving_Time;
     float distance;
     bool jumping = false;
+    bool e = true;
 
     public float xDistanceThreshold = 2f;
     float yDistance;
@@ -91,9 +92,14 @@ public class Bomb_Monkey_Director: MonoBehaviour
     // 매 프레임마다 플레이어와의 거리 체크
     private void Update()
     {
+        if (e)
+        {
+            //Debug.Log("dldi");
+            Player = GameObject.FindWithTag("Player").transform;
+            e = !e;
+        }
 
 
-        
         switch (Pattern)
         {
 
