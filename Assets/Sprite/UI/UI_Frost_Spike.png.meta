@@ -1,43 +1,52 @@
 fileFormatVersion: 2
-guid: 3f6d43e3037fc0a4e83f3c1f643976e1
+guid: 6f8740bac315534498da22732561b0e3
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1669431471026249828
-    second: Truck MOVE-Sheet_0
+      213: 595452241356665459
+    second: UI_Frost_Spike_0
   - first:
-      213: 8132146540626235846
-    second: Truck MOVE-Sheet_1
+      213: 6735080896555984817
+    second: UI_Frost_Spike_1
   - first:
-      213: -8515310407711504393
-    second: Truck MOVE-Sheet_2
+      213: 828107087146938315
+    second: UI_Frost_Spike_2
   - first:
-      213: -8804778103526062228
-    second: Truck MOVE-Sheet_3
+      213: 8663901029606571025
+    second: UI_Frost_Spike_3
   - first:
-      213: 6982672247021243001
-    second: Truck MOVE-Sheet_4
+      213: 6830317493290192948
+    second: UI_Frost_Spike_4
   - first:
-      213: 3158093229299129472
-    second: Truck MOVE-Sheet_5
+      213: -5523484228159489536
+    second: UI_Frost_Spike_5
   - first:
-      213: -5332949599258583848
-    second: Truck MOVE-Sheet_6
+      213: 913706834952940093
+    second: UI_Frost_Spike_6
   - first:
-      213: 6691603374136252924
-    second: Truck MOVE-Sheet_7
+      213: 8171943575437696680
+    second: UI_Frost_Spike_7
   - first:
-      213: -6090516007454828879
-    second: Truck MOVE-Sheet_8
+      213: 3170246242163025089
+    second: UI_Frost_Spike_8
   - first:
-      213: 757741292538111737
-    second: Truck MOVE-Sheet_9
+      213: 5415490479555269939
+    second: UI_Frost_Spike_9
   - first:
-      213: -4523990844430055641
-    second: Truck MOVE-Sheet_10
+      213: 7003249875254807336
+    second: UI_Frost_Spike_10
   - first:
-      213: 311272108875578847
-    second: Truck MOVE-Sheet_11
+      213: 3983471065404496903
+    second: UI_Frost_Spike_11
+  - first:
+      213: -4185154837090693337
+    second: UI_Frost_Spike_12
+  - first:
+      213: 3988564758156224959
+    second: UI_Frost_Spike_13
+  - first:
+      213: 3061660777332639266
+    second: UI_Frost_Spike_14
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -79,7 +88,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -105,7 +114,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 4096
+    maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -129,149 +138,241 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_0
+      name: UI_Frost_Spike_0
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 68
+        width: 11
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 37236ce98a8734800800000000000000
+      internalID: 595452241356665459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_1
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 70
+        width: 6
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1b72db43460d77d50800000000000000
+      internalID: 6735080896555984817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_2
+      rect:
+        serializedVersion: 2
+        x: 59
+        y: 63
+        width: 14
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bcf606d12070e7b00800000000000000
+      internalID: 828107087146938315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_3
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 69
+        width: 15
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 11c37d6451c5c3870800000000000000
+      internalID: 8663901029606571025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_4
+      rect:
+        serializedVersion: 2
+        x: 107
+        y: 73
+        width: 19
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 430d2b252992ace50800000000000000
+      internalID: 6830317493290192948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_5
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 59
+        width: 6
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00ab412fb54a853b0800000000000000
+      internalID: -5523484228159489536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_6
+      rect:
+        serializedVersion: 2
+        x: 51
+        y: 32
+        width: 15
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d3a673e76832eac00800000000000000
+      internalID: 913706834952940093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_7
+      rect:
+        serializedVersion: 2
+        x: 72
+        y: 42
+        width: 19
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8aedf729263986170800000000000000
+      internalID: 8171943575437696680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_8
+      rect:
+        serializedVersion: 2
+        x: 90
+        y: 40
+        width: 8
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1c4e4aa192afefb20800000000000000
+      internalID: 3170246242163025089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI_Frost_Spike_9
       rect:
         serializedVersion: 2
         x: 0
-        y: 280
-        width: 675
-        height: 280
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 460a06fe3130b2710800000000000000
-      internalID: 1669431471026249828
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Truck MOVE-Sheet_1
-      rect:
-        serializedVersion: 2
-        x: 675
-        y: 280
-        width: 675
-        height: 280
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 6c1d27751303bd070800000000000000
-      internalID: 8132146540626235846
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Truck MOVE-Sheet_2
-      rect:
-        serializedVersion: 2
-        x: 1350
-        y: 280
-        width: 675
-        height: 280
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 7f74b2cdc4a83d980800000000000000
-      internalID: -8515310407711504393
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Truck MOVE-Sheet_3
-      rect:
-        serializedVersion: 2
-        x: 2025
-        y: 280
-        width: 675
-        height: 280
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: c67013de6f42fc580800000000000000
-      internalID: -8804778103526062228
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Truck MOVE-Sheet_4
-      rect:
-        serializedVersion: 2
-        x: 2700
-        y: 280
-        width: 675
-        height: 280
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 97a0ea2b96f67e060800000000000000
-      internalID: 6982672247021243001
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Truck MOVE-Sheet_5
-      rect:
-        serializedVersion: 2
-        x: 3375
-        y: 280
-        width: 675
-        height: 280
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 08cd0fb4f0dc3db20800000000000000
-      internalID: 3158093229299129472
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Truck MOVE-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 0
         y: 0
-        width: 675
-        height: 280
+        width: 11
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -280,20 +381,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 8dc512b389e8df5b0800000000000000
-      internalID: -5332949599258583848
+      spriteID: 335d66e06efa72b40800000000000000
+      internalID: 5415490479555269939
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_7
+      name: UI_Frost_Spike_10
       rect:
         serializedVersion: 2
-        x: 675
+        x: 13
         y: 0
-        width: 675
-        height: 280
+        width: 13
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -302,20 +403,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cf9523da0d95ddc50800000000000000
-      internalID: 6691603374136252924
+      spriteID: 82b8cdf18aa803160800000000000000
+      internalID: 7003249875254807336
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_8
+      name: UI_Frost_Spike_11
       rect:
         serializedVersion: 2
-        x: 1350
+        x: 47
         y: 0
-        width: 675
-        height: 280
+        width: 18
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -324,20 +425,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 1b613dcc5f32a7ba0800000000000000
-      internalID: -6090516007454828879
+      spriteID: 70c5b7224d1284730800000000000000
+      internalID: 3983471065404496903
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_9
+      name: UI_Frost_Spike_12
       rect:
         serializedVersion: 2
-        x: 2025
-        y: 0
-        width: 675
-        height: 280
+        x: 88
+        y: 1
+        width: 15
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -346,20 +447,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9f6216dd0b9048a00800000000000000
-      internalID: 757741292538111737
+      spriteID: 72f833d79d75be5c0800000000000000
+      internalID: -4185154837090693337
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_10
+      name: UI_Frost_Spike_13
       rect:
         serializedVersion: 2
-        x: 2700
+        x: 122
         y: 0
-        width: 675
-        height: 280
+        width: 10
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -368,20 +469,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 72780aecb4e8731c0800000000000000
-      internalID: -4523990844430055641
+      spriteID: fb92b85e38a3a5730800000000000000
+      internalID: 3988564758156224959
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Truck MOVE-Sheet_11
+      name: UI_Frost_Spike_14
       rect:
         serializedVersion: 2
-        x: 3375
+        x: 138
         y: 0
-        width: 675
-        height: 280
+        width: 10
+        height: 11
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -390,8 +491,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: fddf306755cd15400800000000000000
-      internalID: 311272108875578847
+      spriteID: 22688af61443d7a20800000000000000
+      internalID: 3061660777332639266
       vertices: []
       indices: 
       edges: []
@@ -400,7 +501,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: ca489a2650ba75349adb169311ab43a6
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -410,18 +511,21 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Truck MOVE-Sheet_0: 1669431471026249828
-      Truck MOVE-Sheet_1: 8132146540626235846
-      Truck MOVE-Sheet_10: -4523990844430055641
-      Truck MOVE-Sheet_11: 311272108875578847
-      Truck MOVE-Sheet_2: -8515310407711504393
-      Truck MOVE-Sheet_3: -8804778103526062228
-      Truck MOVE-Sheet_4: 6982672247021243001
-      Truck MOVE-Sheet_5: 3158093229299129472
-      Truck MOVE-Sheet_6: -5332949599258583848
-      Truck MOVE-Sheet_7: 6691603374136252924
-      Truck MOVE-Sheet_8: -6090516007454828879
-      Truck MOVE-Sheet_9: 757741292538111737
+      UI_Frost_Spike_0: 595452241356665459
+      UI_Frost_Spike_1: 6735080896555984817
+      UI_Frost_Spike_10: 7003249875254807336
+      UI_Frost_Spike_11: 3983471065404496903
+      UI_Frost_Spike_12: -4185154837090693337
+      UI_Frost_Spike_13: 3988564758156224959
+      UI_Frost_Spike_14: 3061660777332639266
+      UI_Frost_Spike_2: 828107087146938315
+      UI_Frost_Spike_3: 8663901029606571025
+      UI_Frost_Spike_4: 6830317493290192948
+      UI_Frost_Spike_5: -5523484228159489536
+      UI_Frost_Spike_6: 913706834952940093
+      UI_Frost_Spike_7: 8171943575437696680
+      UI_Frost_Spike_8: 3170246242163025089
+      UI_Frost_Spike_9: 5415490479555269939
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

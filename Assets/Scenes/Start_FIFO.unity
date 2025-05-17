@@ -488,7 +488,7 @@ GameObject:
   - component: {fileID: 1875592685}
   - component: {fileID: 1875592684}
   m_Layer: 0
-  m_Name: Truck MOVE-Sheet_0
+  m_Name: SnowCrusier
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,7 +504,7 @@ Animator:
   m_GameObject: {fileID: 1875592683}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 29603eb9325503c4f93d4d9472b7abdc, type: 2}
+  m_Controller: {fileID: 9100000, guid: de59a20f22dbae14890dbcaf4bc45d53, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -560,12 +560,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 1669431471026249828, guid: 3f6d43e3037fc0a4e83f3c1f643976e1, type: 3}
+  m_Sprite: {fileID: -462409973589633382, guid: 7befd3e3976defd4bb4dc91a1c6b0ea5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 6.75, y: 2.8}
+  m_Size: {x: 13.5, y: 5.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -580,7 +580,7 @@ Transform:
   m_GameObject: {fileID: 1875592683}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.901751, y: -0.5141489, z: 0}
+  m_LocalPosition: {x: -16.79, y: -0.5141489, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -618,10 +618,6 @@ PlayableDirector:
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
   m_SceneBindings:
-  - key: {fileID: 2336259115170939977, guid: c39789c6487145547a29b50bdf406791, type: 2}
-    value: {fileID: 1875592684}
-  - key: {fileID: -4805857159070040293, guid: c39789c6487145547a29b50bdf406791, type: 2}
-    value: {fileID: 1875592684}
   - key: {fileID: -8775898358983837560, guid: c39789c6487145547a29b50bdf406791, type: 2}
     value: {fileID: 557503181}
   - key: {fileID: 1022142160310958550, guid: c39789c6487145547a29b50bdf406791, type: 2}
@@ -630,8 +626,12 @@ PlayableDirector:
     value: {fileID: 1563121547}
   - key: {fileID: 1569578589570124732, guid: c39789c6487145547a29b50bdf406791, type: 2}
     value: {fileID: 1563121546}
-  - key: {fileID: 7778998842306540943, guid: c39789c6487145547a29b50bdf406791, type: 2}
+  - key: {fileID: 7089803235454158773, guid: c39789c6487145547a29b50bdf406791, type: 2}
     value: {fileID: 1875592683}
+  - key: {fileID: -7777603619267640164, guid: c39789c6487145547a29b50bdf406791, type: 2}
+    value: {fileID: 1875592684}
+  - key: {fileID: -5016001584835439906, guid: c39789c6487145547a29b50bdf406791, type: 2}
+    value: {fileID: 1875592684}
   m_ExposedReferences:
     m_References: []
 --- !u!4 &2124466901

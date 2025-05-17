@@ -1,28 +1,34 @@
 fileFormatVersion: 2
-guid: 8935efc0689447c4bbdfa3b0d0ca75ca
+guid: 7befd3e3976defd4bb4dc91a1c6b0ea5
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -7382854718450532701
-    second: cold_reminder1_0
+      213: -462409973589633382
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_0"
   - first:
-      213: 7045957511683926030
-    second: cold_reminder1_1
+      213: 815394942716055743
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_1"
   - first:
-      213: 2774601422332063880
-    second: cold_reminder1_2
+      213: 7139019904303129345
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_2"
   - first:
-      213: -3875455903672108766
-    second: cold_reminder1_3
+      213: 2438183243209541867
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_3"
   - first:
-      213: -6300166803138317349
-    second: cold_reminder1_4
+      213: -7392414590617095846
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_4"
   - first:
-      213: 5956375511098744597
-    second: cold_reminder1_5
+      213: -7158290873627168613
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_5"
   - first:
-      213: 6326884314444327786
-    second: cold_reminder1_6
+      213: 1704171883009133547
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_6"
+  - first:
+      213: 8869706972218969559
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_7"
+  - first:
+      213: -7078228307233249180
+    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_8"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -64,12 +70,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 50
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -90,7 +96,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -114,43 +120,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 4
-    buildTarget: WindowsStoreApps
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: cold_reminder1_0
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_0"
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 33
-        height: 54
+        width: 675
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -159,42 +139,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 3ae7076efb4da8990800000000000000
-      internalID: -7382854718450532701
+      spriteID: a96979734903599f0800000000000000
+      internalID: -462409973589633382
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cold_reminder1_1
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_1"
       rect:
         serializedVersion: 2
-        x: 19
-        y: 45
-        width: 23
-        height: 9
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: e086a6a960548c160800000000000000
-      internalID: 7045957511683926030
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cold_reminder1_2
-      rect:
-        serializedVersion: 2
-        x: 32
+        x: 675
         y: 0
-        width: 64
-        height: 54
+        width: 675
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,64 +161,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 880756b0b4d518620800000000000000
-      internalID: 2774601422332063880
+      spriteID: fb09d38516dd05b00800000000000000
+      internalID: 815394942716055743
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cold_reminder1_3
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_2"
       rect:
         serializedVersion: 2
-        x: 44
-        y: 44
-        width: 15
-        height: 10
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 229feee736d973ac0800000000000000
-      internalID: -3875455903672108766
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cold_reminder1_4
-      rect:
-        serializedVersion: 2
-        x: 63
-        y: 47
-        width: 13
-        height: 7
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: bd37b391caf4198a0800000000000000
-      internalID: -6300166803138317349
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: cold_reminder1_5
-      rect:
-        serializedVersion: 2
-        x: 0
+        x: 1350
         y: 0
-        width: 9
-        height: 10
+        width: 675
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -269,20 +183,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 51f50e718fb49a250800000000000000
-      internalID: 5956375511098744597
+      spriteID: 1036e6067c4e21360800000000000000
+      internalID: 7139019904303129345
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: cold_reminder1_6
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_3"
       rect:
         serializedVersion: 2
-        x: 82
+        x: 2025
         y: 0
-        width: 14
-        height: 9
+        width: 675
+        height: 280
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -291,8 +205,118 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a6be17143cb9dc750800000000000000
-      internalID: 6326884314444327786
+      spriteID: be880dcddba26d120800000000000000
+      internalID: 2438183243209541867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_4"
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a517ad5b81ed86990800000000000000
+      internalID: -7392414590617095846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_5"
+      rect:
+        serializedVersion: 2
+        x: 3375
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b90388e6064a8ac90800000000000000
+      internalID: -7158290873627168613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_6"
+      rect:
+        serializedVersion: 2
+        x: 4050
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bebc7fa6c4f66a710800000000000000
+      internalID: 1704171883009133547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_7"
+      rect:
+        serializedVersion: 2
+        x: 4725
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7ddcaec5f77871b70800000000000000
+      internalID: 8869706972218969559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_8"
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4686f3c4bd415cd90800000000000000
+      internalID: -7078228307233249180
       vertices: []
       indices: 
       edges: []
@@ -301,7 +325,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 755aed2d9432a134a8a806d3aae36de3
     internalID: 0
     vertices: []
     indices: 
@@ -311,13 +335,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      cold_reminder1_0: -7382854718450532701
-      cold_reminder1_1: 7045957511683926030
-      cold_reminder1_2: 2774601422332063880
-      cold_reminder1_3: -3875455903672108766
-      cold_reminder1_4: -6300166803138317349
-      cold_reminder1_5: 5956375511098744597
-      cold_reminder1_6: 6326884314444327786
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_0": -462409973589633382
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_1": 815394942716055743
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_2": 7139019904303129345
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_3": 2438183243209541867
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_4": -7392414590617095846
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_5": -7158290873627168613
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_6": 1704171883009133547
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_7": 8869706972218969559
+      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_8": -7078228307233249180
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
