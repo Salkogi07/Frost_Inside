@@ -56,7 +56,7 @@ public class HillDetection : MonoBehaviour
 
                         
                     pos.transform.position += new Vector3(0f,monster_Jump.maxHeight,0f);
-                    if (hit != null)
+                    if (hit == null)
                     {
                         monster_Jump.OnJump(); // Jump()는 Monster_Jump 클래스 내의 함수라고 가정
                         monster_Jump.jump_cooltime = 5f;

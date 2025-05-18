@@ -9,7 +9,7 @@ public class Monster_Jump : MonoBehaviour
     [SerializeField] public float jumpspeed = 0.1f;
     [SerializeField] public float jump_cooltime = 0f;
     [SerializeField] public float jump_height = 0.4f;
-    [SerializeField] bool jumping;
+    [SerializeField] public bool jumping;
     [SerializeField] public float maxHeight;
 
     private Rigidbody2D rb;

@@ -16,6 +16,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
     float Concealment_time;
     bool Moving = false;
+    bool monig= false;  
     float Moving_Time;
     float distance;
     bool jumping = false;
@@ -37,6 +38,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
     private GameObject Floor_Measurement_pos;
     private Monster_stat stat;
     private Monster_Jump Monster_Jump;
+    private Collision_Conversion collisions;
 
     public Rigidbody2D rb { get; private set; }
 
@@ -55,7 +57,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
     private void Awake()
     {
         stat = GetComponent<Monster_stat>();
-        Floor_Measurement = transform.Find("Floor Measurement");
+        Floor_Measurement = transform.Find("Floor_Measurement");
         rb = GetComponent<Rigidbody2D>();
         attack = transform.Find("Attack");
         ragne = transform.Find("GameObjeck");
@@ -63,6 +65,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
         //Player = GameObject.FindWithTag("Player").transform;
 
+        collisions = GetComponent<Collision_Conversion>();  
         Monster_Jump = GetComponent<Monster_Jump>();
         Debug.Log("해냇따");
 
@@ -113,18 +116,21 @@ public class Bomb_Monkey_Director: MonoBehaviour
                 /*Debug.Log("ddeee");*/
 
 
-                Move();
 
-                if (Moving == false && Moving_Time >= 5f)
+                if (Moving)
+                {
+                    Move();
+                }
+                    if (Moving == false && Moving_Time >= 3f)
 
 
                 {
+                    
+                    
                     moverandomDirection = Random.Range(1, 3) == 1 ? 1 : -1;
-
-
-                    Moving_Time = 0f;
+                    
                     Moving = true;
-                    distance = 0f;
+                    
                 }
                 else if (Moving == false)
                 {
@@ -138,7 +144,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
                 break;
 
             case pattern.Chase:
-
+                Moving = false;
                 Chase();
                 direction();
                 //StartCoroutine(direction_chase());
@@ -148,7 +154,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
                 break;
 
             case pattern.Attack:
-
+                Destroy(gameObject);
 
                 break;
             default:
@@ -178,7 +184,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
             yDistance = Player.position.y - transform.position.y;
             xDistance = Player.position.x - transform.position.x;
             Debug.Log(xDistance);
-            if (Monster_Jump.jump_cooltime <= 0f)
+            if (Monster_Jump.jump_cooltime <= 0f && !Monster_Jump.jumping)
             {
               if(yDistance > 1f || (xDistance < 1f && xDistance > -1f))
                 {
@@ -201,16 +207,22 @@ public class Bomb_Monkey_Director: MonoBehaviour
     private void Move()
     {
 
-        if (Moving)
-        {
-            if (distance < distanceMax)
-            {
+        //if (Moving)
+        //{
+        //    if (distance < distanceMax)
+        //    {
 
                 if (FloorMeasurement.Groundcheck)
                 {
                     transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                     distance += Time.deltaTime;
                     hillDetections.CheckForHillAhead();
+                    collisions.Collision_conversion();
+                    if(collisions.IsCollision)
+                    {
+                        moverandomDirection = -moverandomDirection;
+                        collisions.IsCollision = false;
+                    }
                 }
                 else
                 {
@@ -218,14 +230,14 @@ public class Bomb_Monkey_Director: MonoBehaviour
 
                 }
                 direction();
+                
+            
+            //else
+            //{
+            //    Moving = false;
 
-            }
-            else
-            {
-                Moving = false;
-
-            }
-        }
+            //}
+        
 
 
 
@@ -251,13 +263,13 @@ public class Bomb_Monkey_Director: MonoBehaviour
         if (moveDirection == -1f) //수정 필요
         {
             Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
-            attack.position = new Vector3(transform.position.x - stat.range[0], attack.position.y, 0f);
+            //attack.position = new Vector3(transform.position.x - stat.range[0], attack.position.y, 0f);
             HillDetection.position = new Vector3(transform.position.x - (hillDetections.boxSize[0] * 1.5f), HillDetection.position.y, 0f);
         }
         else
         {
             Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, 0f);
-            attack.position = new Vector3(transform.position.x + stat.range[0], attack.position.y, 0f);
+            //attack.position = new Vector3(transform.position.x + stat.range[0], attack.position.y, 0f);
             HillDetection.position = new Vector3(transform.position.x + (hillDetections.boxSize[0] * 1.5f), HillDetection.position.y, 0f);
         }
 
