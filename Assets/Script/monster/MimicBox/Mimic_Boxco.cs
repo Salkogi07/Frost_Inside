@@ -103,7 +103,7 @@ public class MimicBoxDirector : MonoBehaviour
         Debug.Log(attacking);
         if (e)
         {
-            Debug.Log("dldi");
+            //Debug.Log("dldi");
             Player = GameObject.FindWithTag("Player").transform;
             e = !e;
         }
