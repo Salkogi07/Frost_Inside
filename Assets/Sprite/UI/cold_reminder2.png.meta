@@ -53,6 +53,27 @@ TextureImporter:
   - first:
       213: -4577051719857198666
     second: cold_reminder2_16
+  - first:
+      213: -3770353676187015527
+    second: cold_reminder2_17
+  - first:
+      213: -1350324454854478252
+    second: cold_reminder2_18
+  - first:
+      213: -3128652020135988300
+    second: cold_reminder2_19
+  - first:
+      213: 3879187872060351703
+    second: cold_reminder2_20
+  - first:
+      213: -48113984970675120
+    second: cold_reminder2_21
+  - first:
+      213: -5034690943139073358
+    second: cold_reminder2_22
+  - first:
+      213: 146151085987361623
+    second: cold_reminder2_23
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -178,9 +199,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 39
-        width: 15
-        height: 15
+        y: 96
+        width: 13
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -199,10 +220,10 @@ TextureImporter:
       name: cold_reminder2_1
       rect:
         serializedVersion: 2
-        x: 17
-        y: 44
-        width: 25
-        height: 10
+        x: 24
+        y: 99
+        width: 29
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -221,10 +242,10 @@ TextureImporter:
       name: cold_reminder2_2
       rect:
         serializedVersion: 2
-        x: 44
-        y: 44
+        x: 57
+        y: 101
         width: 8
-        height: 10
+        height: 7
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -243,10 +264,10 @@ TextureImporter:
       name: cold_reminder2_3
       rect:
         serializedVersion: 2
-        x: 53
-        y: 47
-        width: 7
-        height: 7
+        x: 65
+        y: 100
+        width: 15
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -265,10 +286,10 @@ TextureImporter:
       name: cold_reminder2_4
       rect:
         serializedVersion: 2
-        x: 62
-        y: 45
-        width: 15
-        height: 9
+        x: 81
+        y: 100
+        width: 16
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -287,10 +308,10 @@ TextureImporter:
       name: cold_reminder2_5
       rect:
         serializedVersion: 2
-        x: 80
-        y: 47
-        width: 8
-        height: 7
+        x: 96
+        y: 102
+        width: 14
+        height: 6
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -309,10 +330,10 @@ TextureImporter:
       name: cold_reminder2_6
       rect:
         serializedVersion: 2
-        x: 88
-        y: 41
-        width: 8
-        height: 13
+        x: 118
+        y: 100
+        width: 42
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -331,10 +352,10 @@ TextureImporter:
       name: cold_reminder2_7
       rect:
         serializedVersion: 2
-        x: 0
-        y: 24
-        width: 7
-        height: 15
+        x: 175
+        y: 98
+        width: 17
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -354,9 +375,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 13
-        width: 6
-        height: 11
+        y: 71
+        width: 9
+        height: 18
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -375,10 +396,10 @@ TextureImporter:
       name: cold_reminder2_9
       rect:
         serializedVersion: 2
-        x: 88
-        y: 24
+        x: 184
+        y: 83
         width: 8
-        height: 13
+        height: 10
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -397,10 +418,10 @@ TextureImporter:
       name: cold_reminder2_10
       rect:
         serializedVersion: 2
-        x: 89
-        y: 16
-        width: 7
-        height: 8
+        x: 0
+        y: 60
+        width: 9
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -419,10 +440,10 @@ TextureImporter:
       name: cold_reminder2_11
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 9
-        height: 10
+        x: 182
+        y: 63
+        width: 10
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -441,10 +462,10 @@ TextureImporter:
       name: cold_reminder2_12
       rect:
         serializedVersion: 2
-        x: 13
-        y: 0
-        width: 20
-        height: 7
+        x: 184
+        y: 39
+        width: 8
+        height: 24
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -463,10 +484,10 @@ TextureImporter:
       name: cold_reminder2_13
       rect:
         serializedVersion: 2
-        x: 31
-        y: 0
-        width: 8
-        height: 8
+        x: 0
+        y: 44
+        width: 6
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -485,10 +506,10 @@ TextureImporter:
       name: cold_reminder2_14
       rect:
         serializedVersion: 2
-        x: 40
-        y: 0
-        width: 23
-        height: 8
+        x: 0
+        y: 17
+        width: 9
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -507,10 +528,10 @@ TextureImporter:
       name: cold_reminder2_15
       rect:
         serializedVersion: 2
-        x: 63
-        y: 0
-        width: 12
-        height: 7
+        x: 184
+        y: 27
+        width: 8
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -529,10 +550,10 @@ TextureImporter:
       name: cold_reminder2_16
       rect:
         serializedVersion: 2
-        x: 82
+        x: 0
         y: 0
-        width: 14
-        height: 14
+        width: 12
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -543,6 +564,160 @@ TextureImporter:
       bones: []
       spriteID: 6b9225706bb0b70c0800000000000000
       internalID: -4577051719857198666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cold_reminder2_17
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 0
+        width: 17
+        height: 5
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 996e845ce430dabc0800000000000000
+      internalID: -3770353676187015527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cold_reminder2_18
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 0
+        width: 22
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 45630e8001fa24de0800000000000000
+      internalID: -1350324454854478252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cold_reminder2_19
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 0
+        width: 20
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4b37cf1609bc494d0800000000000000
+      internalID: -3128652020135988300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cold_reminder2_20
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 0
+        width: 28
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7d4292b11d4a5d530800000000000000
+      internalID: 3879187872060351703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cold_reminder2_21
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 0
+        width: 10
+        height: 6
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05c2819e590155ff0800000000000000
+      internalID: -48113984970675120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cold_reminder2_22
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 19
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2b2b15c134f212ab0800000000000000
+      internalID: -5034690943139073358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: cold_reminder2_23
+      rect:
+        serializedVersion: 2
+        x: 179
+        y: 0
+        width: 13
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 75370db63ab370200800000000000000
+      internalID: 146151085987361623
       vertices: []
       indices: 
       edges: []
@@ -570,7 +745,14 @@ TextureImporter:
       cold_reminder2_14: 1405083834025058766
       cold_reminder2_15: -3403704056981373815
       cold_reminder2_16: -4577051719857198666
+      cold_reminder2_17: -3770353676187015527
+      cold_reminder2_18: -1350324454854478252
+      cold_reminder2_19: -3128652020135988300
       cold_reminder2_2: 7320523790894301161
+      cold_reminder2_20: 3879187872060351703
+      cold_reminder2_21: -48113984970675120
+      cold_reminder2_22: -5034690943139073358
+      cold_reminder2_23: 146151085987361623
       cold_reminder2_3: 3973675843629115507
       cold_reminder2_4: 9050913976284894990
       cold_reminder2_5: 1769858608850793152
