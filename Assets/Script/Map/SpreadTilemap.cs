@@ -11,6 +11,11 @@ public class SpreadTilemap : MonoBehaviour
     [SerializeField] private Tilemap itemSpawn;
     [SerializeField] private Tilemap monsterSpawn;
 
+    [Header("=== Ore Àü¿ë Tilemap ===")]
+    [SerializeField] private Tilemap ore;
+
+    public Tilemap OreTilemap => ore;
+
     public Tilemap ItemSpawnTilemap => itemSpawn;
     public Tilemap MonsterSpawnTilemap => monsterSpawn;
 

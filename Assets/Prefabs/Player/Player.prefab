@@ -214,8 +214,6 @@ MonoBehaviour:
   maxTemperature:
     baseValue: 100
     modifiers: 
-  temperatureDropRate: 1
-  hpDropRate: 2
 --- !u!114 &2815366838865872201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +267,7 @@ MonoBehaviour:
   borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
   blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
   isMining: 0
+  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
   toolPower: 5
 --- !u!114 &5331614788319252125
 MonoBehaviour:
