@@ -4,11 +4,19 @@ using System.Collections.Generic;
 
 public class Player_TileMining : BaseTileMiner
 {
+    [Header("Drop Settings")]
+    [SerializeField] private GameObject dropPrefab;         // 드롭할 프리팹
+    private SpreadTilemap spreadTilemap;    // Ore 타일맵 참조
+    private MakeRandomMap mapGenerator;    // oreTileDict 참조
+
     [Header("Tool Settings")]
     public float toolPower = 10f;          // 플레이어의 채굴력
 
     protected override void Awake()
     {
+        spreadTilemap = FindObjectOfType<SpreadTilemap>();
+        mapGenerator = FindObjectOfType<MakeRandomMap>();
+
         base.Awake();
         // 추가 초기화 예: 사운드 매니저, 이펙트 준비 등
     }
@@ -37,6 +45,40 @@ public class Player_TileMining : BaseTileMiner
             FinishMining(tilePos);
 
         // TODO: 채굴 이펙트·사운드 재생
+    }
+
+    protected override void FinishMining(Vector3Int tilePos)
+    {
+        // 1) 셀 → 월드 좌표 변환
+        Vector3 worldPos = spreadTilemap.OreTilemap
+                            .CellToWorld(tilePos) + new Vector3(0.5f, 0.5f);
+        Vector2Int key = new Vector2Int(tilePos.x, tilePos.y);
+
+        // 2) oreTileDict에 정보가 있으면 아이템 드롭
+        if (mapGenerator.oreTileDict.TryGetValue(key, out var ore))
+        {
+            var dropObj = Instantiate(
+                dropPrefab,
+                worldPos + Vector3.up * 0.5f,
+                Quaternion.identity
+            );
+
+            dropObj.GetComponent<ItemObject>()
+                   .SetupItem(ore.dropItem, Vector2.zero);
+
+            InventoryItem data = dropObj.GetComponent<ItemObject>().item;
+
+            int price = Random.Range(data.data.priceRange.x, data.data.priceRange.y + 1);
+            data.price = price;
+            mapGenerator.oreTileDict.Remove(key);
+        }
+
+        // 3) OreTilemap에서 채굴된 타일 제거
+        spreadTilemap.OreTilemap.SetTile(tilePos, null);
+        spreadTilemap.OreTilemap.RefreshTile(tilePos);
+
+        // 4) 기본 채굴 완료 처리 (타일 제거, 하이라이트 해제 등)
+        base.FinishMining(tilePos);
     }
 
     // 필요 시 HandleMining, ApplyTileAlpha 등을 오버라이드하여 확장 가능

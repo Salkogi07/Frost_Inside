@@ -67,6 +67,10 @@ public class MakeRandomMap : MonoBehaviour
     [Tooltip("드롭 가능한 아이템 데이터 리스트")]
     [SerializeField] private List<ItemData> itemList;
 
+    [Header("=== 광석 설정 ===")]
+    [SerializeField] private List<OreSetting> oreSettings;     // Inspector에서 여러 종류 설정
+    [SerializeField][Range(0, 1f)] private float oreSpawnChance = 0.05f; // 타일당 등장 확률
+
     private HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> corridorTiles = new HashSet<Vector2Int>();
@@ -78,6 +82,7 @@ public class MakeRandomMap : MonoBehaviour
     private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> itemSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> monsterSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
+    public Dictionary<Vector2Int, OreSetting> oreTileDict = new Dictionary<Vector2Int, OreSetting>();
 
     private List<BoundsInt> roomBounds = new List<BoundsInt>();
 
@@ -161,6 +166,9 @@ public class MakeRandomMap : MonoBehaviour
             floorTiles, wallTiles, seed
         );
 
+        // 2.5) 광석 생성
+        GenerateOres();
+
         // 3) 아이템 생성
         DropItems();
 
@@ -174,6 +182,32 @@ public class MakeRandomMap : MonoBehaviour
         // 6) 변수 세팅
         SettingManager();
     }
+
+    private void GenerateOres()
+    {
+        for (int x = mapMin.x; x <= mapMax.x; x++)
+        {
+            for (int y = mapMin.y; y <= mapMax.y; y++)
+            {
+                Vector2Int pos = new Vector2Int(x, y);
+
+                // ① 방 바닥 또는 벽 위에는 스폰하지 않음
+                if (floorTiles.Contains(pos) || wallTiles.Contains(pos))
+                    continue;
+
+                // ② oreSpawnChance 확률 체크
+                if (Random.value > oreSpawnChance)
+                    continue;
+
+                // ③ 실제 광석 배치
+                var ore = oreSettings[Random.Range(0, oreSettings.Count)];
+                Vector3Int cellPos = new Vector3Int(x, y, 0);
+                spreadTilemap.OreTilemap.SetTile(cellPos, ore.oreTile);  // Tilemap.SetTile API :contentReference[oaicite:0]{index=0}
+                oreTileDict[pos] = ore;
+            }
+        }
+    }
+
 
     private void DropItems()
     {
