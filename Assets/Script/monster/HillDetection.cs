@@ -35,7 +35,7 @@ public class HillDetection : MonoBehaviour
     public void CheckForHillAhead()
     {
         // pos 변수로 지정된 위치에 OverlapBox를 던져서 Ground 레이어의 오브젝트를 감지
-        Collider2D hit = Physics2D.OverlapBox(pos.transform.position, boxSize, 0f, groundLayer);
+        Collider2D[] hit = Physics2D.OverlapBoxAll(pos.transform.position, boxSize, 0f, groundLayer);
         
         if (hit != null)
         {
@@ -56,16 +56,19 @@ public class HillDetection : MonoBehaviour
 
                         
                     pos.transform.position += new Vector3(0f,monster_Jump.maxHeight,0f);
-                    if (hit == null)
+                    foreach (Collider2D collider in hit)
                     {
-                        monster_Jump.OnJump(); // Jump()는 Monster_Jump 클래스 내의 함수라고 가정
-                        monster_Jump.jump_cooltime = 5f;
-                        break;
-                       
+                        if (collider.tag != "Ground" || collider.tag != "Mining_Tile")
+                        {
+                            Debug.Log("노");
+                           monster_Jump.OnJump(); // Jump()는 Monster_Jump 클래스 내의 함수라고 가정
+                           monster_Jump.jump_cooltime = 5f;
+                           break;
+                        }
+                        //Debug.Log("연결됬노");
                     }
-                 
-                
-                    }
+
+                }
                 pos.transform.position = originalPosition;
 
             }
