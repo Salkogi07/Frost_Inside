@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8645729401264535263}
   - component: {fileID: 5321475379002091796}
   - component: {fileID: 527706935468029842}
+  - component: {fileID: 9111123246847355973}
   m_Layer: 13
   m_Name: Mimic_Box
   m_TagString: monster
@@ -41,6 +42,7 @@ Transform:
   - {fileID: 7338295411854739344}
   - {fileID: 2957275962800447463}
   - {fileID: 4186481683298419947}
+  - {fileID: 7552797973376087692}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &4243026845942754806
@@ -114,7 +116,13 @@ MonoBehaviour:
   jump_cooltime: 0
   jump_height: 0.4
   jumping: 0
+  isJumping: 0
   maxHeight: 0
+  groundCheck: {fileID: 0}
+  size: {x: 0, y: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &6475971633194496435
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -269,6 +277,24 @@ MonoBehaviour:
   range:
   - 2
   - 1
+--- !u!114 &9111123246847355973
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2418878589037185452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc6cad477d36b8b46b4f842ec4f43742, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Boxsize: {x: 1, y: 0.5}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  Collision: 1
+  IsCollision: 0
 --- !u!1 &3112124538613583623
 GameObject:
   m_ObjectHideFlags: 0
@@ -326,6 +352,37 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8287968646697119318}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8464181818995376520
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7552797973376087692}
+  m_Layer: 0
+  m_Name: groundLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7552797973376087692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8464181818995376520}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

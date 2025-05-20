@@ -121,7 +121,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
                 {
                     Move();
                 }
-                if (Moving == false && Moving_Time >= 3f)
+                else if (Moving == false && Moving_Time >= 3f)
                 {
                     
                     
@@ -210,24 +210,26 @@ public class Bomb_Monkey_Director: MonoBehaviour
         //    if (distance < distanceMax)
         //    {
 
-                if (FloorMeasurement.Groundcheck)
-                {
+                
                     transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                     distance += Time.deltaTime;
                     hillDetections.CheckForHillAhead();
-                    collisions.Collision_conversion();
+                    if(!Monster_Jump.isJumping)
+                     {
+                        collisions.Collision_conversion();
+                     }
+                    
                     if(collisions.IsCollision)
                     {
                         moverandomDirection = -moverandomDirection;
                         collisions.IsCollision = false;
                     }
-                }
-                else if(!Monster_Jump.jumping)
-                {
-                    moverandomDirection = -moverandomDirection;
 
-                }
-                direction();
+                    if (!FloorMeasurement.Groundcheck && !Monster_Jump.isJumping)
+                    {
+                        moverandomDirection = -moverandomDirection;
+                     }
+        direction();
                 
             
             //else
