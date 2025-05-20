@@ -43,6 +43,7 @@ public class MimicBoxDirector : MonoBehaviour
     private GameObject Floor_Measurement_pos;
     private Monster_stat stat;
     private Monster_Jump Monster_Jump;
+    private Collision_Conversion collisions;
 
     public Rigidbody2D rb { get; private set; }
 
@@ -68,9 +69,10 @@ public class MimicBoxDirector : MonoBehaviour
         ragne = transform.Find("check");
         HillDetection = transform.Find("HillDetection");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
-        //Player = GameObject.FindWithTag("Player").transform;
+        collisions = GetComponent<Collision_Conversion>();
+    //Player = GameObject.FindWithTag("Player").transform;
 
-        Monster_Jump = GetComponent<Monster_Jump>();
+    Monster_Jump = GetComponent<Monster_Jump>();
             Debug.Log("ÇØ³Áµû");
         
     }
@@ -244,16 +246,22 @@ public class MimicBoxDirector : MonoBehaviour
         { if(distance < distanceMax)
             {
                 
-                if(FloorMeasurement.Groundcheck)
-                {
+                
+                
                     transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                 distance += Time.deltaTime;
                     hillDetections.CheckForHillAhead();
-                }
-                else { 
+                collisions.Collision_conversion();
+                if (collisions.IsCollision)
+                {
                     moverandomDirection = -moverandomDirection;
-
+                    collisions.IsCollision = false;
                 }
+                if (!FloorMeasurement.Groundcheck && !Monster_Jump.isJumping)
+                {
+                    moverandomDirection = -moverandomDirection;
+                }
+                
                    direction(); 
                 
             }

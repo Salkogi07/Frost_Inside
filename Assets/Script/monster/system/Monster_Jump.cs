@@ -12,31 +12,26 @@ public class Monster_Jump : MonoBehaviour
     [SerializeField] public bool jumping;
     [SerializeField] public bool isJumping;
     [SerializeField] public float maxHeight;
-    [SerializeField] public float savedY;
     bool e = true;
 
+
+    [Header("check")]
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Vector2 size;
     public LayerMask groundLayer;
-    private Transform groundCheck;
     private Rigidbody2D rb;
  
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        groundCheck = GameObject.FindWithTag("Mining_Tile").transform;
-        //groundCheck = TileMining.GetComponent<Transform>();
+        //groundCheck = GameObject.FindWithTag("Mining_Tile").transform;
+        
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(e)
-        {
-            e = !e;
-            //groundCheck = GameObject.FindWithTag("Mining_Tile").transform;
-            groundCheck = GameObject.FindWithTag("Mining_Tile").transform;
-            Debug.Log("yuy");
-        }
         if (jump_cooltime >0)
         {
             jump_cooltime -= Time.deltaTime;
@@ -49,6 +44,7 @@ public class Monster_Jump : MonoBehaviour
             //CalculateJumpHeight();
             StartCoroutine(Jumping());
         }
+        
     }
 //Debug.Log("예상 점프 y 이동량: " + expectedJumpY.ToString("F2"));
     public void CalculateJumpHeight()
@@ -62,23 +58,32 @@ public class Monster_Jump : MonoBehaviour
 
     public void OnJump()
     {
-        Debug.Log("??");
+        
         jumping = true;
         isJumping = true;
         
     }
     void FixedUpdate()
     {
+        
         // 착지했는지 확인해서 점프 상태 해제
-        if (isJumping && IsGrounded())
-        {
+        if (!jumping&&isJumping && ground_check())
+        {   
+            Debug.Log("??");
             isJumping = false;
         }
+        
     }
-    bool IsGrounded()
+    
+    bool ground_check()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+        RaycastHit2D hit = Physics2D.Raycast(groundCheck.position, Vector2.down, 0.1f, groundLayer);
+        return hit.collider != null;
     }
+    //bool IsGrounded()
+    //{
+    //    return Physics2D.OverlapCircle(groundCheck.position, 0.2f, groundLayer);
+    //}
 
     private IEnumerator Jumping()
     {
