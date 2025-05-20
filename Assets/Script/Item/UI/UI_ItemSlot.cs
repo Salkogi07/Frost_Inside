@@ -8,8 +8,32 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public InventoryItem item;
     public static UI_ItemSlot draggedSlot;
     public static GameObject draggedItemIcon;
+    private HoverThrowSlot hoverTracker;
 
     public int inventorySlotIndex;
+
+    protected virtual void Awake()
+    {
+        hoverTracker = GetComponent<HoverThrowSlot>()
+                       ?? gameObject.AddComponent<HoverThrowSlot>();
+    }
+
+    protected virtual void Update()
+    {
+        if (!hoverTracker.isPointerOver || item == null) return;
+        if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Throw Item")))
+        {
+            ThrowItem();
+            CleanUpSlot();
+        }
+    }
+
+    protected virtual void ThrowItem()
+    {
+        PlayerManager.instance.playerDrop
+                     .Inventory_Throw(item.data, inventorySlotIndex);
+    }
+
 
     public void UpdateSlot(InventoryItem _newItem)
     {
@@ -37,14 +61,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public virtual void OnPointerDown(PointerEventData eventData)
     {
         if (item == null) return;
-
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
-        {
-            UI_ItemSlot draggedQuickSlot = draggedSlot;
-
-            PlayerManager.instance.playerDrop.Inventory_Throw(item.data, inventorySlotIndex);
-            return;
-        }
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData)

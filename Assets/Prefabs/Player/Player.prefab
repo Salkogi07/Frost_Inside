@@ -228,9 +228,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dust: {fileID: 6298625647772795400}
   walkSpeed: 5
-  sprintSpeed: 10
+  sprintSpeed: 7
   isSprinting: 0
-  sprintCost: 15
+  sprintCost: 10
   jumpCost: 15
   staminaRecoverRate: 15
   staminaDecreaseRate: 10

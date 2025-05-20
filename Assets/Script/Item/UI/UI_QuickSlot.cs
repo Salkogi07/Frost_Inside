@@ -11,15 +11,10 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
         gameObject.name = "Quick Slot - " + quickslot_Index;
     }
 
-    public override void OnPointerDown(PointerEventData eventData)
+    protected override void ThrowItem()
     {
-        if (item == null) return;
-
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
-        {
-            PlayerManager.instance.playerDrop.QuickSlot_Throw(item.data, quickslot_Index);
-            return;
-        }
+        PlayerManager.instance.playerDrop
+                     .QuickSlot_Throw(item.data, quickslot_Index);
     }
 
     public override void OnDrop(PointerEventData eventData)

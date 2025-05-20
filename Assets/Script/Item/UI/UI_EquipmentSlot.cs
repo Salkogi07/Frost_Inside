@@ -11,18 +11,15 @@ public class UI_EquipmentSlot : UI_ItemSlot
         gameObject.name = "Equipment slot - " + slotType.ToString();
     }
 
+    protected override void ThrowItem()
+    {
+        PlayerManager.instance.playerDrop
+                     .EquipmentSlot_Throw(item.data);
+    }
+
     public override void OnPointerDown(PointerEventData eventData)
     {
         if (item == null || item.data == null) return;
-
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
-        {
-            PlayerManager.instance.playerDrop.EquipmentSlot_Throw(item.data);
-            Inventory.instance.UnequipItem(item.data as ItemData_Equipment);
-            CleanUpSlot();
-            return;
-        }
-
         Inventory.instance.UnequipItem(item.data as ItemData_Equipment);
 
         if (Inventory.instance.CanQuickItem())
