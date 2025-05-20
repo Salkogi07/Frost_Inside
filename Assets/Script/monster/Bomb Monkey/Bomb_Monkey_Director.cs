@@ -121,9 +121,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
                 {
                     Move();
                 }
-                    if (Moving == false && Moving_Time >= 3f)
-
-
+                if (Moving == false && Moving_Time >= 3f)
                 {
                     
                     
@@ -224,7 +222,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
                         collisions.IsCollision = false;
                     }
                 }
-                else
+                else if(!Monster_Jump.jumping)
                 {
                     moverandomDirection = -moverandomDirection;
 

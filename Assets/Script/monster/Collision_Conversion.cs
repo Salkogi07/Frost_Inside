@@ -37,7 +37,7 @@ public class Collision_Conversion : MonoBehaviour
         Collider2D[] hit = Physics2D.OverlapBoxAll(transform.position, Boxsize, 0f, groundLayer);
         foreach (Collider2D collider in hit)
         {
-            if (collider.tag == "Ground")
+            if (collider.tag == "Ground" || collider.tag == "Mining_Tile")
             {
                 Debug.Log("연결됬노");
                 if(Collision)
@@ -50,10 +50,10 @@ public class Collision_Conversion : MonoBehaviour
             //Debug.Log("연결됬노");
         }
         Collision = true;
-        if (hit != null)
-        {
-            Debug.Log("연결됬노");
-        }
+        //if (hit != null)
+        //{
+        //    Debug.Log("연결됬노");
+        //}
         }
 
 
