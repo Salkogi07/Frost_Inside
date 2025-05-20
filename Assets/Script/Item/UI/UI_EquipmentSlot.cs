@@ -15,6 +15,14 @@ public class UI_EquipmentSlot : UI_ItemSlot
     {
         PlayerManager.instance.playerDrop
                      .EquipmentSlot_Throw(item.data);
+
+        if (UIManager.instance.itemToolTip.gameObject.activeSelf)
+        {
+            if (item != null)
+                UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
+            else
+                UIManager.instance.itemToolTip.HideToolTip();
+        }
     }
 
     public override void OnPointerDown(PointerEventData eventData)
@@ -81,6 +89,14 @@ public class UI_EquipmentSlot : UI_ItemSlot
                 UpdateSlot(draggedItem);
                 draggedSlot.CleanUpSlot();
             }
+        }
+
+        if (UIManager.instance.itemToolTip.gameObject.activeSelf)
+        {
+            if (item != null)
+                UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
+            else
+                UIManager.instance.itemToolTip.HideToolTip();
         }
     }
 

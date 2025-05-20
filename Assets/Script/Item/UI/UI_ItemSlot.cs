@@ -1,3 +1,4 @@
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -32,6 +33,14 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         PlayerManager.instance.playerDrop
                      .Inventory_Throw(item.data, inventorySlotIndex);
+
+        if (UIManager.instance.itemToolTip.gameObject.activeSelf)
+        {
+            if (item != null)
+                UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
+            else
+                UIManager.instance.itemToolTip.HideToolTip();
+        }
     }
 
 
@@ -107,6 +116,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         InventoryItem draggedItem = draggedSlot.item;
         UI_QuickSlot draggedQS = draggedSlot as UI_QuickSlot;
 
+
         if (draggedQS == null)
         {
             Inventory.instance.SwapInventoryItems(draggedSlot.inventorySlotIndex, inventorySlotIndex);
@@ -122,6 +132,14 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
                 Inventory.instance.Move_Item(draggedItem, inventorySlotIndex);
                 Inventory.instance.Remove_QuickSlot_Item(draggedQS.quickslot_Index);
             }
+        }
+
+        if (UIManager.instance.itemToolTip.gameObject.activeSelf)
+        {
+            if (item != null)
+                UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
+            else
+                UIManager.instance.itemToolTip.HideToolTip();
         }
     }
 

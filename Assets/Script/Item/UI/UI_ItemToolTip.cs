@@ -1,4 +1,4 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,44 +10,44 @@ public class UI_ItemToolTip : MonoBehaviour
     [SerializeField] private TextMeshProUGUI itemExplanation;
 
     private RectTransform background;
-    private Vector2 originalSize; // ¹è°æÀÇ ¿ø·¡ Å©±â ÀúÀå
+    private Vector2 originalSize; // ë°°ê²½ì˜ ì›ë˜ í¬ê¸° ì €ì¥
 
-    // ÃÖ¼Ò ³Êºñ¿Í ÆĞµù °ª ¼³Á¤
+    // ìµœì†Œ ë„ˆë¹„ì™€ íŒ¨ë”© ê°’ ì„¤ì •
     public float minWidth = 200f;
-    public float horizontalPadding = 20f; // ÁÂ¿ì ÆĞµù ÇÕ°è
+    public float horizontalPadding = 20f; // ì¢Œìš° íŒ¨ë”© í•©ê³„
 
-    // ½½·Ô À§Ä¡¿¡¼­ ¾ó¸¶¸¸Å­ ¶³¾îÁ®¼­ Ç¥½ÃÇÒÁö ¼³Á¤ (¿¹: ¿À¸¥ÂÊÀ¸·Î 50ÇÈ¼¿)
+    // ìŠ¬ë¡¯ ìœ„ì¹˜ì—ì„œ ì–¼ë§ˆë§Œí¼ ë–¨ì–´ì ¸ì„œ í‘œì‹œí• ì§€ ì„¤ì • (ì˜ˆ: ì˜¤ë¥¸ìª½ìœ¼ë¡œ 50í”½ì…€)
     public Vector2 tooltipOffset = new Vector2(50f, 0f);
 
-    // ½½·ÔÀÇ À§Ä¡(slotPosition)¸¦ ¹Ş¾Æ ±× À§Ä¡¿¡ ¿ÀÇÁ¼ÂÀ» Àû¿ëÇÏ¿© ÅøÆÁÀ» Ç¥½Ã
+    // ìŠ¬ë¡¯ì˜ ìœ„ì¹˜(slotPosition)ë¥¼ ë°›ì•„ ê·¸ ìœ„ì¹˜ì— ì˜¤í”„ì…‹ì„ ì ìš©í•˜ì—¬ íˆ´íŒì„ í‘œì‹œ
     public void ShowToolTip(InventoryItem item, Vector3 slotPosition)
     {
         if (item == null)
             return;
 
-        // ÅØ½ºÆ® ¾÷µ¥ÀÌÆ®
+        // í…ìŠ¤íŠ¸ ì—…ë°ì´íŠ¸
         itemNameText.text = item?.data.itemName;
         itemTypeText.text = item?.data.itemType.ToString();
         itemCoinText.text = item.price.ToString();
         itemExplanation.text = item?.data.explanation;
 
         background = GetComponent<RectTransform>();
-        originalSize = background.sizeDelta; // ½ÃÀÛ ½Ã ¹è°æÀÇ Å©±â¸¦ ÀúÀå
+        originalSize = background.sizeDelta; // ì‹œì‘ ì‹œ ë°°ê²½ì˜ í¬ê¸°ë¥¼ ì €ì¥
 
-        // ÅØ½ºÆ®ÀÇ preferredWidth °»½ÅÀ» À§ÇØ ·¹ÀÌ¾Æ¿ô °­Á¦ Àç°è»ê
+        // í…ìŠ¤íŠ¸ì˜ preferredWidth ê°±ì‹ ì„ ìœ„í•´ ë ˆì´ì•„ì›ƒ ê°•ì œ ì¬ê³„ì‚°
         LayoutRebuilder.ForceRebuildLayoutImmediate(itemNameText.rectTransform);
 
-        // ¾ÆÀÌÅÛ ÀÌ¸§ÀÇ ±æÀÌ¿¡ µû¶ó ¸ñÇ¥ ³Êºñ °è»ê (10ÀÚ ÀÌ»óÀÏ °æ¿ì preferredWidth ±âÁØ)
+        // ì•„ì´í…œ ì´ë¦„ì˜ ê¸¸ì´ì— ë”°ë¼ ëª©í‘œ ë„ˆë¹„ ê³„ì‚° (10ì ì´ìƒì¼ ê²½ìš° preferredWidth ê¸°ì¤€)
         float targetWidth = minWidth;
         if (itemNameText.text.Length > 10)
         {
             targetWidth = Mathf.Max(minWidth, itemNameText.preferredWidth + horizontalPadding);
         }
 
-        // ¹è°æ ³Êºñ¸¸ º¯°æ (³ôÀÌ´Â ¿ø·¡ Å©±â¸¦ À¯Áö)
+        // ë°°ê²½ ë„ˆë¹„ë§Œ ë³€ê²½ (ë†’ì´ëŠ” ì›ë˜ í¬ê¸°ë¥¼ ìœ ì§€)
         background.sizeDelta = new Vector2(targetWidth, originalSize.y);
 
-        // ½½·Ô À§Ä¡¿¡ ¿ÀÇÁ¼Â Àû¿ë (3D ÁÂÇ¥ÀÌ¹Ç·Î z´Â 0À¸·Î °íÁ¤)
+        // ìŠ¬ë¡¯ ìœ„ì¹˜ì— ì˜¤í”„ì…‹ ì ìš© (3D ì¢Œí‘œì´ë¯€ë¡œ zëŠ” 0ìœ¼ë¡œ ê³ ì •)
         transform.position = slotPosition + new Vector3(tooltipOffset.x, tooltipOffset.y, 0f);
 
         gameObject.SetActive(true);
@@ -55,7 +55,7 @@ public class UI_ItemToolTip : MonoBehaviour
 
     public void HideToolTip()
     {
-        // ÅøÆÁÀ» ¼û±æ ¶§ ¹è°æ Å©±â¸¦ ¿ø·¡ »óÅÂ·Î º¹¿ø
+        // íˆ´íŒì„ ìˆ¨ê¸¸ ë•Œ ë°°ê²½ í¬ê¸°ë¥¼ ì›ë˜ ìƒíƒœë¡œ ë³µì›
         background.sizeDelta = originalSize;
         gameObject.SetActive(false);
     }
