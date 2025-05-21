@@ -2,13 +2,13 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class Select_Character : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class Select_Character_UI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
     [SerializeField] private Character_Data character;
-    private Image characterImage; // 캐릭터 이미지 저장
-    private static Color defaultColor = Color.white; // 기본 색상
-    private Vector3 defaultScale; // 기본 크기
-    private bool isSelected = false; // 현재 선택 여부
+    [SerializeField] private Color defaultColor = Color.white;
+
+    private Image characterImage;
+    private Vector3 defaultScale;
 
     private void Awake()
     {
@@ -21,7 +21,7 @@ public class Select_Character : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (character == null)
             return;
-
+        
         Image[] images = GetComponentsInChildren<Image>();
         if (images.Length > 1 && images[1] != null)
         {
@@ -47,25 +47,21 @@ public class Select_Character : MonoBehaviour, IPointerEnterHandler, IPointerExi
     {
         if (Character_Manager.instance == null) return;
 
-        // 이전 선택된 캐릭터의 선택 상태 초기화
-        if (Character_Manager.instance.selectedCharacter != null)
-        {
-            Character_Manager.instance.selectedCharacter.ResetSelection();
-        }
-
-        // 현재 캐릭터 선택 (색상은 녹색으로 변경)
-        isSelected = true;
-        characterImage.color = Color.green;
         Character_Manager.instance.currentCharacter = character;
-        Character_Manager.instance.selectedCharacter = this;
-
-        // 클릭 시 크기 조정 코드는 제거하여, 마우스가 영역을 벗어나면 OnPointerExit에서 기본 크기로 복귀하게 함
+        GetComponentInParent<Character_UI>().UpdateCharacter_SelectUI();
     }
 
     public void ResetSelection()
     {
-        isSelected = false;
         characterImage.color = defaultColor;
-        transform.localScale = defaultScale; // 기본 크기로 복귀
+        transform.localScale = defaultScale;
+    }
+
+    public void UpdateUI()
+    {
+        if (Character_Manager.instance.currentCharacter == character)
+            characterImage.color = Color.green;
+        else
+            ResetSelection();
     }
 }

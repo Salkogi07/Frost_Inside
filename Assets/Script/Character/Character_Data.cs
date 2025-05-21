@@ -14,5 +14,7 @@ public class Character_Data : ScriptableObject
     public Character character;
     public Sprite selectImage;
     public Sprite illustrationImage;
+
+    [Header("Character Prefab")]
     public GameObject characterPrefab;
 }

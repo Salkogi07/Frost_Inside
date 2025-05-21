@@ -1,22 +1,22 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class Character_Manager : MonoBehaviour
 {
     public static Character_Manager instance;
 
+    public Character_Data currentCharacter;
+
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else if (instance != this) return;
-        DontDestroyOnLoad(instance);
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
-    public Character_Data currentCharacter;
-    public Select_Character selectedCharacter; // 선택된 캐릭터 저장
-
-    public void LoadingScenes()
-    {
-        SceneManager.LoadScene("LoadingScene");
-    }
 }
