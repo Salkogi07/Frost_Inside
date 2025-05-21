@@ -12,8 +12,8 @@ public enum Character
 public class Character_Data : ScriptableObject
 {
     public Character character;
-    public Sprite selectImage;
-    public Sprite illustrationImage;
+    public Sprite selectSprite;
+    public Sprite illustrationSprite;
 
     [Header("Character Prefab")]
     public GameObject characterPrefab;

@@ -13,8 +13,8 @@ public class Select_Character_UI : MonoBehaviour, IPointerEnterHandler, IPointer
     private void Awake()
     {
         characterImage = GetComponent<Image>();
-        defaultColor = characterImage.color; // 초기 색상 저장
-        defaultScale = transform.localScale; // 초기 크기 저장
+        characterImage.color = defaultColor;
+        defaultScale = transform.localScale;
     }
 
     private void OnValidate()
@@ -25,7 +25,7 @@ public class Select_Character_UI : MonoBehaviour, IPointerEnterHandler, IPointer
         Image[] images = GetComponentsInChildren<Image>();
         if (images.Length > 1 && images[1] != null)
         {
-            images[1].sprite = character.selectImage;
+            images[1].sprite = character.selectSprite;
         }
 
         gameObject.name = "Character - " + character.name;
@@ -45,9 +45,11 @@ public class Select_Character_UI : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (Character_Manager.instance == null) return;
+        Character_Manager manager = Character_Manager.instance;
 
-        Character_Manager.instance.currentCharacter = character;
+        if (manager == null) return;
+
+        manager.currentCharacter = character;
         GetComponentInParent<Character_UI>().UpdateCharacter_SelectUI();
     }
 
@@ -59,8 +61,13 @@ public class Select_Character_UI : MonoBehaviour, IPointerEnterHandler, IPointer
 
     public void UpdateUI()
     {
-        if (Character_Manager.instance.currentCharacter == character)
+        Character_Manager manager = Character_Manager.instance;
+
+        if (manager.currentCharacter == character)
+        {
             characterImage.color = Color.green;
+            GetComponentInParent<Character_UI>().Update_illustration(character.illustrationSprite);
+        }
         else
             ResetSelection();
     }

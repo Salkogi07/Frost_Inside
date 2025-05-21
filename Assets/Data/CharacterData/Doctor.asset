@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Doctor
   m_EditorClassIdentifier: 
   character: 0
-  selectImage: {fileID: 4999093505894475253, guid: dae7f20e4f627f14bb61826dceac9276, type: 3}
-  illustrationImage: {fileID: 0}
+  selectSprite: {fileID: 4999093505894475253, guid: dae7f20e4f627f14bb61826dceac9276, type: 3}
+  illustrationSprite: {fileID: 21300000, guid: bb40566cb1d9ae24daaaabcab7e70a16, type: 3}
   characterPrefab: {fileID: 0}

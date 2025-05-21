@@ -1,7 +1,10 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Character_UI : MonoBehaviour
 {
+    [SerializeField] private Image illustrationImage;
+
     [SerializeField] private Transform parent_character;
     private Select_Character_UI[] ui;
 
@@ -21,5 +24,10 @@ public class Character_UI : MonoBehaviour
         {
             data.UpdateUI();
         }
+    }
+
+    public void Update_illustration(Sprite image)
+    {
+        illustrationImage.sprite = image;
     }
 }
