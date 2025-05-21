@@ -11,7 +11,6 @@ public class MakeRandomMap : MonoBehaviour
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
     [SerializeField] private SpreadTilemap spreadTilemap;
-    [SerializeField] private GameObject playerPrefab;
     [SerializeField] private Transform player_SpawnPos;
 
     [Header("=== 시드 설정 ===")]
@@ -447,7 +446,8 @@ public class MakeRandomMap : MonoBehaviour
 
     private void Instantiate_Player()
     {
-        GameObject player = Instantiate(playerPrefab, player_SpawnPos.position, Quaternion.identity);
+        GameObject prefab = Character_Manager.instance.currentCharacter.characterPrefab;
+        GameObject player = Instantiate(prefab, player_SpawnPos.position, Quaternion.identity);
         player.transform.position = player_SpawnPos.position;
     }
 
