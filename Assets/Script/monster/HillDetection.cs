@@ -43,36 +43,39 @@ public class HillDetection : MonoBehaviour
             Groundcheck = true;
 
             //    Debug.Log("앞에 언덕이 있습니다.");
-
+//(hit.tag == "Ground" || hit.tag == "Mining_Tile") &&
             // 예: 몬스터가 점프하도록 명령
-            if (monster_Jump.jump_cooltime <= 0f)  //수정필요
+            
+foreach (Collider2D collider in hit)
+                    {
+                if ((collider.tag == "Ground" || collider.tag == "Mining_Tile") && monster_Jump.jump_cooltime <= 0f)  //수정필요
             {
-
                 monster_Jump.CalculateJumpHeight();
                 Vector3 originalPosition = pos.transform.position;
                 float MaxHeightpercent = monster_Jump.maxHeight - (monster_Jump.maxHeight * 80 / 100);
                 for (float i = 0f; i < monster_Jump.maxHeight; i += MaxHeightpercent)
                     {
-
-                        
-                    pos.transform.position += new Vector3(0f,monster_Jump.maxHeight,0f);
-                    foreach (Collider2D collider in hit)
-                    {
-                        if (collider.tag != "Ground" || collider.tag != "Mining_Tile")
+                        if (collider.tag == "Ground" || collider.tag == "Mining_Tile")
+                        {
+                             Debug.Log(i);
+                        pos.transform.position += new Vector3(0f, MaxHeightpercent, 0f);
+                        }
+                        else
                         {
                             Debug.Log("노");
                            monster_Jump.OnJump(); // Jump()는 Monster_Jump 클래스 내의 함수라고 가정
                            monster_Jump.jump_cooltime = 5f;
                            break;
                         }
-                        //Debug.Log("연결됬노");
+                        
                     }
-
-                }
+                    //Debug.Log("연결됬노");
                 pos.transform.position = originalPosition;
+                }
+                
 
             }
-
+            
                 // 여기서 언덕의 높이나 형태를 체크하여, 플레이어가 올라갈 수 있는지 확인합니다.
                 // 예를 들어, hit의 Collider2D에 따라 추가적인 로직을 작성할 수 있습니다.
             }

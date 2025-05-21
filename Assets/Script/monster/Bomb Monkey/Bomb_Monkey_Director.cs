@@ -219,7 +219,7 @@ public class Bomb_Monkey_Director: MonoBehaviour
                         collisions.Collision_conversion();
                      }
                     
-                    if(collisions.IsCollision)
+                    if(collisions.IsCollision && !Monster_Jump.isJumping)
                     {
                         moverandomDirection = -moverandomDirection;
                         collisions.IsCollision = false;
