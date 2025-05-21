@@ -84,7 +84,7 @@ GameObject:
   - component: {fileID: 4953477730415881772}
   - component: {fileID: 7550061129590875338}
   m_Layer: 6
-  m_Name: Player
+  m_Name: Miner
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -488,7 +488,7 @@ SpriteRenderer:
   m_SortingLayerID: 483563663
   m_SortingLayer: 6
   m_SortingOrder: 10
-  m_Sprite: {fileID: -3992869008237178805, guid: 39510b1c08a5b1746b0c438b2aa506af, type: 3}
+  m_Sprite: {fileID: 5320492022768292585, guid: 8efac1986d3e0e84d94aaa951606f135, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -509,7 +509,7 @@ Animator:
   m_GameObject: {fileID: 6627346968656088041}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 85dd59d81a9d46a4ead41babfaccbb43, type: 2}
+  m_Controller: {fileID: 9100000, guid: be5dde47b907d414aa6be8e4fa209db3, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

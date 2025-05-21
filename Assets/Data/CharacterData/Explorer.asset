@@ -15,4 +15,4 @@ MonoBehaviour:
   character: 2
   selectSprite: {fileID: -7565415868309207557, guid: dae7f20e4f627f14bb61826dceac9276, type: 3}
   illustrationSprite: {fileID: 21300000, guid: 97706132473f1044eafc66083cc81662, type: 3}
-  characterPrefab: {fileID: 0}
+  characterPrefab: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
