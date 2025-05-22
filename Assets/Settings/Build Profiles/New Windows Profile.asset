@@ -18,8 +18,14 @@ MonoBehaviour:
   m_PlatformId: 4e3c793746204150860bf175a9a41a05
   m_PlatformBuildProfile:
     rid: 5826701651272270151
-  m_OverrideGlobalSceneList: 0
-  m_Scenes: []
+  m_OverrideGlobalSceneList: 1
+  m_Scenes:
+  - m_enabled: 1
+    m_path: Assets/Scenes/MainScenes/Character_Seletct.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/MainScenes/Start_FIFO.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/MainScenes/GameScene.unity
   m_ScriptingDefines:
   - DEBUGCODE
   - CHEAT

@@ -1,0 +1,663 @@
+fileFormatVersion: 2
+guid: f43a69a0e4028874c880f7ff29b50fc0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -5387503203437515218
+    second: SnowCrusier-OPEN-Sheet_0
+  - first:
+      213: 8897672118924078555
+    second: SnowCrusier-OPEN-Sheet_1
+  - first:
+      213: -2381277413518176373
+    second: SnowCrusier-OPEN-Sheet_2
+  - first:
+      213: 6219767281082289249
+    second: SnowCrusier-OPEN-Sheet_3
+  - first:
+      213: 1335522349815270255
+    second: SnowCrusier-OPEN-Sheet_4
+  - first:
+      213: -3620440166324828474
+    second: SnowCrusier-OPEN-Sheet_5
+  - first:
+      213: -3320329605084236175
+    second: SnowCrusier-OPEN-Sheet_6
+  - first:
+      213: 1969098819137300022
+    second: SnowCrusier-OPEN-Sheet_7
+  - first:
+      213: -4489278750583879038
+    second: SnowCrusier-OPEN-Sheet_8
+  - first:
+      213: -7184361382702905848
+    second: SnowCrusier-OPEN-Sheet_9
+  - first:
+      213: 295548903141110382
+    second: SnowCrusier-OPEN-Sheet_10
+  - first:
+      213: -8382878678456864568
+    second: SnowCrusier-OPEN-Sheet_11
+  - first:
+      213: 2392685537140342515
+    second: SnowCrusier-OPEN-Sheet_12
+  - first:
+      213: -3456412392372986066
+    second: SnowCrusier-OPEN-Sheet_13
+  - first:
+      213: 3965938016167831500
+    second: SnowCrusier-OPEN-Sheet_14
+  - first:
+      213: 8785023843835645702
+    second: SnowCrusier-OPEN-Sheet_15
+  - first:
+      213: -793681059467898472
+    second: SnowCrusier-OPEN-Sheet_16
+  - first:
+      213: 7222907846022620789
+    second: SnowCrusier-OPEN-Sheet_17
+  - first:
+      213: 7214895720282602715
+    second: SnowCrusier-OPEN-Sheet_18
+  - first:
+      213: 3802274791107533757
+    second: SnowCrusier-OPEN-Sheet_19
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 28
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 8192
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2ee3d4716ebb35b0800000000000000
+      internalID: -5387503203437515218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdded5876a1ea7b70800000000000000
+      internalID: 8897672118924078555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8f86971fc004fed0800000000000000
+      internalID: -2381277413518176373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 2025
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16cc18e636d015650800000000000000
+      internalID: 6219767281082289249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6b8552508ab88210800000000000000
+      internalID: 1335522349815270255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 3375
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6c607a3c9dc91cdc0800000000000000
+      internalID: -3620440166324828474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 4050
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 176bdb7e0d1dbe1d0800000000000000
+      internalID: -3320329605084236175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_7
+      rect:
+        serializedVersion: 2
+        x: 4725
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 636e15a71f4a35b10800000000000000
+      internalID: 1969098819137300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_8
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28a0db5f2c0e2b1c0800000000000000
+      internalID: -4489278750583879038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_9
+      rect:
+        serializedVersion: 2
+        x: 6075
+        y: 280
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 80685f503650c4c90800000000000000
+      internalID: -7184361382702905848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e627b7959200a1400800000000000000
+      internalID: 295548903141110382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_11
+      rect:
+        serializedVersion: 2
+        x: 675
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c0f16f91480aab80800000000000000
+      internalID: -8382878678456864568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_12
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3fef67ca1d6843120800000000000000
+      internalID: 2392685537140342515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_13
+      rect:
+        serializedVersion: 2
+        x: 2025
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e2f9953fd3b5800d0800000000000000
+      internalID: -3456412392372986066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_14
+      rect:
+        serializedVersion: 2
+        x: 2700
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cc7a6eefc97d90730800000000000000
+      internalID: 3965938016167831500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_15
+      rect:
+        serializedVersion: 2
+        x: 3375
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 60f092314acaae970800000000000000
+      internalID: 8785023843835645702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_16
+      rect:
+        serializedVersion: 2
+        x: 4050
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 891d57118474cf4f0800000000000000
+      internalID: -793681059467898472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_17
+      rect:
+        serializedVersion: 2
+        x: 4725
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5766f87da6cec3460800000000000000
+      internalID: 7222907846022620789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_18
+      rect:
+        serializedVersion: 2
+        x: 5400
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bdc3ee27e65702460800000000000000
+      internalID: 7214895720282602715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SnowCrusier-OPEN-Sheet_19
+      rect:
+        serializedVersion: 2
+        x: 6075
+        y: 0
+        width: 675
+        height: 280
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dbb1366f6c464c430800000000000000
+      internalID: 3802274791107533757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 62e7cb98039a1b04b8f78439ee2dab52
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      SnowCrusier-OPEN-Sheet_0: -5387503203437515218
+      SnowCrusier-OPEN-Sheet_1: 8897672118924078555
+      SnowCrusier-OPEN-Sheet_10: 295548903141110382
+      SnowCrusier-OPEN-Sheet_11: -8382878678456864568
+      SnowCrusier-OPEN-Sheet_12: 2392685537140342515
+      SnowCrusier-OPEN-Sheet_13: -3456412392372986066
+      SnowCrusier-OPEN-Sheet_14: 3965938016167831500
+      SnowCrusier-OPEN-Sheet_15: 8785023843835645702
+      SnowCrusier-OPEN-Sheet_16: -793681059467898472
+      SnowCrusier-OPEN-Sheet_17: 7222907846022620789
+      SnowCrusier-OPEN-Sheet_18: 7214895720282602715
+      SnowCrusier-OPEN-Sheet_19: 3802274791107533757
+      SnowCrusier-OPEN-Sheet_2: -2381277413518176373
+      SnowCrusier-OPEN-Sheet_3: 6219767281082289249
+      SnowCrusier-OPEN-Sheet_4: 1335522349815270255
+      SnowCrusier-OPEN-Sheet_5: -3620440166324828474
+      SnowCrusier-OPEN-Sheet_6: -3320329605084236175
+      SnowCrusier-OPEN-Sheet_7: 1969098819137300022
+      SnowCrusier-OPEN-Sheet_8: -4489278750583879038
+      SnowCrusier-OPEN-Sheet_9: -7184361382702905848
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

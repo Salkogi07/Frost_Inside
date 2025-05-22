@@ -9,7 +9,7 @@ public class LoadingManager : MonoBehaviour
 
     public float minLoadTime = 2f;
 
-    [SerializeField] private GameObject LoadScreenObj;
+    [SerializeField] public GameObject LoadScreenObj;
     [SerializeField] private Animator animator;
 
     private void Awake()
