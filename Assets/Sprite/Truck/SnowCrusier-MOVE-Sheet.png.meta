@@ -1,34 +1,34 @@
 fileFormatVersion: 2
-guid: 7befd3e3976defd4bb4dc91a1c6b0ea5
+guid: ce9f2cb13a5019a48be32814df2d6d87
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -462409973589633382
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_0"
+      213: 2547926384416369463
+    second: SnowCrusier-MOVE-Sheet_0
   - first:
-      213: 815394942716055743
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_1"
+      213: -1471394435740832600
+    second: SnowCrusier-MOVE-Sheet_1
   - first:
-      213: 7139019904303129345
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_2"
+      213: -5062959466017830933
+    second: SnowCrusier-MOVE-Sheet_2
   - first:
-      213: 2438183243209541867
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_3"
+      213: 6783636358990782498
+    second: SnowCrusier-MOVE-Sheet_3
   - first:
-      213: -7392414590617095846
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_4"
+      213: 4698545079514820153
+    second: SnowCrusier-MOVE-Sheet_4
   - first:
-      213: -7158290873627168613
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_5"
+      213: 3431058952345868093
+    second: SnowCrusier-MOVE-Sheet_5
   - first:
-      213: 1704171883009133547
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_6"
+      213: -1931398169291040009
+    second: SnowCrusier-MOVE-Sheet_6
   - first:
-      213: 8869706972218969559
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_7"
+      213: -8098998774468689270
+    second: SnowCrusier-MOVE-Sheet_7
   - first:
-      213: -7078228307233249180
-    second: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_8"
+      213: 7288622550054154573
+    second: SnowCrusier-MOVE-Sheet_8
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -75,7 +75,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 50
+  spritePixelsToUnits: 28
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -120,11 +120,37 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_0"
+      name: SnowCrusier-MOVE-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,16 +163,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a96979734903599f0800000000000000
-      internalID: -462409973589633382
+      spriteID: 8909db004f345e042891ab7aca808244
+      internalID: 284826986
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_1"
+      name: SnowCrusier-MOVE-Sheet_1
       rect:
         serializedVersion: 2
         x: 675
@@ -159,16 +185,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: fb09d38516dd05b00800000000000000
-      internalID: 815394942716055743
+      spriteID: 54fe472d6525eac4ab5accc190ed1e35
+      internalID: -1880918380
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_2"
+      name: SnowCrusier-MOVE-Sheet_2
       rect:
         serializedVersion: 2
         x: 1350
@@ -181,16 +207,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 1036e6067c4e21360800000000000000
-      internalID: 7139019904303129345
+      spriteID: b6f79f3a8553e4b4ba9557a79212060f
+      internalID: 1443040457
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_3"
+      name: SnowCrusier-MOVE-Sheet_3
       rect:
         serializedVersion: 2
         x: 2025
@@ -203,16 +229,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: be880dcddba26d120800000000000000
-      internalID: 2438183243209541867
+      spriteID: 9b89c02fd388c594482b0784d752db9d
+      internalID: 666897201
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_4"
+      name: SnowCrusier-MOVE-Sheet_4
       rect:
         serializedVersion: 2
         x: 2700
@@ -225,16 +251,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: a517ad5b81ed86990800000000000000
-      internalID: -7392414590617095846
+      spriteID: 4a30323fc7076064c97bcf467a900459
+      internalID: -87575517
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_5"
+      name: SnowCrusier-MOVE-Sheet_5
       rect:
         serializedVersion: 2
         x: 3375
@@ -247,16 +273,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: b90388e6064a8ac90800000000000000
-      internalID: -7158290873627168613
+      spriteID: d08b109858f7ff84582e2f9e087a78ff
+      internalID: -15370011
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_6"
+      name: SnowCrusier-MOVE-Sheet_6
       rect:
         serializedVersion: 2
         x: 4050
@@ -269,16 +295,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: bebc7fa6c4f66a710800000000000000
-      internalID: 1704171883009133547
+      spriteID: ec41d45ba8dd76e4f98f55195a7671e3
+      internalID: -1179778286
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_7"
+      name: SnowCrusier-MOVE-Sheet_7
       rect:
         serializedVersion: 2
         x: 4725
@@ -291,16 +317,16 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 7ddcaec5f77871b70800000000000000
-      internalID: 8869706972218969559
+      spriteID: 3ccd38e6405a53842bb963e7f9d66d1f
+      internalID: 2094141614
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_8"
+      name: SnowCrusier-MOVE-Sheet_8
       rect:
         serializedVersion: 2
         x: 5400
@@ -313,10 +339,10 @@ TextureImporter:
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: -1
+      tessellationDetail: 0
       bones: []
-      spriteID: 4686f3c4bd415cd90800000000000000
-      internalID: -7078228307233249180
+      spriteID: 27e6eda04e7af1c48a95c9d3985c51f3
+      internalID: 56121199
       vertices: []
       indices: 
       edges: []
@@ -325,7 +351,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 755aed2d9432a134a8a806d3aae36de3
+    spriteID: 9d3f2fd6247e7094eb5d2f75f6c00471
     internalID: 0
     vertices: []
     indices: 
@@ -335,15 +361,15 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_0": -462409973589633382
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_1": 815394942716055743
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_2": 7139019904303129345
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_3": 2438183243209541867
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_4": -7392414590617095846
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_5": -7158290873627168613
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_6": 1704171883009133547
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_7": 8869706972218969559
-      "\uC2A4\uB178\uC6B0 \uD06C\uB8E8\uC800-MOVE-Sheet_8": -7078228307233249180
+      SnowCrusier-MOVE-Sheet_0: 284826986
+      SnowCrusier-MOVE-Sheet_1: -1880918380
+      SnowCrusier-MOVE-Sheet_2: 1443040457
+      SnowCrusier-MOVE-Sheet_3: 666897201
+      SnowCrusier-MOVE-Sheet_4: -87575517
+      SnowCrusier-MOVE-Sheet_5: -15370011
+      SnowCrusier-MOVE-Sheet_6: -1179778286
+      SnowCrusier-MOVE-Sheet_7: 2094141614
+      SnowCrusier-MOVE-Sheet_8: 56121199
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
