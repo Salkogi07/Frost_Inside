@@ -5,6 +5,7 @@ public class HillDetection : MonoBehaviour
     public Vector2 boxSize = new Vector2(1.0f, 1.0f); // OverlapBox 크기
     public LayerMask groundLayer; // Ground 레이어를 설정
     public GameObject pos; // OverlapBox의 중심 위치를 지정할 변수
+    public bool Operation;
 
     public bool Groundcheck = false;
 
@@ -35,29 +36,44 @@ public class HillDetection : MonoBehaviour
     public void CheckForHillAhead()
     {
         // pos 변수로 지정된 위치에 OverlapBox를 던져서 Ground 레이어의 오브젝트를 감지
-        Collider2D[] hit = Physics2D.OverlapBoxAll(pos.transform.position, boxSize, 0f, groundLayer);
-        
-        if (hit != null)
+        Collider2D hit = Physics2D.OverlapBox(pos.transform.position, boxSize, 0f, groundLayer);
+        Debug.Log(hit);
+        if (hit != null && monster_Jump.jump_cooltime <= 0f)
         {
             // Ground 레이어의 오브젝트를 발견한 경우
             Groundcheck = true;
-
-            //    Debug.Log("앞에 언덕이 있습니다.");
+            
+            checkon();
+            Operation = true;
+               
 //(hit.tag == "Ground" || hit.tag == "Mining_Tile") &&
             // 예: 몬스터가 점프하도록 명령
             
-foreach (Collider2D collider in hit)
-                    {
-                if ((collider.tag == "Ground" || collider.tag == "Mining_Tile") && monster_Jump.jump_cooltime <= 0f)  //수정필요
-            {
+
+            }
+        else
+        {
+            Groundcheck = false;
+            Operation = false;
+        }
+    }
+
+
+    private void checkon()
+    {
+        
+        
+                
                 monster_Jump.CalculateJumpHeight();
                 Vector3 originalPosition = pos.transform.position;
                 float MaxHeightpercent = monster_Jump.maxHeight - (monster_Jump.maxHeight * 80 / 100);
                 for (float i = 0f; i < monster_Jump.maxHeight; i += MaxHeightpercent)
                     {
-                        if (collider.tag == "Ground" || collider.tag == "Mining_Tile")
+            Collider2D hit = Physics2D.OverlapBox(pos.transform.position, boxSize, 0f, groundLayer);
+            if (hit != null)
                         {
-                             Debug.Log(i);
+
+                             Debug.Log(monster_Jump.maxHeight);
                         pos.transform.position += new Vector3(0f, MaxHeightpercent, 0f);
                         }
                         else
@@ -69,22 +85,16 @@ foreach (Collider2D collider in hit)
                         }
                         
                     }
-                    //Debug.Log("연결됬노");
+                    Debug.Log("연결됬노");
                 pos.transform.position = originalPosition;
-                }
-                
+                Operation = false;
 
-            }
-            
-                // 여기서 언덕의 높이나 형태를 체크하여, 플레이어가 올라갈 수 있는지 확인합니다.
-                // 예를 들어, hit의 Collider2D에 따라 추가적인 로직을 작성할 수 있습니다.
-            }
-        else
-        {
-            Groundcheck = false;
-        }
+
+
+
+        // 여기서 언덕의 높이나 형태를 체크하여, 플레이어가 올라갈 수 있는지 확인합니다.
+        // 예를 들어, hit의 Collider2D에 따라 추가적인 로직을 작성할 수 있습니다.
     }
-
     // 디버그를 위한 시각적 박스 그리기
     private void OnDrawGizmos()
     {

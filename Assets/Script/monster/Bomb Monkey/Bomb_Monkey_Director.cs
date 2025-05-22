@@ -213,13 +213,17 @@ public class Bomb_Monkey_Director: MonoBehaviour
                 
                     transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                     distance += Time.deltaTime;
-                    hillDetections.CheckForHillAhead();
+                    //if(!hillDetections.Operation)
+                    //{
+                        hillDetections.CheckForHillAhead();
+                    //}
+                   
                     if(!Monster_Jump.isJumping)
                      {
                         collisions.Collision_conversion();
                      }
                     
-                    if(collisions.IsCollision && !Monster_Jump.isJumping)
+                    if(collisions.IsCollision)
                     {
                         moverandomDirection = -moverandomDirection;
                         collisions.IsCollision = false;
