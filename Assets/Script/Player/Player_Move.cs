@@ -15,6 +15,7 @@ public class Player_Move : MonoBehaviour
     [SerializeField] public float walkSpeed = 5f;
     [SerializeField] private float sprintSpeed = 10f;
     private float currentSpeed;
+    private KeyCode lastKey = KeyCode.None;
     public bool isSprinting = false;
 
     [Header("Stamina info")]
@@ -112,6 +113,12 @@ public class Player_Move : MonoBehaviour
 
     void MoveInput()
     {
+        KeyCode leftKey = KeyManager.instance.GetKeyCodeByName("Move Left");
+        KeyCode rightKey = KeyManager.instance.GetKeyCodeByName("Move Right");
+
+        if (Input.GetKeyDown(leftKey)) lastKey = leftKey;
+        if (Input.GetKeyDown(rightKey)) lastKey = rightKey;
+
         moveInput = 0;
 
         if(!player_ladder.IsClimbing)
@@ -120,11 +127,11 @@ public class Player_Move : MonoBehaviour
 
             if (!player_ladder.IsClimbing && !Inventory.instance.isInvenOpen)
             {
-                if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Left")))
+                if (lastKey == KeyManager.instance.GetKeyCodeByName("Move Left") && Input.GetKey(lastKey))
                 {
                     moveInput = -1;
                 }
-                if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Move Right")))
+                else if (lastKey == KeyManager.instance.GetKeyCodeByName("Move Right") && Input.GetKey(lastKey))
                 {
                     moveInput = 1;
                 }
