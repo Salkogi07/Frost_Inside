@@ -3,11 +3,10 @@ using System.Runtime.Serialization;
 using UnityEditor;
 using UnityEngine;
 
-
-public class MimicBoxDirector : MonoBehaviour
+public class Underground_Ghost : MonoBehaviour
 {
-    [Header ("Mimic stats")]
-    [SerializeField]  public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위 
+    [Header("Underground_Ghost stats")]
+    [SerializeField] public float detectionRadius = 1f; // 적이 플레이어를 감지할 범위 
 
     [SerializeField] private Transform Player; // 플레이어의 위치
     float move_time = 5f;
@@ -18,7 +17,7 @@ public class MimicBoxDirector : MonoBehaviour
     bool Scoping = false;
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
     float Concealment_time;
-    bool Moving =  false;
+    bool Moving = false;
     float Moving_Time;
     float distance;
     bool jumping = false;
@@ -26,8 +25,8 @@ public class MimicBoxDirector : MonoBehaviour
     public float xDistanceThreshold = 2f;
     float yDistance;
     bool attacking;
-    
-    
+
+
     private Transform Floor_Measurement;
     private Transform attack;
     private Transform ragne;
@@ -49,14 +48,12 @@ public class MimicBoxDirector : MonoBehaviour
     {
         Move,
         Attack,
-        Concealment,
         Chase,
-        exiting,
 
 
 
     }
-    public pattern Pattern = pattern.Concealment;
+    public pattern Pattern = pattern.Move;
 
     private void Awake()
     {
@@ -68,31 +65,31 @@ public class MimicBoxDirector : MonoBehaviour
         HillDetection = transform.Find("HillDetection");
         FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
         collisions = GetComponent<Collision_Conversion>();
-    //Player = GameObject.FindWithTag("Player").transform;
+        //Player = GameObject.FindWithTag("Player").transform;
 
-    Monster_Jump = GetComponent<Monster_Jump>();
-            Debug.Log("해냇따");
-        
+        Monster_Jump = GetComponent<Monster_Jump>();
+        Debug.Log("해냇따");
+
     }
     void Start()
     {
-        
+
         //attack = attack.GetComponent<Mimic_attack>();
         //Player = GetComponent<>
-        
+
         Player = Player.GetComponent<Transform>();
         //if(Monster_Jump != null)
         //{
         //Monster_Jump.OnJump();
         //}
-        
-    }
-    
 
-    
+    }
+
+
+
 
     // 범위 밖으로 나가면 호출
-    
+
 
     // 플레이어를 추적하는 함수
 
@@ -107,76 +104,47 @@ public class MimicBoxDirector : MonoBehaviour
             Player = GameObject.FindWithTag("Player").transform;
             e = !e;
         }
-        if (Scoping == false && Pattern != pattern.Concealment)
-        {
-            
-            Concealment_time  += Time.deltaTime;
-            if(Concealment_time >= 30f)
-            {
-                Pattern = pattern.Concealment;
-            }
-        }
-        else
-        {
-            Concealment_time = 0f;
-        }
+        
+        
         switch (Pattern)
         {
-         
-            case pattern.Concealment:
-                if(Scoping == false)
-                {
-                    //바로 숨어듬
-                    Hide = true;
-                    Debug.Log("숨었다!");
-                }
-                //플레이어가 건들어야 숨기상태를 해제
-                //if("")
-                //{
-                //    Pattern = pattern.exiting;
-                //}
 
-                break;
+            
             //case :
 
             //    break;
-            case pattern.exiting:
-                //나오는 애니메이션
-
-                Pattern =  pattern.Move;
-                Scoping = false;
-                break;
+            
             case pattern.Move:
 
                 /*Debug.Log("ddeee");*/
 
-                
-                    Move();
-                
+
+                Move();
+
                 if (Moving == false && Moving_Time >= 5f)
-                
-                    
+
+
                 {
                     moverandomDirection = Random.Range(1, 3) == 1 ? 1 : -1;
-                    
-                    
+
+
                     Moving_Time = 0f;
                     Moving = true;
                     distance = 0f;
                 }
-                else if(Moving == false)
+                else if (Moving == false)
                 {
                     Moving_Time += Time.deltaTime;
                 }
-                
+
                 //Debug.Log("움직인다!");
 
-                    // 수정 필요 (5초후 방향을 정하고 일정거리 이동필요)
+                // 수정 필요 (5초후 방향을 정하고 일정거리 이동필요)
 
                 break;
 
             case pattern.Chase:
-                
+
                 Chase();
                 direction();
                 Moving_Time = 0f;
@@ -185,7 +153,7 @@ public class MimicBoxDirector : MonoBehaviour
                 break;
 
             case pattern.Attack:
-              
+
                 attacking = true;
                 //애니매이션
                 //Mimic_Attack.hits();
@@ -201,22 +169,22 @@ public class MimicBoxDirector : MonoBehaviour
 
 
         }
-        
-    } 
+
+    }
     private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player") && !Hide && !attacking) // 플레이어 태그를 가진 객체 감지
         {
-            if (other.CompareTag("Player") && !Hide && !attacking) // 플레이어 태그를 가진 객체 감지
-            {
-            
-                Pattern = pattern.Chase;
-                Scoping = true;
-                Moving = false;
+
+            Pattern = pattern.Chase;
+            Scoping = true;
+            Moving = false;
         }
 
-        }
+    }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if(other.CompareTag("Player") && !Hide && !attacking)
+        if (other.CompareTag("Player") && !Hide && !attacking)
         {
             Pattern = pattern.Chase;
             yDistance = Player.position.y - transform.position.y;
@@ -239,16 +207,17 @@ public class MimicBoxDirector : MonoBehaviour
     }
     private void Move()
     {
-        
+
         if (Moving)
-        { if(distance < distanceMax)
+        {
+            if (distance < distanceMax)
             {
-                
-                
-                
-                    transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
+
+
+
+                transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                 distance += Time.deltaTime;
-                    hillDetections.CheckForHillAhead();
+                hillDetections.CheckForHillAhead();
                 collisions.Collision_conversion();
                 if (collisions.IsCollision)
                 {
@@ -259,30 +228,30 @@ public class MimicBoxDirector : MonoBehaviour
                 {
                     moverandomDirection = -moverandomDirection;
                 }
-                
-                   direction(); 
-                
+
+                direction();
+
             }
-            else 
+            else
             {
                 Moving = false;
 
             }
         }
-        
 
 
-        
 
 
-        
+
+
+
     }
 
     private void direction()
     {
         if (Pattern == pattern.Move)
         {
-            moveDirection = moverandomDirection == 1 ? 1f : -1f ;
+            moveDirection = moverandomDirection == 1 ? 1f : -1f;
         }
 
 
@@ -294,23 +263,23 @@ public class MimicBoxDirector : MonoBehaviour
         {
             Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
             attack.position = new Vector3(transform.position.x - stat.range[0], attack.position.y, 0f);
-            HillDetection.position = new Vector3(transform.position.x - (hillDetections.boxSize[0]* 3f),HillDetection.position.y, 0f);
+            HillDetection.position = new Vector3(transform.position.x - (hillDetections.boxSize[0] * 3f), HillDetection.position.y, 0f);
         }
         else
         {
             Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, 0f);
             attack.position = new Vector3(transform.position.x + stat.range[0], attack.position.y, 0f);
-            HillDetection.position = new Vector3(transform.position.x+ (hillDetections.boxSize[0] *3f), HillDetection.position.y, 0f);
+            HillDetection.position = new Vector3(transform.position.x + (hillDetections.boxSize[0] * 3f), HillDetection.position.y, 0f);
         }
-       
-    
+
+
 
 
     }
-    
+
     private void Chase()
     {
-        
+
         //FloorMeasurement.direction = moveDirection;
 
         transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);

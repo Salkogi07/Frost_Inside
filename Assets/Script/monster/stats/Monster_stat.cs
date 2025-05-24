@@ -25,6 +25,15 @@ public class Monster_stat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+     if(Health <= 0f)
+        {
+            Destroy(gameObject);
+        }
     }
+
+    public void damage(float damage)
+    {
+        Health -= damage;
+    }
+
 }
