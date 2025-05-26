@@ -13,7 +13,6 @@ public class Underground_Ghost : MonoBehaviour
 
     float moveDirection;
     public float distanceMax = 5f;
-    public bool Hide = true;
     bool Scoping = false;
     int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
     float Concealment_time;
@@ -24,23 +23,23 @@ public class Underground_Ghost : MonoBehaviour
     bool e = true;
     public float xDistanceThreshold = 2f;
     float yDistance;
-    bool attacking;
+    bool attacking = false;
 
 
-    private Transform Floor_Measurement;
-    private Transform attack;
+    //private Transform Floor_Measurement;
+    //private Transform attack;
     private Transform ragne;
-    private Transform HillDetection;
+    //private Transform HillDetection;
 
 
-    public Mimic_attack Mimic_Attack;
-    public HillDetection hillDetections;
-    public Floor_Measurement FloorMeasurement;
+    public Ghost_attack Ghost_Attack;
+    //public HillDetection hillDetections;
+    //public Floor_Measurement FloorMeasurement;
 
-    private GameObject Floor_Measurement_pos;
+    //private GameObject Floor_Measurement_pos;
     private Monster_stat stat;
-    private Monster_Jump Monster_Jump;
-    private Collision_Conversion collisions;
+    //private Monster_Jump Monster_Jump;
+    //private Collision_Conversion collisions;
 
     public Rigidbody2D rb { get; private set; }
 
@@ -58,16 +57,16 @@ public class Underground_Ghost : MonoBehaviour
     private void Awake()
     {
         stat = GetComponent<Monster_stat>();
-        Floor_Measurement = transform.Find("Floor_Measurement");
-        rb = GetComponent<Rigidbody2D>();
-        attack = transform.Find("attack");
+        //Floor_Measurement = transform.Find("Floor_Measurement");
+        //rb = GetComponent<Rigidbody2D>();
+        //attack = transform.Find("attack");
         ragne = transform.Find("check");
-        HillDetection = transform.Find("HillDetection");
-        FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
-        collisions = GetComponent<Collision_Conversion>();
-        //Player = GameObject.FindWithTag("Player").transform;
+        //HillDetection = transform.Find("HillDetection");
+        //FloorMeasurement = FloorMeasurement.GetComponent<Floor_Measurement>();
+        //collisions = GetComponent<Collision_Conversion>();
+        Player = GameObject.FindWithTag("Player").transform;
 
-        Monster_Jump = GetComponent<Monster_Jump>();
+
         Debug.Log("해냇따");
 
     }
@@ -97,7 +96,7 @@ public class Underground_Ghost : MonoBehaviour
     // 매 프레임마다 플레이어와의 거리 체크
     private void Update()
     {
-        Debug.Log(attacking);
+        //Debug.Log(attacking);
         if (e)
         {
             //Debug.Log("dldi");
@@ -173,9 +172,9 @@ public class Underground_Ghost : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !Hide && !attacking) // 플레이어 태그를 가진 객체 감지
+        if (other.CompareTag("Player") && !attacking) // 플레이어 태그를 가진 객체 감지
         {
-
+            Debug.Log("Emter");
             Pattern = pattern.Chase;
             Scoping = true;
             Moving = false;
@@ -184,25 +183,20 @@ public class Underground_Ghost : MonoBehaviour
     }
     private void OnTriggerStay2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !Hide && !attacking)
+        if (other.CompareTag("Player") && !attacking)
         {
             Pattern = pattern.Chase;
-            yDistance = Player.position.y - transform.position.y;
-            if (yDistance > 1f && Monster_Jump.jump_cooltime <= 0f)
-            {
-                Monster_Jump.OnJump();
-                Monster_Jump.jump_cooltime = 5f;
-            }// 수정,정리 필요
+            Debug.Log("Stay");
         }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !Hide && !attacking)
+        if (other.CompareTag("Player") && !attacking)
         {
             Scoping = false;
             Pattern = pattern.Move;
-            //Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
+            Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
         }
     }
     private void Move()
@@ -217,17 +211,8 @@ public class Underground_Ghost : MonoBehaviour
 
                 transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
                 distance += Time.deltaTime;
-                hillDetections.CheckForHillAhead();
-                collisions.Collision_conversion();
-                if (collisions.IsCollision)
-                {
-                    moverandomDirection = -moverandomDirection;
-                    collisions.IsCollision = false;
-                }
-                if (!FloorMeasurement.Groundcheck && !Monster_Jump.isJumping)
-                {
-                    moverandomDirection = -moverandomDirection;
-                }
+                //hillDetections.CheckForHillAhead();
+                
 
                 direction();
 
@@ -255,22 +240,22 @@ public class Underground_Ghost : MonoBehaviour
         }
 
 
-        if (Pattern == pattern.Chase)
-        {
-            moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
-        }
-        if (moveDirection == -1f) //수정 필요
-        {
-            Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
-            attack.position = new Vector3(transform.position.x - stat.range[0], attack.position.y, 0f);
-            HillDetection.position = new Vector3(transform.position.x - (hillDetections.boxSize[0] * 3f), HillDetection.position.y, 0f);
-        }
-        else
-        {
-            Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, 0f);
-            attack.position = new Vector3(transform.position.x + stat.range[0], attack.position.y, 0f);
-            HillDetection.position = new Vector3(transform.position.x + (hillDetections.boxSize[0] * 3f), HillDetection.position.y, 0f);
-        }
+        //if (Pattern == pattern.Chase)
+        //{
+        //    moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
+        //}
+        //if (moveDirection == -1f) //수정 필요
+        //{
+        //    Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
+        //    attack.position = new Vector3(transform.position.x - stat.range[0], attack.position.y, 0f);
+        //    HillDetection.position = new Vector3(transform.position.x - (hillDetections.boxSize[0] * 3f), HillDetection.position.y, 0f);
+        //}
+        //else
+        //{
+        //    Floor_Measurement.position = new Vector3(transform.position.x + 1f, Floor_Measurement.position.y, 0f);
+        //    attack.position = new Vector3(transform.position.x + stat.range[0], attack.position.y, 0f);
+        //    HillDetection.position = new Vector3(transform.position.x + (hillDetections.boxSize[0] * 3f), HillDetection.position.y, 0f);
+        //}
 
 
 
@@ -282,9 +267,12 @@ public class Underground_Ghost : MonoBehaviour
 
         //FloorMeasurement.direction = moveDirection;
 
-        transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
-        hillDetections.CheckForHillAhead();
+        //transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
+        //hillDetections.CheckForHillAhead();
+        Vector2 direction = (Player.position - transform.position).normalized;
 
+        // 이동
+        transform.position += (Vector3)(direction * stat.speed * Time.deltaTime);
 
 
 

@@ -24,7 +24,7 @@ public class Monster_Jump : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        //groundCheck = GameObject.FindWithTag("Mining_Tile").transform;
+        groundCheck = GameObject.FindWithTag("Mining_Tile").transform;
         
 
     }

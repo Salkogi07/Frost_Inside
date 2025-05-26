@@ -4553,7 +4553,7 @@ GameObject:
   m_Icon: {fileID: 8418204508859773708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1105447293
 Transform:
   m_ObjectHideFlags: 0
@@ -4810,7 +4810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1161184186
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5093,10 +5093,10 @@ RectTransform:
   - {fileID: 1115571376}
   m_Father: {fileID: 611842127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 65, y: -50}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1173516205
 MonoBehaviour:
@@ -5286,10 +5286,10 @@ RectTransform:
   - {fileID: 2010674257}
   m_Father: {fileID: 611842127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 285, y: -50}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1183330405
 MonoBehaviour:
@@ -7202,7 +7202,7 @@ GameObject:
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1349232009
 Transform:
   m_ObjectHideFlags: 0
@@ -7225,7 +7225,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349232008}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d404a218dbc5a244096dc1bff15be231, type: 3}
   m_Name: 
@@ -7287,11 +7287,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1374210195}
   - component: {fileID: 1374210194}
-  - component: {fileID: 1374210193}
-  - component: {fileID: 1374210192}
+  - component: {fileID: 1374210197}
+  - component: {fileID: 1374210196}
   - component: {fileID: 1374210191}
   - component: {fileID: 1374210190}
-  - component: {fileID: 1374210189}
   m_Layer: 13
   m_Name: Underground_Ghost
   m_TagString: monster
@@ -7299,24 +7298,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1374210189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374210188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc6cad477d36b8b46b4f842ec4f43742, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Boxsize: {x: 1.15, y: 0.5}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  Collision: 1
-  IsCollision: 0
 --- !u!114 &1374210190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7335,7 +7316,7 @@ MonoBehaviour:
   Attack_speed: 3
   Armor: 0
   Groggy: 0
-  speed: 3.5
+  speed: 1
   range:
   - 1
   - 1
@@ -7385,46 +7366,6 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1374210192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374210188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfbf5d51142dee0458cff3fcb2b998c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  boxSize: {x: 1, y: 0.8}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 2056
-  pos: {fileID: 1554766480}
-  Operation: 0
-  Groundcheck: 0
---- !u!114 &1374210193
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1374210188}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed6ccdd83cf4a4346bae9acddb2adb06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectionRadius: 1
-  Player: {fileID: 0}
-  distanceMax: 5
-  Hide: 1
-  xDistanceThreshold: 2
-  Mimic_Attack: {fileID: 0}
-  hillDetections: {fileID: 0}
-  FloorMeasurement: {fileID: 0}
-  Pattern: 2
 --- !u!212 &1374210194
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7489,7 +7430,7 @@ Transform:
   m_GameObject: {fileID: 1374210188}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 27.81, y: 49.65, z: 0}
+  m_LocalPosition: {x: -30.1, y: 49.65, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7499,6 +7440,36 @@ Transform:
   - {fileID: 1105447293}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1374210196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374210188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 386c6be1bfec6864cb4d58ef9a9194da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1374210197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374210188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed6ccdd83cf4a4346bae9acddb2adb06, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectionRadius: 1
+  Player: {fileID: 0}
+  distanceMax: 5
+  xDistanceThreshold: 2
+  Ghost_Attack: {fileID: 1374210196}
+  Pattern: 0
 --- !u!1 &1385551762
 GameObject:
   m_ObjectHideFlags: 0
@@ -8546,7 +8517,7 @@ GameObject:
   m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1554766481
 Transform:
   m_ObjectHideFlags: 0
@@ -26612,10 +26583,10 @@ RectTransform:
   - {fileID: 247327537}
   m_Father: {fileID: 611842127}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -50}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1991300319
 MonoBehaviour:
@@ -27687,6 +27658,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Bomb_Monkey
       objectReference: {fileID: 0}
+    - target: {fileID: 268532341097074013, guid: dc2f03f1c60b8504b9960f774ca5ff23, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 384036276385537767, guid: dc2f03f1c60b8504b9960f774ca5ff23, type: 3}
       propertyPath: m_LocalPosition.x
       value: 16.69
@@ -27743,6 +27718,10 @@ PrefabInstance:
     - target: {fileID: 1013449108461764342, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
       propertyPath: m_Name
       value: Mimic_Box
+      objectReference: {fileID: 0}
+    - target: {fileID: 1013449108461764342, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8990392103600102968, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
       propertyPath: m_LocalPosition.x
