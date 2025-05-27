@@ -118,7 +118,7 @@ public class NetworkManager2 : MonoBehaviourPunCallbacks
         ChatRPC("<color=green>" + PhotonNetwork.NickName + "님이 방에 입장했습니다.</color>");
     }
 
-    public override void OnPlayerEnteredRoom(Player newPlayer)
+    /*public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         RoomRenewal();
         ChatRPC("<color=yellow>" + newPlayer.NickName + "님이 참가하셨습니다</color>");
@@ -128,7 +128,7 @@ public class NetworkManager2 : MonoBehaviourPunCallbacks
     {
         RoomRenewal();
         ChatRPC("<color=yellow>" + otherPlayer.NickName + "님이 퇴장하셨습니다</color>");
-    }
+    }*/
 
     void RoomRenewal()
     {
