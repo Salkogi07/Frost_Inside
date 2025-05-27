@@ -34,6 +34,10 @@ public class Mimic_attack : MonoBehaviour
                 collider.GetComponent<Player_Stats>().TakeDamage(stat.Damage);
                 Debug.Log(Coll);
             }
+            else
+            {
+                Debug.Log("야기분좋타");
+            }
         }
         
             

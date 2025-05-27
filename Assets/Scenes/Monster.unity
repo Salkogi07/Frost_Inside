@@ -1903,6 +1903,14 @@ PrefabInstance:
       propertyPath: walkSpeed
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 3375461312055837039, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
+      propertyPath: hp
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3375461312055837039, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
+      propertyPath: temperature
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2430,6 +2438,11 @@ MonoBehaviour:
   m_Spacing: {x: 30, y: 30}
   m_Constraint: 1
   m_ConstraintCount: 3
+--- !u!4 &590999759 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5325306041917162173, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
+  m_PrefabInstance: {fileID: 5310271507129510301}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &593885460
 GameObject:
   m_ObjectHideFlags: 0
@@ -7291,6 +7304,7 @@ GameObject:
   - component: {fileID: 1374210196}
   - component: {fileID: 1374210191}
   - component: {fileID: 1374210190}
+  - component: {fileID: 1374210198}
   m_Layer: 13
   m_Name: Underground_Ghost
   m_TagString: monster
@@ -7311,15 +7325,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Health: 0
-  MaxHealth: 20
+  MaxHealth: 60
   Damage: 5
   Attack_speed: 3
   Armor: 0
   Groggy: 0
-  speed: 1
+  speed: 2
   range:
-  - 1
-  - 1
+  - 5
+  - 5
 --- !u!61 &1374210191
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -7452,6 +7466,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 386c6be1bfec6864cb4d58ef9a9194da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Boxsize: {x: 5, y: 5}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  Maxstay: 1
+  playerstat: {fileID: 1172619196}
 --- !u!114 &1374210197
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7470,6 +7490,33 @@ MonoBehaviour:
   xDistanceThreshold: 2
   Ghost_Attack: {fileID: 1374210196}
   Pattern: 0
+--- !u!50 &1374210198
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1374210188}
+  m_BodyType: 2
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDamping: 0
+  m_AngularDamping: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1385551762
 GameObject:
   m_ObjectHideFlags: 0
@@ -27721,8 +27768,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1013449108461764342, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2582495177649879474, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 590999759}
     - target: {fileID: 8990392103600102968, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -28.848

@@ -14,7 +14,8 @@ public class Underground_Ghost : MonoBehaviour
     float moveDirection;
     public float distanceMax = 5f;
     bool Scoping = false;
-    int moverandomDirection; //랜덤좌우방향으로 이동하는 변수
+    float moverandomDirection_x; //랜덤좌우방향으로 이동하는 변수
+    float moverandomDirection_y; //랜덤상하방향으로 이동하는 변수
     float Concealment_time;
     bool Moving = false;
     float Moving_Time;
@@ -24,12 +25,12 @@ public class Underground_Ghost : MonoBehaviour
     public float xDistanceThreshold = 2f;
     float yDistance;
     bool attacking = false;
+    Vector2 directions;
 
 
-    //private Transform Floor_Measurement;
-    //private Transform attack;
+
     private Transform ragne;
-    //private Transform HillDetection;
+    
 
 
     public Ghost_attack Ghost_Attack;
@@ -58,7 +59,7 @@ public class Underground_Ghost : MonoBehaviour
     {
         stat = GetComponent<Monster_stat>();
         //Floor_Measurement = transform.Find("Floor_Measurement");
-        //rb = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
         //attack = transform.Find("attack");
         ragne = transform.Find("check");
         //HillDetection = transform.Find("HillDetection");
@@ -124,7 +125,9 @@ public class Underground_Ghost : MonoBehaviour
 
 
                 {
-                    moverandomDirection = Random.Range(1, 3) == 1 ? 1 : -1;
+                    moverandomDirection_x = Random.Range(-1f, 1f);
+                    moverandomDirection_y = Random.Range(-1f, 1f);
+                    directions = new Vector2(moverandomDirection_x, moverandomDirection_y).normalized;
 
 
                     Moving_Time = 0f;
@@ -174,7 +177,7 @@ public class Underground_Ghost : MonoBehaviour
     {
         if (other.CompareTag("Player") && !attacking) // 플레이어 태그를 가진 객체 감지
         {
-            Debug.Log("Emter");
+            
             Pattern = pattern.Chase;
             Scoping = true;
             Moving = false;
@@ -186,7 +189,7 @@ public class Underground_Ghost : MonoBehaviour
         if (other.CompareTag("Player") && !attacking)
         {
             Pattern = pattern.Chase;
-            Debug.Log("Stay");
+            //Debug.Log("Stay");
         }
     }
 
@@ -196,7 +199,7 @@ public class Underground_Ghost : MonoBehaviour
         {
             Scoping = false;
             Pattern = pattern.Move;
-            Debug.Log("플레이어가 범위 밖으로 나갔습니다!");
+            
         }
     }
     private void Move()
@@ -207,14 +210,19 @@ public class Underground_Ghost : MonoBehaviour
             if (distance < distanceMax)
             {
 
-
-
-                transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
-                distance += Time.deltaTime;
-                //hillDetections.CheckForHillAhead();
                 
 
+               
                 direction();
+                // 이동
+
+                transform.position += (Vector3)(directions * stat.speed * Time.deltaTime);
+                //distance += stat.speed * Time.deltaTime;
+                distance += Time.deltaTime;
+                
+                
+
+                
 
             }
             else
@@ -236,14 +244,15 @@ public class Underground_Ghost : MonoBehaviour
     {
         if (Pattern == pattern.Move)
         {
-            moveDirection = moverandomDirection == 1 ? 1f : -1f;
+            Debug.Log(directions);
         }
 
 
-        //if (Pattern == pattern.Chase)
-        //{
-        //    moveDirection = Player.position.x > transform.position.x ? 1f : -1f; // 플레이어가 오른쪽이면 1, 왼쪽이면 -1
-        //}
+        if (Pattern == pattern.Chase)
+        {
+            directions = (Player.position - transform.position).normalized;
+            
+        }
         //if (moveDirection == -1f) //수정 필요
         //{
         //    Floor_Measurement.position = new Vector3(transform.position.x - 1f, Floor_Measurement.position.y, 0f);
@@ -269,10 +278,10 @@ public class Underground_Ghost : MonoBehaviour
 
         //transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
         //hillDetections.CheckForHillAhead();
-        Vector2 direction = (Player.position - transform.position).normalized;
+        
 
         // 이동
-        transform.position += (Vector3)(direction * stat.speed * Time.deltaTime);
+        transform.position += (Vector3)(directions * stat.speed * Time.deltaTime);
 
 
 
