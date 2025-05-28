@@ -141,7 +141,7 @@ CapsuleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.5, y: 1.54}
+  m_Size: {x: 0.5, y: 1.542}
   m_Direction: 0
 --- !u!50 &3255006627929712995
 Rigidbody2D:
@@ -156,7 +156,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 0.1
+  m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_GravityScale: 3.5
   m_Material: {fileID: 6200000, guid: cf2b2126212a15e43b67cfe95502d021, type: 2}
@@ -185,10 +185,12 @@ MonoBehaviour:
   moveSpeed: 8
   jumpForce: 12
   inAirMoveMultiplier: 0.8
-  groundCheckDistance: 0.8
+  groundCheck: {fileID: 6888678176120883945}
+  groundCheckSize: {x: 0.3, y: 0.1}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  groundCheckDistance: 0.85
 --- !u!114 &8710203413524532382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5340,7 +5342,7 @@ Transform:
   m_GameObject: {fileID: 7994871953755379895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: -0.41, z: 0}
+  m_LocalPosition: {x: 0.06, y: -0.524, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

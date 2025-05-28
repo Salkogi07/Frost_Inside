@@ -24,8 +24,11 @@ public class Player : MonoBehaviour
     public Vector2 moveInput { get; private set; }
 
     [Header("Collision detection")]
-    [SerializeField] private float groundCheckDistance;
+    [SerializeField] private Transform groundCheck;
+    [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
     [SerializeField] private LayerMask whatIsGround;
+
+    [SerializeField] private float groundCheckDistance;
     public bool groundDetected { get; private set; }
 
 
@@ -89,11 +92,14 @@ public class Player : MonoBehaviour
 
     private void HandleCollisionDetection()
     {
-        groundDetected = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, whatIsGround);
+        groundDetected = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, whatIsGround);
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
+
+        //Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));
     }
 }

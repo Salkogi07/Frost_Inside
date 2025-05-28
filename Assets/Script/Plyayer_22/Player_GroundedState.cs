@@ -10,6 +10,9 @@ public class Player_GroundedState : EntityState
     {
         base.Update();
 
+        Debug.Log("ground");
+        Debug.Log(rb.linearVelocity.y);
+
         if (rb.linearVelocity.y < 0)
             stateMachine.ChangeState(player.fallState);
 
