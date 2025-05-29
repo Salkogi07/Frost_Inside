@@ -76,13 +76,10 @@ GameObject:
   - component: {fileID: 36520864720831461}
   - component: {fileID: 2093785360371588388}
   - component: {fileID: 3255006627929712995}
-  - component: {fileID: 3375461312055837039}
-  - component: {fileID: 2815366838865872201}
-  - component: {fileID: 6436803716985183836}
-  - component: {fileID: 5331614788319252125}
-  - component: {fileID: 1812610323777888314}
-  - component: {fileID: 4953477730415881772}
-  - component: {fileID: 7550061129590875338}
+  - component: {fileID: 6439846600469785769}
+  - component: {fileID: 8710203413524532382}
+  - component: {fileID: 8632942042615940793}
+  - component: {fileID: 3316583795968269838}
   m_Layer: 6
   m_Name: Doctor
   m_TagString: Player
@@ -143,8 +140,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.0035529137, y: -0.031058073}
-  m_Size: {x: 0.5401468, y: 1.2845187}
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.5, y: 1.542}
   m_Direction: 0
 --- !u!50 &3255006627929712995
 Rigidbody2D:
@@ -173,7 +170,55 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &3375461312055837039
+--- !u!114 &6439846600469785769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba461457ff358794b96bb0c3076bb131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 8
+  jumpForce: 12
+  inAirMoveMultiplier: 0.8
+  groundCheck: {fileID: 6888678176120883945}
+  groundCheckSize: {x: 0.3, y: 0.1}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+  groundCheckDistance: 0.85
+--- !u!114 &8710203413524532382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de512a33e26ef7a48a4a6d80037f5339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRange: 3
+  pickupCooldown: 0.5
+--- !u!114 &8632942042615940793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b80c78004b8b3b4fb62d47e8dd5fe1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
+--- !u!114 &3316583795968269838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,16 +232,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isDead: 0
   mining:
-    baseValue: 1
+    baseValue: 0
     modifiers: 
   damage:
-    baseValue: 1
+    baseValue: 0
     modifiers: 
   armor:
-    baseValue: 1
+    baseValue: 0
     modifiers: 
   lagging:
-    baseValue: 1
+    baseValue: 0
     modifiers: 
   hp: 0
   maxHp:
@@ -208,125 +253,12 @@ MonoBehaviour:
     modifiers: 
   weight: 0
   maxWeight:
-    baseValue: 0
+    baseValue: 100
     modifiers: 
   temperature: 100
   maxTemperature:
     baseValue: 100
     modifiers: 
---- !u!114 &2815366838865872201
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f05d9d8404e4c6042ae1091176fc95be, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dust: {fileID: 6298625647772795400}
-  walkSpeed: 5
-  sprintSpeed: 7
-  isSprinting: 0
-  sprintCost: 10
-  jumpCost: 15
-  staminaRecoverRate: 15
-  staminaDecreaseRate: 10
-  staminaCooldownDuration: 2
-  jumpForce: 13
-  coyoteTime: 0.13
-  jumpBufferTime: 0.13
-  groundCheck: {fileID: 6888678176120883945}
-  groundCheckSize: {x: 0.3, y: 0.1}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 2056
-  moveInput: 0
-  isAttack: 0
-  canDoubleJump: 0
---- !u!114 &6436803716985183836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148b3047e622f6e4eaeef57964986dbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemaps: []
-  player: {fileID: 36520864720831461}
-  miningRange: 5
-  miningTime: 0.1
-  miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
-  highlightTilemap: {fileID: 0}
-  borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
-  blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
-  isMining: 0
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
-  toolPower: 5
---- !u!114 &5331614788319252125
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f0b2065c3ff63d4183cd2fcc7dc6895, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  climbSpeed: 10
-  climbDirection: 0
-  IsLadder: 0
-  IsClimbing: 0
-  pos: {fileID: 5239020522990727974}
-  boxSize: {x: 1, y: 1}
-  ladderCooldownDuration: 0.5
---- !u!114 &1812610323777888314
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de512a33e26ef7a48a4a6d80037f5339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupRange: 1.5
-  pickupCooldown: 0.5
---- !u!114 &4953477730415881772
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b80c78004b8b3b4fb62d47e8dd5fe1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
---- !u!114 &7550061129590875338
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4d1836978deab8f4e93061b8f79d77db, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &4241109382183132690
 GameObject:
   m_ObjectHideFlags: 0
@@ -5410,7 +5342,7 @@ Transform:
   m_GameObject: {fileID: 7994871953755379895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.06, y: -0.41, z: 0}
+  m_LocalPosition: {x: 0.06, y: -0.524, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

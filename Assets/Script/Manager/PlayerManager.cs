@@ -56,14 +56,14 @@ public class PlayerManager : MonoBehaviour
     {
         float dropRate = temperatureDropRate;
 
-        if (playerMove.moveInput != 0)
+        /*if (playerMove.moveInput != 0)
             dropRate *= 0.5f; // 움직이면 감소율 줄이기
 
         if (playerMove.isSprinting)
             dropRate *= 0.25f; // 뛰고 있으면 온도 감소율 더 낮추기
 
         if (playerMove.isAttack)
-            dropRate *= 0.5f; // 공격 중에는 감소율 반으로
+            dropRate *= 0.5f; // 공격 중에는 감소율 반으로*/
 
         playerStats.temperature -= dropRate * Time.deltaTime;
         playerStats.temperature = Mathf.Max(playerStats.GetTemperature(), 0f);

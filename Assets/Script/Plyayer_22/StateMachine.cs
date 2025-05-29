@@ -1,24 +1,25 @@
-using UnityEngine;
-
-public class StateMachine
+namespace Script.Plyayer_22
 {
-    public EntityState currentState { get; private set; }
-
-    public void Initialize(EntityState startState)
+    public class StateMachine
     {
-        currentState = startState;
-        currentState.Enter();
-    }
+        public EntityState currentState { get; private set; }
 
-    public void ChangeState(EntityState newState)
-    {
-        currentState.Exit();
-        currentState = newState;
-        currentState.Enter();
-    }
+        public void Initialize(EntityState startState)
+        {
+            currentState = startState;
+            currentState.Enter();
+        }
 
-    public void UpdateActiveState()
-    {
-        currentState.Update();
+        public void ChangeState(EntityState newState)
+        {
+            currentState.Exit();
+            currentState = newState;
+            currentState.Enter();
+        }
+
+        public void UpdateActiveState()
+        {
+            currentState.Update();
+        }
     }
 }
