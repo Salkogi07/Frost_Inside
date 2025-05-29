@@ -247,8 +247,8 @@ public class MimicBoxDirector : MonoBehaviour
                 
                 
                     transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
-                distance += Time.deltaTime;
-                    hillDetections.CheckForHillAhead();
+                distance += stat.speed * Time.deltaTime;
+                hillDetections.CheckForHillAhead();
                 collisions.Collision_conversion();
                 if (collisions.IsCollision)
                 {

@@ -22,32 +22,28 @@ public class Ghost_attack : MonoBehaviour
     // 수정필요
     void Update()
     {
-        Collider2D[] hit = Physics2D.OverlapBoxAll(transform.position, Boxsize, 0f,groundLayer);
-        foreach (Collider2D collider in hit)
-        {
-            if (collider.tag == "Player")
-            {
-                stay += Time.deltaTime;
-                
 
-                Debug.Log(collider);
-                Debug.Log(stay);
-                if (stay >= Maxstay)
-                {
-                    //collider.GetComponent<Player_Stats>().TakeDamage(10);
-                    playerstat.stamina -= 10;
-                    stay = 0f;
-                    Debug.Log("1");
-                }
-                
-                
-            }
-            else
+        Collider2D hit = Physics2D.OverlapBox(transform.position, Boxsize, 0f, groundLayer);
+
+        if (hit != null)
+        {
+            stay += Time.deltaTime;
+            if (stay >= Maxstay)
             {
-                Debug.Log(stay);
+                //온도 감소
+                
+                playerstat.temperature -= 1.25f;
                 stay = 0f;
+               
             }
         }
+        else
+        {
+            stay = 0f;
+             
+        }
+
+
     }
 
 

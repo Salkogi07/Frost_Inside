@@ -215,10 +215,11 @@ public class Underground_Ghost : MonoBehaviour
                
                 direction();
                 // ¿Ãµø
-
-                transform.position += (Vector3)(directions * stat.speed * Time.deltaTime);
-                //distance += stat.speed * Time.deltaTime;
-                distance += Time.deltaTime;
+                float move_speed = stat.speed + (stat.speed * 50 / 100);
+                transform.position += (Vector3)(directions * move_speed * Time.deltaTime);
+                Debug.Log(move_speed);
+                distance += stat.speed * Time.deltaTime;
+                //distance += Time.deltaTime;
                 
                 
 
