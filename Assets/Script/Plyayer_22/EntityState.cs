@@ -1,38 +1,41 @@
 using UnityEngine;
 
-public abstract class EntityState
+namespace Script.Plyayer_22
 {
-    protected Player player;
-    protected StateMachine stateMachine;
-    protected string animBoolName;
-
-    protected Animator anim;
-    protected Rigidbody2D rb;
-    protected PlayerInputSet input;
-
-    public EntityState(Player player, StateMachine stateMachine, string animBoolName)
+    public abstract class EntityState
     {
-        this.player = player;
-        this.stateMachine = stateMachine;
-        this.animBoolName = animBoolName;
+        protected Player player;
+        protected StateMachine stateMachine;
+        protected string animBoolName;
 
-        anim = player.anim;
-        rb = player.rb;
-        input = player.input;
-    }
+        protected Animator anim;
+        protected Rigidbody2D rb;
+        protected PlayerInputSet input;
 
-    public virtual void Enter()
-    {
-        anim.SetBool(animBoolName, true);
-    }
+        public EntityState(Player player, StateMachine stateMachine, string animBoolName)
+        {
+            this.player = player;
+            this.stateMachine = stateMachine;
+            this.animBoolName = animBoolName;
 
-    public virtual void Update()
-    {
-        anim.SetFloat("yVelocity", rb.linearVelocity.y);
-    }
+            anim = player.anim;
+            rb = player.rb;
+            input = player.input;
+        }
 
-    public virtual void Exit()
-    {
-        anim.SetBool(animBoolName, false);
+        public virtual void Enter()
+        {
+            anim.SetBool(animBoolName, true);
+        }
+
+        public virtual void Update()
+        {
+            anim.SetFloat("yVelocity", rb.linearVelocity.y);
+        }
+
+        public virtual void Exit()
+        {
+            anim.SetBool(animBoolName, false);
+        }
     }
 }

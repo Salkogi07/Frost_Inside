@@ -1,23 +1,24 @@
-using UnityEngine;
-
-public class Player_IdleState : Player_GroundedState
+namespace Script.Plyayer_22
 {
-    public Player_IdleState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
+    public class Player_IdleState : Player_GroundedState
     {
-    }
+        public Player_IdleState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
+        {
+        }
 
-    public override void Enter()
-    {
-        base.Enter();
+        public override void Enter()
+        {
+            base.Enter();
 
-        player.SetVelocity(0, rb.linearVelocity.y);
-    }
+            player.SetVelocity(0, rb.linearVelocity.y);
+        }
 
-    public override void Update()
-    {
-        base.Update();
+        public override void Update()
+        {
+            base.Update();
 
-        if (player.moveInput.x != 0)
-            stateMachine.ChangeState(player.moveState);
+            if (player.moveInput.x != 0)
+                stateMachine.ChangeState(player.moveState);
+        }
     }
 }

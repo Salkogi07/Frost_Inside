@@ -1,23 +1,24 @@
-using UnityEngine;
-
-public class Player_JumpState : Player_AiredState
+namespace Script.Plyayer_22
 {
-    public Player_JumpState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+    public class Player_JumpState : Player_AiredState
     {
-    }
+        public Player_JumpState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+        {
+        }
 
-    public override void Enter()
-    {
-        base.Enter();
+        public override void Enter()
+        {
+            base.Enter();
 
-        player.SetVelocity(rb.linearVelocity.x, player.jumpForce);
-    }
+            player.SetVelocity(rb.linearVelocity.x, player.jumpForce);
+        }
 
-    public override void Update()
-    {
-        base.Update();
+        public override void Update()
+        {
+            base.Update();
 
-        if (rb.linearVelocity.y < 0)
-            stateMachine.ChangeState(player.fallState);
+            if (rb.linearVelocity.y < 0)
+                stateMachine.ChangeState(player.fallState);
+        }
     }
 }
