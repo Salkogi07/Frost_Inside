@@ -10,15 +10,15 @@ namespace Script.Plyayer_22
         {
             base.Enter();
 
-            player.SetVelocity(0, rb.linearVelocity.y);
+            player.SetVelocity(0, rigidbody.linearVelocity.y);
         }
 
         public override void Update()
         {
             base.Update();
 
-            if (player.MoveInput.x != 0)
-                stateMachine.ChangeState(player.MoveState);
+            if (player.MoveInput != 0)
+                stateMachine.ChangeState(player.WalkState);
         }
     }
 }

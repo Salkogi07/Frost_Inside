@@ -8020,6 +8020,7 @@ MonoBehaviour:
   - {fileID: 4598726474971685724, guid: 70b063b6055d15c4db15648bb1c16fba, type: 3}
   - {fileID: 7542970107553027502, guid: b60ef86ee48b8e04e869d599b00a8e63, type: 3}
   - {fileID: 7305855154435600090, guid: 05d7aecfdae5cec469e84d00e018d56d, type: 3}
+  - {fileID: 7305855154435600090, guid: 1cb375d6b3bb2c84a9b7ad399dd31771, type: 3}
   maxRooms: 30
   spreadTilemap: {fileID: 2047765571}
   player_SpawnPos: {fileID: 416645220}

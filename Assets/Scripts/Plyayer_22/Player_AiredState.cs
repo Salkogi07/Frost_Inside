@@ -12,10 +12,8 @@ namespace Script.Plyayer_22
         {
             base.Update();
 
-            Debug.Log("air");
-
-            if (player.MoveInput.x != 0)
-                player.SetVelocity(player.MoveInput.x * (player.moveSpeed * player.inAirMoveMultiplier) , rb.linearVelocity.y);
+            if (player.MoveInput != 0)
+                player.SetVelocity(player.MoveInput * (player.WalkSpeed * player.inAirMoveMultiplier) , rigidbody.linearVelocity.y);
         }
     }
 }

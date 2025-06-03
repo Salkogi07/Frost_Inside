@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 namespace Script.Plyayer_22
 {
@@ -7,23 +8,26 @@ namespace Script.Plyayer_22
         public Animator Anim { get; private set; }
         public Rigidbody2D Rigidbody2D { get; private set; }
         
-        public PlayerInputSet Input { get; private set; }
         private StateMachine _stateMachine;
 
         public Player_IdleState IdleState { get; private set; }
-        public Player_MoveState MoveState { get; private set; }
+        public Player_WalkState WalkState { get; private set; }
+        public Player_RunState RunState { get; private set; }
         public Player_JumpState JumpState { get; private set; }
         public Player_FallState FallState { get; private set; }
 
 
         [Header("Movement details")]
-        public float moveSpeed;
-        public float jumpForce;
+        public float WalkSpeed;
+        public float RunSpeed;
+        public float JumpForce;
 
         [Range(0,1)]
         public float inAirMoveMultiplier = .7f;
         private bool _isFacingRight = false;
-        public Vector2 MoveInput { get; private set; }
+        
+        private KeyCode _lastKey = KeyCode.None;
+        public float MoveInput { get; private set; } = 0f;
 
         [Header("Collision detection")]
         [SerializeField] private Transform groundCheck;
@@ -40,26 +44,14 @@ namespace Script.Plyayer_22
             Rigidbody2D = GetComponent<Rigidbody2D>();
 
             _stateMachine = new StateMachine();
-            Input = new PlayerInputSet();
 
             IdleState = new Player_IdleState(this, _stateMachine, "idle");
-            MoveState = new Player_MoveState(this, _stateMachine, "move");
+            WalkState = new Player_WalkState(this, _stateMachine, "walk");
+            RunState = new Player_RunState(this, _stateMachine, "run");
             JumpState = new Player_JumpState(this, _stateMachine, "jumpFall");
             FallState = new Player_FallState(this, _stateMachine, "jumpFall");
         }
-
-        private void OnEnable()
-        {
-            Input.Enable();
-
-            Input.Player.Movement.performed += ctx => MoveInput = ctx.ReadValue<Vector2>();
-            Input.Player.Movement.canceled += ctx => MoveInput = Vector2.zero;
-        }
-
-        private void OnDisable()
-        {
-            Input.Disable();
-        }
+        
 
         private void Start()
         {
@@ -68,6 +60,8 @@ namespace Script.Plyayer_22
 
         private void Update()
         {
+            ProcessKeyboardInput();
+            
             _stateMachine.UpdateActiveState();
         }
 
@@ -75,6 +69,26 @@ namespace Script.Plyayer_22
         {
             HandleCollisionDetection();
             _stateMachine.FiexedUpdateActiveState();
+        }
+
+        private void ProcessKeyboardInput()
+        {
+            KeyCode leftKey = KeyManager.instance.GetKeyCodeByName("Move Left");
+            KeyCode rightKey = KeyManager.instance.GetKeyCodeByName("Move Right");
+
+            if (Input.GetKeyDown(leftKey)) _lastKey = leftKey;
+            if (Input.GetKeyDown(rightKey)) _lastKey = rightKey;
+            
+            MoveInput = 0;
+            
+            if (_lastKey == KeyManager.instance.GetKeyCodeByName("Move Left") && Input.GetKey(_lastKey))
+            {
+                MoveInput = -1;
+            }
+            else if (_lastKey == KeyManager.instance.GetKeyCodeByName("Move Right") && Input.GetKey(_lastKey))
+            {
+                MoveInput = 1;
+            }
         }
 
         public void SetVelocity(float xVelocity, float yVelocity)

@@ -182,8 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba461457ff358794b96bb0c3076bb131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  jumpForce: 12
+  WalkSpeed: 3
+  RunSpeed: 7
+  JumpForce: 13
   inAirMoveMultiplier: 0.8
   groundCheck: {fileID: 6888678176120883945}
   groundCheckSize: {x: 0.3, y: 0.1}
