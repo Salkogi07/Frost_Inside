@@ -22,8 +22,9 @@ namespace Script.Plyayer_22
         public override void FiexedUpdate()
         {
             base.FiexedUpdate();
-
-            player.SetVelocity(player.MoveInput * player.RunSpeed, rigidbody.linearVelocity.y);
+            
+            player.SetMoveSpeed(player.RunSpeed);
+            player.SetVelocity(player.MoveInput * player.CurrentSpeed, rigidbody.linearVelocity.y);
         }
     }
 }

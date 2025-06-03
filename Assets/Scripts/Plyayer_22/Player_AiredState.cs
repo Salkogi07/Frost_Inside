@@ -13,7 +13,7 @@ namespace Script.Plyayer_22
             base.Update();
 
             if (player.MoveInput != 0)
-                player.SetVelocity(player.MoveInput * (player.WalkSpeed * player.inAirMoveMultiplier) , rigidbody.linearVelocity.y);
+                player.SetVelocity(player.MoveInput * (player.CurrentSpeed * player.inAirMoveMultiplier) , rigidbody.linearVelocity.y);
         }
     }
 }

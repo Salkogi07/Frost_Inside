@@ -6,13 +6,13 @@ public class Stat
 {
     [SerializeField] private int baseValue;
 
-    public List<int> modifiers;
+    public List<int> Modifiers;
 
     public int GetValue()
     {
         int finalValue = baseValue;
 
-        foreach (int modifier in modifiers)
+        foreach (int modifier in Modifiers)
         {
             finalValue += modifier;
         }
@@ -26,11 +26,11 @@ public class Stat
 
     public void AddModifier(int _modifier)
     {
-        modifiers.Add(_modifier);
+        Modifiers.Add(_modifier);
     }
 
     public void RemoveModifier(int _modifier)
     {
-        modifiers.Remove(_modifier);
+        Modifiers.Remove(_modifier);
     }
 }

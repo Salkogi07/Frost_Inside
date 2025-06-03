@@ -18,13 +18,13 @@ namespace Script.Plyayer_22
             if (rigidbody.linearVelocity.y < 0)
                 stateMachine.ChangeState(player.FallState);
 
-            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
-                stateMachine.ChangeState(player.JumpState);
 
             if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Sprint")) && player.MoveInput != 0)
-            {
                 stateMachine.ChangeState(player.RunState);
-            }
+
+            
+            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
+                stateMachine.ChangeState(player.JumpState);
         }
     }
 }

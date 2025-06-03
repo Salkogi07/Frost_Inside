@@ -20,7 +20,8 @@ namespace Script.Plyayer_22
         {
             base.FiexedUpdate();
 
-            player.SetVelocity(player.MoveInput * player.WalkSpeed, rigidbody.linearVelocity.y);
+            player.SetMoveSpeed(player.WalkSpeed);
+            player.SetVelocity(player.MoveInput * player.CurrentSpeed, rigidbody.linearVelocity.y);
         }
     }
 }

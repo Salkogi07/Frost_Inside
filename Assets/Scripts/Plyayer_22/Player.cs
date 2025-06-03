@@ -5,6 +5,7 @@ namespace Script.Plyayer_22
 {
     public class Player : MonoBehaviour
     {
+        public ParticleSystem Dust { get; private set; }
         public Animator Anim { get; private set; }
         public Rigidbody2D Rigidbody2D { get; private set; }
         
@@ -16,10 +17,11 @@ namespace Script.Plyayer_22
         public Player_JumpState JumpState { get; private set; }
         public Player_FallState FallState { get; private set; }
 
-
+        
         [Header("Movement details")]
-        public float WalkSpeed;
-        public float RunSpeed;
+        public float CurrentSpeed { get; private set; }
+        public float WalkSpeed; // 나중에 스탯처리
+        public float RunSpeed; // 나중에 스탯처리
         public float JumpForce;
 
         [Range(0,1)]
@@ -41,6 +43,7 @@ namespace Script.Plyayer_22
         private void Awake()
         {
             Anim = GetComponentInChildren<Animator>();
+            Dust = GetComponentInChildren<ParticleSystem>();
             Rigidbody2D = GetComponent<Rigidbody2D>();
 
             _stateMachine = new StateMachine();
@@ -107,6 +110,9 @@ namespace Script.Plyayer_22
 
         private void Flip()
         {
+            if (IsGroundDetected)
+                Dust.Play();
+            
             transform.Rotate(0, 180, 0);
             _isFacingRight = !_isFacingRight;
         }
@@ -114,6 +120,11 @@ namespace Script.Plyayer_22
         private void HandleCollisionDetection()
         {
             IsGroundDetected = Physics2D.OverlapBox(groundCheck.position, groundCheckSize, 0f, whatIsGround);
+        }
+
+        public void SetMoveSpeed(float speed)
+        {
+            CurrentSpeed = speed;
         }
 
         private void OnDrawGizmos()
