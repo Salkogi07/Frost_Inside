@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8467fac9e5cda59408312586df5258e1
+guid: 91ffb81800b1add43bc823eabca8a308
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2250447470966073246
-    second: Lab_Tile_BackGround_0
+      213: 1714949066122688340
+    second: Lab_Tile_BackGround 1_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Lab_Tile_BackGround_0
+      name: Lab_Tile_BackGround 1_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,30 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2681463d2fdc4c0e0800000000000000
-      internalID: -2250447470966073246
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Lab_Tile_BackGround_1
-      rect:
-        serializedVersion: 2
-        x: 24
-        y: 0
-        width: 24
-        height: 24
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 677629eedb476364cb6566e1728f81c8
-      internalID: 1804929848
+      spriteID: 4577126e619bcc710800000000000000
+      internalID: 1714949066122688340
       vertices: []
       indices: 
       edges: []
@@ -147,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d62ebb4d0076ea84086bcb02f1ce9f8c
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -157,8 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Lab_Tile_BackGround_0: -2250447470966073246
-      Lab_Tile_BackGround_1: 1804929848
+      Lab_Tile_BackGround 1_0: 1714949066122688340
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
