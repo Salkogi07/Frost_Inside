@@ -10,14 +10,14 @@ namespace Script.Plyayer_22
         {
             base.Enter();
 
-            player.SetVelocity(rb.linearVelocity.x, player.jumpForce);
+            player.SetVelocity(rigidbody.linearVelocity.x, player.JumpForce);
         }
 
         public override void Update()
         {
             base.Update();
 
-            if (rb.linearVelocity.y < 0)
+            if (rigidbody.linearVelocity.y < 0)
                 stateMachine.ChangeState(player.FallState);
         }
     }

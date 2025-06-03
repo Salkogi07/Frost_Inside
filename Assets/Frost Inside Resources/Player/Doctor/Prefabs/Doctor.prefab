@@ -182,8 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba461457ff358794b96bb0c3076bb131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  jumpForce: 12
+  WalkSpeed: 4
+  RunSpeed: 7
+  JumpForce: 13
   inAirMoveMultiplier: 0.8
   groundCheck: {fileID: 6888678176120883945}
   groundCheckSize: {x: 0.3, y: 0.1}
@@ -480,7 +481,7 @@ Transform:
   m_GameObject: {fileID: 6679198849221358927}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.015, y: -0.68, z: 0}
+  m_LocalPosition: {x: 0.015, y: -0.7701, z: 0}
   m_LocalScale: {x: 1, y: -1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5251,8 +5252,8 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1186788091
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_RenderMode: 0
   m_MeshDistribution: 0

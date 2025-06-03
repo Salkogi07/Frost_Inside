@@ -9,8 +9,7 @@ namespace Script.Plyayer_22
         protected string animBoolName;
 
         protected Animator anim;
-        protected Rigidbody2D rb;
-        protected PlayerInputSet input;
+        protected Rigidbody2D rigidbody;
 
         public EntityState(Player player, StateMachine stateMachine, string animBoolName)
         {
@@ -19,8 +18,7 @@ namespace Script.Plyayer_22
             this.animBoolName = animBoolName;
 
             anim = player.Anim;
-            rb = player.Rigidbody2D;
-            input = player.Input;
+            rigidbody = player.Rigidbody2D;
         }
 
         public virtual void Enter()
@@ -30,12 +28,12 @@ namespace Script.Plyayer_22
 
         public virtual void Update()
         {
-            anim.SetFloat("yVelocity", rb.linearVelocity.y);
+            anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
         }
 
         public virtual void FiexedUpdate()
         {
-            anim.SetFloat("yVelocity", rb.linearVelocity.y);
+            anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
         }
 
         public virtual void Exit()
