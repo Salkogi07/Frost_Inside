@@ -79,16 +79,29 @@ namespace Script.Plyayer_22
             KeyCode leftKey = KeyManager.instance.GetKeyCodeByName("Move Left");
             KeyCode rightKey = KeyManager.instance.GetKeyCodeByName("Move Right");
 
+            // 마지막으로 누른 키 저장
             if (Input.GetKeyDown(leftKey)) _lastKey = leftKey;
             if (Input.GetKeyDown(rightKey)) _lastKey = rightKey;
-            
+
+            // 현재 눌려 있는 키 확인
+            bool isLeftHeld = Input.GetKey(leftKey);
+            bool isRightHeld = Input.GetKey(rightKey);
+
             MoveInput = 0;
-            
-            if (_lastKey == KeyManager.instance.GetKeyCodeByName("Move Left") && Input.GetKey(_lastKey))
+
+            if (isLeftHeld && isRightHeld)
+            {
+                // 둘 다 눌린 경우는 마지막 누른 키 우선
+                if (_lastKey == leftKey)
+                    MoveInput = -1;
+                else if (_lastKey == rightKey)
+                    MoveInput = 1;
+            }
+            else if (isLeftHeld)
             {
                 MoveInput = -1;
             }
-            else if (_lastKey == KeyManager.instance.GetKeyCodeByName("Move Right") && Input.GetKey(_lastKey))
+            else if (isRightHeld)
             {
                 MoveInput = 1;
             }
