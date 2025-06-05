@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Script.Plyayer_22
 {
-    public class Player_GroundedState : EntityState
+    public class Player_GroundedState : PlayerState
     {
-        public Player_GroundedState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+        public Player_GroundedState(Player player, Player_StateMachine playerStateMachine, string animBoolName) : base(player, playerStateMachine, animBoolName)
         {
         }
 
@@ -13,17 +13,17 @@ namespace Script.Plyayer_22
             base.Update();
             
             //안전 장치
-            /*if(player.IsGroundDetected)
-                player.SetVelocity(rigidbody.linearVelocity.x, 0);*/
+            if(player.IsGroundDetected)
+                player.SetVelocity(rigidbody.linearVelocity.x, 0);
 
             if (rigidbody.linearVelocity.y < 0)
-                stateMachine.ChangeState(player.FallState);
+                playerStateMachine.ChangeState(player.FallState);
 
             if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Sprint")) && player.MoveInput != 0)
-                stateMachine.ChangeState(player.RunState);
+                playerStateMachine.ChangeState(player.RunState);
             
             if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
-                stateMachine.ChangeState(player.JumpState);
+                playerStateMachine.ChangeState(player.JumpState);
         }
     }
 }

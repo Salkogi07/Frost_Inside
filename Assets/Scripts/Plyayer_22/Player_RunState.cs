@@ -4,7 +4,7 @@ namespace Script.Plyayer_22
 {
     public class Player_RunState : Player_GroundedState
     {
-        public Player_RunState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+        public Player_RunState(Player player, Player_StateMachine playerStateMachine, string animBoolName) : base(player, playerStateMachine, animBoolName)
         {
         }
         
@@ -13,10 +13,10 @@ namespace Script.Plyayer_22
             base.Update();
             
             if (player.MoveInput == 0)
-                stateMachine.ChangeState(player.IdleState);
+                playerStateMachine.ChangeState(player.IdleState);
             
             if (Input.GetKeyUp(KeyManager.instance.GetKeyCodeByName("Sprint")))
-                stateMachine.ChangeState(player.WalkState);
+                playerStateMachine.ChangeState(player.WalkState);
         }
 
         public override void FiexedUpdate()

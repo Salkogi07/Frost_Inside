@@ -2,7 +2,7 @@ namespace Script.Plyayer_22
 {
     public class Player_JumpState : Player_AiredState
     {
-        public Player_JumpState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+        public Player_JumpState(Player player, Player_StateMachine playerStateMachine, string animBoolName) : base(player, playerStateMachine, animBoolName)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Script.Plyayer_22
             base.Update();
 
             if (rigidbody.linearVelocity.y < 0)
-                stateMachine.ChangeState(player.FallState);
+                playerStateMachine.ChangeState(player.FallState);
         }
     }
 }

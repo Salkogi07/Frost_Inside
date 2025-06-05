@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace Script.Plyayer_22
 {
-    public class Player_AiredState : EntityState
+    public class Player_AiredState : PlayerState
     {
-        public Player_AiredState(Player player, StateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
+        public Player_AiredState(Player player, Player_StateMachine playerStateMachine, string animBoolName) : base(player, playerStateMachine, animBoolName)
         {
         }
 

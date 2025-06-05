@@ -7,9 +7,9 @@ namespace Script.Plyayer_22
     {
         public ParticleSystem Dust { get; private set; }
         public Animator Anim { get; private set; }
-        public Rigidbody2D Rigidbody2D { get; private set; }
+        public Rigidbody2D Rigidbody { get; private set; }
         
-        private StateMachine _stateMachine;
+        private Player_StateMachine _playerStateMachine;
 
         public Player_IdleState IdleState { get; private set; }
         public Player_WalkState WalkState { get; private set; }
@@ -27,6 +27,7 @@ namespace Script.Plyayer_22
         [Range(0,1)]
         public float inAirMoveMultiplier = .7f;
         private bool _isFacingRight = false;
+        public int FacingDirection { get; private set; } = -1;
         
         private KeyCode _lastKey = KeyCode.None;
         public float MoveInput { get; private set; } = 0f;
@@ -44,34 +45,34 @@ namespace Script.Plyayer_22
         {
             Anim = GetComponentInChildren<Animator>();
             Dust = GetComponentInChildren<ParticleSystem>();
-            Rigidbody2D = GetComponent<Rigidbody2D>();
+            Rigidbody = GetComponent<Rigidbody2D>();
 
-            _stateMachine = new StateMachine();
+            _playerStateMachine = new Player_StateMachine();
 
-            IdleState = new Player_IdleState(this, _stateMachine, "idle");
-            WalkState = new Player_WalkState(this, _stateMachine, "walk");
-            RunState = new Player_RunState(this, _stateMachine, "run");
-            JumpState = new Player_JumpState(this, _stateMachine, "jumpFall");
-            FallState = new Player_FallState(this, _stateMachine, "jumpFall");
+            IdleState = new Player_IdleState(this, _playerStateMachine, "idle");
+            WalkState = new Player_WalkState(this, _playerStateMachine, "walk");
+            RunState = new Player_RunState(this, _playerStateMachine, "run");
+            JumpState = new Player_JumpState(this, _playerStateMachine, "jumpFall");
+            FallState = new Player_FallState(this, _playerStateMachine, "jumpFall");
         }
         
 
         private void Start()
         {
-            _stateMachine.Initialize(IdleState);
+            _playerStateMachine.Initialize(IdleState);
         }
 
         private void Update()
         {
             ProcessKeyboardInput();
             
-            _stateMachine.UpdateActiveState();
+            _playerStateMachine.UpdateActiveState();
         }
 
         private void FixedUpdate()
         {
             HandleCollisionDetection();
-            _stateMachine.FiexedUpdateActiveState();
+            _playerStateMachine.FiexedUpdateActiveState();
         }
 
         private void ProcessKeyboardInput()
@@ -109,7 +110,7 @@ namespace Script.Plyayer_22
 
         public void SetVelocity(float xVelocity, float yVelocity)
         {
-            Rigidbody2D.linearVelocity = new Vector2(xVelocity, yVelocity);
+            Rigidbody.linearVelocity = new Vector2(xVelocity, yVelocity);
             HandleFlip(xVelocity);
         }
 
@@ -128,6 +129,7 @@ namespace Script.Plyayer_22
             
             transform.Rotate(0, 180, 0);
             _isFacingRight = !_isFacingRight;
+            FacingDirection *= -1;
         }
 
         private void HandleCollisionDetection()
