@@ -2,7 +2,7 @@ namespace Script.Plyayer_22
 {
     public class Player_IdleState : Player_GroundedState
     {
-        public Player_IdleState(Player player, StateMachine stateMachine, string stateName) : base(player, stateMachine, stateName)
+        public Player_IdleState(Player player, Player_StateMachine playerStateMachine, string stateName) : base(player, playerStateMachine, stateName)
         {
         }
 
@@ -18,7 +18,7 @@ namespace Script.Plyayer_22
             base.Update();
 
             if (player.MoveInput != 0)
-                stateMachine.ChangeState(player.WalkState);
+                playerStateMachine.ChangeState(player.WalkState);
         }
     }
 }

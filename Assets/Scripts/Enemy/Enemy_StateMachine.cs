@@ -1,16 +1,16 @@
-namespace Script.Plyayer_22
+﻿namespace Scripts.Enemy
 {
-    public class StateMachine
+    public class Enemy_StateMachine
     {
-        public EntityState currentState { get; private set; }
+        public EnemyState currentState { get; private set; }
 
-        public void Initialize(EntityState startState)
+        public void Initialize(EnemyState startState)
         {
             currentState = startState;
             currentState.Enter();
         }
 
-        public void ChangeState(EntityState newState)
+        public void ChangeState(EnemyState newState)
         {
             currentState.Exit();
             currentState = newState;

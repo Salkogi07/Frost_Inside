@@ -2,23 +2,23 @@ using UnityEngine;
 
 namespace Script.Plyayer_22
 {
-    public abstract class EntityState
+    public abstract class PlayerState
     {
         protected Player player;
-        protected StateMachine stateMachine;
+        protected Player_StateMachine playerStateMachine;
         protected string animBoolName;
 
         protected Animator anim;
         protected Rigidbody2D rigidbody;
 
-        public EntityState(Player player, StateMachine stateMachine, string animBoolName)
+        public PlayerState(Player player, Player_StateMachine playerStateMachine, string animBoolName)
         {
             this.player = player;
-            this.stateMachine = stateMachine;
+            this.playerStateMachine = playerStateMachine;
             this.animBoolName = animBoolName;
 
             anim = player.Anim;
-            rigidbody = player.Rigidbody2D;
+            rigidbody = player.Rigidbody;
         }
 
         public virtual void Enter()
