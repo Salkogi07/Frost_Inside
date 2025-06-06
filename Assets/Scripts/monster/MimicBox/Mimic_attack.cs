@@ -28,7 +28,7 @@ public class Mimic_attack : MonoBehaviour
             {
                 Coll = stat.Attack_speed;
                 boxDirector.Pattern = MimicBoxDirector.pattern.Attack;
-                collider.GetComponent<Player_Condition>().TakeDamage(stat.Damage);
+                collider.GetComponent<Player_Condition>().TakeDamage(stat.Damage.GetValue());
                 Debug.Log(Coll);
             }
             else

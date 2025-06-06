@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class Monster_stat : MonoBehaviour
 {
-    [Header("Stats")]
-    [SerializeField] public float Health;
-    [SerializeField] public float MaxHealth;
-    [SerializeField] public int Damage;
-    [SerializeField] public float Attack_speed;
-    [SerializeField] public float Armor;
-    [SerializeField] public float Groggy = 0f;
-    [SerializeField] public float speed = 1f;
+    
+     public float Health;
+     public Stat MaxHealth;
+     public Stat Damage;
+     public float Attack_speed;
+     public Stat Armor;
+     public Stat Groggy;
+     public float speed;
 
     [Header("s")]
     //[SerializeField] public Vector2 range = new Vector2(1f, 1f);
@@ -18,7 +18,7 @@ public class Monster_stat : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Health = MaxHealth;
+        Health = MaxHealth.GetValue();
     }
 
     // Update is called once per frame
@@ -32,6 +32,6 @@ public class Monster_stat : MonoBehaviour
 
     public void damage(float damage)
     {
-        Health -= damage;
+         Health -= damage;
     }
 }
