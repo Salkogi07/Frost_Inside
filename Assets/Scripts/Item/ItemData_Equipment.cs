@@ -43,8 +43,8 @@ public class ItemData_Equipment : ItemData
         playerStats.mining.AddModifier(mining);
         playerStats.armor.AddModifier(armor);
         playerStats.lagging.AddModifier(lagging);
-        playerStats.maxHp.AddModifier(Hp);
-        playerStats.maxTemperature.AddModifier(Temperature);
+        playerStats.MaxHp.AddModifier(Hp);
+        playerStats.MaxTemperature.AddModifier(Temperature);
     }
 
     public void RemoveModifiers()
@@ -54,7 +54,7 @@ public class ItemData_Equipment : ItemData
         playerStats.mining.RemoveModifier(mining);
         playerStats.armor.RemoveModifier(armor);
         playerStats.lagging.RemoveModifier(lagging);
-        playerStats.maxHp.RemoveModifier(Hp);
-        playerStats.maxTemperature.RemoveModifier(Temperature);
+        playerStats.MaxHp.RemoveModifier(Hp);
+        playerStats.MaxTemperature.RemoveModifier(Temperature);
     }
 }

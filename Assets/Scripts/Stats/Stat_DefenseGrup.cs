@@ -7,5 +7,6 @@ namespace Stats
     {
         public Stat Armor;
         public Stat Evasion;
+        public Stat Lagging;
     }
 }

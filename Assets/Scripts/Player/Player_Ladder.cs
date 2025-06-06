@@ -4,7 +4,7 @@ using UnityEngine.Tilemaps;
 
 public class Player_Ladder : MonoBehaviour
 {
-    private Tilemap ladder_Tilemap;
+    /*private Tilemap ladder_Tilemap;
     private Tilemap ladderTop_Tilemap;
     private Player_Stats stats;
     private Rigidbody2D rb;
@@ -169,5 +169,5 @@ public class Player_Ladder : MonoBehaviour
             Gizmos.color = Color.red;
             Gizmos.DrawWireCube(pos.position, boxSize);
         }   
-    }
+    }*/
 }

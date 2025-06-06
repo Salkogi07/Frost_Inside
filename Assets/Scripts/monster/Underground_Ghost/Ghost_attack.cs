@@ -1,3 +1,4 @@
+using Stats;
 using UnityEngine;
 
 public class Ghost_attack : MonoBehaviour
@@ -9,7 +10,7 @@ public class Ghost_attack : MonoBehaviour
 
     private Monster_stat stat;
 
-    public Player_Stats playerstat;
+    public Player_Condition PlayerCondition;
     
     void Start()
     {
@@ -28,7 +29,7 @@ public class Ghost_attack : MonoBehaviour
             stay += Time.deltaTime;
             if (stay >= Maxstay)
             {
-                playerstat.temperature -= 1.25f;
+                PlayerCondition.ChangeTemperature(-1.25f);
                 stay = 0f;
             }
         }

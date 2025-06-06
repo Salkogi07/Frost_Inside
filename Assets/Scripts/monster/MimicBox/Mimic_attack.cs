@@ -1,3 +1,4 @@
+using Stats;
 using UnityEngine;
 
 public class Mimic_attack : MonoBehaviour
@@ -27,7 +28,7 @@ public class Mimic_attack : MonoBehaviour
             {
                 Coll = stat.Attack_speed;
                 boxDirector.Pattern = MimicBoxDirector.pattern.Attack;
-                collider.GetComponent<Player_Stats>().TakeDamage(stat.Damage);
+                collider.GetComponent<Player_Condition>().TakeDamage(stat.Damage);
                 Debug.Log(Coll);
             }
             else

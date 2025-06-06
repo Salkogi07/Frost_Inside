@@ -1,12 +1,18 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using Unity.Cinemachine;
 using System.Linq;
 using System.Collections;
+using Map;
+using Random = UnityEngine.Random;
 
 public class MakeRandomMap : MonoBehaviour
 {
+    private PlayerManager _playerManager;
+    private CinemachineCamera _camera;
+    
     [Header("=== 방 프리팹 및 플레이어 설정 ===")]
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
@@ -84,6 +90,11 @@ public class MakeRandomMap : MonoBehaviour
     public Dictionary<Vector2Int, OreSetting> oreTileDict = new Dictionary<Vector2Int, OreSetting>();
 
     private List<BoundsInt> roomBounds = new List<BoundsInt>();
+
+    private void Awake()
+    {
+        _playerManager = GetComponent<PlayerManager>();
+    }
 
     private void Start()
     {
@@ -333,7 +344,7 @@ public class MakeRandomMap : MonoBehaviour
         );
 
         // 4) 플레이어 방 인덱스 계산
-        Vector3 playerPos = PlayerManager.instance.playerObject.transform.position;
+        Vector3 playerPos = _playerManager.PlayerObject.transform.position;
         Vector3Int playerCell = spreadTilemap.MonsterSpawnTilemap.WorldToCell(playerPos);
         int currentRoomIdx = -1;
         for (int i = 0; i < roomBounds.Count; i++)
@@ -368,7 +379,7 @@ public class MakeRandomMap : MonoBehaviour
             spawnedCount++;
             Debug.Log(
                 $"[Spawned] #{spawnedCount} Room:{roomIdx} " +
-                $"→ diff:{chosen.GetComponent<EnemyStats>().difficulty}"
+                $"→ diff:{chosen.GetComponent<Enemy_Stats>().difficulty}"
             );
         }
 
@@ -413,7 +424,7 @@ public class MakeRandomMap : MonoBehaviour
         var weightMap = new Dictionary<GameObject, float>();
         foreach (var p in prefabs)
         {
-            int diff = p.GetComponent<EnemyStats>().difficulty;
+            int diff = p.GetComponent<Enemy_Stats>().difficulty;
             weightMap[p] = (diff == 1 ? w1
                              : diff == 2 ? w2
                              : w3);
@@ -421,11 +432,11 @@ public class MakeRandomMap : MonoBehaviour
 
         // 6) 디버그 로그: 난이도별 확률 계산
         float totalW = weightMap.Values.Sum();
-        float p1 = weightMap.Where(kv => kv.Key.GetComponent<EnemyStats>().difficulty == 1)
+        float p1 = weightMap.Where(kv => kv.Key.GetComponent<Enemy_Stats>().difficulty == 1)
                             .Sum(kv => kv.Value) / totalW;
-        float p2 = weightMap.Where(kv => kv.Key.GetComponent<EnemyStats>().difficulty == 2)
+        float p2 = weightMap.Where(kv => kv.Key.GetComponent<Enemy_Stats>().difficulty == 2)
                             .Sum(kv => kv.Value) / totalW;
-        float p3 = weightMap.Where(kv => kv.Key.GetComponent<EnemyStats>().difficulty == 3)
+        float p3 = weightMap.Where(kv => kv.Key.GetComponent<Enemy_Stats>().difficulty == 3)
                             .Sum(kv => kv.Value) / totalW;
         Debug.Log($"[Spawn Prob] Room:{roomIdx} Depth:{depthNorm:P2} Time:{timeNorm:P2} → D1:{p1:P2} D2:{p2:P2} D3:{p3:P2}");
 
@@ -453,16 +464,11 @@ public class MakeRandomMap : MonoBehaviour
 
     private void SettingManager()
     {
-        PlayerManager manager = PlayerManager.instance;
-        manager.playerObject = GameObject.FindGameObjectWithTag("Player");
-        manager.playerStats = manager.playerObject.GetComponent<Player_Stats>();
-        manager.playerMove = manager.playerObject.GetComponent<Player_Move>(); 
-        manager.playerDrop = manager.playerObject.GetComponent<Player_ItemDrop>();
-        manager.cam = GameObject.FindGameObjectWithTag("CinemachineCamera").GetComponent<CinemachineCamera>();
-        manager.SettingCam();
+        _camera = GameObject.FindGameObjectWithTag("CinemachineCamera").GetComponent<CinemachineCamera>();
+        _camera.Follow = _playerManager.PlayerObject.transform;
+        _camera.LookAt = _playerManager.PlayerObject.transform;
 
         GameManager.instance.isSetting = true;
-
     }
 
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)

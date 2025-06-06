@@ -2,12 +2,13 @@
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 using System.Linq;
+using Stats;
 
 public abstract class BaseTileMiner : MonoBehaviour
 {
     [Header("Component")]
     protected Player_Move playerMove;
-    protected Player_Stats stats;
+    protected Player_Condition playerCondition;
 
     [Header("Mining Settings")]
     // 단일 Tilemap → 여러 Tilemap 배열로 변경
@@ -38,7 +39,7 @@ public abstract class BaseTileMiner : MonoBehaviour
     protected virtual void Awake()
     {
         playerMove = GetComponent<Player_Move>();
-        stats = GetComponent<Player_Stats>();
+        playerCondition = GetComponent<Player_Condition>();
         if (player == null) player = transform;
 
         if (tilemaps == null || tilemaps.Length == 0)
@@ -106,7 +107,7 @@ public abstract class BaseTileMiner : MonoBehaviour
     }
 
     protected virtual bool CanUpdate()
-        => !stats.isDead && !Inventory.instance.isInvenOpen;
+        => !playerCondition.CheckIsDead() && !Inventory.instance.isInvenOpen;
 
     protected virtual Vector3Int GetMouseTilePosition()
     {

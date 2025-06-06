@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class EnemyStats : MonoBehaviour
+public class Enemy_Stats : MonoBehaviour
 {
     [Header("Hp info")]
     [SerializeField] public float hp = 0;

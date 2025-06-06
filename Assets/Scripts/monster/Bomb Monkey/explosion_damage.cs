@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Stats;
 
 public class explosion_damage : MonoBehaviour
 {
@@ -32,7 +33,7 @@ public class explosion_damage : MonoBehaviour
             if (collider.tag == "Player")
             {
                 hasExploded = true;
-                collider.GetComponent<Player_Stats>().TakeDamage(damage);
+                collider.GetComponent<Player_Condition>().TakeDamage(damage);
             }
             if (collider.tag == "Player")
             {

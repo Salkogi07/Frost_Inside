@@ -19,10 +19,10 @@ public class Player_Move : MonoBehaviour
     public bool isSprinting = false;
 
     [Header("Stamina info")]
-    [SerializeField] private float sprintCost = 5f; // ÃÊ´ç ½ºÅ×¹Ì³ª °¨¼Ò·®
-    [SerializeField] private float jumpCost = 25f; // ÃÊ´ç ½ºÅ×¹Ì³ª °¨¼Ò·®
-    [SerializeField] private float staminaRecoverRate = 15f; // ÃÊ´ç ½ºÅ×¹Ì³ª È¸º¹·®
-    [SerializeField] private float staminaDecreaseRate = 10f; // ÃÊ´ç ½ºÅ×¹Ì³ª °©¼Ò·®
+    [SerializeField] private float sprintCost = 5f; // ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½×¹Ì³ï¿½ ï¿½ï¿½ï¿½Ò·ï¿½
+    [SerializeField] private float jumpCost = 25f; // ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½×¹Ì³ï¿½ ï¿½ï¿½ï¿½Ò·ï¿½
+    [SerializeField] private float staminaRecoverRate = 15f; // ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½×¹Ì³ï¿½ È¸ï¿½ï¿½ï¿½ï¿½
+    [SerializeField] private float staminaDecreaseRate = 10f; // ï¿½Ê´ï¿½ ï¿½ï¿½ï¿½×¹Ì³ï¿½ ï¿½ï¿½ï¿½Ò·ï¿½
 
     [Header("Stamina Cooldown")]
     [SerializeField] private float staminaCooldownDuration = 2f;
@@ -76,11 +76,11 @@ public class Player_Move : MonoBehaviour
         if (!GameManager.instance.isSetting)
             return;
 
-        if (player_tileMing.isMining || stats.isDead)
+        /*if (player_tileMing.isMining || stats.isDead)
         {
             rb.linearVelocityX = 0;
             return;
-        }
+        }*/
 
         Sprint();
         HandleStamina();
@@ -95,10 +95,10 @@ public class Player_Move : MonoBehaviour
 
     void Sprint()
     {
-        if (player_ladder.IsClimbing || Inventory.instance.isInvenOpen)
-            return;
+        /*if (player_ladder.IsClimbing || Inventory.instance.isInvenOpen)
+            return;*/
 
-        // Shift¸¦ ´©¸£°í ÀÖ°í, ½ºÅ×¹Ì³ª°¡ ³²¾ÆÀÖÀ» °æ¿ì ´Þ¸®±â
+        // Shiftï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½, ï¿½ï¿½ï¿½×¹Ì³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Þ¸ï¿½ï¿½ï¿½
         if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Sprint")) && moveInput != 0)
         {
             isSprinting = true;
@@ -121,7 +121,7 @@ public class Player_Move : MonoBehaviour
 
         moveInput = 0;
 
-        if(!player_ladder.IsClimbing)
+        /*if(!player_ladder.IsClimbing)
         {
             rb.gravityScale = gravityScale;
 
@@ -137,12 +137,12 @@ public class Player_Move : MonoBehaviour
                 }
             }
             rb.linearVelocity = new Vector2(moveInput * currentSpeed / (isAttack ? 2 : 1), rb.linearVelocityY);
-        }
+        }*/
     }
 
     void HandleStamina()
     {
-        float tempRatio = stats.temperature / stats.maxTemperature.GetValue();
+        /*float tempRatio = stats.temperature / stats.MaxTemperature.GetValue();
         int tempState = Temp(tempRatio);
 
         if (isSprinting)
@@ -172,9 +172,9 @@ public class Player_Move : MonoBehaviour
             }
             else if (tempState == 2)
             {
-                float targetStamina = stats.maxStamina.GetValue() * 0.5f;
+                float targetStamina = stats.MaxStamina.GetValue() * 0.5f;
 
-                // ½ºÅÂ¹Ì³ª°¡ ¸ñÇ¥Ä¡º¸´Ù ³ô´Ù¸é ¼­¼­È÷ °¨¼Ò
+                // ï¿½ï¿½ï¿½Â¹Ì³ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 if (stats.stamina > targetStamina)
                 {
                     stats.stamina -= staminaDecreaseRate * Time.deltaTime;
@@ -183,7 +183,7 @@ public class Player_Move : MonoBehaviour
                 }
                 else
                 {
-                    // ¸ñÇ¥Ä¡º¸´Ù ³·À¸¸é È¸º¹ (ÃÖ´ë targetStamina±îÁö¸¸ È¸º¹)
+                    // ï¿½ï¿½Ç¥Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ (ï¿½Ö´ï¿½ targetStaminaï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½)
                     stats.stamina += staminaRecoverRate * Time.deltaTime;
                     if (stats.stamina > targetStamina)
                         stats.stamina = targetStamina;
@@ -198,13 +198,13 @@ public class Player_Move : MonoBehaviour
                 else
                 {
                     stats.stamina += staminaRecoverRate * Time.deltaTime;
-                    if (stats.stamina > stats.maxStamina.GetValue())
+                    if (stats.stamina > stats.MaxStamina.GetValue())
                     {
-                        stats.stamina = stats.maxStamina.GetValue();
+                        stats.stamina = stats.MaxStamina.GetValue();
                     }
                 }
             }
-        }
+        }*/
     }
 
     private static int Temp(float tempRatio)
@@ -212,19 +212,19 @@ public class Player_Move : MonoBehaviour
         int tempState;
         if (tempRatio >= 0.75f)
         {
-            tempState = 0; // Á¤»ó Ã¼¿Â
+            tempState = 0; // ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
         }
         else if (tempRatio >= 0.5f)
         {
-            tempState = 1; // ¾à°£ Ãß¿ò
+            tempState = 1; // ï¿½à°£ ï¿½ß¿ï¿½
         }
         else if (tempRatio >= 0.25f)
         {
-            tempState = 2; // ¸¹ÀÌ Ãß¿ò
+            tempState = 2; // ï¿½ï¿½ï¿½ï¿½ ï¿½ß¿ï¿½
         }
         else
         {
-            tempState = 3; // ±Øµµ·Î Ãß¿ò
+            tempState = 3; // ï¿½Øµï¿½ï¿½ï¿½ ï¿½ß¿ï¿½
         }
 
         return tempState;
@@ -286,7 +286,7 @@ public class Player_Move : MonoBehaviour
             }
         }
 
-        if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f && !isJumping)
+        /*if (coyoteTimeCounter > 0f && jumpBufferCounter > 0f && !isJumping)
         {
             if (stats.stamina >= jumpCost)
             {
@@ -305,7 +305,7 @@ public class Player_Move : MonoBehaviour
                 isJumpCut = true;
                 doubleJumpAvailable = false;
             }
-        }
+        }*/
 
         if (isJumpCut && Input.GetKeyUp(KeyManager.instance.GetKeyCodeByName("Jump")) && rb.linearVelocityY > 0f)
         {

@@ -3,12 +3,12 @@ using UnityEngine;
 public class Player_ItemPicker : MonoBehaviour
 {
     Player_Move player_move;
-    Player_Stats stats;
+    //Player_Stats stats;
 
-    [Tooltip("¾ÆÀÌÅÛÀ» ÁÝ±â À§ÇÑ ÃÖ´ë °Å¸®")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý±ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½Å¸ï¿½")]
     public float pickupRange = 3f;
 
-    [Tooltip("¾ÆÀÌÅÛ ÁÝ±â ÈÄ Äð´Ù¿î ½Ã°£ (ÃÊ)")]
+    [Tooltip("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý±ï¿½ ï¿½ï¿½ ï¿½ï¿½Ù¿ï¿½ ï¿½Ã°ï¿½ (ï¿½ï¿½)")]
     public float pickupCooldown = 0.5f;
 
     private float nextPickupTime = 0f;
@@ -16,15 +16,14 @@ public class Player_ItemPicker : MonoBehaviour
     private void Awake()
     {
         player_move = GetComponent<Player_Move>();
-        stats = GetComponent<Player_Stats>();
+        //stats = GetComponent<Player_Stats>();
     }
 
     void Update()
     {
-        if(stats.isDead || Inventory.instance.isInvenOpen)
-            return;
-
-        // ÇöÀç ½Ã°£°ú ºñ±³ÇÏ¿© Äð´Ù¿îÀÌ Áö³µÀ» ¶§¸¸ ½ÇÇà
+        /*if(stats.isDead || Inventory.instance.isInvenOpen)
+            return;*/
+        
         if (Time.time >= nextPickupTime && Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Pick Up Item")))
         {
             GameObject nearestItem = FindNearestItem();
@@ -44,16 +43,14 @@ public class Player_ItemPicker : MonoBehaviour
     {
         Inventory inventory = Inventory.instance;
         InventoryItem newItem = itemPickup.item;
-
-        // Äü½½·Ô¿¡ Ãß°¡ °¡´ÉÇÑÁö È®ÀÎ ÈÄ ÀÌµ¿
+        
         if (inventory.CanQuickItem() && inventory.GetCheck_QuiSlot_Item())
         {
             inventory.Move_QuickSlot_Item(newItem, inventory.selectedQuickSlot);
             Destroy(nearestItem);
             return;
         }
-
-        // ÀÎº¥Åä¸®¿¡ Ãß°¡ °¡´ÉÇÑÁö È®ÀÎ ÈÄ Ãß°¡
+        
         if (inventory.isPocket && inventory.CanAddItem())
         {
             inventory.AddItem(newItem);
@@ -61,8 +58,7 @@ public class Player_ItemPicker : MonoBehaviour
             return;
         }
     }
-
-    // ÇÃ·¹ÀÌ¾î ±âÁØ °¡Àå °¡±î¿î ¾ÆÀÌÅÛ Ã£±â
+    
     GameObject FindNearestItem()
     {
         GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
