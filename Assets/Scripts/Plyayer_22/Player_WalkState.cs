@@ -12,7 +12,7 @@ namespace Script.Plyayer_22
         {
             base.Update();
             
-            player.PlayerCondition.StaminaRecovery();
+            player.Condition.StaminaRecovery();
             
             if (player.MoveInput == 0)
                 playerStateMachine.ChangeState(player.IdleState);

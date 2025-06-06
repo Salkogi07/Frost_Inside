@@ -10,7 +10,7 @@ namespace Script.Plyayer_22
         {
             base.Update();
             
-            player.PlayerCondition.StaminaRecovery();
+            player.Condition.StaminaRecovery();
             
             if (player.IsGroundDetected)
                 playerStateMachine.ChangeState(player.IdleState);

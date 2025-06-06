@@ -68,7 +68,7 @@ public class UIManager : MonoBehaviour
 
     private void Start()
     {
-        QuickSlotUpdate();
+        //QuickSlotUpdate();
     }
 
     private void Update()

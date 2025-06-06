@@ -9,7 +9,7 @@ namespace Script.Plyayer_22
         public override void Enter()
         {
             base.Enter();
-            player.PlayerCondition.UseStaminaToJump();
+            player.Condition.UseStaminaToJump();
             player.SetVelocity(rigidbody.linearVelocity.x, player.JumpForce);
         }
 

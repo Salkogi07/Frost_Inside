@@ -8,7 +8,8 @@ namespace Script.Plyayer_22
     {
         public ParticleSystem Dust { get; private set; }
         public Player_Stats Stats { get; private set; }
-        public Player_Condition PlayerCondition { get; private set; }
+        public Player_Condition Condition { get; private set; }
+        public Player_TileMining TileMining { get; private set; }
         public Animator Anim { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
         
@@ -19,6 +20,7 @@ namespace Script.Plyayer_22
         public Player_RunState RunState { get; private set; }
         public Player_JumpState JumpState { get; private set; }
         public Player_FallState FallState { get; private set; }
+        public Player_MiningState MiningState { get; private set; }
 
         
         [Header("Movement details")]
@@ -43,7 +45,8 @@ namespace Script.Plyayer_22
         private void Awake()
         {
             Stats = GetComponent<Player_Stats>();
-            PlayerCondition = GetComponent<Player_Condition>();
+            Condition = GetComponent<Player_Condition>();
+            TileMining = GetComponent<Player_TileMining>();
             
             Anim = GetComponentInChildren<Animator>();
             Dust = GetComponentInChildren<ParticleSystem>();
@@ -56,6 +59,7 @@ namespace Script.Plyayer_22
             RunState = new Player_RunState(this, _playerStateMachine, "run");
             JumpState = new Player_JumpState(this, _playerStateMachine, "jumpFall");
             FallState = new Player_FallState(this, _playerStateMachine, "jumpFall");
+            MiningState = new Player_MiningState(this, _playerStateMachine, "mining");
         }
         
 

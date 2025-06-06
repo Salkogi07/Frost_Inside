@@ -10,7 +10,8 @@ public class Player_TileMining : BaseTileMiner
     private MakeRandomMap mapGenerator;    // oreTileDict 참조
 
     [Header("Tool Settings")]
-    public float toolPower = 10f;          // 플레이어의 채굴력
+    private float _toolPower = 10f;         // 플레이어의 채굴력
+    private bool _canMining = true;
 
     protected override void Awake()
     {
@@ -26,19 +27,20 @@ public class Player_TileMining : BaseTileMiner
         if (!tileAlphaDict.ContainsKey(tilePos))
             tileAlphaDict[tilePos] = 1f;
 
+        if(!_canMining)
+            return;
+
         var map = GetTilemapAt(tilePos);
         var tileBase = map.GetTile(tilePos);
 
-        // 방어력 조회
+        // ▶ 방어력 조회
         float defense = miningSettings.GetDefense(tileBase);
-        // 채굴 시간 = miningTime × (defense ÷ toolPower)
-        float timeToMine = miningTime * (defense / Mathf.Max(toolPower, 0.0001f));
-        // alpha 감소량 = 1 ÷ timeToMine 초 만큼 줄어들도록
+        // ▶ 채굴 시간 계산 = miningTime × (defense ÷ toolPower)
+        float timeToMine = miningTime * (defense / Mathf.Max(_toolPower, 0.0001f));
+        // ▶ 한 프레임당 알파 감소량 = Time.deltaTime ÷ timeToMine
         float decrease = Time.deltaTime / timeToMine;
 
         tileAlphaDict[tilePos] -= decrease;
-
-        // 색상 적용 (투명도 조절)  
         ApplyTileAlpha(tilePos, Mathf.Clamp01(tileAlphaDict[tilePos]));
 
         if (tileAlphaDict[tilePos] <= 0f)
@@ -67,19 +69,36 @@ public class Player_TileMining : BaseTileMiner
                    .SetupItem(ore.dropItem, Vector2.zero);
 
             InventoryItem data = dropObj.GetComponent<ItemObject>().item;
-
             int price = Random.Range(data.data.priceRange.x, data.data.priceRange.y + 1);
             data.price = price;
             mapGenerator.oreTileDict.Remove(key);
         }
 
-        // 3) OreTilemap에서 채굴된 타일 제거
+        // 3) OreTilemap에서 타일 제거
         spreadTilemap.OreTilemap.SetTile(tilePos, null);
         spreadTilemap.OreTilemap.RefreshTile(tilePos);
 
         // 4) 기본 채굴 완료 처리 (타일 제거, 하이라이트 해제 등)
         base.FinishMining(tilePos);
     }
+    
+    public bool CanMining() => _canMining;
 
-    // 필요 시 HandleMining, ApplyTileAlpha 등을 오버라이드하여 확장 가능
+    public void SetToolPower(float power)
+    {
+        _toolPower = power;
+    }
+
+    public void CanMiningToTrue()
+    {
+        _canMining = true;
+    }
+
+    public void CanMiningToFalse()
+    {
+        _canMining = false;
+        // 채굴 도중 중단 시에는 꼭 isMining도 false로 처리
+        isMining = false;
+        currentMiningTile = null;
+    }
 }

@@ -107,7 +107,7 @@ public abstract class BaseTileMiner : MonoBehaviour
     }
 
     protected virtual bool CanUpdate()
-        => !playerCondition.CheckIsDead() && !Inventory.instance.isInvenOpen;
+        => !playerCondition.CheckIsDead()/* && !Inventory.instance.isInvenOpen*/;
 
     protected virtual Vector3Int GetMouseTilePosition()
     {
