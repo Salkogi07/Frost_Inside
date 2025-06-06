@@ -12,6 +12,8 @@ namespace Script.Plyayer_22
         {
             base.Update();
             
+            player.PlayerCondition.StaminaRecovery();
+            
             if (player.MoveInput == 0)
                 playerStateMachine.ChangeState(player.IdleState);
         }
@@ -20,7 +22,7 @@ namespace Script.Plyayer_22
         {
             base.FiexedUpdate();
 
-            player.SetMoveSpeed(player.WalkSpeed);
+            player.SetMoveSpeed(player.Stats.WalkSpeed);
             player.SetVelocity(player.MoveInput * player.CurrentSpeed, rigidbody.linearVelocity.y);
         }
     }

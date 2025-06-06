@@ -1,11 +1,14 @@
 using UnityEngine;
 using System.Collections;
+using Stats;
 
 namespace Script.Plyayer_22
 {
     public class Player : MonoBehaviour
     {
         public ParticleSystem Dust { get; private set; }
+        public Player_Stats Stats { get; private set; }
+        public Player_Condition PlayerCondition { get; private set; }
         public Animator Anim { get; private set; }
         public Rigidbody2D Rigidbody { get; private set; }
         
@@ -20,8 +23,6 @@ namespace Script.Plyayer_22
         
         [Header("Movement details")]
         public float CurrentSpeed { get; private set; }
-        public float WalkSpeed; // 나중에 스탯처리
-        public float RunSpeed; // 나중에 스탯처리
         public float JumpForce;
 
         [Range(0,1)]
@@ -36,13 +37,14 @@ namespace Script.Plyayer_22
         [SerializeField] private Transform groundCheck;
         [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
         [SerializeField] private LayerMask whatIsGround;
-
-        [SerializeField] private float groundCheckDistance;
         public bool IsGroundDetected { get; private set; }
 
 
         private void Awake()
         {
+            Stats = GetComponent<Player_Stats>();
+            PlayerCondition = GetComponent<Player_Condition>();
+            
             Anim = GetComponentInChildren<Animator>();
             Dust = GetComponentInChildren<ParticleSystem>();
             Rigidbody = GetComponent<Rigidbody2D>();
@@ -146,8 +148,6 @@ namespace Script.Plyayer_22
         {
             Gizmos.color = Color.green;
             Gizmos.DrawWireCube(groundCheck.position, groundCheckSize);
-
-            //Gizmos.DrawLine(transform.position, transform.position + new Vector3(0, -groundCheckDistance));
         }
     }
 }

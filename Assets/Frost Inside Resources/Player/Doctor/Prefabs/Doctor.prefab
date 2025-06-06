@@ -183,8 +183,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba461457ff358794b96bb0c3076bb131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 4
-  RunSpeed: 7
   JumpForce: 13
   inAirMoveMultiplier: 0.8
   groundCheck: {fileID: 6888678176120883945}
@@ -192,7 +190,6 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
-  groundCheckDistance: 0.85
 --- !u!114 &7283335558516981223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,6 +218,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bde7980eb8ea5e478115fc1e8e78032, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  WalkSpeed: 4
+  RunSpeed: 7
+  SprintCost: 10
+  JumpCost: 15
+  StaminaRecoverRate: 15
+  staminaDecreaseRate: 10
   MaxHp:
     baseValue: 100
     Modifiers: 

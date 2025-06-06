@@ -9,7 +9,9 @@ namespace Script.Plyayer_22
         public override void Update()
         {
             base.Update();
-
+            
+            player.PlayerCondition.StaminaRecovery();
+            
             if (player.IsGroundDetected)
                 playerStateMachine.ChangeState(player.IdleState);
         }

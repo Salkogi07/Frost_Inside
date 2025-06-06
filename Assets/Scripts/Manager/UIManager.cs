@@ -73,10 +73,10 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        UpdateInventory();
+        //UpdateInventory();
+        //UpdateQuickSlot();
         UpdateTime();
         UpdateFreezeEdges();
-        UpdateQuickSlot();
     }
 
     private void UpdateQuickSlot()
@@ -187,33 +187,33 @@ public class UIManager : MonoBehaviour
         damageCoroutine = null;
     }
 
-    public void UpdateHp(float min,  float max)
+    public void UpdateHp(float value,  float max)
     {
-        float hpValue = min / max;
+        float hpValue = value / max;
         hpImage.fillAmount = hpValue;
     }
 
-    public void UpdateStamina(float min,  float max)
+    public void UpdateStamina(float value,  float max)
     {
-        float staminaValue = min / max;
+        float staminaValue = value / max;
         steppedFill.SetNormalizedValue(staminaValue);
     }
     
-    public void UpdateWeight(float min,  float max)
+    public void UpdateWeight(float value,  float max)
     {
-        float weightValue = min / max;
+        float weightValue = value / max;
         //무계변경
     }
 
-    public void UpdateTemperature(float min,  float max)
+    public void UpdateTemperature(float value,  float max)
     {
-        float temperatureValue = min / max;
+        float temperatureValue = value / max;
         temperatureImage.fillAmount = temperatureValue;
     }
 
-    public void UpdateTemperatureState(float min,  float max)
+    public void UpdateTemperatureState(float value,  float max)
     {
-        float tempRatio =  min / max;
+        float tempRatio =  value / max;
         int tempState;
         
         if (tempRatio >= 0.75f)

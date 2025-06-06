@@ -3212,60 +3212,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &670090521
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 670090523}
-  - component: {fileID: 670090522}
-  m_Layer: 0
-  m_Name: Inventory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &670090522
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670090521}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1bbb675982942d4fa6acd5ee2f73714, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isPocket: 0
-  isInvenOpen: 0
-  startingItems: []
-  quickSlotItems: []
-  selectedQuickSlot: 0
-  equipment: []
-  inventoryItems: []
-  inventorySlotParent: {fileID: 1694495543}
-  equipmentSlotParent: {fileID: 1190695680}
-  quickSlotParent: {fileID: 462481779}
---- !u!4 &670090523
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 670090521}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &670500906
 GameObject:
   m_ObjectHideFlags: 0
@@ -7025,7 +6971,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1226288859}
-  - component: {fileID: 1226288858}
   - component: {fileID: 1226288857}
   - component: {fileID: 1226288855}
   - component: {fileID: 1226288856}
@@ -7119,27 +7064,6 @@ MonoBehaviour:
   hours: 8
   minutes: 0
   isSetting: 0
---- !u!114 &1226288858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226288854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee27851c40b35714d894586e442c82c6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  playerObject: {fileID: 0}
-  playerStats: {fileID: 0}
-  playerMove: {fileID: 0}
-  playerDrop: {fileID: 0}
-  cam: {fileID: 0}
-  temperatureDropRate: 0.1
-  hpDropRate: 2
-  isNearHeatSource: 0
-  isInColdZone: 0
 --- !u!4 &1226288859
 Transform:
   m_ObjectHideFlags: 0
@@ -7982,6 +7906,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1399778990}
   - component: {fileID: 1399778991}
+  - component: {fileID: 1399778992}
   m_Layer: 0
   m_Name: MakeRandomMap
   m_TagString: Untagged
@@ -8081,6 +8006,19 @@ MonoBehaviour:
       data: {fileID: 11400000, guid: c52d2582232527543b006d252f05dfeb, type: 2}
       price: 0
   oreSpawnChance: 0.005
+--- !u!114 &1399778992
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1399778989}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e296a34b34f7474fada4f449856e6f4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PlayerObject: {fileID: 0}
 --- !u!1 &1409514378
 GameObject:
   m_ObjectHideFlags: 0
@@ -13123,7 +13061,6 @@ SceneRoots:
   - {fileID: 1897997056}
   - {fileID: 1161184186}
   - {fileID: 1226288859}
-  - {fileID: 670090523}
   - {fileID: 619394802}
   - {fileID: 784575628}
   - {fileID: 287746791}
