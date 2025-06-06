@@ -11,11 +11,16 @@ namespace Script.Plyayer_22
         public override void Update()
         {
             base.Update();
+
+            player.Condition.UseStaminaToSprint();
             
             if (player.MoveInput == 0)
                 playerStateMachine.ChangeState(player.IdleState);
             
             if (Input.GetKeyUp(KeyManager.instance.GetKeyCodeByName("Sprint")))
+                playerStateMachine.ChangeState(player.WalkState);
+
+            if (player.Condition.currentStamina.Value <= 0)
                 playerStateMachine.ChangeState(player.WalkState);
         }
 
@@ -23,7 +28,7 @@ namespace Script.Plyayer_22
         {
             base.FiexedUpdate();
             
-            player.SetMoveSpeed(player.RunSpeed);
+            player.SetMoveSpeed(player.Stats.RunSpeed);
             player.SetVelocity(player.MoveInput * player.CurrentSpeed, rigidbody.linearVelocity.y);
         }
     }

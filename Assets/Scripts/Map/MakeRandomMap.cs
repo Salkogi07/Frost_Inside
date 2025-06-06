@@ -460,6 +460,7 @@ public class MakeRandomMap : MonoBehaviour
         GameObject prefab = Character_Manager.instance.currentCharacter.characterPrefab;
         GameObject player = Instantiate(prefab, player_SpawnPos.position, Quaternion.identity);
         player.transform.position = player_SpawnPos.position;
+        _playerManager.PlayerObject = player;
     }
 
     private void SettingManager()
