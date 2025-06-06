@@ -77,11 +77,6 @@ public class UIManager : MonoBehaviour
         UpdateTime();
         UpdateFreezeEdges();
         UpdateQuickSlot();
-
-        /*UpdateHp();
-        UpdateStamina();
-        UpdateTemperature();
-        UpdateTemperatureState();*/
     }
 
     private void UpdateQuickSlot()
@@ -192,33 +187,34 @@ public class UIManager : MonoBehaviour
         damageCoroutine = null;
     }
 
-    /*public void UpdateHp()
+    public void UpdateHp(float min,  float max)
     {
-        Player_Stats stats = PlayerManager.instance.playerStats;
-        float hpValue = stats.GetHp() / stats.MaxHp.GetValue();
+        float hpValue = min / max;
         hpImage.fillAmount = hpValue;
     }
 
-    public void UpdateStamina()
+    public void UpdateStamina(float min,  float max)
     {
-        Player_Stats stats = PlayerManager.instance.playerStats;
-        float staminaValue = stats.GetStamina() / stats.MaxStamina.GetValue();
-        
+        float staminaValue = min / max;
         steppedFill.SetNormalizedValue(staminaValue);
     }
-
-    public void UpdateTemperature()
+    
+    public void UpdateWeight(float min,  float max)
     {
-        Player_Stats stats = PlayerManager.instance.playerStats;
-        float temperatureValue = stats.GetTemperature() / stats.MaxTemperature.GetValue();
+        float weightValue = min / max;
+        //무계변경
+    }
+
+    public void UpdateTemperature(float min,  float max)
+    {
+        float temperatureValue = min / max;
         temperatureImage.fillAmount = temperatureValue;
     }
 
-    public void UpdateTemperatureState()
+    public void UpdateTemperatureState(float min,  float max)
     {
-        Player_Stats stats = PlayerManager.instance.playerStats;
-        float tempRatio =  stats.GetTemperature() / stats.MaxTemperature.GetValue();
-        int tempState = 0;
+        float tempRatio =  min / max;
+        int tempState;
         
         if (tempRatio >= 0.75f)
         {
@@ -260,7 +256,7 @@ public class UIManager : MonoBehaviour
         }
         
         temperatureImage.sprite = temperatureSprites[tempState];
-    }*/
+    }
 
     private void SetImageAlpha(Image image, float alpha)
     {

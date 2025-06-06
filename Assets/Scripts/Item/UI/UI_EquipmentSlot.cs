@@ -13,8 +13,8 @@ public class UI_EquipmentSlot : UI_ItemSlot
 
     protected override void ThrowItem()
     {
-        PlayerManager.instance.playerDrop
-                     .EquipmentSlot_Throw(item.data);
+        /*PlayerManager.instance.playerDrop
+                     .EquipmentSlot_Throw(item.data);*/
 
         if (UIManager.instance.itemToolTip.gameObject.activeSelf)
         {
@@ -42,8 +42,8 @@ public class UI_EquipmentSlot : UI_ItemSlot
         }
         else
         {
-            var drop = PlayerManager.instance.playerStats.GetComponent<Player_ItemDrop>();
-            drop.Unequipment_ItemDrop(item.data);
+            /*var drop = PlayerManager.instance.playerStats.GetComponent<Player_ItemDrop>();
+            drop.Unequipment_ItemDrop(item.data);*/
             CleanUpSlot();
         }
     }

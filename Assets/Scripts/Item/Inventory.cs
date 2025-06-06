@@ -78,7 +78,7 @@ public class Inventory : MonoBehaviour
             {
                 if(quickSlotItems[selectedQuickSlot]?.data != null)
                 {
-                    PlayerManager.instance.playerDrop.QuickSlot_Throw(quickSlotItems[selectedQuickSlot].data, selectedQuickSlot);
+                    //PlayerManager.instance.playerDrop.QuickSlot_Throw(quickSlotItems[selectedQuickSlot].data, selectedQuickSlot);
                     return;
                 }
             }
@@ -87,12 +87,12 @@ public class Inventory : MonoBehaviour
 
     private void NotPocket_ItemDrop()
     {
-        Player_ItemDrop itemDrop = PlayerManager.instance.playerStats.GetComponent<Player_ItemDrop>();
+        //Player_ItemDrop itemDrop = PlayerManager.instance.playerStats.GetComponent<Player_ItemDrop>();
         for (int i = 0; i < inventoryItems.Length; i++)
         {
             if (inventoryItems[i]?.data != null)
             {
-                itemDrop.Pocket_Inventory_Drop(inventoryItems[i].data, i);
+                //itemDrop.Pocket_Inventory_Drop(inventoryItems[i].data, i);
                 inventoryItems[i] = null;
             }
         }

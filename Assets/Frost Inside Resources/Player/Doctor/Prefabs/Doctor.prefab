@@ -77,9 +77,10 @@ GameObject:
   - component: {fileID: 2093785360371588388}
   - component: {fileID: 3255006627929712995}
   - component: {fileID: 6439846600469785769}
+  - component: {fileID: 7283335558516981223}
+  - component: {fileID: 3316583795968269838}
   - component: {fileID: 8710203413524532382}
   - component: {fileID: 8632942042615940793}
-  - component: {fileID: 3316583795968269838}
   m_Layer: 6
   m_Name: Doctor
   m_TagString: Player
@@ -192,6 +193,66 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheckDistance: 0.85
+--- !u!114 &7283335558516981223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6b8b8b2e4f4bb2bcb3cf591bb41c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  temperatureDropRate: 1
+  frozenHpDropRate: 2
+  isNearHeatSource: 0
+  isInColdZone: 0
+--- !u!114 &3316583795968269838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bde7980eb8ea5e478115fc1e8e78032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHp:
+    baseValue: 100
+    Modifiers: 
+  MaxStamina:
+    baseValue: 100
+    Modifiers: 
+  MaxWeight:
+    baseValue: 100
+    Modifiers: 
+  MaxTemperature:
+    baseValue: 100
+    Modifiers: 
+  Mining:
+    baseValue: 10
+    Modifiers: 
+  Defense:
+    Armor:
+      baseValue: 0
+      Modifiers: 
+    Evasion:
+      baseValue: 0
+      Modifiers: 
+    Lagging:
+      baseValue: 0
+      Modifiers: 
+  Offense:
+    Damage:
+      baseValue: 0
+      Modifiers: 
+    Ice_Damge:
+      baseValue: 0
+      Modifiers: 
 --- !u!114 &8710203413524532382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -219,47 +280,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
---- !u!114 &3316583795968269838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bde7980eb8ea5e478115fc1e8e78032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isDead: 0
-  mining:
-    baseValue: 0
-    modifiers: 
-  damage:
-    baseValue: 0
-    modifiers: 
-  armor:
-    baseValue: 0
-    modifiers: 
-  lagging:
-    baseValue: 0
-    modifiers: 
-  hp: 0
-  maxHp:
-    baseValue: 100
-    modifiers: 
-  stamina: 0
-  maxStamina:
-    baseValue: 100
-    modifiers: 
-  weight: 0
-  maxWeight:
-    baseValue: 100
-    modifiers: 
-  temperature: 100
-  maxTemperature:
-    baseValue: 100
-    modifiers: 
 --- !u!1 &4241109382183132690
 GameObject:
   m_ObjectHideFlags: 0

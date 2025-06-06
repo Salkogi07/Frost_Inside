@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using R3;
 
 namespace Stats
 {
@@ -17,34 +18,62 @@ namespace Stats
         public bool isNearHeatSource = false;
         public bool isInColdZone = false;
 
-        public float currentHp { get; private set; }
-        public float currentStamina { get; private set; }
-        public float currentWeight { get; private set; }
-        public float currentTemperature { get; private set; }
+        public ReactiveProperty<float> currentHp { get; private set; }
+        public ReactiveProperty<float> currentStamina { get; private set; }
+        public ReactiveProperty<float> currentWeight { get; private set; }
+        public ReactiveProperty<float> currentTemperature { get; private set; }
 
         private void Awake()
         {
             stats = GetComponent<Player_Stats>();
         }
 
+        private void Start()
+        {
+            currentHp = new ReactiveProperty<float>(stats.MaxHp.GetValue());
+            currentStamina = new ReactiveProperty<float>(stats.MaxStamina.GetValue());
+            currentWeight = new ReactiveProperty<float>(stats.MaxTemperature.GetValue());
+            currentTemperature = new ReactiveProperty<float>(stats.MaxWeight.GetValue());
+        }
         public bool CheckIsDead() => _isDead;
 
         private void Update()
         {
+            currentHp.Subscribe(hp =>
+            {
+                UIManager.instance.UpdateHp(currentHp.Value,stats.MaxHp.GetValue());
+            });
+            
+            currentStamina.Subscribe(hp =>
+            {
+                UIManager.instance.UpdateStamina(currentStamina.Value,stats.MaxStamina.GetValue());
+            });
+            
+            currentWeight.Subscribe(hp =>
+            {
+                UIManager.instance.UpdateWeight(currentWeight.Value,stats.MaxWeight.GetValue());
+            });
+            
+            currentTemperature.Subscribe(hp =>
+            {
+                UIManager.instance.UpdateTemperature(currentTemperature.Value,stats.MaxTemperature.GetValue());
+                UIManager.instance.UpdateTemperatureState(currentTemperature.Value,stats.MaxTemperature.GetValue());
+            });
+            
             HandleTemperature();
             HandleFrozenHp();
         }
 
         public void AddStamina(int value)
         {
-            currentStamina += value;
-            currentStamina = Mathf.Clamp(currentStamina, 0f, stats.MaxStamina.GetValue());
+            currentStamina.Value += value;
+            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, stats.MaxStamina.GetValue());
         }
 
         public void ChangeTemperature(float value)
         {
-            currentTemperature += value;
-            currentTemperature = Mathf.Clamp(currentTemperature, 0f, stats.MaxTemperature.GetValue());
+            currentTemperature.Value += value;
+            currentTemperature.Value = Mathf.Clamp(currentTemperature.Value, 0f, stats.MaxTemperature.GetValue());
         }
         
         public void TakeDamage(int _damage)
@@ -52,10 +81,10 @@ namespace Stats
             if(_isDead)
                 return;
 
-            currentHp -= _damage;
-            if(currentHp <= 0)
+            currentHp.Value -= _damage;
+            if(currentHp.Value <= 0)
             {
-                currentHp = 0;
+                currentHp.Value = 0;
                 Die();
             }
             else
@@ -85,13 +114,13 @@ namespace Stats
             if (playerMove.isAttack)
                 dropRate *= 0.5f;*/
 
-            currentTemperature -= dropRate * Time.deltaTime;
-            currentTemperature = Mathf.Max(currentTemperature, 0f);
+            currentTemperature.Value -= dropRate * Time.deltaTime;
+            currentTemperature.Value = Mathf.Max(currentTemperature.Value, 0f);
         }
 
         private void HandleFrozenHp()
         {
-            float tempRatio = currentTemperature;
+            float tempRatio = currentTemperature.Value;
 
             if (tempRatio <= 0)
             {

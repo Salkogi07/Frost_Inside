@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    public int quickslot_Index; // ÀÎ½ºÆåÅÍ¿¡¼­ ½½·Ô ¹øÈ£ ÇÒ´ç
+    public int quickslot_Index; // ï¿½Î½ï¿½ï¿½ï¿½ï¿½Í¿ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È£ ï¿½Ò´ï¿½
 
     private void OnValidate()
     {
@@ -13,8 +13,8 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
 
     protected override void ThrowItem()
     {
-        PlayerManager.instance.playerDrop
-                     .QuickSlot_Throw(item.data, quickslot_Index);
+        /*PlayerManager.instance.playerDrop
+                     .QuickSlot_Throw(item.data, quickslot_Index);*/
 
         if (UIManager.instance.itemToolTip.gameObject.activeSelf)
         {

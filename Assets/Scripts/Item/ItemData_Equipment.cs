@@ -38,23 +38,23 @@ public class ItemData_Equipment : ItemData
 
     public void AddModifiers()
     {
-        Player_Stats playerStats = PlayerManager.instance.playerStats;
+        /*Player_Stats playerStats = PlayerManager.instance.playerStats;
 
         playerStats.mining.AddModifier(mining);
         playerStats.armor.AddModifier(armor);
         playerStats.lagging.AddModifier(lagging);
         playerStats.MaxHp.AddModifier(Hp);
-        playerStats.MaxTemperature.AddModifier(Temperature);
+        playerStats.MaxTemperature.AddModifier(Temperature);*/
     }
 
     public void RemoveModifiers()
     {
-        Player_Stats playerStats = PlayerManager.instance.playerStats;
+        /*Player_Stats playerStats = PlayerManager.instance.playerStats;
 
         playerStats.mining.RemoveModifier(mining);
         playerStats.armor.RemoveModifier(armor);
         playerStats.lagging.RemoveModifier(lagging);
         playerStats.MaxHp.RemoveModifier(Hp);
-        playerStats.MaxTemperature.RemoveModifier(Temperature);
+        playerStats.MaxTemperature.RemoveModifier(Temperature);*/
     }
 }

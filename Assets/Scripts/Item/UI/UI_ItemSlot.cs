@@ -31,8 +31,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     protected virtual void ThrowItem()
     {
-        PlayerManager.instance.playerDrop
-                     .Inventory_Throw(item.data, inventorySlotIndex);
+        /*PlayerManager.instance.playerDrop
+                     .Inventory_Throw(item.data, inventorySlotIndex);*/
 
         if (UIManager.instance.itemToolTip.gameObject.activeSelf)
         {
