@@ -103,6 +103,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Destroy_Time: 0.65
   speed: 8.75
+  damage: 1
+  Boxsize: {x: 0.1, y: 0.1}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!50 &-8491807038415053654
 Rigidbody2D:
   serializedVersion: 5

@@ -35,11 +35,11 @@ public class explosion_damage : MonoBehaviour
                 hasExploded = true;
                 collider.GetComponent<Player_Condition>().TakeDamage(damage);
             }
-            if (collider.tag == "Player")
-            {
-                Debug.Log("sdsds");
-
-            }
+            // if (collider.tag == "Player")
+            // {
+            //     Debug.Log("sdsds");
+            //
+            // }
         }
     }
     private void OnDrawGizmos()
