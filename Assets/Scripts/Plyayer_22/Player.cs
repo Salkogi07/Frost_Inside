@@ -78,6 +78,7 @@ namespace Script.Plyayer_22
         private void FixedUpdate()
         {
             HandleCollisionDetection();
+            
             _playerStateMachine.FiexedUpdateActiveState();
         }
 

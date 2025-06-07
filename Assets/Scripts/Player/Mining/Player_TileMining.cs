@@ -11,7 +11,6 @@ public class Player_TileMining : BaseTileMiner
 
     [Header("Tool Settings")]
     private float _toolPower = 10f;         // 플레이어의 채굴력
-    private bool _canMining = true;
 
     protected override void Awake()
     {
@@ -26,9 +25,6 @@ public class Player_TileMining : BaseTileMiner
     {
         if (!tileAlphaDict.ContainsKey(tilePos))
             tileAlphaDict[tilePos] = 1f;
-
-        if(!_canMining)
-            return;
 
         var map = GetTilemapAt(tilePos);
         var tileBase = map.GetTile(tilePos);
@@ -81,24 +77,9 @@ public class Player_TileMining : BaseTileMiner
         // 4) 기본 채굴 완료 처리 (타일 제거, 하이라이트 해제 등)
         base.FinishMining(tilePos);
     }
-    
-    public bool CanMining() => _canMining;
 
     public void SetToolPower(float power)
     {
         _toolPower = power;
-    }
-
-    public void CanMiningToTrue()
-    {
-        _canMining = true;
-    }
-
-    public void CanMiningToFalse()
-    {
-        _canMining = false;
-        // 채굴 도중 중단 시에는 꼭 isMining도 false로 처리
-        isMining = false;
-        currentMiningTile = null;
     }
 }
