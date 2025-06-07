@@ -12,17 +12,18 @@ namespace Script.Plyayer_22
         {
             base.Update();
             
-            KeyCode miningKey = KeyManager.instance.GetKeyCodeByName("Mining");
-            if (player.IsGroundDetected && Input.GetKey(miningKey) && player.TileMining.CanMining())
-            {
-                // 채굴 가능 상태라면 채굴 상태로 전이
-                playerStateMachine.ChangeState(player.MiningState);
-                return;  // 이후의 점프/이동 로직은 실행하지 않음
-            }
             
-            //안전 장치
-            if(player.IsGroundDetected)
-                player.SetVelocity(rigidbody.linearVelocity.x, 0);
+            
+            /*float y = rigidbody.linearVelocity.y;
+            if (Mathf.Abs(y) < 0.0001f)  
+                y = 0f;*/
+            
+            if (player.IsGroundDetected)
+            {
+                var v = rigidbody.linearVelocity;
+                v.y = 0f;
+                rigidbody.linearVelocity = v;
+            }
 
             if (rigidbody.linearVelocity.y < 0)
                 playerStateMachine.ChangeState(player.FallState);

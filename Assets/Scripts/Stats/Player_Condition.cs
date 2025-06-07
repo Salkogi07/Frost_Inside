@@ -28,15 +28,15 @@ namespace Stats
         private void Awake()
         {
             _stats = GetComponent<Player_Stats>();
-        }
-
-        private void Start()
-        {
+            
             currentHp = new ReactiveProperty<float>(_stats.MaxHp.GetValue());
             currentStamina = new ReactiveProperty<float>(_stats.MaxStamina.GetValue());
             currentWeight = new ReactiveProperty<float>(_stats.MaxTemperature.GetValue());
             currentTemperature = new ReactiveProperty<float>(_stats.MaxWeight.GetValue());
-            
+        }
+
+        private void Start()
+        {
             currentHp.Subscribe(hp =>
             {
                 UIManager.instance.UpdateHp(currentHp.Value,_stats.MaxHp.GetValue());
