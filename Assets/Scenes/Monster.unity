@@ -2076,21 +2076,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995a1ca4ad54748449d6ecf7b7b50e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Health: 0
   MaxHealth:
-    baseValue: 0
+    baseValue: 10
     Modifiers: 
-  Damage:
-    baseValue: 0
-    Modifiers: 
-  Attack_speed: 3
-  Armor:
-    baseValue: 0
-    Modifiers: 
-  Groggy:
-    baseValue: 0
-    Modifiers: 
-  speed: 3
+  Health: 0
+  MonsterGroup:
+    attack:
+      baseValue: 0
+      Modifiers: 
+    Armor:
+      baseValue: 0
+      Modifiers: 
+    Groggy: 0
+    Attack_speed: 0
+    speed: 3.8
   range:
   - 1
   - 1
@@ -8708,8 +8707,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bulletPrefab: {fileID: 2435721809930264131, guid: 02e7f81602eadb14c98d945998083f41, type: 3}
-  bullet: 50
-  cooltime: 0.1
+  bullet: 100
+  cooltime: 0.038
   player: {fileID: 331335303}
 --- !u!212 &1587508519
 SpriteRenderer:
@@ -28206,6 +28205,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4336386003038529747, guid: dc2f03f1c60b8504b9960f774ca5ff23, type: 3}
+      propertyPath: MonsterGroup.speed
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4336386003038529747, guid: dc2f03f1c60b8504b9960f774ca5ff23, type: 3}
+      propertyPath: MaxHealth.baseValue
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -28231,6 +28238,14 @@ PrefabInstance:
       propertyPath: groundCheck
       value: 
       objectReference: {fileID: 590999759}
+    - target: {fileID: 4867038147764150902, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
+      propertyPath: MonsterGroup.speed
+      value: 1.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4867038147764150902, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
+      propertyPath: MaxHealth.baseValue
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 8990392103600102968, guid: 1b621d4e4f7ef674790d6dcc81411a2b, type: 3}
       propertyPath: m_LocalPosition.x
       value: -28.848
@@ -28286,7 +28301,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 69228515765200552, guid: edc095eb90acbc7478922be5116bd31c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -30.1
+      value: -22.8
       objectReference: {fileID: 0}
     - target: {fileID: 69228515765200552, guid: edc095eb90acbc7478922be5116bd31c, type: 3}
       propertyPath: m_LocalPosition.y
@@ -28338,7 +28353,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4644093476831787377, guid: edc095eb90acbc7478922be5116bd31c, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951183745401348496, guid: edc095eb90acbc7478922be5116bd31c, type: 3}
+      propertyPath: MonsterGroup.speed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5951183745401348496, guid: edc095eb90acbc7478922be5116bd31c, type: 3}
+      propertyPath: MaxHealth.baseValue
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
