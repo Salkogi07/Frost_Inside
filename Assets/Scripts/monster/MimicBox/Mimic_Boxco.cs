@@ -187,8 +187,8 @@ public class MimicBoxDirector : MonoBehaviour
         if (Moving)
         { if(distance < distanceMax)
             {
-                transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
-                distance += stat.speed * Time.deltaTime;
+                transform.position += new Vector3(moverandomDirection * stat.MonsterGroup.speed * Time.deltaTime, 0f, 0f);
+                distance += stat.MonsterGroup.speed * Time.deltaTime;
                 hillDetections.CheckForHillAhead();
                 collisions.Collision_conversion();
                 if (collisions.IsCollision)
@@ -238,7 +238,7 @@ public class MimicBoxDirector : MonoBehaviour
     {
         //FloorMeasurement.direction = moveDirection;
 
-        transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
+        transform.position += new Vector3(moveDirection * stat.MonsterGroup.speed * Time.deltaTime, 0f, 0f);
         hillDetections.CheckForHillAhead();
     }
 

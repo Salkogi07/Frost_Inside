@@ -152,10 +152,10 @@ public class Underground_Ghost : MonoBehaviour
             if (distance < distanceMax)
             {
                 direction();
-                float move_speed = stat.speed + (stat.speed * 50 / 100);
+                float move_speed = stat.MonsterGroup.speed + (stat.MonsterGroup.speed * 50 / 100);
                 transform.position += (Vector3)(directions * move_speed * Time.deltaTime);
                 Debug.Log(move_speed);
-                distance += stat.speed * Time.deltaTime;
+                distance += stat.MonsterGroup.speed * Time.deltaTime;
                 //distance += Time.deltaTime;
             }
             else
@@ -198,7 +198,7 @@ public class Underground_Ghost : MonoBehaviour
         //transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
         //hillDetections.CheckForHillAhead();
         
-        transform.position += (Vector3)(directions * stat.speed * Time.deltaTime);
+        transform.position += (Vector3)(directions * stat.MonsterGroup.speed * Time.deltaTime);
     }
 
     IEnumerator attackingAnimationToEnd()

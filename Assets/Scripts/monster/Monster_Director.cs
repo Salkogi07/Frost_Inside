@@ -174,7 +174,7 @@ public class Monster_Director : MonoBehaviour
             {
                 if (FloorMeasurement.Groundcheck)
                 {
-                    transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
+                    transform.position += new Vector3(moverandomDirection * stat.MonsterGroup.speed * Time.deltaTime, 0f, 0f);
                     distance += Time.deltaTime;
                 }
                 else
@@ -226,7 +226,7 @@ public class Monster_Director : MonoBehaviour
     private void Chase()
     {
         //FloorMeasurement.direction = moveDirection;
-        transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
+        transform.position += new Vector3(moveDirection * stat.MonsterGroup.speed * Time.deltaTime, 0f, 0f);
 
         if (hillDetections.Groundcheck == true)
         {

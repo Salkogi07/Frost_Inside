@@ -153,8 +153,8 @@ public class White_Parasite_Director: MonoBehaviour
     }
     private void Move()
     {
-        transform.position += new Vector3(moverandomDirection * stat.speed * Time.deltaTime, 0f, 0f);
-        distance += stat.speed * Time.deltaTime;
+        transform.position += new Vector3(moverandomDirection * stat.MonsterGroup.speed * Time.deltaTime, 0f, 0f);
+        distance += stat.MonsterGroup.speed * Time.deltaTime;
         //if(!hillDetections.Operation)
         //{
         hillDetections.CheckForHillAhead();
@@ -223,7 +223,7 @@ public class White_Parasite_Director: MonoBehaviour
     {
         //FloorMeasurement.direction = moveDirection;
 
-        transform.position += new Vector3(moveDirection * stat.speed * Time.deltaTime, 0f, 0f);
+        transform.position += new Vector3(moveDirection * stat.MonsterGroup.speed * Time.deltaTime, 0f, 0f);
         hillDetections.CheckForHillAhead();
     }
 }

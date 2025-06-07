@@ -46,9 +46,9 @@ public class Robot_Cannon : MonoBehaviour
     {   
         bullet--; 
         direction = (player.position - transform.position).normalized;
-        GameObject Bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+        Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        Bullet.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+        bulletPrefab.transform.rotation = Quaternion.Euler(0f, 0f, angle);
         
         
         

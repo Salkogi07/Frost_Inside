@@ -2,14 +2,11 @@ using UnityEngine;
 
 public class Monster_stat : MonoBehaviour
 {
-    
-     public float Health;
+    [Header("stat")]
      public Stat MaxHealth;
-     public Stat Damage;
-     public float Attack_speed;
-     public Stat Armor;
-     public Stat Groggy;
-     public float speed;
+     public float Health;
+     public Monster_StatGroup MonsterGroup;
+     
 
     [Header("s")]
     //[SerializeField] public Vector2 range = new Vector2(1f, 1f);
@@ -24,10 +21,10 @@ public class Monster_stat : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Health <= 0f)
-        {
-            Destroy(gameObject);
-        }
+        // if(Health <= 0f)
+        // {
+        //     Destroy(gameObject);
+        // }
     }
 
     public void damage(float damage)
