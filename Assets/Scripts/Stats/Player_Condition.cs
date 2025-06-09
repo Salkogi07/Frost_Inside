@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using R3;
 using Script.Plyayer_22;
 
@@ -20,7 +19,12 @@ namespace Stats
         public bool isNearHeatSource = false;
         public bool isInColdZone = false;
 
-        public ReactiveProperty<float> currentHp { get; private set; }
+        private ReactiveProperty<float> currentHpPropertiy;
+        public float CurrentHp { get => currentHpPropertiy.Value; set =>  currentHpPropertiy.Value = value; }
+
+        private Observable<float> _currentHpObservable;
+        public Observable<float> currentHpObservable => _currentHpObservable ??= currentHpPropertiy.AsObservable();
+        
         public ReactiveProperty<float> currentStamina { get; private set; }
         public ReactiveProperty<float> currentWeight { get; private set; }
         public ReactiveProperty<float> currentTemperature { get; private set; }
@@ -29,33 +33,33 @@ namespace Stats
         {
             _stats = GetComponent<Player_Stats>();
             
-            currentHp = new ReactiveProperty<float>(_stats.MaxHp.GetValue());
-            currentStamina = new ReactiveProperty<float>(_stats.MaxStamina.GetValue());
-            currentWeight = new ReactiveProperty<float>(_stats.MaxTemperature.GetValue());
-            currentTemperature = new ReactiveProperty<float>(_stats.MaxWeight.GetValue());
+            currentHpPropertiy = new ReactiveProperty<float>(_stats.MaxHp.Value);
+            currentStamina = new ReactiveProperty<float>(_stats.MaxStamina.Value);
+            currentWeight = new ReactiveProperty<float>(_stats.MaxTemperature.Value);
+            currentTemperature = new ReactiveProperty<float>(_stats.MaxWeight.Value);
         }
 
         private void Start()
         {
-            currentHp.Subscribe(hp =>
+            currentHpPropertiy.Subscribe(hp =>
             {
-                UIManager.instance.UpdateHp(currentHp.Value,_stats.MaxHp.GetValue());
+                UIManager.instance.UpdateHp(currentHpPropertiy.Value,_stats.MaxHp.Value);
             });
             
-            currentStamina.Subscribe(hp =>
+            currentStamina.Subscribe(stamina =>
             {
-                UIManager.instance.UpdateStamina(currentStamina.Value,_stats.MaxStamina.GetValue());
+                UIManager.instance.UpdateStamina(currentStamina.Value,_stats.MaxStamina.Value);
             });
             
-            currentWeight.Subscribe(hp =>
+            currentWeight.Subscribe(weight =>
             {
-                UIManager.instance.UpdateWeight(currentWeight.Value,_stats.MaxWeight.GetValue());
+                UIManager.instance.UpdateWeight(currentWeight.Value,_stats.MaxWeight.Value);
             });
             
-            currentTemperature.Subscribe(hp =>
+            currentTemperature.Subscribe(temp =>
             {
-                UIManager.instance.UpdateTemperature(currentTemperature.Value,_stats.MaxTemperature.GetValue());
-                UIManager.instance.UpdateTemperatureState(currentTemperature.Value,_stats.MaxTemperature.GetValue());
+                UIManager.instance.UpdateTemperature(currentTemperature.Value,_stats.MaxTemperature.Value);
+                UIManager.instance.UpdateTemperatureState(currentTemperature.Value,_stats.MaxTemperature.Value);
             });
         }
         
@@ -69,11 +73,10 @@ namespace Stats
 
         public void StaminaRecovery()
         {
-            float tempValue = currentTemperature.Value / _stats.MaxTemperature.GetValue();
-            
+            float tempValue = currentTemperature.Value / _stats.MaxTemperature.Value;
             if (Temp(tempValue) == 2)
             {
-                float targetStamina = _stats.MaxStamina.GetValue() * 0.5f;
+                float targetStamina = _stats.MaxStamina.Value * 0.5f;
                 
                 if (currentStamina.Value > targetStamina)
                     currentStamina.Value -= _stats.staminaDecreaseRate * Time.deltaTime;
@@ -88,25 +91,25 @@ namespace Stats
                 if (currentStamina.Value >= 0)
                     currentStamina.Value -= _stats.staminaDecreaseRate * Time.deltaTime;
                 else
-                    currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.GetValue());
+                    currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
             }
             else
             {
                 currentStamina.Value += _stats.StaminaRecoverRate * Time.deltaTime;
-                currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.GetValue());
+                currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
             }
         }
         
         public void UseStaminaToSprint()
         {
             currentStamina.Value -= _stats.SprintCost * Time.deltaTime;
-            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.GetValue());
+            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
         }
         
         public void UseStaminaToJump()
         {
             currentStamina.Value -= _stats.JumpCost;
-            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.GetValue());
+            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
         }
 
         public bool CanSprint() => currentStamina.Value > _stats.SprintCost * Time.deltaTime;
@@ -115,13 +118,13 @@ namespace Stats
         public void AddStamina(int value)
         {
             currentStamina.Value += value;
-            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.GetValue());
+            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
         }
 
         public void ChangeTemperature(float value)
         {
             currentTemperature.Value += value;
-            currentTemperature.Value = Mathf.Clamp(currentTemperature.Value, 0f, _stats.MaxTemperature.GetValue());
+            currentTemperature.Value = Mathf.Clamp(currentTemperature.Value, 0f, _stats.MaxTemperature.Value);
         }
         
         public void TakeDamage(int _damage)
@@ -129,10 +132,10 @@ namespace Stats
             if(_isDead)
                 return;
 
-            currentHp.Value -= _damage;
-            if(currentHp.Value <= 0)
+            CurrentHp -= _damage;
+            if(CurrentHp <= 0)
             {
-                currentHp.Value = 0;
+                CurrentHp = 0;
                 Die();
             }
             else

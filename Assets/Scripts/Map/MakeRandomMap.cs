@@ -280,7 +280,7 @@ public class MakeRandomMap : MonoBehaviour
         foreach (var (data, pos, vel, price) in dropInfos)
         {
             int adjustedPrice = Mathf.RoundToInt(price * adjustRatio);
-            var invItem = new InventoryItem(data, adjustedPrice);
+            var invItem = new Inventory_Item(data, adjustedPrice);
             var drop = Instantiate(dropPrefab, pos, Quaternion.identity, dropParent);
             drop.GetComponent<ItemObject>().SetupItem(invItem, vel);
         }

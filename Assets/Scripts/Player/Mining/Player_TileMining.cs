@@ -64,7 +64,7 @@ public class Player_TileMining : BaseTileMiner
             dropObj.GetComponent<ItemObject>()
                    .SetupItem(ore.dropItem, Vector2.zero);
 
-            InventoryItem data = dropObj.GetComponent<ItemObject>().item;
+            Inventory_Item data = dropObj.GetComponent<ItemObject>().item;
             int price = Random.Range(data.data.priceRange.x, data.data.priceRange.y + 1);
             data.price = price;
             mapGenerator.oreTileDict.Remove(key);

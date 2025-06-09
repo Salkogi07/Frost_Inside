@@ -29,7 +29,7 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
     {
         if (draggedSlot == null || draggedSlot.item == null || draggedSlot == this) return;
 
-        InventoryItem draggedItem = draggedSlot.item;
+        Inventory_Item draggedItem = draggedSlot.item;
         UI_QuickSlot origQS = draggedSlot as UI_QuickSlot;
 
         if (origQS != null)

@@ -20,7 +20,7 @@ public class UI_ItemToolTip : MonoBehaviour
     public Vector2 tooltipOffset = new Vector2(50f, 0f);
 
     // 슬롯의 위치(slotPosition)를 받아 그 위치에 오프셋을 적용하여 툴팁을 표시
-    public void ShowToolTip(InventoryItem item, Vector3 slotPosition)
+    public void ShowToolTip(Inventory_Item item, Vector3 slotPosition)
     {
         if (item == null)
             return;

@@ -9,15 +9,15 @@ public class Inventory : MonoBehaviour
     public bool isPocket = false;
     public bool isInvenOpen = false;
 
-    public List<InventoryItem> startingItems;
+    public List<Inventory_Item> startingItems;
 
-    public InventoryItem[] quickSlotItems;
+    public Inventory_Item[] quickSlotItems;
     public int selectedQuickSlot = 0;
 
-    public List<InventoryItem> equipment;
-    public Dictionary<ItemData_Equipment, InventoryItem> equipmentDictionary;
+    public List<Inventory_Item> equipment;
+    public Dictionary<ItemData_Equipment, Inventory_Item> equipmentDictionary;
 
-    public InventoryItem[] inventoryItems;
+    public Inventory_Item[] inventoryItems;
 
     [Header("Inventory UI")]
     [SerializeField] private Transform inventorySlotParent;
@@ -41,15 +41,15 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        equipment = new List<InventoryItem>();
-        equipmentDictionary = new Dictionary<ItemData_Equipment, InventoryItem>();
+        equipment = new List<Inventory_Item>();
+        equipmentDictionary = new Dictionary<ItemData_Equipment, Inventory_Item>();
 
         inventoryItemSlot = inventorySlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlot = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();
         quickSlot = quickSlotParent.GetComponentsInChildren<UI_QuickSlot>();
 
-        inventoryItems = new InventoryItem[inventoryItemSlot.Length];
-        quickSlotItems = new InventoryItem[quickSlot.Length];
+        inventoryItems = new Inventory_Item[inventoryItemSlot.Length];
+        quickSlotItems = new Inventory_Item[quickSlot.Length];
 
         AddStartingItems();
     }
@@ -108,11 +108,11 @@ public class Inventory : MonoBehaviour
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
         newEquipment.ExecuteItemEffect();
-        InventoryItem newItem = new InventoryItem(newEquipment);
+        Inventory_Item newItem = new Inventory_Item(newEquipment);
 
         ItemData_Equipment oldEquipment = null;
 
-        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemData_Equipment, Inventory_Item> item in equipmentDictionary)
         {
             if (item.Key.equipmentType == newEquipment.equipmentType)
                 oldEquipment = item.Key;
@@ -121,7 +121,7 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            AddItem(new InventoryItem(oldEquipment));
+            AddItem(new Inventory_Item(oldEquipment));
         }
 
         equipment.Add(newItem);
@@ -135,11 +135,11 @@ public class Inventory : MonoBehaviour
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
         newEquipment.ExecuteItemEffect();
-        InventoryItem newItem = new InventoryItem(newEquipment);
+        Inventory_Item newItem = new Inventory_Item(newEquipment);
 
         ItemData_Equipment oldEquipment = null;
 
-        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemData_Equipment, Inventory_Item> item in equipmentDictionary)
         {
             if (item.Key.equipmentType == newEquipment.equipmentType)
                 oldEquipment = item.Key;
@@ -148,7 +148,7 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            AddItem(new InventoryItem(oldEquipment));
+            AddItem(new Inventory_Item(oldEquipment));
         }
 
         equipment.Add(newItem);
@@ -163,12 +163,12 @@ public class Inventory : MonoBehaviour
     public void EquipItem_ToQuickSlot(ItemData _item, int index)
     {
         ItemData_Equipment newEquipment = _item as ItemData_Equipment;
-        InventoryItem newItem = new InventoryItem(newEquipment);
+        Inventory_Item newItem = new Inventory_Item(newEquipment);
         newEquipment?.ExecuteItemEffect();
 
         ItemData_Equipment oldEquipment = null;
 
-        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemData_Equipment, Inventory_Item> item in equipmentDictionary)
         {
             if (item.Key.equipmentType == newEquipment.equipmentType)
                 oldEquipment = item.Key;
@@ -177,7 +177,7 @@ public class Inventory : MonoBehaviour
         if (oldEquipment != null)
         {
             UnequipItem(oldEquipment);
-            Add_QuickSlot_Item(new InventoryItem(oldEquipment));
+            Add_QuickSlot_Item(new Inventory_Item(oldEquipment));
         }
 
         equipment.Add(newItem);
@@ -191,7 +191,7 @@ public class Inventory : MonoBehaviour
 
     public void UnequipItem(ItemData_Equipment itemToRemove)
     {
-        if (equipmentDictionary.TryGetValue(itemToRemove, out InventoryItem newItem))
+        if (equipmentDictionary.TryGetValue(itemToRemove, out Inventory_Item newItem))
         {
             equipment.Remove(newItem);
             equipmentDictionary.Remove(itemToRemove);
@@ -204,7 +204,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < equipmentSlot.Length; i++)
         {
-            foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+            foreach (KeyValuePair<ItemData_Equipment, Inventory_Item> item in equipmentDictionary)
             {
                 if (item.Key.equipmentType == equipmentSlot[i].slotType)
                     equipmentSlot[i].UpdateSlot(item.Value);
@@ -231,7 +231,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItem(InventoryItem newItem)
+    public void AddItem(Inventory_Item newItem)
     {
         int index = GetFirst_EmptySlot();
         if (index == -1) return;
@@ -245,7 +245,7 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
-    public void Move_Item(InventoryItem item, int index)
+    public void Move_Item(Inventory_Item item, int index)
     {
         inventoryItems[index] = item;
         UpdateSlotUI();
@@ -260,7 +260,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        InventoryItem temp = inventoryItems[index1];
+        Inventory_Item temp = inventoryItems[index1];
         inventoryItems[index1] = inventoryItems[index2];
         inventoryItems[index2] = temp;
 
@@ -316,7 +316,7 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    public void Add_QuickSlot_Item(InventoryItem newItem)
+    public void Add_QuickSlot_Item(Inventory_Item newItem)
     {
         int index = GetFirst_EmptyQuickSlot();
         if (index == -1) return;
@@ -324,7 +324,7 @@ public class Inventory : MonoBehaviour
         UpdateSlotUI();
     }
 
-    public void Move_QuickSlot_Item(InventoryItem item, int index)
+    public void Move_QuickSlot_Item(Inventory_Item item, int index)
     {
         quickSlotItems[index] = item;
         UpdateSlotUI();
@@ -345,7 +345,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        InventoryItem temp = quickSlotItems[index1];
+        Inventory_Item temp = quickSlotItems[index1];
         quickSlotItems[index1] = quickSlotItems[index2];
         quickSlotItems[index2] = temp;
 
@@ -363,7 +363,7 @@ public class Inventory : MonoBehaviour
         }
 
         // 아이템 교환
-        InventoryItem temp = quickSlotItems[quickSlotIndex];
+        Inventory_Item temp = quickSlotItems[quickSlotIndex];
         quickSlotItems[quickSlotIndex] = inventoryItems[inventoryIndex];
         inventoryItems[inventoryIndex] = temp;
 
@@ -372,15 +372,15 @@ public class Inventory : MonoBehaviour
     }
 
 
-    public List<InventoryItem> GetEquipmentList() => equipment;
+    public List<Inventory_Item> GetEquipmentList() => equipment;
 
-    public InventoryItem[] GetInventoryList() => inventoryItems;
+    public Inventory_Item[] GetInventoryList() => inventoryItems;
 
     public ItemData_Equipment GetEquipment(EquipmentType _type)
     {
         ItemData_Equipment equipedItem = null;
 
-        foreach (KeyValuePair<ItemData_Equipment, InventoryItem> item in equipmentDictionary)
+        foreach (KeyValuePair<ItemData_Equipment, Inventory_Item> item in equipmentDictionary)
         {
             if (item.Key.equipmentType == _type)
                 equipedItem = item.Key;

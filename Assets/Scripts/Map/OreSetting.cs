@@ -3,6 +3,6 @@ using UnityEngine.Tilemaps;
 [System.Serializable]
 public class OreSetting
 {
-    public TileBase oreTile;    // ±¤¼® Å¸ÀÏ
-    public InventoryItem dropItem;   // Ã¤±¼ ½Ã µå·ÓÇÒ ÀÎº¥Åä¸® ¾ÆÀÌÅÛ (°¡°Ý Æ÷ÇÔ)
+    public TileBase oreTile;    // ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
+    public Inventory_Item dropItem;   // Ã¤ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½ï¿½ä¸® ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ (ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)
 }

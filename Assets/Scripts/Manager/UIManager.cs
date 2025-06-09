@@ -107,7 +107,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateQuickSlo_View(InventoryItem _newItem, int index)
+    public void UpdateQuickSlo_View(Inventory_Item _newItem, int index)
     {
         itemImage[index].color = Color.white;
 

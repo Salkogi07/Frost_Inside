@@ -52,7 +52,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
     {
         if (draggedSlot == null || draggedSlot.item == null) return;
 
-        InventoryItem draggedItem = draggedSlot.item;
+        Inventory_Item draggedItem = draggedSlot.item;
         UI_QuickSlot draggedQS = draggedSlot as UI_QuickSlot;
 
         if (draggedItem.data is ItemData_Equipment equipData && equipData.equipmentType == slotType)
