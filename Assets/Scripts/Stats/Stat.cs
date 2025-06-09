@@ -6,7 +6,7 @@ public class Stat
 {
     [SerializeField] private int baseValue;
 
-    public List<int> Modifiers;
+    [SerializeField] private List<int> Modifiers = new List<int>();
 
     public int GetValue()
     {
@@ -18,19 +18,32 @@ public class Stat
         }
         return finalValue;
     }
+    
+    public int Value {
+        get
+        {
+            int finalValue = baseValue;
 
-    public void SetDefaultValue(int _value)
-    {
-        baseValue = _value;
+            foreach (int modifier in Modifiers)
+            {
+                finalValue += modifier;
+            }
+            return finalValue;
+        }
     }
 
-    public void AddModifier(int _modifier)
+    public void SetDefaultValue(int value)
     {
-        Modifiers.Add(_modifier);
+        baseValue = value;
     }
 
-    public void RemoveModifier(int _modifier)
+    public void AddModifier(int modifier)
     {
-        Modifiers.Remove(_modifier);
+        Modifiers.Add(modifier);
+    }
+
+    public void RemoveModifier(int modifier)
+    {
+        Modifiers.Remove(modifier);
     }
 }

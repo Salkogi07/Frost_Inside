@@ -12,8 +12,6 @@ namespace Script.Plyayer_22
         {
             base.Update();
             
-            
-            
             /*float y = rigidbody.linearVelocity.y;
             if (Mathf.Abs(y) < 0.0001f)  
                 y = 0f;*/

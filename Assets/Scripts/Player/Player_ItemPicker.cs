@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Player_ItemPicker : MonoBehaviour
 {
-    Player_Move player_move;
     //Player_Stats stats;
 
     [Tooltip("�������� �ݱ� ���� �ִ� �Ÿ�")]
@@ -15,7 +14,6 @@ public class Player_ItemPicker : MonoBehaviour
 
     private void Awake()
     {
-        player_move = GetComponent<Player_Move>();
         //stats = GetComponent<Player_Stats>();
     }
 
@@ -42,7 +40,7 @@ public class Player_ItemPicker : MonoBehaviour
     private void PickupItem(GameObject nearestItem, ItemObject itemPickup)
     {
         Inventory inventory = Inventory.instance;
-        InventoryItem newItem = itemPickup.item;
+        Inventory_Item newItem = itemPickup.item;
         
         if (inventory.CanQuickItem() && inventory.GetCheck_QuiSlot_Item())
         {

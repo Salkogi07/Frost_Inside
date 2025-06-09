@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image itemImage;
-    public InventoryItem item;
+    public Inventory_Item item;
     public static UI_ItemSlot draggedSlot;
     public static GameObject draggedItemIcon;
     private HoverThrowSlot hoverTracker;
@@ -44,7 +44,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     }
 
 
-    public void UpdateSlot(InventoryItem _newItem)
+    public void UpdateSlot(Inventory_Item _newItem)
     {
         item = _newItem;
         itemImage.color = Color.white;
@@ -113,7 +113,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     {
         if (draggedSlot == null || draggedSlot == this || draggedSlot.item == null) return;
 
-        InventoryItem draggedItem = draggedSlot.item;
+        Inventory_Item draggedItem = draggedSlot.item;
         UI_QuickSlot draggedQS = draggedSlot as UI_QuickSlot;
 
 
@@ -145,7 +145,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     private void SwapItems(UI_ItemSlot otherSlot)
     {
-        InventoryItem tempItem = item;
+        Inventory_Item tempItem = item;
         Inventory.instance.SwapInventoryItems(inventorySlotIndex, otherSlot.inventorySlotIndex);
     }
 
