@@ -8960,7 +8960,7 @@ MonoBehaviour:
   ShowDebugText: 0
   ShowCameraFrustum: 1
   IgnoreTimeScale: 0
-  WorldUpOverride: {fileID: 0}
+  WorldUpOverride: {fileID: 1786089849}
   ChannelMask: -1
   UpdateMethod: 2
   BlendUpdateMethod: 1
@@ -10191,6 +10191,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e6b8b8b2e4f4bb2bcb3cf591bb41c35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1786089849 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 36520864720831461, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
+  m_PrefabInstance: {fileID: 217588995}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1786432688
 GameObject:
   m_ObjectHideFlags: 0
