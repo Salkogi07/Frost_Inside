@@ -18,7 +18,6 @@ public class ItemData : ScriptableObject
     [TextArea(3, 10)]
     public string explanation = "";
 
-    [Header("=== ���� ������ ���� ���� ���� (Inspector) ===")]
-    [Tooltip("�� �������� ������ �������� ������ ������ �����ϼ���.")]
+    [Header("=== (Inspector) ===")]
     public Vector2Int priceRange = new Vector2Int(50, 100);
 }
