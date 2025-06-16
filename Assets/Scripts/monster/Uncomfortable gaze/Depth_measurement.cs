@@ -20,19 +20,19 @@ public class Depth_measurement : MonoBehaviour
     {
         float Depth = transform.position.y;
 
-        if (Depth>= 48f)
+        if (Depth>= 80f)
         {
-            Debug.Log("가가ㅏ가ㅏㅏㅏㅏㅏ가ㅏㄱ");
-        }else if (Depth < 48f && Depth >= 4f)
+            
+        }else if (Depth < 80f && Depth >= 70f)
         {
             Debug.Log("2");
 
-        }else if (Depth < 4f && Depth >= -22f)
+        }else if (Depth < 70f && Depth >= 60f)
         {
             Debug.Log("33");
 
         }
-        else if(Depth < -22f && Depth >= -46f)
+        else if(Depth < 60f && Depth >= 50f)
         {
             Debug.Log("444");
 
