@@ -1,17 +1,19 @@
-using Scripts.Enemy;
-using UnityEngine;
-
-public class Tester : Enemy
+namespace Scripts.Enemy
 {
-    protected override void Awake()
-    {
-        base.Awake();
-    }
 
-    protected override void Start()
+
+    public class Tester : Enemy
     {
-        base.Start();
-            
-        EnemyStateMachine.Initialize(IdleState);
+        protected override void Awake()
+        {
+            base.Awake();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            EnemyStateMachine.Initialize(IdleState);
+        }
     }
 }
