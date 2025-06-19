@@ -13,6 +13,7 @@ namespace Scripts.Enemy
         protected Rigidbody2D rigidbody;
         
         protected float stateTimer;
+        protected bool triggerCalled;
 
         public EnemyState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName)
         {
@@ -27,22 +28,27 @@ namespace Scripts.Enemy
         public virtual void Enter()
         {
             anim.SetBool(animBoolName, true);
+            triggerCalled = false;
         }
 
         public virtual void Update()
         {
             stateTimer -= Time.deltaTime;
-            anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
+            anim.SetFloat("moveAnimSpeedMultiplier",enemy.moveAnimSpeedMultiplier);
+            // anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
         }
 
         public virtual void FiexedUpdate()
         {
-            anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
+            anim.SetFloat("moveAnimSpeedMultiplier",enemy.moveAnimSpeedMultiplier);
+            // anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
         }
 
         public virtual void Exit()
         {
             anim.SetBool(animBoolName, false);
         }
+        
+        // public void Ca
     }
 }

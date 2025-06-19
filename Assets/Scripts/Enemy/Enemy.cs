@@ -12,11 +12,15 @@ namespace Scripts.Enemy
         
         public Enemy_IdleState IdleState { get; private set; }
         public Enemy_MoveState MoveState { get; private set; }
+         public Enemy_AttackState AttackState { get; private set; }
 
         
         [Header("Movement details")]
         public float IdleTime = 2;
         public float MoveSpeed = 1.4f;
+        
+        [Range(0, 10)]
+        public float moveAnimSpeedMultiplier = 1;
         
         private bool _isFacingRight = false;
         public int FacingDirection { get; private set; } = -1;
@@ -62,12 +66,20 @@ namespace Scripts.Enemy
             EnemyStateMachine.FiexedUpdateActiveState();
         }
 
+        public void CallAnimationTrigger()
+        {
+            // EnemyStateMachine.currentState.CallAnimationTrigger();
+        }
+        
+        
+        
         public void SetVelocity(float xVelocity, float yVelocity)
         {
             Rigidbody.linearVelocity = new Vector2(xVelocity, yVelocity);
             HandleFlip(xVelocity);
         }
 
+        
         private void HandleFlip(float xVelcoity)
         {
             if (xVelcoity > 0 && !_isFacingRight)
