@@ -34,6 +34,12 @@ namespace Scripts.Enemy
         public virtual void Update()
         {
             stateTimer -= Time.deltaTime;
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Debug.Log("dd");
+                enemyStateMachine.ChangeState(enemy.AttackState);
+            }
             anim.SetFloat("moveAnimSpeedMultiplier",enemy.moveAnimSpeedMultiplier);
             // anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
         }
@@ -48,7 +54,10 @@ namespace Scripts.Enemy
         {
             anim.SetBool(animBoolName, false);
         }
-        
-        // public void Ca
+
+        public void CallAnimationTrigger()
+        {
+            triggerCalled = true;
+        }
     }
 }

@@ -47,6 +47,7 @@ namespace Scripts.Enemy
 
             IdleState = new Enemy_IdleState(this, EnemyStateMachine, "idle");
             MoveState = new Enemy_MoveState(this, EnemyStateMachine, "move");
+            AttackState = new Enemy_AttackState(this, EnemyStateMachine, "attack");
         }
         
 
@@ -68,7 +69,7 @@ namespace Scripts.Enemy
 
         public void CallAnimationTrigger()
         {
-            // EnemyStateMachine.currentState.CallAnimationTrigger();
+            EnemyStateMachine.currentState.CallAnimationTrigger();
         }
         
         
