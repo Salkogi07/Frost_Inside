@@ -147,13 +147,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7ad6ec7f874f36bbf946d5558e8233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  battleMoveSpeed: 3
+  attackDistance: 2
   IdleTime: 2
   MoveSpeed: 1.4
-  groundCheck: {fileID: 6888678176120883945}
+  moveAnimSpeedMultiplier: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  groundCheck: {fileID: 6888678176120883945}
   groundCheckDistance: 0.15
+  playerCheck: {fileID: 0}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 0
+  playerCheckDistance: 10
   primaryWallCheck: {fileID: 2724800033337947095}
   secondaryWallCheck: {fileID: 2724800033337947095}
   whatIsWall:
@@ -286,6 +294,7 @@ GameObject:
   - component: {fileID: 4589327746630019981}
   - component: {fileID: 4383163789121894670}
   - component: {fileID: 8788408177247116188}
+  - component: {fileID: 7684268948642768014}
   m_Layer: 15
   m_Name: Sprite
   m_TagString: Enemy
@@ -385,6 +394,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7684268948642768014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6627346968656088041}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf7d805e13c364f4e8e5a97f1623c0cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6827681608836800624
 GameObject:
   m_ObjectHideFlags: 0

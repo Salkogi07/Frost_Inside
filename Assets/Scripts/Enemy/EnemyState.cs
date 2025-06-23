@@ -21,6 +21,7 @@ namespace Scripts.Enemy
             this.enemyStateMachine = enemyStateMachine;
             this.animBoolName = animBoolName;
 
+            
             anim = enemy.Anim;
             rigidbody = enemy.Rigidbody;
         }
@@ -41,7 +42,7 @@ namespace Scripts.Enemy
                 enemyStateMachine.ChangeState(enemy.AttackState);
             }
             anim.SetFloat("moveAnimSpeedMultiplier",enemy.moveAnimSpeedMultiplier);
-            // anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
+             anim.SetFloat("xVelocity", rigidbody.linearVelocity.x);
         }
 
         public virtual void FiexedUpdate()

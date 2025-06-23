@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Enemy
 {
-    public class Enemy_MoveState : EnemyState
+    public class Enemy_MoveState : Enemy_GroundedState
     {
         public Enemy_MoveState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
         {

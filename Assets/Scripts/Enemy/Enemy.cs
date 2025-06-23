@@ -1,4 +1,5 @@
 ﻿using Script.Plyayer_22;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 namespace Scripts.Enemy
@@ -13,8 +14,14 @@ namespace Scripts.Enemy
         public Enemy_IdleState IdleState { get; private set; }
         public Enemy_MoveState MoveState { get; private set; }
          public Enemy_AttackState AttackState { get; private set; }
+         public Enemy_BattleState  BattleState { get; private set; }
 
-        
+
+
+         [Header("Battle details")] 
+         public float battleMoveSpeed = 3;
+         public float attackDistance = 2;
+         
         [Header("Movement details")]
         public float IdleTime = 2;
         public float MoveSpeed = 1.4f;
@@ -26,9 +33,26 @@ namespace Scripts.Enemy
         public int FacingDirection { get; private set; } = -1;
 
         [Header("Collision detection")]
+        [SerializeField] protected LayerMask whatIsGround;
         [SerializeField] private Transform groundCheck;
-        [SerializeField] private LayerMask whatIsGround;
         [SerializeField] private float groundCheckDistance;
+        
+        [Header("Player detection")]
+        [SerializeField] private Transform playerCheck;
+        [SerializeField] private LayerMask whatIsPlayer;
+        [SerializeField] private float playerCheckDistance = 10;
+
+        public RaycastHit2D PlayerDetection()
+        {
+            RaycastHit2D hit = Physics2D.Raycast(playerCheck.position,Vector2.right * FacingDirection , playerCheckDistance, whatIsPlayer | whatIsGround);
+
+            if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Player"))
+            {
+                return default;
+            }
+            
+            return hit;
+        }
         
         public bool IsGroundDetected { get; private set; }
         public bool IsWallDetected { get; private set; }
@@ -48,6 +72,7 @@ namespace Scripts.Enemy
             IdleState = new Enemy_IdleState(this, EnemyStateMachine, "idle");
             MoveState = new Enemy_MoveState(this, EnemyStateMachine, "move");
             AttackState = new Enemy_AttackState(this, EnemyStateMachine, "attack");
+            BattleState = new Enemy_BattleState(this, EnemyStateMachine, "battle");
         }
         
 
@@ -103,13 +128,19 @@ namespace Scripts.Enemy
                              && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * FacingDirection, wallCheckDistance, whatIsWall);
         }
 
-        private void OnDrawGizmos()
+        protected virtual void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
 
             Gizmos.DrawLine(groundCheck.position, groundCheck.position + new Vector3(0, -groundCheckDistance));
             Gizmos.DrawLine(primaryWallCheck.position, primaryWallCheck.position + new Vector3(wallCheckDistance * FacingDirection, 0));
             Gizmos.DrawLine(secondaryWallCheck.position, secondaryWallCheck.position + new Vector3(wallCheckDistance * FacingDirection, 0));
+            
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(playerCheck.position,new Vector3(playerCheck.position.x+(FacingDirection * playerCheckDistance),playerCheck.position.y));
+            
+            Gizmos.color = Color.blue;
+            Gizmos.DrawLine(playerCheck.position,new Vector3(playerCheck.position.x+(FacingDirection * attackDistance),playerCheck.position.y));
         }
     }
 }
