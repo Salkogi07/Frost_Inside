@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class LoadingScreen : MonoBehaviour
 {
     public Image progressBar;
-    public float minLoadTime = 2f; // 최소 로딩 시간 (초)
+    public float minLoadTime = 2f;
 
     void Start()
     {
@@ -25,9 +25,8 @@ public class LoadingScreen : MonoBehaviour
             timer += Time.deltaTime;
 
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
-            progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, progress, Time.deltaTime * 5f); // 부드럽게
-
-            // 최소 시간 + 로딩 완료된 경우에만 씬 전환
+            progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, progress, Time.deltaTime * 5f);
+            
             if (operation.progress >= 0.9f && timer >= minLoadTime)
             {
                 operation.allowSceneActivation = true;
