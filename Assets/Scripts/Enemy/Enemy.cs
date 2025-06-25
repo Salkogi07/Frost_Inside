@@ -21,6 +21,11 @@ namespace Scripts.Enemy
          [Header("Battle details")] 
          public float battleMoveSpeed = 3;
          public float attackDistance = 2;
+         public float battleTimeDuration = 5;
+         public float minRetreatDistance = 1;
+         public Vector2 retreatVelocity;
+         // public float lastTimeWasInBattle;
+         // public float inGameTime;
          
         [Header("Movement details")]
         public float IdleTime = 2;
@@ -81,8 +86,10 @@ namespace Scripts.Enemy
             
         }
 
+        
         protected virtual void Update()
         {
+            // inGameTime += Time.deltaTime;
             EnemyStateMachine.UpdateActiveState();
         }
 
@@ -106,7 +113,7 @@ namespace Scripts.Enemy
         }
 
         
-        private void HandleFlip(float xVelcoity)
+        public void HandleFlip(float xVelcoity)
         {
             if (xVelcoity > 0 && !_isFacingRight)
                 Flip();
@@ -141,6 +148,9 @@ namespace Scripts.Enemy
             
             Gizmos.color = Color.blue;
             Gizmos.DrawLine(playerCheck.position,new Vector3(playerCheck.position.x+(FacingDirection * attackDistance),playerCheck.position.y));
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(playerCheck.position,new Vector3(playerCheck.position.x+(FacingDirection * minRetreatDistance),playerCheck.position.y));
         }
     }
 }

@@ -36,11 +36,11 @@ namespace Scripts.Enemy
         {
             stateTimer -= Time.deltaTime;
 
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                Debug.Log("dd");
-                enemyStateMachine.ChangeState(enemy.AttackState);
-            }
+            
+
+			float battleAnimSpeedMultiplier = enemy.battleMoveSpeed / enemy.MoveSpeed;
+
+            anim.SetFloat("BattleAnimSpeedMultiplier",battleAnimSpeedMultiplier);
             anim.SetFloat("moveAnimSpeedMultiplier",enemy.moveAnimSpeedMultiplier);
              anim.SetFloat("xVelocity", rigidbody.linearVelocity.x);
         }
