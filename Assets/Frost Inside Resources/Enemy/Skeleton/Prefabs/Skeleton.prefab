@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2093785360371588388}
   - component: {fileID: 3255006627929712995}
   - component: {fileID: 7941363909139575587}
+  - component: {fileID: 3887468149059330943}
   m_Layer: 15
   m_Name: Skeleton
   m_TagString: Enemy
@@ -149,6 +150,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   battleMoveSpeed: 3
   attackDistance: 2
+  battleTimeDuration: 5
+  minRetreatDistance: 1
+  retreatVelocity: {x: 0, y: 0}
   IdleTime: 2
   MoveSpeed: 1.4
   moveAnimSpeedMultiplier: 1
@@ -168,6 +172,35 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   wallCheckDistance: 0.3
+--- !u!114 &3887468149059330943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 995a1ca4ad54748449d6ecf7b7b50e46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth:
+    baseValue: 0
+    Modifiers: 
+  Health: 0
+  MonsterGroup:
+    attack:
+      baseValue: 0
+      Modifiers: 
+    Armor:
+      baseValue: 0
+      Modifiers: 
+    Groggy: 0
+    Attack_speed: 0
+    speed: 0
+  range:
+  - 1
+  - 1
 --- !u!1 &4241109382183132690
 GameObject:
   m_ObjectHideFlags: 0
