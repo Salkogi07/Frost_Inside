@@ -16,7 +16,8 @@ public class Enemy_AttackState : EnemyState
         
         if(triggerCalled)
         {
-            enemyStateMachine.ChangeState(enemy.IdleState);
+            enemyStateMachine.ChangeState(enemy.BattleState);
+            // 끝없는 추격
         }
         
         

@@ -5,6 +5,7 @@ public class Enemy_BattleState : EnemyState
 {
     
     private Transform player;
+    private float lastTimeWasInBattle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public Enemy_BattleState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
     {
@@ -19,14 +20,28 @@ public class Enemy_BattleState : EnemyState
         {
             player = enemy.PlayerDetection().transform;
         }
+
+        if (shouldRetreat())
+        {
+            rigidbody.linearVelocity = new Vector2(enemy.retreatVelocity.x*-DirectionToPlayer(),enemy.retreatVelocity.y);
+            enemy.HandleFlip(DirectionToPlayer());
+        }
         
     }
 
     public override void Update()
     {
         base.Update();
+        if (enemy.PlayerDetection() == true)
+        {
+            UpdateBattleTimer();
+        }
 
-        if (WithinAttackRange())
+        if (BattleTimeIsOver())
+        {
+            enemyStateMachine.ChangeState(enemy.IdleState);
+        }
+        if (WithinAttackRange() && enemy.PlayerDetection())
         {
             enemyStateMachine.ChangeState(enemy.AttackState);
         }
@@ -35,9 +50,10 @@ public class Enemy_BattleState : EnemyState
             enemy.SetVelocity(enemy.battleMoveSpeed * DirectionToPlayer(), rigidbody.linearVelocity.y);
         }
     }
-    
+    private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
+    private bool BattleTimeIsOver() =>Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;
     private bool WithinAttackRange() => DistanceToPlayer() < enemy.attackDistance;
-    
+    private bool shouldRetreat() => DistanceToPlayer() < enemy.minRetreatDistance;
         
     
     
