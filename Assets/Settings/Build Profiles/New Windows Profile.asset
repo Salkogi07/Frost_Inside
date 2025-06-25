@@ -21,11 +21,13 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/MainScenes/Character_Seletct.unity
+    m_path: Assets/Scenes/Multi/Setup.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/MainScenes/Start_FIFO.unity
+    m_path: Assets/Scenes/Multi/MainMenu.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/MainScenes/GameScene.unity
+    m_path: Assets/Scenes/Multi/Lobby.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/Multi/Game.unity
   m_ScriptingDefines:
   - DEBUGCODE
   - CHEAT
