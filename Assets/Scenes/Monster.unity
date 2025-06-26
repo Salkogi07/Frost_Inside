@@ -2382,10 +2382,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 995a1ca4ad54748449d6ecf7b7b50e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth:
-    baseValue: 10
-    Modifiers: 
-  Health: 0
   MonsterGroup:
     attack:
       baseValue: 0

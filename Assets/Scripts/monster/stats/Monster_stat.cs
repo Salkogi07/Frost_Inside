@@ -3,8 +3,8 @@ using UnityEngine;
 public class Monster_stat : MonoBehaviour
 {
     [Header("stat")]
-     public Stat MaxHealth;
-     public float Health;
+     // public Stat MaxHealth;
+     // public float Health;
      public Monster_StatGroup MonsterGroup;
      
 
@@ -15,7 +15,7 @@ public class Monster_stat : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Health = MaxHealth.GetValue();
+        // Health = MaxHealth.GetValue();
     }
 
     // Update is called once per frame
@@ -27,8 +27,8 @@ public class Monster_stat : MonoBehaviour
         // }
     }
 
-    public void damage(float damage)
-    {
-         Health -= damage;
-    }
+    // public void damage(float damage)
+    // {
+    //      Health -= damage;
+    // }
 }
