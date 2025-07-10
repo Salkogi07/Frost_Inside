@@ -1,5 +1,4 @@
 using System;
-using Stats;
 using UnityEngine;
 
 public class Enemy_Combat : MonoBehaviour
@@ -8,20 +7,24 @@ public class Enemy_Combat : MonoBehaviour
     public int damage = 10;
     // public Collider2D[] targetColliders;
 
-    [Header("Tatget detection")] 
+    [Header("Target detection")] 
     [SerializeField] private Transform targetChack;
     [SerializeField] private float targetcheckRadius;
     [SerializeField] private LayerMask whatIsTarget;
-
+    // public TagHandle;
+    
     public void PerformAttack()
     {
         GetDetectedColliders();
 
         foreach (var target in GetDetectedColliders())
         {
-            Player_Condition playerCondition = target.GetComponent<Player_Condition>();
+            // Player_Condition playerCondition = target.GetComponent<Player_Condition>();
+            //  
+            // playerCondition?.TakeDamage(damage);
+            Enemy_Health enemy_Health = target.GetComponent<Enemy_Health>();
              
-            playerCondition?.TakeDamage(damage);
+            enemy_Health?.TakeDamage(damage,transform);
         }
     }
     

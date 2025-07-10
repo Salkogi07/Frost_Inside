@@ -49,6 +49,8 @@ GameObject:
   - component: {fileID: 7941363909139575587}
   - component: {fileID: 3887468149059330943}
   - component: {fileID: 509788980795662491}
+  - component: {fileID: 6403125614287489953}
+  - component: {fileID: 5975421801985942122}
   m_Layer: 15
   m_Name: Skeleton
   m_TagString: Enemy
@@ -181,15 +183,11 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 995a1ca4ad54748449d6ecf7b7b50e46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxHealth:
-    baseValue: 0
-    Modifiers: 
-  Health: 0
   MonsterGroup:
     attack:
       baseValue: 0
@@ -215,12 +213,63 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a59b1ea13a136449911b058a5a0446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetColliders: []
+  damage: 10
   targetChack: {fileID: 6432104966819269287}
   targetcheckRadius: 1
   whatIsTarget:
     serializedVersion: 2
     m_Bits: 64
+--- !u!114 &6403125614287489953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20af4ffdd60e9d34c96edf430f1d2362, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp: 0
+  maxHp: 100
+  damage: 0
+  armor: 0
+  difficulty: 1
+--- !u!114 &5975421801985942122
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25138c6a3ea15747b0f1c5caf6e0a76, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  isDead: 0
+  MaxHealth:
+    baseValue: 0
+    Modifiers: 
+  Offense:
+    Damage:
+      baseValue: 0
+      Modifiers: 
+    Ice_Damge:
+      baseValue: 0
+      Modifiers: 
+  Defense:
+    Armor:
+      baseValue: 0
+      Modifiers: 
+    Evasion:
+      baseValue: 0
+      Modifiers: 
+    Lagging:
+      baseValue: 0
+      Modifiers: 
 --- !u!1 &4241109382183132690
 GameObject:
   m_ObjectHideFlags: 0

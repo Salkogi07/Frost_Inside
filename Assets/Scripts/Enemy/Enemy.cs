@@ -47,6 +47,29 @@ namespace Scripts.Enemy
         [SerializeField] private LayerMask whatIsPlayer;
         [SerializeField] private float playerCheckDistance = 10;
 
+        public Transform player {get; private set;}
+        public void TryEnterBattleState(Transform player)
+        {
+            if (EnemyStateMachine.currentState == BattleState)
+            {
+                return;
+            }
+            if(EnemyStateMachine.currentState == AttackState)
+            {
+                return;
+            }
+            this.player =  player;
+            EnemyStateMachine.ChangeState(BattleState);
+        }
+
+        public Transform GetPlayerReference()
+        {
+            if (player == null)
+            {
+                player = PlayerDetection().transform;            
+            }
+            return player;
+        }
         public RaycastHit2D PlayerDetection()
         {
             RaycastHit2D hit = Physics2D.Raycast(playerCheck.position,Vector2.right * FacingDirection , playerCheckDistance, whatIsPlayer | whatIsGround);

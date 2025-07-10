@@ -16,11 +16,13 @@ public class Enemy_BattleState : EnemyState
     {
         base.Enter();
 
+        UpdateBattleTimer();
+        
         if (player == null)
         {
-            player = enemy.PlayerDetection().transform;
+            player = enemy.GetPlayerReference();
         }
-
+        // player ??= enemy.GetPlayerReference();
         if (shouldRetreat())
         {
             rigidbody.linearVelocity = new Vector2(enemy.retreatVelocity.x*-DirectionToPlayer(),enemy.retreatVelocity.y);

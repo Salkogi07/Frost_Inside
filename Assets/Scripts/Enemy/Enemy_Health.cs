@@ -1,35 +1,28 @@
+using Script.Plyayer_22;
+using Scripts.Enemy;
+using Stats;
 using UnityEngine;
 
-public class Enemy_Health : MonoBehaviour
+public class Enemy_Health : Entity_Stats
 {
-    [SerializeField] protected float Maxhealth;
-    [SerializeField] protected bool isDead = false;
-
-
-    public virtual void TakeDamage(float damage)
+    private Enemy enemy => GetComponent<Enemy>();
+    
+    
+    
+    public override void TakeDamage(float damage, Transform damageDeaaler)
     {
-        if (isDead)
+        if (damageDeaaler.GetComponent<Player>() != null)
         {
-            return;
+            enemy.TryEnterBattleState(damageDeaaler);
         }
-        ReduceHp(damage);
+        base.TakeDamage(damage, damageDeaaler);
     }
+    
+    
+    
 
-    private void ReduceHp(float damage)
-    {
-        Maxhealth -= damage;
 
-        if (Maxhealth < 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        isDead = true;
-        Debug.Log("뻐@거");
-    }
+    
 
 
 }
