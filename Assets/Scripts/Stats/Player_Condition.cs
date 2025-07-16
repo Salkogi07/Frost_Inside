@@ -8,6 +8,7 @@ namespace Stats
     {
         private Player_Stats _stats;
         private Player _player;
+        private Entity_VFX _vfx;
         
         [Header("Player info")]
         private bool _isDead = false;
@@ -32,6 +33,7 @@ namespace Stats
         private void Awake()
         {
             _stats = GetComponent<Player_Stats>();
+            _vfx = GetComponent<Entity_VFX>();
             
             currentHpPropertiy = new ReactiveProperty<float>(_stats.MaxHp.Value);
             currentStamina = new ReactiveProperty<float>(_stats.MaxStamina.Value);
@@ -133,6 +135,7 @@ namespace Stats
                 return;
 
             CurrentHp -= _damage;
+            _vfx.PlayOnDamageVfx();
             if(CurrentHp <= 0)
             {
                 CurrentHp = 0;

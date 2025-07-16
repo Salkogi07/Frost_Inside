@@ -1,4 +1,5 @@
-﻿using Script.Plyayer_22;
+﻿using System.Collections;
+using Script.Plyayer_22;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
@@ -89,7 +90,8 @@ namespace Scripts.Enemy
         [SerializeField] private LayerMask whatIsWall;
         [SerializeField] private float wallCheckDistance;
 
-
+        private Coroutine KnockbackCo;
+        private bool isknocked;
         protected virtual void Awake()
         {
             Anim = GetComponentInChildren<Animator>();
@@ -122,6 +124,22 @@ namespace Scripts.Enemy
             EnemyStateMachine.FiexedUpdateActiveState();
         }
 
+        public void Reciveknockback(Vector2 knockback, float duration)
+        {
+            if (KnockbackCo != null)
+            {
+                StopCoroutine(KnockbackCo);
+            }
+            KnockbackCo = StartCoroutine(konckbackCo(knockback, duration));
+        }
+        private IEnumerator konckbackCo(Vector2 knockback ,float duration)
+        {
+            isknocked = true;
+            Rigidbody.linearVelocity = knockback;
+            yield return new WaitForSeconds(duration);
+            Rigidbody.linearVelocity = Vector2.zero;
+            isknocked = false;
+        }
         public void CallAnimationTrigger()
         {
             EnemyStateMachine.currentState.CallAnimationTrigger();
@@ -131,6 +149,11 @@ namespace Scripts.Enemy
         
         public void SetVelocity(float xVelocity, float yVelocity)
         {
+            if (isknocked)
+            {
+                return;
+            }
+            
             Rigidbody.linearVelocity = new Vector2(xVelocity, yVelocity);
             HandleFlip(xVelocity);
         }

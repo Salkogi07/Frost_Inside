@@ -1,4 +1,5 @@
 using System;
+using Stats;
 using UnityEngine;
 
 public class Enemy_Combat : MonoBehaviour
@@ -19,12 +20,12 @@ public class Enemy_Combat : MonoBehaviour
 
         foreach (var target in GetDetectedColliders())
         {
-            // Player_Condition playerCondition = target.GetComponent<Player_Condition>();
+            Player_Condition playerCondition = target.GetComponent<Player_Condition>();
+            
+            playerCondition?.TakeDamage(damage);
+            // Enemy_Health enemy_Health = target.GetComponent<Enemy_Health>();
             //  
-            // playerCondition?.TakeDamage(damage);
-            Enemy_Health enemy_Health = target.GetComponent<Enemy_Health>();
-             
-            enemy_Health?.TakeDamage(damage,transform);
+            // enemy_Health?.TakeDamage(damage,transform);
         }
     }
     
