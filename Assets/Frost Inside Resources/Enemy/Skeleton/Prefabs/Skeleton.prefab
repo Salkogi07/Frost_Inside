@@ -50,7 +50,7 @@ GameObject:
   - component: {fileID: 3887468149059330943}
   - component: {fileID: 509788980795662491}
   - component: {fileID: 6403125614287489953}
-  - component: {fileID: 748514528279752800}
+  - component: {fileID: 1241602051025749017}
   - component: {fileID: 6194448974202251314}
   m_Layer: 8
   m_Name: Skeleton
@@ -237,19 +237,19 @@ MonoBehaviour:
   damage: 0
   armor: 0
   difficulty: 1
---- !u!114 &748514528279752800
+--- !u!114 &1241602051025749017
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01c0ee003fa3e9545b0e43fe49535cec, type: 3}
+  m_Script: {fileID: 11500000, guid: c25138c6a3ea15747b0f1c5caf6e0a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 100
   isDead: 0
   knockbackDuration: 0.2
   onDamageKnockback: {x: 1.5, y: 2.5}
