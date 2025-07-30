@@ -16,6 +16,7 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private Button leaveButton;
     [SerializeField] private Transform playerListContent;
     [SerializeField] private GameObject playerItemPrefab;
+    [SerializeField] private Toggle allReadyToggle;
     
     // TODO: 여기에 실제 캐릭터 선택 패널/버튼 등을 연결
     // public CharacterSelectionPanel characterSelectionPanel;
@@ -97,6 +98,7 @@ public class LobbyUI : MonoBehaviour
         if (isHost)
         {
             startGameButton.interactable = PlayerDataManager.instance.AreAllPlayersReady();
+            allReadyToggle.isOn = PlayerDataManager.instance.AreAllPlayersReady();
         }
     }
     

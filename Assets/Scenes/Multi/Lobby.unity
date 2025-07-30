@@ -1585,6 +1585,7 @@ MonoBehaviour:
   leaveButton: {fileID: 423120435}
   playerListContent: {fileID: 515514726}
   playerItemPrefab: {fileID: 9204626771907074494, guid: c24284e67e05e274ba21c1bf2ee33d02, type: 3}
+  allReadyToggle: {fileID: 846714472}
 --- !u!1 &477894583
 GameObject:
   m_ObjectHideFlags: 0
