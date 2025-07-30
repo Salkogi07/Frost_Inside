@@ -22,30 +22,6 @@ namespace Stats
             
             return baseEvasion;
         }
-        public virtual void TakeDamage(float damage , Transform damageDealer)
-        {
         
-            if (isDead)
-            {
-                return;
-            }
-            ReduceHp(damage);
-        }
-
-        private void ReduceHp(float damage)
-        {
-            health -= damage;
-
-            if (health < 0)
-            {
-                Die();
-            }
-        }
-
-        private void Die()
-        {
-            isDead = true;
-            Debug.Log("뻐@거");
-        }
     }
 }

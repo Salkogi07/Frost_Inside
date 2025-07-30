@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3733507237557569488}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: Checks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -50,8 +50,9 @@ GameObject:
   - component: {fileID: 3887468149059330943}
   - component: {fileID: 509788980795662491}
   - component: {fileID: 6403125614287489953}
-  - component: {fileID: 5975421801985942122}
-  m_Layer: 15
+  - component: {fileID: 748514528279752800}
+  - component: {fileID: 6194448974202251314}
+  m_Layer: 8
   m_Name: Skeleton
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -236,7 +237,23 @@ MonoBehaviour:
   damage: 0
   armor: 0
   difficulty: 1
---- !u!114 &5975421801985942122
+--- !u!114 &748514528279752800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c0ee003fa3e9545b0e43fe49535cec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  isDead: 0
+  knockbackDuration: 0.2
+  onDamageKnockback: {x: 1.5, y: 2.5}
+--- !u!114 &6194448974202251314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -245,31 +262,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 3867197236472526811}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c25138c6a3ea15747b0f1c5caf6e0a76, type: 3}
+  m_Script: {fileID: 11500000, guid: 993954aeb2892e1429548b8df26d8f71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  isDead: 0
-  MaxHealth:
-    baseValue: 0
-    Modifiers: 
-  Offense:
-    Damage:
-      baseValue: 0
-      Modifiers: 
-    Ice_Damge:
-      baseValue: 0
-      Modifiers: 
-  Defense:
-    Armor:
-      baseValue: 0
-      Modifiers: 
-    Evasion:
-      baseValue: 0
-      Modifiers: 
-    Lagging:
-      baseValue: 0
-      Modifiers: 
+  OnDamageMaterial: {fileID: 2100000, guid: 81bf0fba219d57c49a40c7d65a2b6165, type: 2}
+  onDamagefxDuration: 0.2
 --- !u!1 &4241109382183132690
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,7 +277,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1461770328628560386}
   - component: {fileID: 2031871411484249938}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -363,7 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2724800033337947095}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: Wall Check
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
@@ -397,7 +394,7 @@ GameObject:
   - component: {fileID: 4383163789121894670}
   - component: {fileID: 8788408177247116188}
   - component: {fileID: 7684268948642768014}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: Sprite
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -517,7 +514,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3830037776627040223}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: AttackPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -548,7 +545,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6888678176120883945}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: Ground Check
   m_TagString: Untagged
   m_Icon: {fileID: 7422848464349959988, guid: 0000000000000000d000000000000000, type: 0}
@@ -579,7 +576,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6432104966819269287}
-  m_Layer: 15
+  m_Layer: 8
   m_Name: Target Check
   m_TagString: Untagged
   m_Icon: {fileID: 0}

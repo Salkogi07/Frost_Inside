@@ -7,6 +7,7 @@ public class Enemy_Combat : MonoBehaviour
     
     public int damage = 10;
     // public Collider2D[] targetColliders;
+    
 
     [Header("Target detection")] 
     [SerializeField] private Transform targetChack;
@@ -17,12 +18,14 @@ public class Enemy_Combat : MonoBehaviour
     public void PerformAttack()
     {
         GetDetectedColliders();
-
+        // entityHealth?.TakeDamage(damage,transform);
         foreach (var target in GetDetectedColliders())
         {
-            Player_Condition playerCondition = target.GetComponent<Player_Condition>();
-            
-            playerCondition?.TakeDamage(damage);
+            // Player_Condition playerCondition = target.GetComponent<Player_Condition>();
+            //
+            // playerCondition?.TakeDamage(damage);
+            Entity_Health entityHealth = target.GetComponent<Entity_Health>();
+            entityHealth?.TakeDamage(damage,transform);
             // Enemy_Health enemy_Health = target.GetComponent<Enemy_Health>();
             //  
             // enemy_Health?.TakeDamage(damage,transform);
