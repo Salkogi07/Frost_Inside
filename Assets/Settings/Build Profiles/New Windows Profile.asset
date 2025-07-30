@@ -21,9 +21,9 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/Multi/Setup.unity
+    m_path: Assets/Scenes/Multi/Introduction.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/Multi/MainMenu.unity
+    m_path: Assets/Scenes/Multi/Menu.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Multi/Lobby.unity
   - m_enabled: 1
