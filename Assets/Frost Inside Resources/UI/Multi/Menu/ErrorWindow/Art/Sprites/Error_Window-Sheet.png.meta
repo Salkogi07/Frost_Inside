@@ -1,0 +1,643 @@
+fileFormatVersion: 2
+guid: 3d206a3f72ad0674896e159a622f263c
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1037171711241512932
+    second: Error_Window-Sheet_0
+  - first:
+      213: -8384006733260522258
+    second: Error_Window-Sheet_1
+  - first:
+      213: 2593720306278271510
+    second: Error_Window-Sheet_2
+  - first:
+      213: -1310006888386053205
+    second: Error_Window-Sheet_3
+  - first:
+      213: -6256013659871592661
+    second: Error_Window-Sheet_4
+  - first:
+      213: -7355849435532019327
+    second: Error_Window-Sheet_5
+  - first:
+      213: 1736684204487268692
+    second: Error_Window-Sheet_6
+  - first:
+      213: -8199713896679998220
+    second: Error_Window-Sheet_7
+  - first:
+      213: 8677489543710488147
+    second: Error_Window-Sheet_8
+  - first:
+      213: -5466118668243677685
+    second: Error_Window-Sheet_9
+  - first:
+      213: -5252882105189281198
+    second: Error_Window-Sheet_10
+  - first:
+      213: 6559568110410152957
+    second: Error_Window-Sheet_11
+  - first:
+      213: -6252044857340423765
+    second: Error_Window-Sheet_12
+  - first:
+      213: 1814973615288177782
+    second: Error_Window-Sheet_13
+  - first:
+      213: -6308112166084304355
+    second: Error_Window-Sheet_14
+  - first:
+      213: 6148185332736242453
+    second: Error_Window-Sheet_15
+  - first:
+      213: 4374748149474489630
+    second: Error_Window-Sheet_16
+  - first:
+      213: 1789227786465378001
+    second: Error_Window-Sheet_17
+  - first:
+      213: -5830057469608685869
+    second: Error_Window-Sheet_18
+  - first:
+      213: 4265035582678041006
+    second: Error_Window-Sheet_19
+  - first:
+      213: -1239970237238061285
+    second: Error_Window-Sheet_20
+  - first:
+      213: 4204980552352318192
+    second: Error_Window-Sheet_21
+  - first:
+      213: 8540079266198360817
+    second: Error_Window-Sheet_22
+  - first:
+      213: 7585902000347887324
+    second: Error_Window-Sheet_23
+  - first:
+      213: 4684855020197606691
+    second: Error_Window-Sheet_24
+  - first:
+      213: -4096108239095952686
+    second: Error_Window-Sheet_25
+  - first:
+      213: -3073768616273668402
+    second: Error_Window-Sheet_26
+  - first:
+      213: 7853896037238180150
+    second: Error_Window-Sheet_27
+  - first:
+      213: -1026190932337999607
+    second: Error_Window-Sheet_28
+  - first:
+      213: 349298355949263868
+    second: Error_Window-Sheet_29
+  - first:
+      213: -4424122004091857401
+    second: Error_Window-Sheet_30
+  - first:
+      213: -3847393412518516653
+    second: Error_Window-Sheet_31
+  - first:
+      213: -7560544073082778962
+    second: Error_Window-Sheet_32
+  - first:
+      213: -8959630573778114719
+    second: Error_Window-Sheet_33
+  - first:
+      213: -668769833978265240
+    second: Error_Window-Sheet_34
+  - first:
+      213: 721651570591144301
+    second: Error_Window-Sheet_35
+  - first:
+      213: -5526357157055257676
+    second: Error_Window-Sheet_36
+  - first:
+      213: -6508999701987517430
+    second: Error_Window-Sheet_37
+  - first:
+      213: -2539937488318168187
+    second: Error_Window-Sheet_38
+  - first:
+      213: -1329083410718143460
+    second: Error_Window-Sheet_39
+  - first:
+      213: 4736955151599157404
+    second: Error_Window-Sheet_40
+  - first:
+      213: -7595245764882184220
+    second: Error_Window-Sheet_41
+  - first:
+      213: 2367460690524681857
+    second: Error_Window-Sheet_42
+  - first:
+      213: 49146447419666946
+    second: Error_Window-Sheet_43
+  - first:
+      213: -8167274428040685899
+    second: Error_Window-Sheet_44
+  - first:
+      213: 6358168991515659612
+    second: Error_Window-Sheet_45
+  - first:
+      213: 8615023276332190591
+    second: Error_Window-Sheet_46
+  - first:
+      213: 4151579675326392745
+    second: Error_Window-Sheet_47
+  - first:
+      213: 419988426474742972
+    second: Error_Window-Sheet_48
+  - first:
+      213: -2328752116580592370
+    second: Error_Window-Sheet_49
+  - first:
+      213: 8984308951831212703
+    second: Error_Window-Sheet_50
+  - first:
+      213: -6045694134915439238
+    second: Error_Window-Sheet_51
+  - first:
+      213: 9164250148082395775
+    second: Error_Window-Sheet_52
+  - first:
+      213: 6630779162287048241
+    second: Error_Window-Sheet_53
+  - first:
+      213: 4460481040233113663
+    second: Error_Window-Sheet_54
+  - first:
+      213: -4840091479583687874
+    second: Error_Window-Sheet_55
+  - first:
+      213: 1339708896262981497
+    second: Error_Window-Sheet_56
+  - first:
+      213: -7532889542878502280
+    second: Error_Window-Sheet_57
+  - first:
+      213: -7892933845336681450
+    second: Error_Window-Sheet_58
+  - first:
+      213: 1804440122011079394
+    second: Error_Window-Sheet_59
+  - first:
+      213: -1861306648425729215
+    second: Error_Window-Sheet_60
+  - first:
+      213: 2182672462011122537
+    second: Error_Window-Sheet_61
+  - first:
+      213: 5770139390126208656
+    second: Error_Window-Sheet_62
+  - first:
+      213: 1351607572454700669
+    second: Error_Window-Sheet_63
+  - first:
+      213: 6393827423931040069
+    second: Error_Window-Sheet_64
+  - first:
+      213: 4447342533184670928
+    second: Error_Window-Sheet_65
+  - first:
+      213: -448046422730282148
+    second: Error_Window-Sheet_66
+  - first:
+      213: -174052385454704370
+    second: Error_Window-Sheet_67
+  - first:
+      213: 7926729486589883380
+    second: Error_Window-Sheet_68
+  - first:
+      213: -1574972896464704366
+    second: Error_Window-Sheet_69
+  - first:
+      213: -7260859368765262911
+    second: Error_Window-Sheet_70
+  - first:
+      213: -6842598028618960943
+    second: Error_Window-Sheet_71
+  - first:
+      213: 7990656671668910239
+    second: Error_Window-Sheet_72
+  - first:
+      213: -4864787927863989120
+    second: Error_Window-Sheet_73
+  - first:
+      213: 6331838743682510277
+    second: Error_Window-Sheet_74
+  - first:
+      213: 4397882102823116473
+    second: Error_Window-Sheet_75
+  - first:
+      213: -5022365961294935726
+    second: Error_Window-Sheet_76
+  - first:
+      213: -330315032389073567
+    second: Error_Window-Sheet_77
+  - first:
+      213: -3572846610106976690
+    second: Error_Window-Sheet_78
+  - first:
+      213: 435554489222879875
+    second: Error_Window-Sheet_79
+  - first:
+      213: 1116487958383912466
+    second: Error_Window-Sheet_80
+  - first:
+      213: -8218531856601351205
+    second: Error_Window-Sheet_81
+  - first:
+      213: 3462757388002474189
+    second: Error_Window-Sheet_82
+  - first:
+      213: 2133808674658145572
+    second: Error_Window-Sheet_83
+  - first:
+      213: 6637724151624479380
+    second: Error_Window-Sheet_84
+  - first:
+      213: -5657704804905649153
+    second: Error_Window-Sheet_85
+  - first:
+      213: 3014020638030921334
+    second: Error_Window-Sheet_86
+  - first:
+      213: -7583577374815047417
+    second: Error_Window-Sheet_87
+  - first:
+      213: 929623626075918838
+    second: Error_Window-Sheet_88
+  - first:
+      213: 2029959555512840326
+    second: Error_Window-Sheet_89
+  - first:
+      213: -7013790771495152954
+    second: Error_Window-Sheet_90
+  - first:
+      213: 6608477374740178499
+    second: Error_Window-Sheet_91
+  - first:
+      213: -594464046552601874
+    second: Error_Window-Sheet_92
+  - first:
+      213: -7065686258605139257
+    second: Error_Window-Sheet_93
+  - first:
+      213: -1880172702864774985
+    second: Error_Window-Sheet_94
+  - first:
+      213: -4878387393910856646
+    second: Error_Window-Sheet_95
+  - first:
+      213: -5168453370217944050
+    second: Error_Window-Sheet_96
+  - first:
+      213: -4491937272576279138
+    second: Error_Window-Sheet_97
+  - first:
+      213: 4771564980021684619
+    second: Error_Window-Sheet_98
+  - first:
+      213: 1649669683580344802
+    second: Error_Window-Sheet_99
+  - first:
+      213: -499363526486207893
+    second: Error_Window-Sheet_100
+  - first:
+      213: 8848610706333188186
+    second: Error_Window-Sheet_101
+  - first:
+      213: -8508060361464381001
+    second: Error_Window-Sheet_102
+  - first:
+      213: 1934931283166890181
+    second: Error_Window-Sheet_103
+  - first:
+      213: 2252006518270019162
+    second: Error_Window-Sheet_104
+  - first:
+      213: -701568135383292222
+    second: Error_Window-Sheet_105
+  - first:
+      213: 2909388053064189264
+    second: Error_Window-Sheet_106
+  - first:
+      213: -6110540004848796641
+    second: Error_Window-Sheet_107
+  - first:
+      213: 5702245809724958393
+    second: Error_Window-Sheet_108
+  - first:
+      213: -2518446730665031685
+    second: Error_Window-Sheet_109
+  - first:
+      213: -5362593992078108367
+    second: Error_Window-Sheet_110
+  - first:
+      213: -7072303491710475772
+    second: Error_Window-Sheet_111
+  - first:
+      213: -8201122686707346007
+    second: Error_Window-Sheet_112
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Error_Window-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4e762ab1d26c46e00800000000000000
+      internalID: 1037171711241512932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Error_Window-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eecf585eb4606ab80800000000000000
+      internalID: -8384006733260522258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Error_Window-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 61a0f6e50eebef320800000000000000
+      internalID: 2593720306278271510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Error_Window-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 200
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bab3f6cfcabe1dde0800000000000000
+      internalID: -1310006888386053205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Error_Window-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 200
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b2fbc5dd8bc2e29a0800000000000000
+      internalID: -6256013659871592661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Error_Window-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 200
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1893bdd49e5cae990800000000000000
+      internalID: -7355849435532019327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Error_Window-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 200
+        height: 130
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 459de772511f91810800000000000000
+      internalID: 1736684204487268692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: e6667663580758142a888dd297335b22
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Error_Window-Sheet_0: 1037171711241512932
+      Error_Window-Sheet_1: -8384006733260522258
+      Error_Window-Sheet_2: 2593720306278271510
+      Error_Window-Sheet_3: -1310006888386053205
+      Error_Window-Sheet_4: -6256013659871592661
+      Error_Window-Sheet_5: -7355849435532019327
+      Error_Window-Sheet_6: 1736684204487268692
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

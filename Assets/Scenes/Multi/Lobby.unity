@@ -816,7 +816,7 @@ Animator:
   m_GameObject: {fileID: 196019686}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bce5d41d25d0a2249893c81f051bba2f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 799582e44ac21574ebbf59212c831fec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2548,10 +2548,10 @@ RectTransform:
   - {fileID: 299236594}
   m_Father: {fileID: 960304089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 350, y: -110}
+  m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &694392971
 MonoBehaviour:
@@ -3194,10 +3194,10 @@ RectTransform:
   - {fileID: 479359953}
   m_Father: {fileID: 423783814}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &911370160
 MonoBehaviour:
@@ -3524,7 +3524,7 @@ Animator:
   m_GameObject: {fileID: 1093425011}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: bce5d41d25d0a2249893c81f051bba2f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 799582e44ac21574ebbf59212c831fec, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3781,10 +3781,10 @@ RectTransform:
   - {fileID: 773071100}
   m_Father: {fileID: 960304089}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 110, y: -110}
+  m_SizeDelta: {x: 220, y: 220}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1186482820
 MonoBehaviour:
@@ -4349,7 +4349,7 @@ Animator:
   m_GameObject: {fileID: 1381094954}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: be6577ff5510ca142a7ec80ab5479c72, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7fbd8950a67302146b502ef59aefb5a0, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
