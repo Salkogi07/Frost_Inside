@@ -90,15 +90,6 @@ public class NetworkTransmission : NetworkBehaviour
         
         // 모든 클라이언트에게 킥/밴 사실을 알립니다.
         NotifyPlayerKickedClientRpc(targetClientId, kickedPlayerName, shouldBan);
-
-        // RPC가 클라이언트에게 전달될 시간을 주기 위해 한 프레임 뒤에 연결을 끊습니다.
-        StartCoroutine(DisconnectClientDelayed(targetClientId));
-    }
-
-    private IEnumerator DisconnectClientDelayed(ulong targetClientId)
-    {
-        yield return new WaitForEndOfFrame();
-        NetworkManager.Singleton.DisconnectClient(targetClientId);
     }
     
     [ClientRpc]

@@ -98,8 +98,8 @@ public class LobbyUI : MonoBehaviour
         if (isHost)
         {
             startGameButton.interactable = PlayerDataManager.instance.AreAllPlayersReady();
-            allReadyToggle.isOn = PlayerDataManager.instance.AreAllPlayersReady();
         }
+        allReadyToggle.isOn = PlayerDataManager.instance.AreAllPlayersReady();
     }
     
     private void SetReady(bool isReady)
