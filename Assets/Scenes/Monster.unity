@@ -4810,30 +4810,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f501881307557499462d2e3c358182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleMoveSpeed: 3
-  attackDistance: 2
-  battleTimeDuration: 5
-  minRetreatDistance: 1
-  retreatVelocity: {x: 0, y: 0}
-  IdleTime: 2
-  MoveSpeed: 1.4
-  moveAnimSpeedMultiplier: 1
+  Anim: {fileID: 0}
+  rb: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   groundCheck: {fileID: 1561153232}
   groundCheckDistance: 0.15
-  playerCheck: {fileID: 0}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 0
-  playerCheckDistance: 10
   primaryWallCheck: {fileID: 1779518}
   secondaryWallCheck: {fileID: 1779518}
   whatIsWall:
     serializedVersion: 2
     m_Bits: 8
   wallCheckDistance: 0.35
+  battleMoveSpeed: 3
+  attackDistance: 2
+  battleTimeDuration: 5
+  minRetreatDistance: 1
+  retreatVelocity: {x: 0, y: 0}
+  playerCheck: {fileID: 0}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 0
+  playerCheckDistance: 10
+  IdleTime: 2
+  MoveSpeed: 1.4
+  moveAnimSpeedMultiplier: 1
 --- !u!50 &815643349
 Rigidbody2D:
   serializedVersion: 5
@@ -13276,6 +13278,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: Anim
+      value: 
+      objectReference: {fileID: 1212651791}
+    - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: IdleTime
       value: 1
       objectReference: {fileID: 0}
@@ -14018,6 +14024,11 @@ MonoBehaviour:
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7215720939812296226, guid: 19b02c871166adc48992e915e2554356, type: 3}
   m_PrefabInstance: {fileID: 1207210036}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &1212651791 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8788408177247116188, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+  m_PrefabInstance: {fileID: 1160284132}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1223576613
 GameObject:
@@ -40734,10 +40745,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c25138c6a3ea15747b0f1c5caf6e0a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
+  health: 0
+  maxHealth: 100
   isDead: 0
   knockbackDuration: 0.2
-  onDamageKnockback: {x: 1.5, y: 2.5}
+  KnockbackPower: {x: 1.5, y: 2.5}
+  heavyKnockbackpower: {x: 1.5, y: 2.5}
+  heavyKnockbackDuration: 0.5
+  heavyDamageThreshold: 0.3
 --- !u!114 &2019678892
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -40750,7 +40765,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a59b1ea13a136449911b058a5a0446, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 50
   targetChack: {fileID: 117775011}
   targetcheckRadius: 1
   whatIsTarget:

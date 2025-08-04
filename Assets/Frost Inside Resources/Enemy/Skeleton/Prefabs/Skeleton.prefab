@@ -153,30 +153,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe7ad6ec7f874f36bbf946d5558e8233, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  battleMoveSpeed: 3
-  attackDistance: 2
-  battleTimeDuration: 5
-  minRetreatDistance: 1
-  retreatVelocity: {x: 0, y: 0}
-  IdleTime: 2
-  MoveSpeed: 1.4
-  moveAnimSpeedMultiplier: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   groundCheck: {fileID: 6888678176120883945}
   groundCheckDistance: 0.15
-  playerCheck: {fileID: 0}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 0
-  playerCheckDistance: 10
   primaryWallCheck: {fileID: 2724800033337947095}
   secondaryWallCheck: {fileID: 2724800033337947095}
   whatIsWall:
     serializedVersion: 2
     m_Bits: 8
   wallCheckDistance: 0.3
+  battleMoveSpeed: 3
+  attackDistance: 2
+  battleTimeDuration: 5
+  minRetreatDistance: 1
+  retreatVelocity: {x: 0, y: 0}
+  playerCheck: {fileID: 0}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 64
+  playerCheckDistance: 10
+  IdleTime: 2
+  MoveSpeed: 1.4
+  moveAnimSpeedMultiplier: 1
 --- !u!114 &3887468149059330943
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,9 +250,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 100
+  maxHealth: 100
   isDead: 0
   knockbackDuration: 0.2
-  onDamageKnockback: {x: 1.5, y: 2.5}
+  KnockbackPower: {x: 1.5, y: 2.5}
+  heavyKnockbackpower: {x: 7, y: 7}
+  heavyKnockbackDuration: 0.5
+  heavyDamageThreshold: 0.3
 --- !u!114 &6194448974202251314
 MonoBehaviour:
   m_ObjectHideFlags: 0

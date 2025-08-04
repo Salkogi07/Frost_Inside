@@ -1,5 +1,4 @@
 using Script.Plyayer_22;
-using Scripts.Enemy;
 using UnityEngine;
 
 public class Enemy_Health : Entity_Health
@@ -16,6 +15,14 @@ public class Enemy_Health : Entity_Health
     
     public override void TakeDamage(int damage, Transform damageDeaaler)
     {
+        
+        base.TakeDamage(damage, damageDeaaler);
+        
+        
+        if (isDead)
+        {
+            return;
+        }
         if (damageDeaaler.GetComponent<Player>() != null)
         {
             
@@ -23,6 +30,6 @@ public class Enemy_Health : Entity_Health
         }
         
         // Debug.Log(damageDeaaler);
-        base.TakeDamage(damage, damageDeaaler);
+        
     }
 }

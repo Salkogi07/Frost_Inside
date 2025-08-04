@@ -1,4 +1,4 @@
-using Scripts.Enemy;
+
 using UnityEngine;
 
 public class Enemy_BattleState : EnemyState

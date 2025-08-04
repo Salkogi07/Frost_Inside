@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Enemy
-{
+
     public class Enemy_IdleState : Enemy_GroundedState
     {
         public Enemy_IdleState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
@@ -23,4 +22,3 @@ namespace Scripts.Enemy
                 enemyStateMachine.ChangeState(enemy.MoveState);
         }
     }
-}

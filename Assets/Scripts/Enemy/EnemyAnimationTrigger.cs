@@ -1,14 +1,14 @@
-using Scripts.Enemy;
+
 using UnityEngine;
 
 public class EnemyAnimationTrigger : MonoBehaviour
 {
-    private Enemy entity;
+    private Entity entity;
     private Enemy_Combat enemyCombat;
     
     private void Awake()
     {
-        entity = GetComponentInParent<Enemy>();
+        entity = GetComponentInParent<Entity>();
         enemyCombat = GetComponentInParent<Enemy_Combat>();
     }
 

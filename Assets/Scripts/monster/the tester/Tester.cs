@@ -1,5 +1,4 @@
-namespace Scripts.Enemy
-{
+
 
 
     public class Tester : Enemy
@@ -16,4 +15,4 @@ namespace Scripts.Enemy
             EnemyStateMachine.Initialize(IdleState);
         }
     }
-}
+

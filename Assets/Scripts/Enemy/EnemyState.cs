@@ -1,8 +1,7 @@
 ﻿using Script.Plyayer_22;
 using UnityEngine;
 
-namespace Scripts.Enemy
-{
+
     public abstract class EnemyState
     {
         protected Enemy enemy;
@@ -23,7 +22,7 @@ namespace Scripts.Enemy
 
             
             anim = enemy.Anim;
-            rigidbody = enemy.Rigidbody;
+            rigidbody = enemy.rb;
         }
 
         public virtual void Enter()
@@ -61,4 +60,3 @@ namespace Scripts.Enemy
             triggerCalled = true;
         }
     }
-}
