@@ -37,6 +37,10 @@ public class PlayerDataUI : MonoBehaviour
         {
             kickButton.gameObject.SetActive(!isHostPlayer);
         }
+        else
+        {
+            kickButton.gameObject.SetActive(false);
+        }
         
         readyCheckText.text = info.IsReady ? "Ready" : "Not Ready";
         readyCheckText.color = info.IsReady ? Color.green : Color.red;
