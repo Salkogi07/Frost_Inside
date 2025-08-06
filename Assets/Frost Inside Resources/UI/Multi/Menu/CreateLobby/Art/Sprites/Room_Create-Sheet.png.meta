@@ -1,0 +1,640 @@
+fileFormatVersion: 2
+guid: a1352381353eada4a8aa44f0e43e9285
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1603143908811162761
+    second: Room_Create-Sheet_0
+  - first:
+      213: -6978299677006228391
+    second: Room_Create-Sheet_1
+  - first:
+      213: 8587942222957613428
+    second: Room_Create-Sheet_2
+  - first:
+      213: 2733933308723497912
+    second: Room_Create-Sheet_3
+  - first:
+      213: -8459319723079231433
+    second: Room_Create-Sheet_4
+  - first:
+      213: -7162077614006483973
+    second: Room_Create-Sheet_5
+  - first:
+      213: -440586937135808153
+    second: Room_Create-Sheet_6
+  - first:
+      213: 8683761445314322424
+    second: Room_Create-Sheet_7
+  - first:
+      213: 7652953758544358325
+    second: Room_Create-Sheet_8
+  - first:
+      213: 7007001258750622085
+    second: Room_Create-Sheet_9
+  - first:
+      213: -3681776641497552244
+    second: Room_Create-Sheet_10
+  - first:
+      213: -3432454492506978880
+    second: Room_Create-Sheet_11
+  - first:
+      213: 1708079089832755764
+    second: Room_Create-Sheet_12
+  - first:
+      213: 3827488692581219218
+    second: Room_Create-Sheet_13
+  - first:
+      213: -271063636786507756
+    second: Room_Create-Sheet_14
+  - first:
+      213: -6434330679571692778
+    second: Room_Create-Sheet_15
+  - first:
+      213: 1256481368549309386
+    second: Room_Create-Sheet_16
+  - first:
+      213: 1561020919726821085
+    second: Room_Create-Sheet_17
+  - first:
+      213: -5077905230299660434
+    second: Room_Create-Sheet_18
+  - first:
+      213: 6601320083443250000
+    second: Room_Create-Sheet_19
+  - first:
+      213: 249093120243694909
+    second: Room_Create-Sheet_20
+  - first:
+      213: -7183899181360955038
+    second: Room_Create-Sheet_21
+  - first:
+      213: 3474537027972169048
+    second: Room_Create-Sheet_22
+  - first:
+      213: -2848293217177260907
+    second: Room_Create-Sheet_23
+  - first:
+      213: -292064366248290333
+    second: Room_Create-Sheet_24
+  - first:
+      213: -8450750108315207962
+    second: Room_Create-Sheet_25
+  - first:
+      213: -5961747836101555859
+    second: Room_Create-Sheet_26
+  - first:
+      213: 9099656994535766145
+    second: Room_Create-Sheet_27
+  - first:
+      213: 6469628010599657769
+    second: Room_Create-Sheet_28
+  - first:
+      213: -2620205658353593602
+    second: Room_Create-Sheet_29
+  - first:
+      213: -8586340922479716617
+    second: Room_Create-Sheet_30
+  - first:
+      213: -7809018349810860758
+    second: Room_Create-Sheet_31
+  - first:
+      213: -5767947992634674266
+    second: Room_Create-Sheet_32
+  - first:
+      213: -932474513625141978
+    second: Room_Create-Sheet_33
+  - first:
+      213: 8919056872987628940
+    second: Room_Create-Sheet_34
+  - first:
+      213: 755911181508661186
+    second: Room_Create-Sheet_35
+  - first:
+      213: 899243174967523106
+    second: Room_Create-Sheet_36
+  - first:
+      213: 6413821377889393443
+    second: Room_Create-Sheet_37
+  - first:
+      213: -5136582002027210280
+    second: Room_Create-Sheet_38
+  - first:
+      213: 52959168327308141
+    second: Room_Create-Sheet_39
+  - first:
+      213: 6349732230216959522
+    second: Room_Create-Sheet_40
+  - first:
+      213: 3303986828206524837
+    second: Room_Create-Sheet_41
+  - first:
+      213: -8009500126484409352
+    second: Room_Create-Sheet_42
+  - first:
+      213: 2045373897859986475
+    second: Room_Create-Sheet_43
+  - first:
+      213: 5067949238900958746
+    second: Room_Create-Sheet_44
+  - first:
+      213: -6406927594963974420
+    second: Room_Create-Sheet_45
+  - first:
+      213: -8740124277895541335
+    second: Room_Create-Sheet_46
+  - first:
+      213: -7512983170465696023
+    second: Room_Create-Sheet_47
+  - first:
+      213: 7181074846769681331
+    second: Room_Create-Sheet_48
+  - first:
+      213: 5593125464160244442
+    second: Room_Create-Sheet_49
+  - first:
+      213: 7642719070998897081
+    second: Room_Create-Sheet_50
+  - first:
+      213: -4647237946101294037
+    second: Room_Create-Sheet_51
+  - first:
+      213: -4531152720257091160
+    second: Room_Create-Sheet_52
+  - first:
+      213: 1327688554462668068
+    second: Room_Create-Sheet_53
+  - first:
+      213: -945218537395999101
+    second: Room_Create-Sheet_54
+  - first:
+      213: 3170534399897329275
+    second: Room_Create-Sheet_55
+  - first:
+      213: -7016284767967813466
+    second: Room_Create-Sheet_56
+  - first:
+      213: 7394925748516840764
+    second: Room_Create-Sheet_57
+  - first:
+      213: 2838316976294671758
+    second: Room_Create-Sheet_58
+  - first:
+      213: 9134103310479255539
+    second: Room_Create-Sheet_59
+  - first:
+      213: -4023084300810631
+    second: Room_Create-Sheet_60
+  - first:
+      213: 994770306842633492
+    second: Room_Create-Sheet_61
+  - first:
+      213: 6484260076305445375
+    second: Room_Create-Sheet_62
+  - first:
+      213: -1830901728752441114
+    second: Room_Create-Sheet_63
+  - first:
+      213: 6865230499100302907
+    second: Room_Create-Sheet_64
+  - first:
+      213: -469486782704914716
+    second: Room_Create-Sheet_65
+  - first:
+      213: 270576454206683336
+    second: Room_Create-Sheet_66
+  - first:
+      213: 2176759589707674475
+    second: Room_Create-Sheet_67
+  - first:
+      213: 5280002740015869121
+    second: Room_Create-Sheet_68
+  - first:
+      213: -3792354688105515115
+    second: Room_Create-Sheet_69
+  - first:
+      213: -8222239730089389417
+    second: Room_Create-Sheet_70
+  - first:
+      213: 8269346211663216229
+    second: Room_Create-Sheet_71
+  - first:
+      213: 5873928773411174530
+    second: Room_Create-Sheet_72
+  - first:
+      213: 1379318834393318924
+    second: Room_Create-Sheet_73
+  - first:
+      213: 9057625948265848424
+    second: Room_Create-Sheet_74
+  - first:
+      213: 6573003378564318064
+    second: Room_Create-Sheet_75
+  - first:
+      213: 2316737033326894354
+    second: Room_Create-Sheet_76
+  - first:
+      213: 7523759218381468265
+    second: Room_Create-Sheet_77
+  - first:
+      213: -3975087219116369686
+    second: Room_Create-Sheet_78
+  - first:
+      213: 8772023075955122079
+    second: Room_Create-Sheet_79
+  - first:
+      213: -1806578534014814162
+    second: Room_Create-Sheet_80
+  - first:
+      213: -7382654101521596337
+    second: Room_Create-Sheet_81
+  - first:
+      213: 334398100912245631
+    second: Room_Create-Sheet_82
+  - first:
+      213: -9024905914119888755
+    second: Room_Create-Sheet_83
+  - first:
+      213: -1060410313922441854
+    second: Room_Create-Sheet_84
+  - first:
+      213: 2417398541900422581
+    second: Room_Create-Sheet_85
+  - first:
+      213: 1996680364079117927
+    second: Room_Create-Sheet_86
+  - first:
+      213: 6441689472505588358
+    second: Room_Create-Sheet_87
+  - first:
+      213: -5787886994830158955
+    second: Room_Create-Sheet_88
+  - first:
+      213: -1680124130820025132
+    second: Room_Create-Sheet_89
+  - first:
+      213: 593699476628749131
+    second: Room_Create-Sheet_90
+  - first:
+      213: -6560634630236570935
+    second: Room_Create-Sheet_91
+  - first:
+      213: -8165997516381436712
+    second: Room_Create-Sheet_92
+  - first:
+      213: 1413729264367390681
+    second: Room_Create-Sheet_93
+  - first:
+      213: -1625573067451075621
+    second: Room_Create-Sheet_94
+  - first:
+      213: 1475768318515160010
+    second: Room_Create-Sheet_95
+  - first:
+      213: 9016153242917605363
+    second: Room_Create-Sheet_96
+  - first:
+      213: 5289497569148073555
+    second: Room_Create-Sheet_97
+  - first:
+      213: 1724054082272017167
+    second: Room_Create-Sheet_98
+  - first:
+      213: -6021285637659667392
+    second: Room_Create-Sheet_99
+  - first:
+      213: 681149121254333912
+    second: Room_Create-Sheet_100
+  - first:
+      213: 2672101166124037326
+    second: Room_Create-Sheet_101
+  - first:
+      213: 4103133975365765669
+    second: Room_Create-Sheet_102
+  - first:
+      213: -988471319130148168
+    second: Room_Create-Sheet_103
+  - first:
+      213: 6384227798781700865
+    second: Room_Create-Sheet_104
+  - first:
+      213: -2056621600563103877
+    second: Room_Create-Sheet_105
+  - first:
+      213: -1975729121512785373
+    second: Room_Create-Sheet_106
+  - first:
+      213: 2195913726941506329
+    second: Room_Create-Sheet_107
+  - first:
+      213: -440709749157219442
+    second: Room_Create-Sheet_108
+  - first:
+      213: 6170236129129250834
+    second: Room_Create-Sheet_109
+  - first:
+      213: -4658317221230294857
+    second: Room_Create-Sheet_110
+  - first:
+      213: 6116525893510927412
+    second: Room_Create-Sheet_111
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Room_Create-Sheet_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 200
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 984458824e28f3610800000000000000
+      internalID: 1603143908811162761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room_Create-Sheet_1
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 200
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95412d79a69182f90800000000000000
+      internalID: -6978299677006228391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room_Create-Sheet_2
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 200
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 47197fe63ff7e2770800000000000000
+      internalID: 8587942222957613428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room_Create-Sheet_3
+      rect:
+        serializedVersion: 2
+        x: 600
+        y: 0
+        width: 200
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8bb821afbd1e0f520800000000000000
+      internalID: 2733933308723497912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room_Create-Sheet_4
+      rect:
+        serializedVersion: 2
+        x: 800
+        y: 0
+        width: 200
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 738186008857a9a80800000000000000
+      internalID: -8459319723079231433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room_Create-Sheet_5
+      rect:
+        serializedVersion: 2
+        x: 1000
+        y: 0
+        width: 200
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bf3cd5b3b503b9c90800000000000000
+      internalID: -7162077614006483973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Room_Create-Sheet_6
+      rect:
+        serializedVersion: 2
+        x: 1200
+        y: 0
+        width: 200
+        height: 125
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 761c757d388b2e9f0800000000000000
+      internalID: -440586937135808153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 360abf0fc8b8c6e438c4c3dc0b80001a
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Room_Create-Sheet_0: 1603143908811162761
+      Room_Create-Sheet_1: -6978299677006228391
+      Room_Create-Sheet_2: 8587942222957613428
+      Room_Create-Sheet_3: 2733933308723497912
+      Room_Create-Sheet_4: -8459319723079231433
+      Room_Create-Sheet_5: -7162077614006483973
+      Room_Create-Sheet_6: -440586937135808153
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -527,7 +527,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 200
+        width: 240
         height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -547,9 +547,9 @@ TextureImporter:
       name: Room_List-Sheet_1
       rect:
         serializedVersion: 2
-        x: 200
+        x: 240
         y: 0
-        width: 200
+        width: 240
         height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -569,9 +569,9 @@ TextureImporter:
       name: Room_List-Sheet_2
       rect:
         serializedVersion: 2
-        x: 400
+        x: 480
         y: 0
-        width: 200
+        width: 240
         height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -591,9 +591,9 @@ TextureImporter:
       name: Room_List-Sheet_3
       rect:
         serializedVersion: 2
-        x: 600
+        x: 720
         y: 0
-        width: 200
+        width: 240
         height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -613,9 +613,9 @@ TextureImporter:
       name: Room_List-Sheet_4
       rect:
         serializedVersion: 2
-        x: 800
+        x: 960
         y: 0
-        width: 200
+        width: 240
         height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -635,9 +635,9 @@ TextureImporter:
       name: Room_List-Sheet_5
       rect:
         serializedVersion: 2
-        x: 1000
+        x: 1200
         y: 0
-        width: 200
+        width: 240
         height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -657,9 +657,9 @@ TextureImporter:
       name: Room_List-Sheet_6
       rect:
         serializedVersion: 2
-        x: 1200
+        x: 1440
         y: 0
-        width: 200
+        width: 240
         height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -679,7 +679,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 6d1c264b6c03b22419ce54992cc499c8
     internalID: 0
     vertices: []
     indices: 

@@ -5,12 +5,12 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public int hours = 8; // ÇöÀç ½Ã°£ (0 ~ 23)
-    public int minutes = 0; // ÇöÀç ºÐ (0 ~ 59)
-    private float timeSpeed = 1.875f; // 1.875ÃÊ = °ÔÀÓ ³» 1ºÐ
+    public int hours = 8; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½ (0 ~ 23)
+    public int minutes = 0; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ (0 ~ 59)
+    private float timeSpeed = 1.875f; // 1.875ï¿½ï¿½ = ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ 1ï¿½ï¿½
 
     public delegate void OnTimeChanged(int hours, int minutes);
-    public event OnTimeChanged onTimeChanged; // UI ¾÷µ¥ÀÌÆ® ÀÌº¥Æ®
+    public event OnTimeChanged onTimeChanged; // UI ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ìºï¿½Æ®
 
     public bool isSetting = false;
 
@@ -51,8 +51,13 @@ public class GameManager : MonoBehaviour
                 }
             }
 
-            // ÀÌº¥Æ® ½ÇÇà (UI °»½Å)
+            // ï¿½Ìºï¿½Æ® ï¿½ï¿½ï¿½ï¿½ (UI ï¿½ï¿½ï¿½ï¿½)
             onTimeChanged?.Invoke(hours, minutes);
         }
+    }
+    
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }

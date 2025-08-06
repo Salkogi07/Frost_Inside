@@ -1,10 +1,14 @@
 using UnityEngine;
 using System.Collections;
 using Stats;
+using Unity.Netcode;
+using Unity.Netcode.Components;
 
 namespace Script.Plyayer_22
 {
-    public class Player : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody2D))]
+    [RequireComponent(typeof(NetworkTransform))]
+    public class Player : NetworkBehaviour
     {
         public ParticleSystem Dust { get; private set; }
         public Player_Stats Stats { get; private set; }
@@ -62,6 +66,13 @@ namespace Script.Plyayer_22
             MiningState = new Player_MiningState(this, _playerStateMachine, "mining");
         }
         
+        public override void OnNetworkSpawn()
+        {
+            if (!IsOwner)
+            {
+                this.enabled = false;
+            }
+        }
 
         private void Start()
         {
@@ -134,7 +145,9 @@ namespace Script.Plyayer_22
             if (IsGroundDetected)
                 Dust.Play();
             
-            transform.Rotate(0, 180, 0);
+            Vector3 currentScale = transform.localScale;
+            currentScale.x *= -1;
+            transform.localScale = currentScale;
             _isFacingRight = !_isFacingRight;
             FacingDirection *= -1;
         }

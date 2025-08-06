@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 440c64acb82e645499e5f053b1039616
+guid: 7a370ae760c13a64ab030ea0c3b03a14
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1398003346512655554
-    second: Room_List_0
+      213: 9068516090306296971
+    second: Room_Create_CheckBox_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Room_List_0
+      name: Room_Create_CheckBox_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 200
-        height: 150
+        width: 13
+        height: 13
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2c4b1bff2a4b66310800000000000000
-      internalID: 1398003346512655554
+      spriteID: b8cfe9a4657d9dd70800000000000000
+      internalID: 9068516090306296971
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Room_List_0: 1398003346512655554
+      Room_Create_CheckBox_0: 9068516090306296971
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
