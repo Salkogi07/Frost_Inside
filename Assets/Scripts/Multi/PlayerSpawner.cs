@@ -1,8 +1,5 @@
-// --- START OF MODIFIED FILE PlayerSpawner.cs (Using Arrays) ---
-
 using Unity.Netcode;
 using UnityEngine;
-using System.Linq; // Keep this for .TryGetValue on Dictionary
 
 public class PlayerSpawner : NetworkBehaviour
 {
@@ -10,62 +7,77 @@ public class PlayerSpawner : NetworkBehaviour
     [SerializeField] private Transform[] spawnPoints;
 
     private int nextSpawnPointIndex = 0;
-
+    
     public override void OnNetworkSpawn()
     {
         if (!IsServer) return;
         
-        foreach (var client in NetworkManager.Singleton.ConnectedClientsList)
-        {
-            SpawnPlayerForClient(client.ClientId);
-        }
-
-        NetworkManager.Singleton.OnClientConnectedCallback += HandleClientConnected;
-        NetworkManager.Singleton.OnClientDisconnectCallback += HandleClientDisconnected;
+        NetworkManager.Singleton.SceneManager.OnSceneEvent += HandleSceneEvent;
     }
 
-    private void HandleClientConnected(ulong clientId)
+    public override void OnNetworkDespawn()
     {
-        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client) && client.PlayerObject == null)
+        if (!IsServer) return;
+        
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.SceneManager != null)
         {
-             SpawnPlayerForClient(clientId);
+            NetworkManager.Singleton.SceneManager.OnSceneEvent -= HandleSceneEvent;
         }
     }
-
-    private void HandleClientDisconnected(ulong clientId)
+    
+    private void HandleSceneEvent(SceneEvent sceneEvent)
     {
-        Debug.Log($"Client {clientId} disconnected.");
+        if (sceneEvent.SceneEventType != SceneEventType.LoadComplete) return;
+        
+        ulong clientId = sceneEvent.ClientId;
+        
+        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client) && client.PlayerObject != null)
+        {
+            return;
+        }
+        
+        Debug.Log($"[Server-Side] Client {clientId} has finished loading the scene. Spawning player.");
+        SpawnPlayerForClient(clientId);
     }
 
     private void SpawnPlayerForClient(ulong clientId)
     {
         if (!IsServer) return;
-
+        
         PlayerInfo playerInfo = PlayerDataManager.instance.GetPlayerInfo(clientId);
         if (playerInfo == null)
         {
-            Debug.LogError($"[PlayerSpawner] Cannot find PlayerInfo for client {clientId}. Player will not be spawned.");
+            Debug.LogError($"[PlayerSpawner] CRITICAL: Cannot find PlayerInfo for client {clientId}. Player will not be spawned.");
             return;
         }
 
         GameObject prefabToSpawn = GetPrefabForCharacter(playerInfo.SelectedCharacterId);
+        if (prefabToSpawn == null)
+        {
+            Debug.LogError($"[PlayerSpawner] CRITICAL: GetPrefabForCharacter returned null. Spawning aborted.");
+            return;
+        }
+        
         Vector3 spawnPosition = GetNextSpawnPosition();
-
         GameObject playerInstance = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
         NetworkObject networkObject = playerInstance.GetComponent<NetworkObject>();
-        
+    
         networkObject.SpawnAsPlayerObject(clientId, true);
-        
+    
         Debug.Log($"Spawned character {prefabToSpawn.name} for Client ID: {clientId} at {spawnPosition}");
     }
     
     private GameObject GetPrefabForCharacter(int characterId)
     {
-        // 배열의 길이를 기준으로 유효성 검사 (list.Count -> array.Length)
         if (characterId < 0 || characterId >= playerPrefabs.Length)
         {
             Debug.LogWarning($"Invalid character ID: {characterId}. Spawning default character (index 0).");
-            return playerPrefabs[0];
+            if (playerPrefabs.Length > 0)
+            {
+                return playerPrefabs[0];
+            }
+            Debug.LogError("Player Prefabs array is empty!");
+            return null;
         }
         
         return playerPrefabs[characterId];
@@ -73,7 +85,6 @@ public class PlayerSpawner : NetworkBehaviour
     
     private Vector3 GetNextSpawnPosition()
     {
-        // 배열의 길이를 기준으로 유효성 검사
         if (spawnPoints == null || spawnPoints.Length == 0)
         {
             Debug.LogWarning("No spawn points assigned. Spawning at world origin (0,0,0).");
@@ -81,22 +92,8 @@ public class PlayerSpawner : NetworkBehaviour
         }
 
         Transform spawnPoint = spawnPoints[nextSpawnPointIndex];
-        
-        // 배열의 길이를 사용한 모듈러 연산
         nextSpawnPointIndex = (nextSpawnPointIndex + 1) % spawnPoints.Length;
 
         return spawnPoint.position;
-    }
-
-    public override void OnNetworkDespawn()
-    {
-        if (IsServer)
-        {
-            if (NetworkManager.Singleton != null)
-            {
-                 NetworkManager.Singleton.OnClientConnectedCallback -= HandleClientConnected;
-                 NetworkManager.Singleton.OnClientDisconnectCallback -= HandleClientDisconnected;
-            }
-        }
     }
 }
