@@ -185,12 +185,6 @@ public class MakeRandomMap : MonoBehaviour
 
         // 4) 몬스터 생성
         StartCoroutine(SpawnMonstersRoutine());
-
-        // 5) 플레이어 생성
-        Instantiate_Player();
-
-        // 6) 변수 세팅
-        SettingManager();
     }
 
     private void GenerateOres()
@@ -452,24 +446,6 @@ public class MakeRandomMap : MonoBehaviour
 
         // 안전장치: 만약 룰렛이 실패하면 첫번째 리턴
         return prefabs.Length > 0 ? prefabs[0] : null;
-    }
-
-
-    private void Instantiate_Player()
-    {
-        GameObject prefab = Character_Manager.instance.currentCharacter.characterPrefab;
-        GameObject player = Instantiate(prefab, player_SpawnPos.position, Quaternion.identity);
-        player.transform.position = player_SpawnPos.position;
-        _playerManager.PlayerObject = player;
-    }
-
-    private void SettingManager()
-    {
-        _camera = GameObject.FindGameObjectWithTag("CinemachineCamera").GetComponent<CinemachineCamera>();
-        _camera.Follow = _playerManager.PlayerObject.transform;
-        _camera.LookAt = _playerManager.PlayerObject.transform;
-
-        GameManager.instance.isSetting = true;
     }
 
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)

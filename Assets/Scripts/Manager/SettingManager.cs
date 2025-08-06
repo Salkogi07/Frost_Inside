@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -17,16 +18,25 @@ public class SettingManager : MonoBehaviour
     public static SettingManager Instance;
 
     [Header("Setting Panel")]
-    public GameObject MenuPanel;
-    public GameObject KeyPanel;
+    [SerializeField] private GameObject menuPanel;
+    [SerializeField] private GameObject keyPanel;
+    
+    [Header("Setting Button")]
+    [SerializeField] private Button keyButton;
+    [SerializeField] private Button quitButton;
 
     public SettingPage currentPage = SettingPage.None;
-    private bool isPause = false;
 
     private void Awake()
     {
         if (Instance == null)
             Instance = this;
+    }
+
+    private void Start()
+    {
+        keyButton.onClick.AddListener(OnClick_KeyButton);
+        quitButton.onClick.AddListener(OnClick_QuitButton);
     }
 
     private void Update()
@@ -47,43 +57,39 @@ public class SettingManager : MonoBehaviour
             }
         }
     }
+    
+    public void OnClick_KeyButton()
+    {
+        Debug.Log("Key Button Clicked");
+        Enter_KeyPage();
+    }
 
-    public void Enter_NonePage()
+    public void OnClick_QuitButton()
+    {
+        GameManager.instance.QuitGame();
+    }
+
+    private void Enter_NonePage()
     {
         currentPage = SettingPage.None;
-        MenuPanel.SetActive(false);
-        KeyPanel.SetActive(false);
-        isPause = false;
-        OffPause();
+        menuPanel.SetActive(false);
+        keyPanel.SetActive(false);
     }
 
-    public void Enter_MenuPage()
+    private void Enter_MenuPage()
     {
         currentPage = SettingPage.Menu;
-        MenuPanel.SetActive(true);
-        KeyPanel.SetActive(false);
-        isPause = true;
-        OnPause();
+        menuPanel.SetActive(true);
+        keyPanel.SetActive(false);
     }
 
-    public void Enter_KeyPage()
+    private void Enter_KeyPage()
     {
         currentPage = SettingPage.Key;
-        MenuPanel.SetActive(true);
-        KeyPanel.SetActive(true);
-        isPause = true;
-        OnPause();
+        menuPanel.SetActive(true);
+        keyPanel.SetActive(true);
     }
 
-    public void OnPause()
-    {
-        Time.timeScale = 0;
-    }
-
-    public void OffPause()
-    {
-        Time.timeScale = 1;
-    }
 
     public bool IsOpenSetting()
     {

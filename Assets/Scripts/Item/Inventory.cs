@@ -56,8 +56,6 @@ public class Inventory : MonoBehaviour
 
     private void Update()
     {
-        if (!GameManager.instance.isSetting)
-            return;
 
         if (!isPocket)
         {

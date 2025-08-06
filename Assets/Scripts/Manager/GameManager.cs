@@ -12,8 +12,6 @@ public class GameManager : MonoBehaviour
     public delegate void OnTimeChanged(int hours, int minutes);
     public event OnTimeChanged onTimeChanged; // UI ������Ʈ �̺�Ʈ
 
-    public bool isSetting = false;
-
     private void Awake()
     {
         if (instance == null)
@@ -50,8 +48,7 @@ public class GameManager : MonoBehaviour
                     hours = 0;
                 }
             }
-
-            // �̺�Ʈ ���� (UI ����)
+            
             onTimeChanged?.Invoke(hours, minutes);
         }
     }

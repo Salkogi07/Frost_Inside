@@ -32,9 +32,6 @@ namespace Scripts.Inventory
 
         private void Update()
         {
-            if (!GameManager.instance.isSetting)
-                return;
-
             if (!isPocket)
             {
                 NotPocket_ItemDrop();

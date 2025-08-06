@@ -70,8 +70,6 @@ public abstract class BaseTileMiner : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!GameManager.instance.isSetting)
-            return;
 
         if (!CanUpdate()) return;
 

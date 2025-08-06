@@ -73,9 +73,6 @@ public class Player_Move : MonoBehaviour
 
     void Update()
     {
-        if (!GameManager.instance.isSetting)
-            return;
-
         /*if (player_tileMing.isMining || stats.isDead)
         {
             rb.linearVelocityX = 0;
