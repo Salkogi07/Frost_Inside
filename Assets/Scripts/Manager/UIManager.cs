@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,22 +8,29 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
 
-    [Header("Component")]
+    [Header("Hp GUI")]
     [SerializeField] Image hpImage;
+    
+    [Header("Stamina GUI")]
     [SerializeField] Image staminaImage;
     [SerializeField] Image staminaFreezeImage;
     [SerializeField] private Sprite[] staminaFreezeSprite;
-    private SteppedFill steppedFill;
+    
+    [Header("Temperature GUI")]
     [SerializeField] Image temperatureImage;
     [SerializeField] private Sprite[] temperatureSprites;
+    
+    [Header("Weight GUI")]
     [SerializeField] Image weightImage;
-    [Space(10)]
-    [SerializeField] Image timeImage;
-    [SerializeField] Text timeText;
-    [SerializeField] private Sprite[] timeSprites;
+    [SerializeField] private Sprite[] weightSprites;
+    [SerializeField] TextMeshProUGUI weightText;
+    
+    [Header("Time GUI")]
+    [SerializeField] TextMeshProUGUI timeText;
+    [SerializeField] Slider timeSlider;
     [Space(10)]
 
-    [Header("Freeze Edges")]
+    [Header("Freeze Edges GUI")]
     [SerializeField] private Image[] freezeEdges;
     [SerializeField] private float fadeSpeed = 2f;
     private Coroutine damageCoroutine;
@@ -53,8 +61,6 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
-        steppedFill = staminaImage.gameObject.GetComponent<SteppedFill>();
         
         targetAlphas = new float[freezeEdges.Length];
         
@@ -134,24 +140,39 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// 게임 플레이 시간 표시
+    /// </summary>
     private void UpdateTime()
     {
         timeText.text = GameManager.instance.hours.ToString("D2") + ":" + GameManager.instance.minutes.ToString("D2");
 
-        if (GameManager.instance.hours < 17)
-        {
-            timeImage.sprite = timeSprites[0];
-        }
-        else if (GameManager.instance.hours < 21)
-        {
-            timeImage.sprite = timeSprites[1];
-        }
-        else
-        {
-            timeImage.sprite = timeSprites[2];
-        }
-    }
+        // 1. 현재 시간을 변수에 저장
+        int currentHours = GameManager.instance.hours;
+        int currentMinutes = GameManager.instance.minutes;
 
+        // 2. 위에서 만든 함수를 호출하여 0~1 사이의 값을 계산
+        float sliderValue = ConvertTimeToSliderValue(currentHours, currentMinutes);
+
+        // 3. 슬라이더에 최종 값 적용
+        timeSlider.value = sliderValue;
+    }
+    
+    public float ConvertTimeToSliderValue(int hours, int minutes)
+    {
+        // 1. 현재 시간을 소수점 형태로 변환 (예: 9시 30분 -> 9.5f)
+        float currentTime = hours + (float)minutes / 60.0f;
+
+        // 2. 시간 범위 설정
+        float startTime = 8.0f;   // 시작: 오전 8시
+        float totalDuration = 16.0f; // 전체 길이: 16시간 (8시부터 24시까지)
+
+        // 3. (현재시간 - 시작시간) / (전체시간) 공식 적용
+        float normalizedTime = (currentTime - startTime) / totalDuration;
+        
+        return Mathf.Clamp01(normalizedTime);
+    }
+    
     public void ShowDamageEffect()
     {
         if (damageCoroutine != null)
@@ -196,13 +217,12 @@ public class UIManager : MonoBehaviour
     public void UpdateStamina(float value,  float max)
     {
         float staminaValue = value / max;
-        steppedFill.SetNormalizedValue(staminaValue);
+        staminaImage.fillAmount = staminaValue;
     }
     
-    public void UpdateWeight(float value,  float max)
+    public void UpdateWeight(float value, float max)
     {
-        float weightValue = value / max;
-        //무계변경
+        
     }
 
     public void UpdateTemperature(float value,  float max)
@@ -210,7 +230,8 @@ public class UIManager : MonoBehaviour
         float temperatureValue = value / max;
         temperatureImage.fillAmount = temperatureValue;
     }
-
+    
+    //화면 테두리 얼어붙는 효과 (나중에 수정 필요 너무 더러움)
     public void UpdateTemperatureState(float value,  float max)
     {
         float tempRatio =  value / max;
@@ -258,6 +279,11 @@ public class UIManager : MonoBehaviour
         temperatureImage.sprite = temperatureSprites[tempState];
     }
 
+    /// <summary>
+    /// 이미지 알파값 변경하는 함수
+    /// </summary>
+    /// <param name="image"></param>
+    /// <param name="alpha"></param>
     private void SetImageAlpha(Image image, float alpha)
     {
         Color c = image.color;

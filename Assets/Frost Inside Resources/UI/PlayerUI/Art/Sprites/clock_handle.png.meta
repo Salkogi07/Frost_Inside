@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 98121e1b5d5ea5b4890f7f8d1379260d
+guid: 690d804a8a3857e4c9b16b4c760baafa
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 7149459697996808697
-    second: UITemp__0
+      213: 4017821122687341
+    second: clock_handle_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UITemp__0
+      name: clock_handle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 150
-        height: 100
+        width: 11
+        height: 14
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9f1421347bbf73360800000000000000
-      internalID: 7149459697996808697
+      spriteID: d61f9c0ef264e0000800000000000000
+      internalID: 4017821122687341
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UITemp__0: 7149459697996808697
+      clock_handle_0: 4017821122687341
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

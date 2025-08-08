@@ -1,16 +1,10 @@
 fileFormatVersion: 2
-guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa
+guid: b04f6c025752cdf49b5a751456c20ce1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4628948989125786106
-    second: time_afternoon_0
-  - first:
-      213: 1989073359742111832
-    second: time_afternoon_1
-  - first:
-      213: -5692298359058840270
-    second: time_afternoon_2
+      213: -865747944386877460
+    second: Player_UI_Weight_R_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -57,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -132,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: time_afternoon_0
+      name: Player_UI_Weight_R_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 70
-        height: 70
+        x: 32
+        y: 22
+        width: 12
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -147,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: af9fe3494945d3040800000000000000
-      internalID: 4628948989125786106
+      spriteID: ce7abcdd4de3cf3f0800000000000000
+      internalID: -865747944386877460
       vertices: []
       indices: 
       edges: []
@@ -157,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: febadf2183f5aa44b87a8824ef1a29e6
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -167,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      time_afternoon_0: 4628948989125786106
+      Player_UI_Weight_R_0: -865747944386877460
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

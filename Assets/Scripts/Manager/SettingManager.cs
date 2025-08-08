@@ -68,6 +68,11 @@ public class SettingManager : MonoBehaviour
     {
         GameManager.instance.QuitGame();
     }
+    
+    public void OnClick_MenuButton()
+    {
+        Enter_MenuPage();
+    }
 
     private void Enter_NonePage()
     {

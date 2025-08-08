@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 8a36ae12f1f1049478066f7fecd9d50f
+guid: 2082d9f7930fa0a4ebfd2e1f55c6bd60
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 8823166479081205076
-    second: time_night_0
+      213: -8801819111103863087
+    second: Timer_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,23 +126,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: time_night_0
+      name: Timer_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 70
-        height: 70
+        width: 86
+        height: 36
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 45de4c36a2f227a70800000000000000
-      internalID: 8823166479081205076
+      spriteID: 1d6e8690728a9d580800000000000000
+      internalID: -8801819111103863087
       vertices: []
       indices: 
       edges: []
@@ -151,7 +151,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: e327a6088a6c2ae47b31c0753a597f45
+    spriteID: 5e97eb03825dee720800000000000000
     internalID: 0
     vertices: []
     indices: 
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      time_night_0: 8823166479081205076
+      Timer_0: -8801819111103863087
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f76376b51ab1d724384a6a0e324f6fdd
+guid: 8bdf8605347def946a67a76fc9d97dc8
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2171712980845345368
-    second: UIStemina_Cold_0
+      213: 6355051256796066855
+    second: Player_UI_Weight_G_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +51,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UIStemina_Cold_0
+      name: Player_UI_Weight_G_0
       rect:
         serializedVersion: 2
-        x: 48
-        y: 31
-        width: 52
-        height: 29
+        x: 32
+        y: 22
+        width: 12
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 85a34692379732e10800000000000000
-      internalID: 2171712980845345368
+      spriteID: 724bab2927da13850800000000000000
+      internalID: 6355051256796066855
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      UIStemina_Cold_0: 2171712980845345368
+      Player_UI_Weight_G_0: 6355051256796066855
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
