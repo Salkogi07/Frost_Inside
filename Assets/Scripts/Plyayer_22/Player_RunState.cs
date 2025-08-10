@@ -20,7 +20,7 @@ namespace Script.Plyayer_22
             if (Input.GetKeyUp(KeyManager.instance.GetKeyCodeByName("Sprint")))
                 playerStateMachine.ChangeState(player.WalkState);
 
-            if (player.Condition.currentStamina.Value <= 0)
+            if (player.Condition.Stamina <= 0)
                 playerStateMachine.ChangeState(player.WalkState);
         }
 

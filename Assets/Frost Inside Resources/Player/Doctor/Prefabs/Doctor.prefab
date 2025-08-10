@@ -77,16 +77,16 @@ GameObject:
   - component: {fileID: 2093785360371588388}
   - component: {fileID: 3255006627929712995}
   - component: {fileID: 2094093678723558631}
+  - component: {fileID: 1527125104932756293}
+  - component: {fileID: -325649861077476063}
+  - component: {fileID: -4396336483708900251}
+  - component: {fileID: 3316583795968269838}
   - component: {fileID: 6439846600469785769}
   - component: {fileID: 7283335558516981223}
-  - component: {fileID: 3316583795968269838}
   - component: {fileID: 8831513836135423732}
   - component: {fileID: 8710203413524532382}
   - component: {fileID: 8632942042615940793}
   - component: {fileID: -4578731868711547750}
-  - component: {fileID: 1527125104932756293}
-  - component: {fileID: -325649861077476063}
-  - component: {fileID: -4396336483708900251}
   m_Layer: 6
   m_Name: Doctor
   m_TagString: Player
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 1343147706
+  GlobalObjectIdHash: 2316847257
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -202,154 +202,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &6439846600469785769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba461457ff358794b96bb0c3076bb131, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  JumpForce: 13
-  inAirMoveMultiplier: 0.8
-  groundCheck: {fileID: 6888678176120883945}
-  groundCheckSize: {x: 0.3, y: 0.1}
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
---- !u!114 &7283335558516981223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e6b8b8b2e4f4bb2bcb3cf591bb41c35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  temperatureDropRate: 1
-  frozenHpDropRate: 2
-  isNearHeatSource: 0
-  isInColdZone: 0
---- !u!114 &3316583795968269838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bde7980eb8ea5e478115fc1e8e78032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  WalkSpeed: 4
-  RunSpeed: 7
-  SprintCost: 10
-  JumpCost: 15
-  StaminaRecoverRate: 15
-  staminaDecreaseRate: 10
-  MaxHp:
-    baseValue: 100
-    Modifiers: 
-  MaxStamina:
-    baseValue: 100
-    Modifiers: 
-  MaxWeight:
-    baseValue: 100
-    Modifiers: 
-  MaxTemperature:
-    baseValue: 100
-    Modifiers: 
-  Mining:
-    baseValue: 10
-    Modifiers: 
-  Defense:
-    Armor:
-      baseValue: 0
-      Modifiers: 
-    Evasion:
-      baseValue: 0
-      Modifiers: 
-    Lagging:
-      baseValue: 0
-      Modifiers: 
-  Offense:
-    Damage:
-      baseValue: 0
-      Modifiers: 
-    Ice_Damge:
-      baseValue: 0
-      Modifiers: 
---- !u!114 &8831513836135423732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148b3047e622f6e4eaeef57964986dbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemaps: []
-  player: {fileID: 0}
-  miningRange: 5
-  miningTime: 2
-  miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
-  highlightTilemap: {fileID: 0}
-  borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
-  blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
-  isMining: 0
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
---- !u!114 &8710203413524532382
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de512a33e26ef7a48a4a6d80037f5339, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pickupRange: 3
-  pickupCooldown: 0.5
---- !u!114 &8632942042615940793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b80c78004b8b3b4fb62d47e8dd5fe1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
---- !u!114 &-4578731868711547750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0ff74e93c4534fbd96eb24f2321e8190, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &1527125104932756293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -367,7 +219,7 @@ MonoBehaviour:
   AutoOwnerAuthorityTickOffset: 1
   PositionInterpolationType: 1
   RotationInterpolationType: 0
-  ScaleInterpolationType: 0
+  ScaleInterpolationType: 1
   PositionLerpSmoothing: 1
   PositionMaxInterpolationTime: 0.01
   RotationLerpSmoothing: 1
@@ -428,6 +280,152 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 8788408177247116188}
+--- !u!114 &3316583795968269838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bde7980eb8ea5e478115fc1e8e78032, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  WalkSpeed: 4
+  RunSpeed: 7
+  SprintCost: 10
+  JumpCost: 15
+  StaminaRecoverRate: 15
+  staminaDecreaseRate: 10
+  MaxHp:
+    baseValue: 100
+    Modifiers: 
+  MaxStamina:
+    baseValue: 100
+    Modifiers: 
+  MaxWeight:
+    baseValue: 100
+    Modifiers: 
+  MaxTemperature:
+    baseValue: 100
+    Modifiers: 
+  Mining:
+    baseValue: 10
+    Modifiers: 
+  Defense:
+    Armor:
+      baseValue: 0
+      Modifiers: 
+    Evasion:
+      baseValue: 0
+      Modifiers: 
+    Lagging:
+      baseValue: 0
+      Modifiers: 
+  Offense:
+    Damage:
+      baseValue: 0
+      Modifiers: 
+    Ice_Damge:
+      baseValue: 0
+      Modifiers: 
+--- !u!114 &6439846600469785769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba461457ff358794b96bb0c3076bb131, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  JumpForce: 13
+  inAirMoveMultiplier: 0.8
+  groundCheck: {fileID: 6888678176120883945}
+  groundCheckSize: {x: 0.3, y: 0.1}
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 8
+--- !u!114 &7283335558516981223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e6b8b8b2e4f4bb2bcb3cf591bb41c35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  temperatureDropRate: 0.1
+  frozenHpDropRate: 2
+--- !u!114 &8831513836135423732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 148b3047e622f6e4eaeef57964986dbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemaps: []
+  player: {fileID: 0}
+  miningRange: 5
+  miningTime: 2
+  miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
+  highlightTilemap: {fileID: 0}
+  borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
+  blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
+  isMining: 0
+  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
+--- !u!114 &8710203413524532382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de512a33e26ef7a48a4a6d80037f5339, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pickupRange: 3
+  pickupCooldown: 0.5
+--- !u!114 &8632942042615940793
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b80c78004b8b3b4fb62d47e8dd5fe1e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
+--- !u!114 &-4578731868711547750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ff74e93c4534fbd96eb24f2321e8190, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &4241109382183132690
 GameObject:
   m_ObjectHideFlags: 0

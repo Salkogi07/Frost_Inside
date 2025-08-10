@@ -7,40 +7,18 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
     public static UIManager instance;
-
-    [Header("Hp GUI")]
-    [SerializeField] Image hpImage;
-    
-    [Header("Stamina GUI")]
-    [SerializeField] Image staminaImage;
-    [SerializeField] Image staminaFreezeImage;
-    [SerializeField] private Sprite[] staminaFreezeSprite;
-    
-    [Header("Temperature GUI")]
-    [SerializeField] Image temperatureImage;
-    [SerializeField] private Sprite[] temperatureSprites;
-    
-    [Header("Weight GUI")]
-    [SerializeField] Image weightImage;
-    [SerializeField] private Sprite[] weightSprites;
-    [SerializeField] TextMeshProUGUI weightText;
     
     [Header("Time GUI")]
     [SerializeField] TextMeshProUGUI timeText;
     [SerializeField] Slider timeSlider;
     [Space(10)]
-
-    [Header("Freeze Edges GUI")]
-    [SerializeField] private Image[] freezeEdges;
-    [SerializeField] private float fadeSpeed = 2f;
+    
     private Coroutine damageCoroutine;
 
     [Header("Player Damage")]
     [SerializeField] private Image damagePanel;
     [SerializeField] private Image damageImage;
     public float fadeDuration = 0.5f;
-    
-    private float[] targetAlphas;
 
     [Header("Inventory info")]
     [SerializeField] private GameObject inventoryObject;
@@ -61,15 +39,6 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-        
-        targetAlphas = new float[freezeEdges.Length];
-        
-        for (int i = 0; i < freezeEdges.Length; i++)
-        {
-            freezeEdges[i].gameObject.SetActive(true);
-            SetImageAlpha(freezeEdges[i], 0f);
-            targetAlphas[i] = 0f;
-        }
     }
 
     private void Start()
@@ -82,7 +51,6 @@ public class UIManager : MonoBehaviour
         //UpdateInventory();
         //UpdateQuickSlot();
         UpdateTime();
-        UpdateFreezeEdges();
     }
 
     private void UpdateQuickSlot()
@@ -207,98 +175,11 @@ public class UIManager : MonoBehaviour
         damageImage.gameObject.SetActive(false);
         damageCoroutine = null;
     }
-
-    public void UpdateHp(float value,  float max)
-    {
-        float hpValue = value / max;
-        hpImage.fillAmount = hpValue;
-    }
-
-    public void UpdateStamina(float value,  float max)
-    {
-        float staminaValue = value / max;
-        staminaImage.fillAmount = staminaValue;
-    }
     
-    public void UpdateWeight(float value, float max)
-    {
-        
-    }
-
-    public void UpdateTemperature(float value,  float max)
-    {
-        float temperatureValue = value / max;
-        temperatureImage.fillAmount = temperatureValue;
-    }
-    
-    //화면 테두리 얼어붙는 효과 (나중에 수정 필요 너무 더러움)
-    public void UpdateTemperatureState(float value,  float max)
-    {
-        float tempRatio =  value / max;
-        int tempState;
-        
-        if (tempRatio >= 0.75f)
-        {
-            tempState = 0;
-            staminaFreezeImage.gameObject.SetActive(false);
-            
-            targetAlphas[0] = 0f;
-            targetAlphas[1] = 0f;
-            targetAlphas[2] = 0f;
-        }
-        else if (tempRatio >= 0.5f)
-        {
-            tempState = 1;
-            staminaFreezeImage.gameObject.SetActive(false);
-            
-            targetAlphas[0] = 1f;
-            targetAlphas[1] = 0f;
-            targetAlphas[2] = 0f;
-        }
-        else if (tempRatio >= 0.25f)
-        {
-            tempState = 2;
-            staminaFreezeImage.sprite = staminaFreezeSprite[0];
-            staminaFreezeImage.gameObject.SetActive(true);
-            
-            targetAlphas[0] = 1f;
-            targetAlphas[1] = 1f;
-            targetAlphas[2] = 0f;
-        }
-        else
-        {
-            tempState = 3;
-            staminaFreezeImage.sprite = staminaFreezeSprite[1];
-            staminaFreezeImage.gameObject.SetActive(true);
-            
-            targetAlphas[0] = 1f;
-            targetAlphas[1] = 1f;
-            targetAlphas[2] = 1f;
-        }
-        
-        temperatureImage.sprite = temperatureSprites[tempState];
-    }
-
-    /// <summary>
-    /// 이미지 알파값 변경하는 함수
-    /// </summary>
-    /// <param name="image"></param>
-    /// <param name="alpha"></param>
     private void SetImageAlpha(Image image, float alpha)
     {
         Color c = image.color;
         c.a = alpha;
         image.color = c;
-    }
-
-    private void UpdateFreezeEdges()
-    {
-        for (int i = 0; i < freezeEdges.Length; i++)
-        {
-            float currentAlpha = freezeEdges[i].color.a;
-            
-            float newAlpha = Mathf.Lerp(currentAlpha, targetAlphas[i], Time.deltaTime * fadeSpeed);
-            SetImageAlpha(freezeEdges[i], newAlpha);
-        }
     }
 }

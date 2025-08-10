@@ -1,220 +1,223 @@
 ﻿using UnityEngine;
 using R3;
-using Script.Plyayer_22;
 
-namespace Stats
+public class Player_Condition : MonoBehaviour
 {
-    public class Player_Condition : MonoBehaviour
+    private Player_Stats _stats;
+    // private Entity_VFX _vfx;
+
+    [Header("Player info")] private bool _isDead = false;
+
+    [SerializeField] private float temperatureDropRate = 1f;
+    [SerializeField] private int frozenHpDropRate = 2;
+    private float _frozenDamageTimer = 0f;
+
+    #region current Stats
+    private ReactiveProperty<float> _hpPropertiy;
+    private ReactiveProperty<float> _staminaPropertiy;
+    private ReactiveProperty<float> _weightPropertiy;
+    private ReactiveProperty<float> _temperaturePropertiy;
+
+    public float Hp
     {
-        private Player_Stats _stats;
-        private Player _player;
-        // private Entity_VFX _vfx;
-        
-        [Header("Player info")]
-        private bool _isDead = false;
-        
-        public float temperatureDropRate = 1f;
-        [SerializeField] private int frozenHpDropRate = 2;
-        private float _frozenDamageTimer = 0f;
+        get => _hpPropertiy.Value;
+        set => _hpPropertiy.Value = value;
+    }
+    public float Stamina
+    {
+        get => _staminaPropertiy.Value;
+        set => _staminaPropertiy.Value = value;
+    }
+    public float Weight
+    {
+        get => _weightPropertiy.Value;
+        set => _weightPropertiy.Value = value;
+    }
+    public float Temperature
+    {
+        get => _temperaturePropertiy.Value;
+        set => _temperaturePropertiy.Value = value;
+    }
+    
 
-        public bool isNearHeatSource = false;
-        public bool isInColdZone = false;
+    private Observable<float> _hpObservable;
+    public Observable<float> HpObservable => _hpObservable ??= _hpPropertiy.AsObservable();
+    
+    
+    private Observable<float> _staminaObservable;
+    public Observable<float> StaminaObservable => _staminaObservable ??= _staminaPropertiy.AsObservable();
+    
+    
+    private Observable<float> _weightObservable;
+    public Observable<float> WeightObservable => _weightObservable ??= _weightPropertiy.AsObservable();
+    
+    
+    private Observable<float> _temperatureObservable;
+    public Observable<float> TemperatureObservable => _temperatureObservable ??= _temperaturePropertiy.AsObservable();
+    #endregion
 
-        private ReactiveProperty<float> currentHpPropertiy;
-        public float CurrentHp { get => currentHpPropertiy.Value; set =>  currentHpPropertiy.Value = value; }
+    private void Awake()
+    {
+        _stats = GetComponent<Player_Stats>();
+        // _vfx = GetComponent<Entity_VFX>();
 
-        private Observable<float> _currentHpObservable;
-        public Observable<float> currentHpObservable => _currentHpObservable ??= currentHpPropertiy.AsObservable();
-        
-        public ReactiveProperty<float> currentStamina { get; private set; }
-        public ReactiveProperty<float> currentWeight { get; private set; }
-        public ReactiveProperty<float> currentTemperature { get; private set; }
+        _hpPropertiy = new ReactiveProperty<float>(_stats.MaxHp.Value);
+        _staminaPropertiy = new ReactiveProperty<float>(_stats.MaxStamina.Value);
+        _weightPropertiy = new ReactiveProperty<float>(0);
+        _temperaturePropertiy = new ReactiveProperty<float>(_stats.MaxTemperature.Value);
+    }
+    
+    private void Update()
+    {
+        HandleTemperature();
+        HandleFrozenHp();
+    }
 
-        
-        
-        private  void Awake()
+    #region Get Stat Function
+    public float GetMaxHp() => _stats.MaxHp.Value;
+    public float GeMaxStamina() => _stats.MaxStamina.Value;
+    public float GetMaxWeight() => _stats.MaxWeight.Value;
+    public float GetMaxTemperature() => _stats.MaxTemperature.Value;
+    public bool CheckIsDead() => _isDead;
+    #endregion
+
+    #region Stamina Function
+    public void StaminaRecovery()
+    {
+        float tempValue = Temperature / _stats.MaxTemperature.Value;
+        if (GetTemperatureState(tempValue) == TemperatureState.Cold)
         {
-            _stats = GetComponent<Player_Stats>();
-            // _vfx = GetComponent<Entity_VFX>();
-            
-            currentHpPropertiy = new ReactiveProperty<float>(_stats.MaxHp.Value);
-            currentStamina = new ReactiveProperty<float>(_stats.MaxStamina.Value);
-            currentWeight = new ReactiveProperty<float>(_stats.MaxTemperature.Value);
-            currentTemperature = new ReactiveProperty<float>(_stats.MaxWeight.Value);
-        }
+            float targetStamina = _stats.MaxStamina.Value * 0.5f;
 
-        private void Start()
-        {
-            currentHpPropertiy.Subscribe(hp =>
-            {
-                UIManager.instance.UpdateHp(currentHpPropertiy.Value,_stats.MaxHp.Value);
-            });
-            
-            currentStamina.Subscribe(stamina =>
-            {
-                UIManager.instance.UpdateStamina(currentStamina.Value,_stats.MaxStamina.Value);
-            });
-            
-            currentWeight.Subscribe(weight =>
-            {
-                UIManager.instance.UpdateWeight(currentWeight.Value,_stats.MaxWeight.Value);
-            });
-            
-            currentTemperature.Subscribe(temp =>
-            {
-                UIManager.instance.UpdateTemperature(currentTemperature.Value,_stats.MaxTemperature.Value);
-                UIManager.instance.UpdateTemperatureState(currentTemperature.Value,_stats.MaxTemperature.Value);
-            });
-        }
-        
-        public bool CheckIsDead() => _isDead;
-
-        private void Update()
-        {
-            HandleTemperature();
-            HandleFrozenHp();
-        }
-
-        public void StaminaRecovery()
-        {
-            float tempValue = currentTemperature.Value / _stats.MaxTemperature.Value;
-            if (Temp(tempValue) == 2)
-            {
-                float targetStamina = _stats.MaxStamina.Value * 0.5f;
-                
-                if (currentStamina.Value > targetStamina)
-                    currentStamina.Value -= _stats.staminaDecreaseRate * Time.deltaTime;
-                else
-                {
-                    currentStamina.Value += _stats.StaminaRecoverRate * Time.deltaTime;
-                    currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, targetStamina);
-                }
-            }
-            else if (Temp(tempValue) == 3)
-            {
-                if (currentStamina.Value >= 0)
-                    currentStamina.Value -= _stats.staminaDecreaseRate * Time.deltaTime;
-                else
-                    currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
-            }
+            if (Stamina > targetStamina)
+                Stamina -= _stats.staminaDecreaseRate * Time.deltaTime;
             else
             {
-                currentStamina.Value += _stats.StaminaRecoverRate * Time.deltaTime;
-                currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
+                Stamina += _stats.StaminaRecoverRate * Time.deltaTime;
+                Stamina = Mathf.Clamp(Stamina, 0f, targetStamina);
             }
         }
-        
-        public void UseStaminaToSprint()
+        else if (GetTemperatureState(tempValue) == TemperatureState.Freezing)
         {
-            currentStamina.Value -= _stats.SprintCost * Time.deltaTime;
-            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
-        }
-        
-        public void UseStaminaToJump()
-        {
-            currentStamina.Value -= _stats.JumpCost;
-            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
-        }
-
-        public bool CanSprint() => currentStamina.Value > _stats.SprintCost * Time.deltaTime;
-        public bool CanJump() => currentStamina.Value > _stats.JumpCost;
-
-        public void AddStamina(int value)
-        {
-            currentStamina.Value += value;
-            currentStamina.Value = Mathf.Clamp(currentStamina.Value, 0f, _stats.MaxStamina.Value);
-        }
-
-        public void ChangeTemperature(float value)
-        {
-            currentTemperature.Value += value;
-            currentTemperature.Value = Mathf.Clamp(currentTemperature.Value, 0f, _stats.MaxTemperature.Value);
-        }
-        
-        public void TakeDamage(int _damage)
-        {
-            if(_isDead)
-                return;
-
-            CurrentHp -= _damage;
-            // _vfx.PlayOnDamageVfx();
-            if(CurrentHp <= 0)
-            {
-                CurrentHp = 0;
-                Die();
-            }
+            if (Stamina >= 0)
+                Stamina -= _stats.staminaDecreaseRate * Time.deltaTime;
             else
-            {
-                UIManager.instance.ShowDamageEffect();
-            }
+                Stamina = Mathf.Clamp(Stamina, 0f, _stats.MaxStamina.Value);
         }
-
-        void Die()
+        else
         {
-            _isDead = true;
-
-            GetComponent<Player_ItemDrop>()?.GenerateDrop();
-            Debug.Log("죽음");
+            Stamina += _stats.StaminaRecoverRate * Time.deltaTime;
+            Stamina = Mathf.Clamp(Stamina, 0f, _stats.MaxStamina.Value);
         }
-        
-        private void HandleTemperature()
+    }
+
+    public void UseStaminaToSprint()
+    {
+        Stamina -= _stats.SprintCost * Time.deltaTime;
+        Stamina = Mathf.Clamp(Stamina, 0f, _stats.MaxStamina.Value);
+    }
+
+    public void UseStaminaToJump()
+    {
+        Stamina -= _stats.JumpCost;
+        Stamina = Mathf.Clamp(Stamina, 0f, _stats.MaxStamina.Value);
+    }
+
+    public bool CanSprint() => Stamina > _stats.SprintCost * Time.deltaTime;
+    public bool CanJump() => Stamina > _stats.JumpCost;
+    #endregion
+    
+    #region PlayerDamage Function
+    public void TakeDamage(int _damage)
+    {
+        if (_isDead)
+            return;
+
+        Hp -= _damage;
+        // _vfx.PlayOnDamageVfx();
+        if (Hp <= 0)
         {
-            float dropRate = temperatureDropRate;
-
-            /*if (playerMove.moveInput != 0)
-                dropRate *= 0.5f;
-
-            if (playerMove.isSprinting)
-                dropRate *= 0.25f;
-
-            if (playerMove.isAttack)
-                dropRate *= 0.5f;*/
-
-            currentTemperature.Value -= dropRate * Time.deltaTime;
-            currentTemperature.Value = Mathf.Max(currentTemperature.Value, 0f);
+            Hp = 0;
+            Die();
         }
-
-        private void HandleFrozenHp()
+        else
         {
-            float tempRatio = currentTemperature.Value;
+            UIManager.instance.ShowDamageEffect();
+        }
+    }
 
-            if (tempRatio <= 0)
-            {
-                _frozenDamageTimer += Time.deltaTime;
+    void Die()
+    {
+        _isDead = true;
 
-                if (_frozenDamageTimer >= 1f)
-                {
-                    TakeDamage(frozenHpDropRate);
-                    _frozenDamageTimer = 0f;
-                }
-            }
-            else
+        GetComponent<Player_ItemDrop>()?.GenerateDrop();
+        Debug.Log("죽음");
+    }
+    #endregion
+    
+    public void ChangeTemperature(float value)
+    {
+        Temperature += value;
+        Temperature = Mathf.Clamp(Temperature, 0f, _stats.MaxTemperature.Value);
+    }
+
+    private void HandleTemperature()
+    {
+        float dropRate = temperatureDropRate;
+
+        /*if (playerMove.moveInput != 0)
+            dropRate *= 0.5f;
+
+        if (playerMove.isSprinting)
+            dropRate *= 0.25f;
+
+        if (playerMove.isAttack)
+            dropRate *= 0.5f;*/
+
+        Temperature -= dropRate * Time.deltaTime;
+        Temperature = Mathf.Max(Temperature, 0f);
+    }
+
+    private void HandleFrozenHp()
+    {
+        float tempRatio = Temperature / _stats.MaxTemperature.Value;
+
+        if (tempRatio <= 0)
+        {
+            _frozenDamageTimer += Time.deltaTime;
+
+            if (_frozenDamageTimer >= 1f)
             {
+                TakeDamage(frozenHpDropRate);
                 _frozenDamageTimer = 0f;
             }
         }
-        
-        private int Temp(float tempRatio)
+        else
         {
-            int tempState;
-            if (tempRatio >= 0.75f)
-            {
-                tempState = 0;
-            }
-            else if (tempRatio >= 0.5f)
-            {
-                tempState = 1;
-            }
-            else if (tempRatio >= 0.25f)
-            {
-                tempState = 2;
-            }
-            else
-            {
-                tempState = 3;
-            }
-
-            return tempState;
+            _frozenDamageTimer = 0f;
         }
+    }
+
+    private TemperatureState GetTemperatureState(float tempRatio)
+    {
+        TemperatureState tempState;
+        if (tempRatio >= 0.75f)
+        {
+            tempState = TemperatureState.Normal;
+        }
+        else if (tempRatio >= 0.5f)
+        {
+            tempState = TemperatureState.Chilly;
+        }
+        else if (tempRatio >= 0.25f)
+        {
+            tempState = TemperatureState.Cold;
+        }
+        else
+        {
+            tempState = TemperatureState.Freezing;
+        }
+
+        return tempState;
     }
 }
