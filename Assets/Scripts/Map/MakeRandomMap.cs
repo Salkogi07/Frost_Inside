@@ -289,7 +289,7 @@ public class MakeRandomMap : MonoBehaviour
     {
         while (true)
         {
-            float rawHour = GameManager.instance.hours + GameManager.instance.minutes / 60f;
+            float rawHour = GameManager.instance.Hours + GameManager.instance.Minutes / 60f;
             // 7시(7)부터 22시(22)까지 정규화
             float timeNorm = Mathf.Clamp01((rawHour - 7f) / 15f);
 
@@ -315,7 +315,7 @@ public class MakeRandomMap : MonoBehaviour
     private void SpawnMonsters()
     {
         // 1) 시간 정규화 (8시→0, 22시→1)
-        float rawHour = GameManager.instance.hours + GameManager.instance.minutes / 60f;
+        float rawHour = GameManager.instance.Hours + GameManager.instance.Minutes / 60f;
         float timeNorm = Mathf.Clamp01((rawHour - 8f) / 14f);
         float smoothTime = Mathf.Pow(timeNorm, 2);
 
@@ -390,7 +390,7 @@ public class MakeRandomMap : MonoBehaviour
         float depthNorm = Mathf.Clamp01((mapMax.y - centerY) / (float)(mapMax.y - mapMin.y));
 
         // 2) 시간 정규화 (8시→0, 22시→1)
-        float rawHour = GameManager.instance.hours + GameManager.instance.minutes / 60f;
+        float rawHour = GameManager.instance.Hours + GameManager.instance.Minutes / 60f;
         float timeNorm = Mathf.Clamp01((rawHour - 8f) / 14f);
 
         // 3) 난이도별 기본 가중치 및 보너스 파라미터

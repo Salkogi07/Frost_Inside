@@ -5,7 +5,6 @@ public class PlayerSpawner : NetworkBehaviour
 {
     [SerializeField] private GameObject[] playerPrefabs;
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private GameObject Precenters;
 
     private int nextSpawnPointIndex = 0;
     
@@ -61,21 +60,11 @@ public class PlayerSpawner : NetworkBehaviour
         
         Vector3 spawnPosition = GetNextSpawnPosition();
         GameObject playerInstance = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
-        SettingPlayerUI(playerInstance);
         NetworkObject networkObject = playerInstance.GetComponent<NetworkObject>();
     
         networkObject.SpawnAsPlayerObject(clientId, true);
     
         Debug.Log($"Spawned character {prefabToSpawn.name} for Client ID: {clientId} at {spawnPosition}");
-    }
-
-    private void SettingPlayerUI(GameObject player)
-    {
-        Player_Condition playerCondition = player.GetComponent<Player_Condition>();
-        Precenters.GetComponent<PlayerHpUIPrecenter>().SetPlayerModel(playerCondition);
-        Precenters.GetComponent<PlayerStaminaUIPresenter>().SetPlayerModel(playerCondition);
-        Precenters.GetComponent<PlayerTemperatureUIPresenter>().SetPlayerModel(playerCondition);
-        Precenters.GetComponent<PlayerWeightUIPresenter>().SetPlayerModel(playerCondition);
     }
     
     private GameObject GetPrefabForCharacter(int characterId)
