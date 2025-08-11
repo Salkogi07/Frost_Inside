@@ -1,5 +1,4 @@
-﻿using Script.Plyayer_22;
-using UnityEngine;
+﻿using UnityEngine;
 
 
     public abstract class EnemyState

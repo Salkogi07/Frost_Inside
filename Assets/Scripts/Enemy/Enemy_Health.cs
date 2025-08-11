@@ -1,4 +1,3 @@
-using Script.Plyayer_22;
 using UnityEngine;
 
 public class Enemy_Health : Entity_Health
