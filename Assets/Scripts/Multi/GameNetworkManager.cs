@@ -203,14 +203,23 @@ public class GameNetworkManager : MonoBehaviour
     private void OnLobbyEntered(Lobby lobby)
     {
         CurrentLobby = lobby;
-        
-        if (!NetworkManager.Singleton.IsHost)
+
+        if (NetworkManager.Singleton.IsHost)
         {
+            // 호스트는 별도의 데이터 동기화 대기가 필요 없으므로, 즉시 로딩을 시작합니다.
+            // activationCondition을 항상 true를 반환하는 람다식으로 전달합니다.
+            LoadingManager.instance.LoadScene("Lobby", () => true);
+        }
+        else
+        {
+            // 클라이언트는 서버에 연결하고 초기 데이터를 받을 때까지 기다려야 합니다.
             NetworkManager.Singleton.gameObject.GetComponent<FacepunchTransport>().targetSteamId = lobby.Owner.Id;
             NetworkManager.Singleton.StartClient();
+            
+            // LoadingManager의 IsInitialDataReceived 플래그가 true가 되는 것을 씬 활성화 조건으로 설정합니다.
+            // 이 플래그는 NetworkTransmission에서 데이터를 받으면 true로 설정해줄 것입니다.
+            LoadingManager.instance.LoadScene("Lobby", () => LoadingManager.instance.IsInitialDataReceived);
         }
-
-        StartCoroutine(LoadLobbySceneAndNotify());
     }
     
     private async void OnGameLobbyJoinRequested(Lobby lobby, SteamId steamId)
@@ -226,7 +235,7 @@ public class GameNetworkManager : MonoBehaviour
         }
     }
     
-    private IEnumerator LoadLobbySceneAndNotify()
+    /*private IEnumerator LoadLobbySceneAndNotify()
     {
         var loadOperation = SceneManager.LoadSceneAsync("Lobby");
         while (!loadOperation.isDone)
@@ -235,7 +244,7 @@ public class GameNetworkManager : MonoBehaviour
         }
         yield return new WaitForEndOfFrame();
         ChatManager.instance?.AddMessage("You have joined the lobby.", MessageType.PersonalSystem);
-    }
+    }*/
 
     private void OnClientDisconnected(ulong clientId)
     {

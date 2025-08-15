@@ -10,7 +10,7 @@ public class GameScene : MonoBehaviour
 
     private void Awake()
     {
-        LoadingManager.instance.LoadScreenObj.GetComponent<Image>().material = mal;
+        TestLoadingManager.instance.LoadScreenObj.GetComponent<Image>().material = mal;
     }
 
     private void Start()
@@ -24,8 +24,8 @@ public class GameScene : MonoBehaviour
         timeline.Play();
 
         yield return new WaitWhile(() => timeline.state == PlayState.Playing);
-        Debug.Log("Timeline Àç»ý Á¾·á");
+        Debug.Log("Timeline ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
-        LoadingManager.instance.LoadScene("GameScene");
+        TestLoadingManager.instance.LoadScene("GameScene");
     }
 }

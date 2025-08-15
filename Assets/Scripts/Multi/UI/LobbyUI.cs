@@ -111,16 +111,6 @@ public class LobbyUI : MonoBehaviour
         }
         NetworkTransmission.instance.SetMyReadyStateServerRpc(isReady);
     }
-    
-    // 캐릭터 선택 UI에서 이 함수를 호출하게 하세요.
-    public void SelectCharacter(int characterId)
-    {
-        if(PlayerDataManager.instance.MyInfo.SelectedCharacterId == characterId)
-            return;
-        
-        ChatManager.instance.AddMessage($"Character {characterId} has been selected.", MessageType.PersonalSystem);
-        NetworkTransmission.instance.SetMyCharacterServerRpc(characterId);
-    }
 
     private void StartGame() => NetworkTransmission.instance.RequestStartGameServerRpc();
     private void LeaveLobby() => GameNetworkManager.instance.Disconnect();
