@@ -1,16 +1,17 @@
-﻿using Unity.Netcode;
+﻿using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerUISetup : NetworkBehaviour
 {
-    private GameObject Precenters;
+    private GameObject _precenters;
 
     public override void OnNetworkSpawn()
     {
         if (IsOwner)
         {
-            Precenters = GameObject.FindGameObjectWithTag("PlayerPrecenters");
-            if (Precenters != null)
+            _precenters = GameObject.FindGameObjectWithTag("PlayerPrecenters");
+            if (_precenters != null)
             {
                 SettingPlayerUI(gameObject);
             }
@@ -20,9 +21,9 @@ public class PlayerUISetup : NetworkBehaviour
     private void SettingPlayerUI(GameObject player)
     {
         Player_Condition playerCondition = player.GetComponent<Player_Condition>();
-        Precenters.GetComponent<PlayerHpUIPrecenter>().SetPlayerModel(playerCondition);
-        Precenters.GetComponent<PlayerStaminaUIPresenter>().SetPlayerModel(playerCondition);
-        Precenters.GetComponent<PlayerTemperatureUIPresenter>().SetPlayerModel(playerCondition);
-        Precenters.GetComponent<PlayerWeightUIPresenter>().SetPlayerModel(playerCondition);
+        _precenters.GetComponent<PlayerHpUIPrecenter>().SetPlayerModel(playerCondition);
+        _precenters.GetComponent<PlayerStaminaUIPresenter>().SetPlayerModel(playerCondition);
+        _precenters.GetComponent<PlayerTemperatureUIPresenter>().SetPlayerModel(playerCondition);
+        _precenters.GetComponent<PlayerWeightUIPresenter>().SetPlayerModel(playerCondition);
     }
 }

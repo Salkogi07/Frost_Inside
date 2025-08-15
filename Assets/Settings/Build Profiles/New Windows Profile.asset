@@ -28,6 +28,8 @@ MonoBehaviour:
     m_path: Assets/Scenes/Multi/Lobby.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Multi/Game.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/Multi/LobbyGame.unity
   m_ScriptingDefines:
   - DEBUGCODE
   - CHEAT

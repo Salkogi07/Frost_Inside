@@ -2797,88 +2797,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1001 &331335302
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -42.9
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 50.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2815366838865872201, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: walkSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375461312055837039, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: hp
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3375461312055837039, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: temperature
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_Name
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 3867197236472526811, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6436803716985183836, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-      propertyPath: highlightTilemap
-      value: 
-      objectReference: {fileID: 1302817699}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
---- !u!4 &331335303 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 36520864720831461, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-  m_PrefabInstance: {fileID: 331335302}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &344991975
 GameObject:
   m_ObjectHideFlags: 0
@@ -4810,8 +4728,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f501881307557499462d2e3c358182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Anim: {fileID: 0}
-  rb: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
@@ -13390,30 +13306,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4082e6d8bd7d7a74688db940f6bb0389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpImage: {fileID: 1756907208}
-  staminaImage: {fileID: 1238334689}
-  staminaFreezeImage: {fileID: 1525420461}
-  staminaFreezeSprite:
-  - {fileID: 21300000, guid: 5ca87bedff63d434babaa8197679f13b, type: 3}
-  - {fileID: 21300000, guid: f76376b51ab1d724384a6a0e324f6fdd, type: 3}
-  temperatureImage: {fileID: 1746214132}
-  temperatureSprites:
-  - {fileID: 21300000, guid: 84372d95720e3dd4aae01ab5857b5dbf, type: 3}
-  - {fileID: 21300000, guid: cd94e3f48dbcc174ab280ac3c0b5a677, type: 3}
-  - {fileID: 21300000, guid: 421c8425ad04264438e18abb732ad7a8, type: 3}
-  - {fileID: 21300000, guid: e9e0216005338844a8a76238bbab7c7a, type: 3}
-  weightImage: {fileID: 0}
-  timeImage: {fileID: 841158453}
-  timeText: {fileID: 1694153522}
-  timeSprites:
-  - {fileID: 21300000, guid: 4d0557ac6b47aab4283952b0a7527fc8, type: 3}
-  - {fileID: 21300000, guid: fd3ce4b5e1c03f64a92ebed27cf6aaaa, type: 3}
-  - {fileID: 21300000, guid: 8a36ae12f1f1049478066f7fecd9d50f, type: 3}
-  freezeEdges:
-  - {fileID: 2089900466}
-  - {fileID: 1454746584}
-  - {fileID: 426380628}
-  fadeSpeed: 2
   damagePanel: {fileID: 0}
   damageImage: {fileID: 1410450979}
   fadeDuration: 0.3
@@ -13566,17 +13458,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1170337303}
   m_CullTransparentMesh: 1
---- !u!114 &1172619196 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3375461312055837039, guid: 113fc8713d753d84f95ff3ca7ba033f9, type: 3}
-  m_PrefabInstance: {fileID: 331335302}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bde7980eb8ea5e478115fc1e8e78032, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1173516203
 GameObject:
   m_ObjectHideFlags: 0
@@ -14542,8 +14423,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc4d7525f75b7724994bc3420b483d95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuPanel: {fileID: 183391073}
-  KeyPanel: {fileID: 596671046}
+  menuPanel: {fileID: 0}
+  keyPanel: {fileID: 0}
+  keyButton: {fileID: 0}
+  quitButton: {fileID: 0}
   currentPage: 0
 --- !u!114 &1226288856
 MonoBehaviour:
@@ -14609,9 +14492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b19883c03b742264ea31f3c24a338dbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hours: 8
-  minutes: 0
-  isSetting: 1
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &1226288858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16822,7 +16703,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2435721809930264131, guid: 02e7f81602eadb14c98d945998083f41, type: 3}
   bullet: 100
   cooltime: 0.038
-  player: {fileID: 331335303}
+  player: {fileID: 0}
 --- !u!212 &1587508519
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -41890,7 +41771,7 @@ PrefabInstance:
     - target: {fileID: 4622791958767861242, guid: edc095eb90acbc7478922be5116bd31c, type: 3}
       propertyPath: playerstat
       value: 
-      objectReference: {fileID: 1172619196}
+      objectReference: {fileID: 0}
     - target: {fileID: 4622791958767861242, guid: edc095eb90acbc7478922be5116bd31c, type: 3}
       propertyPath: PlayerCondition
       value: 
@@ -41922,7 +41803,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 1609987813}
   - {fileID: 299409898}
-  - {fileID: 331335302}
   - {fileID: 1819043047}
   - {fileID: 1161184186}
   - {fileID: 1226288859}

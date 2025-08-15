@@ -61,6 +61,8 @@ public class PlayerSpawner : NetworkBehaviour
         Vector3 spawnPosition = GetNextSpawnPosition();
         GameObject playerInstance = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
         NetworkObject networkObject = playerInstance.GetComponent<NetworkObject>();
+        PlayerNameSetup playerNameSetup = playerInstance.GetComponent<PlayerNameSetup>();
+        playerNameSetup.SetPlayerName(playerInfo.SteamName);
     
         networkObject.SpawnAsPlayerObject(clientId, true);
     

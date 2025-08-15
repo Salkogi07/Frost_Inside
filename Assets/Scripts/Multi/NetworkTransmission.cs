@@ -52,15 +52,6 @@ public class NetworkTransmission : NetworkBehaviour
     [ClientRpc]
     private void SyncExistingPlayerToNewClientRpc(ulong clientId, ulong steamId, string steamName, bool isReady, int charId, ClientRpcParams clientRpcParams = default)
     {
-        // 이 RPC는 새로 접속한 클라이언트에게만 전송됩니다.
-        // 이 RPC를 받았다는 것은 초기 데이터 동기화가 시작되었다는 의미입니다.
-        if (LoadingManager.instance != null)
-        {
-            // LoadingManager에 데이터 수신이 완료되었음을 알립니다.
-            // 이 플래그가 true로 바뀌면 클라이언트의 로딩 화면이 사라지고 로비 씬이 활성화됩니다.
-            LoadingManager.instance.IsInitialDataReceived = true;
-        }
-        
         PlayerDataManager.instance.AddPlayer(clientId, steamId, steamName);
         PlayerDataManager.instance.UpdatePlayerReadyStatus(clientId, isReady);
         PlayerDataManager.instance.UpdatePlayerCharacter(clientId, charId);

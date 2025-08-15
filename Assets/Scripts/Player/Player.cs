@@ -22,6 +22,7 @@ public class Player : NetworkBehaviour
     public Player_FallState FallState { get; private set; }
     public Player_MiningState MiningState { get; private set; }
 
+    [SerializeField] private GameObject playerObject;
 
     [Header("Movement details")] public float CurrentSpeed { get; private set; }
     public float JumpForce;
@@ -140,9 +141,9 @@ public class Player : NetworkBehaviour
         if (IsGroundDetected)
             Dust.Play();
 
-        Vector3 currentScale = transform.localScale;
+        Vector3 currentScale = playerObject.transform.localScale;
         currentScale.x *= -1;
-        transform.localScale = currentScale;
+        playerObject.transform.localScale = currentScale;
         _isFacingRight = !_isFacingRight;
         FacingDirection *= -1;
     }
