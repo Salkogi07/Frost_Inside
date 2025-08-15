@@ -16,7 +16,7 @@ public class Player_AiredState : PlayerState
     {
         base.FixedUpdate();
 
-        float xVelocity = player.MoveInput * (player.Stats.WalkSpeed * player.inAirMoveMultiplier);
+        float xVelocity = player.MoveInput * (player.CurrentSpeed * player.inAirMoveMultiplier);
 
         if (player.MoveInput != 0)
             player.SetVelocity(xVelocity, rigidbody.linearVelocity.y);

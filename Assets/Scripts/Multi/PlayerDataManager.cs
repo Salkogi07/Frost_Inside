@@ -43,7 +43,7 @@ public class PlayerDataManager : MonoBehaviour
             SteamId = steamId,
             SteamName = steamName,
             IsReady = false,
-            SelectedCharacterId = -1
+            SelectedCharacterId = 0
         };
         playerInfoMap[clientId] = newPlayer;
         OnPlayerAdded?.Invoke(newPlayer);
