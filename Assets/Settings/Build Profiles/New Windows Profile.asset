@@ -21,15 +21,15 @@ MonoBehaviour:
   m_OverrideGlobalSceneList: 1
   m_Scenes:
   - m_enabled: 1
-    m_path: Assets/Scenes/Multi/Introduction.unity
+    m_path: Assets/Scenes/Multi/Logo.unity
+  - m_enabled: 1
+    m_path: Assets/Scenes/Multi/Setup.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Multi/Menu.unity
   - m_enabled: 1
-    m_path: Assets/Scenes/Multi/Lobby.unity
+    m_path: Assets/Scenes/Multi/LobbyGame.unity
   - m_enabled: 1
     m_path: Assets/Scenes/Multi/Game.unity
-  - m_enabled: 1
-    m_path: Assets/Scenes/Multi/LobbyGame.unity
   m_ScriptingDefines:
   - DEBUGCODE
   - CHEAT
@@ -47,13 +47,13 @@ MonoBehaviour:
     - line: '|   useOnDemandResources: 0'
     - line: '|   accelerometerFrequency: 60'
     - line: '|   companyName: DefaultCompany'
-    - line: '|   productName: Frost_Inside'
+    - line: '|   productName: QuesPick'
     - line: '|   defaultCursor: {instanceID: 0}'
     - line: '|   cursorHotspot: {x: 0, y: 0}'
     - line: '|   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b:
         0.1254902, a: 1}'
     - line: '|   m_ShowUnitySplashScreen: 1'
-    - line: '|   m_ShowUnitySplashLogo: 1'
+    - line: '|   m_ShowUnitySplashLogo: 0'
     - line: '|   m_SplashScreenOverlayOpacity: 1'
     - line: '|   m_SplashScreenAnimation: 1'
     - line: '|   m_SplashScreenLogoStyle: 1'
