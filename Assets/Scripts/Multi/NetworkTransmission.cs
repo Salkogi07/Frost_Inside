@@ -155,6 +155,23 @@ public class NetworkTransmission : NetworkBehaviour
         PlayerDataManager.instance.UpdatePlayerCharacter(clientId, characterId);
     }
     
+    [ServerRpc(RequireOwnership = false)]
+    public void RequestCharacterChangeServerRpc(int newCharacterId, ServerRpcParams rpcParams = default)
+    {
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        var playerInfo = PlayerDataManager.instance.GetPlayerInfo(clientId);
+
+        if (playerInfo == null || playerInfo.SelectedCharacterId == newCharacterId)
+        {
+            return;
+        }
+        
+        UpdatePlayerCharacterClientRpc(clientId, newCharacterId);
+    
+        // 이 부분이 핵심입니다. 서버가 PlayerSpawner를 통해 캐릭터 교체를 명령합니다.
+        FindObjectOfType<PlayerSpawner>().RespawnPlayerCharacter(clientId, newCharacterId);
+    }
+    
     // --- Game Start ---
     [ServerRpc(RequireOwnership = false)]
     public void RequestStartGameServerRpc(ServerRpcParams rpcParams = default)

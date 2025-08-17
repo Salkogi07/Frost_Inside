@@ -22,6 +22,8 @@ public class ChatManager : MonoBehaviour
     [SerializeField] private int maxMessages = 250;
 
     private List<GameObject> messageObjects = new List<GameObject>();
+    
+    public bool IsChatting { get; private set; }
 
     private void Awake()
     {
@@ -31,7 +33,9 @@ public class ChatManager : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Return))
+        IsChatting = chatInput.isFocused;
+        
+        if (Input.GetKeyDown(KeyCode.Return) && !IsChatting)
         {
             ToggleChatBox();
         }
@@ -43,13 +47,7 @@ public class ChatManager : MonoBehaviour
         {
             if (EventSystem.current.currentSelectedGameObject == chatInput.gameObject)
             {
-                if (!string.IsNullOrWhiteSpace(chatInput.text))
-                {
-                    Debug.Log("메시지 전송: " + chatInput.text);
-                    NetworkTransmission.instance.SendChatMessageServerRpc(chatInput.text);
-                    chatInput.text = "";
-                }
-                EventSystem.current.SetSelectedGameObject(null);
+                StartCoroutine(SendMessageAfterDelay());
             }
             else
             {
@@ -68,7 +66,23 @@ public class ChatManager : MonoBehaviour
             chatScrollRect.verticalNormalizedPosition = 0f;
         }
     }
+    
+    private IEnumerator SendMessageAfterDelay()
+    {
+        // IME 조합이 끝날 때까지 한 프레임 대기 (WaitForEndOfFrame)
+        yield return new WaitForEndOfFrame();
 
+        string messageToSend = chatInput.text;  // 확정된 한글 포함됨
+        chatInput.text = "";
+
+        EventSystem.current.SetSelectedGameObject(null);
+
+        if (!string.IsNullOrWhiteSpace(messageToSend))
+        {
+            Debug.Log("메시지 전송: " + messageToSend);
+            NetworkTransmission.instance.SendChatMessageServerRpc(messageToSend);
+        }
+    }
 
     public void AddMessage(string message, MessageType type)
     {

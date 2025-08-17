@@ -53,9 +53,6 @@ public class PlayerSpawner : NetworkBehaviour
         
         ulong clientId = sceneEvent.ClientId;
 
-        // [수정됨] PlayerDataManager에 해당 클라이언트의 정보가 등록되었는지 먼저 확인합니다.
-        // 정보가 없다면, 아직 AnnounceMyselfToServerRpc가 도착하지 않은 것이므로 스폰을 시도하지 않고 기다립니다.
-        // 잠시 후 HandlePlayerAdded가 스폰을 처리해 줄 것입니다.
         if (PlayerDataManager.instance.GetPlayerInfo(clientId) == null)
         {
             return;
@@ -77,7 +74,6 @@ public class PlayerSpawner : NetworkBehaviour
         PlayerInfo playerInfo = PlayerDataManager.instance.GetPlayerInfo(clientId);
         if (playerInfo == null)
         {
-            // 이 수정으로 인해 이 에러는 거의 발생하지 않아야 합니다.
             Debug.LogError($"[PlayerSpawner] CRITICAL: Cannot find PlayerInfo for client {clientId}. Player will not be spawned.");
             return;
         }
@@ -101,6 +97,66 @@ public class PlayerSpawner : NetworkBehaviour
         networkObject.SpawnAsPlayerObject(clientId, true);
     
         Debug.Log($"Spawned character {prefabToSpawn.name} for Client ID: {clientId} at {spawnPosition}");
+    }
+    
+    /// <summary>
+    /// (서버 전용) 지정된 클라이언트의 플레이어 캐릭터를 새로운 캐릭터로 교체합니다.
+    /// </summary>
+    /// <param name="clientId">캐릭터를 변경할 클라이언트의 ID</param>
+    /// <param name="newCharacterId">새로운 캐릭터 프리팹의 인덱스</param>
+    public void RespawnPlayerCharacter(ulong clientId, int newCharacterId)
+    {
+        if (!IsServer) return;
+
+        // 기존 플레이어 오브젝트를 찾습니다.
+        if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client) && client.PlayerObject != null)
+        {
+            Vector3 oldPosition = client.PlayerObject.transform.position;
+            Quaternion oldRotation = client.PlayerObject.transform.rotation;
+
+            // 기존 오브젝트를 Despawn하고 파괴합니다.
+            client.PlayerObject.Despawn(true);
+
+            // 새로운 캐릭터를 이전 위치에 스폰합니다.
+            SpawnNewCharacterForClient(clientId, newCharacterId, oldPosition, oldRotation);
+        }
+        else
+        {
+            Debug.LogWarning($"[PlayerSpawner] Client {clientId} has no player object to respawn. Attempting initial spawn.");
+            // 만약의 경우 플레이어 오브젝트가 없다면, 그냥 새로 스폰합니다.
+            SpawnPlayerForClient(clientId);
+        }
+    }
+
+    private void SpawnNewCharacterForClient(ulong clientId, int characterId, Vector3 position, Quaternion rotation)
+    {
+        if (!IsServer) return;
+
+        PlayerInfo playerInfo = PlayerDataManager.instance.GetPlayerInfo(clientId);
+        if (playerInfo == null)
+        {
+            Debug.LogError($"[PlayerSpawner] CRITICAL: Cannot find PlayerInfo for client {clientId} during respawn.");
+            return;
+        }
+
+        GameObject prefabToSpawn = GetPrefabForCharacter(characterId);
+        if (prefabToSpawn == null)
+        {
+            Debug.LogError($"[PlayerSpawner] CRITICAL: GetPrefabForCharacter returned null for new character ID {characterId}.");
+            return;
+        }
+
+        GameObject playerInstance = Instantiate(prefabToSpawn, position, rotation);
+        NetworkObject networkObject = playerInstance.GetComponent<NetworkObject>();
+
+        if (playerInstance.TryGetComponent<PlayerNameSetup>(out var playerNameSetup))
+        {
+            playerNameSetup.SetPlayerName(playerInfo.SteamName);
+        }
+
+        networkObject.SpawnAsPlayerObject(clientId, true);
+
+        Debug.Log($"Respawned character {prefabToSpawn.name} for Client ID: {clientId} at {position}");
     }
     
     private GameObject GetPrefabForCharacter(int characterId)

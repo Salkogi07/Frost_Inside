@@ -11,5 +11,5 @@ public class PlayerInfo
     public ulong SteamId;
     public string SteamName;
     public bool IsReady;
-    public int SelectedCharacterId = -1; // -1은 선택되지 않음을 의미
+    public int SelectedCharacterId = 0; // 0은 선택되지 않음을 의미
 }

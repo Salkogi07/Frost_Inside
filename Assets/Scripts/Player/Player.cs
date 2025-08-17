@@ -77,6 +77,12 @@ public class Player : NetworkBehaviour
 
     private void Update()
     {
+        if (ChatManager.instance != null && ChatManager.instance.IsChatting)
+        {
+            _playerStateMachine.ChangeState(IdleState);
+            return;
+        }
+        
         ProcessKeyboardInput();
 
         _playerStateMachine.UpdateActiveState();
