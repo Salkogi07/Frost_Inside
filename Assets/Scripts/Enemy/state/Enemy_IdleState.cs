@@ -18,7 +18,7 @@
         {
             base.Update();
             
-            if(stateTimer < 0)
-                enemyStateMachine.ChangeState(enemy.MoveState);
+            if(stateTimer < 0 && enemy.MoveDirector != null)
+                enemyStateMachine.ChangeState(enemy.MoveDirector);
         }
     }

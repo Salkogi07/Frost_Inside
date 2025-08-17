@@ -10,17 +10,16 @@
         // public Enemy_StateMachine EnemyStateMachine;
 
 
-        public Enemy_IdleState IdleState;
-        public Enemy_MoveState MoveState;
-        public Enemy_AttackState AttackState;
-        public Enemy_BattleState BattleState;
-        public Enemy_DeadState DeadState;
+        public Enemy_Idle_director_State IdleDirector { get; private set; }
+        public Enemy_Move_director_State MoveDirector { get; private set; }
+        // public En AttackState { get; private set; }
+        public Enemy_Battle_director_State  BattleDirector { get; private set; }
+        public Enemy_Dead_director_State  DeadDirector { get; private set; }
+
+
         
-        // public Enemy_IdleState IdleState { get; private set; }
-        // public Enemy_MoveState MoveState { get; private set; }
-        //  public Enemy_AttackState AttackState { get; private set; }
-        //  public Enemy_BattleState  BattleState { get; private set; }
-        //  public Enemy_DeadState  DeadState { get; private set; }
+        
+        
 
 
 
@@ -57,20 +56,25 @@
             base.EntityDeath();
            
             
-            EnemyStateMachine.ChangeState(DeadState);
+            if (DeadDirector != null)
+                EnemyStateMachine.ChangeState(DeadDirector);
         }
         public void TryEnterBattleState(Transform player)
         {
-            if (EnemyStateMachine.currentState == BattleState)
-            {
-                return;
-            }
-            if(EnemyStateMachine.currentState == AttackState)
-            {
-                return;
-            }
-            this.player =  player;
-            EnemyStateMachine.ChangeState(BattleState);
+            // if (BattleDirector == null || AttackState == null)
+            // {
+            //      return;
+            // }
+            // if (EnemyStateMachine.currentState == BattleDirector)
+            // {
+            //     return;
+            // }
+            // if(EnemyStateMachine.currentState == AttackState)
+            // {
+            //     return;
+            // }
+            // this.player =  player;
+            // EnemyStateMachine.ChangeState(BattleState);
         }
 
         public Transform GetPlayerReference()

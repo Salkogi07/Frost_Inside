@@ -1,15 +1,17 @@
 
 using UnityEngine;
 
-public class Enemy_BattleState : EnemyState
+public class Enemy_ChaseState : Enemy_Battle_director_State
 {
     
     private Transform player;
     private float lastTimeWasInBattle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public Enemy_BattleState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
+
+
+    public Enemy_ChaseState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
     {
-        
+       
     }
 
     public override void Enter()
@@ -39,18 +41,18 @@ public class Enemy_BattleState : EnemyState
             UpdateBattleTimer();
         }
 
-        if (BattleTimeIsOver())
-        {
-            enemyStateMachine.ChangeState(enemy.IdleState);
-        }
-        if (WithinAttackRange() && enemy.PlayerDetection())
-        {
-            enemyStateMachine.ChangeState(enemy.AttackState);
-        }
-        else
-        {
-            enemy.SetVelocity(enemy.battleMoveSpeed * DirectionToPlayer(), rigidbody.linearVelocity.y);
-        }
+        // if (BattleTimeIsOver()&& enemy.IdleState != null)
+        // {
+        //     enemyStateMachine.ChangeState(enemy.IdleState);
+        // }
+        // if (WithinAttackRange() && enemy.PlayerDetection()&& enemy.AttackState != null)
+        // {
+        //     enemyStateMachine.ChangeState(enemy.AttackState);
+        // }
+        // else
+        // {
+        //     enemy.SetVelocity(enemy.battleMoveSpeed * DirectionToPlayer(), rigidbody.linearVelocity.y);
+        // }
     }
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
     private bool BattleTimeIsOver() =>Time.time > lastTimeWasInBattle + enemy.battleTimeDuration;

@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class Enemy_GroundedState : EnemyState
+public class Enemy_GroundedState : Enemy_Grounded_director_State
 {
     public Enemy_GroundedState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
     {
@@ -14,7 +14,7 @@ public class Enemy_GroundedState : EnemyState
 
         if (enemy.PlayerDetection() == true)
         {
-            enemyStateMachine.ChangeState(enemy.BattleState);
+            enemyStateMachine.ChangeState(enemy.BattleDirector);
         }
     }
 }

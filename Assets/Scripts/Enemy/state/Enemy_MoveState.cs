@@ -1,8 +1,9 @@
 ﻿
-    public class Enemy_MoveState : Enemy_GroundedState
+    public class Enemy_MoveState : Enemy_Move_director_State
     {
         public Enemy_MoveState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
         {
+            
         }
 
         public override void Enter()
@@ -17,8 +18,8 @@
         {
             base.Update();
 
-            if (enemy.IsGroundDetected == false|| enemy.IsWallDetected)
-                enemyStateMachine.ChangeState(enemy.IdleState);
+            if (enemy.IsGroundDetected == false|| enemy.IsWallDetected && enemy.IdleDirector != null)
+                enemyStateMachine.ChangeState(enemy.IdleDirector);
         }
 
         public override void FiexedUpdate()
