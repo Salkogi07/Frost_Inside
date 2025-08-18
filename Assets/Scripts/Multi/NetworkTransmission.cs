@@ -172,25 +172,26 @@ public class NetworkTransmission : NetworkBehaviour
         FindObjectOfType<PlayerSpawner>().RespawnPlayerCharacter(clientId, newCharacterId);
     }
     
-    // --- Game Start ---
     [ServerRpc(RequireOwnership = false)]
     public void RequestStartGameServerRpc(ServerRpcParams rpcParams = default)
     {
         // 이 RPC는 호스트만 호출할 수 있도록 UI에서 제어해야 합니다.
         if (!IsServer) return;
 
+        // 모든 플레이어가 준비되었는지 서버 측에서 한 번 더 확인합니다.
         if (PlayerDataManager.instance.AreAllPlayersReady())
         {
+            // 1. 로비를 잠가 더 이상 새로운 플레이어가 들어오지 못하게 합니다.
             GameNetworkManager.instance.LockLobby();
             
-            // Netcode의 SceneManager를 사용하여 씬 로딩을 시작합니다.
+            // 2. Netcode의 SceneManager를 사용하여 씬 로딩을 시작합니다.
             // 이 함수를 호출하면 서버가 모든 클라이언트에게 "Game" 씬을 로드하라고 자동으로 명령합니다.
             // Netcode는 모든 클라이언트가 로딩을 마칠 때까지 기다렸다가 씬을 동시에 활성화합니다.
             NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
         else
         {
-            // 만약의 경우를 대비한 로그 (예: 클라이언트가 RPC를 잘못 호출)
+            // 만약의 경우를 대비한 로그
             ulong senderId = rpcParams.Receive.SenderClientId;
             Debug.LogWarning($"Client {senderId} requested game start, but not all players are ready.");
         }

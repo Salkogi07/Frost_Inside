@@ -35,9 +35,10 @@ public class LoadingManager : NetworkBehaviour
         {
             NetworkManager.Singleton.SceneManager.OnSceneEvent += HandleSceneEvent;
         }
-
+        
         // 클라이언트 본인이 정상적으로 방에 입장할 때 수동 처리
-        NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
+        if(!IsServer || !IsHost)
+            NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
     }
 
     public override void OnNetworkDespawn()
@@ -48,7 +49,8 @@ public class LoadingManager : NetworkBehaviour
         }
         
         // 콜백 해제
-        NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
+        if(!IsServer || !IsHost)
+            NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
     }
     
     private void OnClientConnected(ulong clientId)

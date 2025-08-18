@@ -77,7 +77,7 @@ GameObject:
   - component: {fileID: 4294238124675178962}
   - component: {fileID: 4550964729933029432}
   - component: {fileID: 3029170303914760309}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: 483563663
   m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &4550964729933029432
@@ -5628,7 +5628,7 @@ GameObject:
   - component: {fileID: 4287253112221553943}
   - component: {fileID: 9216212533090838939}
   - component: {fileID: 7048437721639184899}
-  m_Layer: 5
+  m_Layer: 6
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5684,8 +5684,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: NameNone
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e3f343490e746314a840e6b996af6477, type: 2}
-  m_sharedMaterial: {fileID: 6268123202537107757, guid: e3f343490e746314a840e6b996af6477, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 2d7ab78d0ecdc3a40886912a471599db, type: 2}
+  m_sharedMaterial: {fileID: 4624208887801247165, guid: 2d7ab78d0ecdc3a40886912a471599db, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

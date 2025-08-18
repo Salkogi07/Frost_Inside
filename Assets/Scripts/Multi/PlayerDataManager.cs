@@ -56,7 +56,7 @@ public class PlayerDataManager : MonoBehaviour
             ClientId = clientId,
             SteamId = steamId,
             SteamName = steamName,
-            IsReady = false,
+            IsReady = true,
             SelectedCharacterId = 0
         };
         playerInfoMap[clientId] = newPlayer;
