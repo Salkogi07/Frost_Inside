@@ -231,6 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   loadingScreenObj: {fileID: 105301652}
+  backgroundObj: {fileID: 1396346688}
   animator: {fileID: 1396346689}
 --- !u!114 &91453858
 MonoBehaviour:

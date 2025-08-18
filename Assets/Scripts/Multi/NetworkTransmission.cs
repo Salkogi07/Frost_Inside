@@ -184,10 +184,9 @@ public class NetworkTransmission : NetworkBehaviour
             // 1. 로비를 잠가 더 이상 새로운 플레이어가 들어오지 못하게 합니다.
             GameNetworkManager.instance.LockLobby();
             
-            // 2. Netcode의 SceneManager를 사용하여 씬 로딩을 시작합니다.
-            // 이 함수를 호출하면 서버가 모든 클라이언트에게 "Game" 씬을 로드하라고 자동으로 명령합니다.
-            // Netcode는 모든 클라이언트가 로딩을 마칠 때까지 기다렸다가 씬을 동시에 활성화합니다.
-            NetworkManager.Singleton.SceneManager.LoadScene("Game", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            // 2. 변경된 부분: LoadingManager를 통해 씬 로딩을 시작합니다.
+            // 이렇게 하면 호스트의 로딩 화면 표시와 Netcode의 씬 로드가 함께 처리됩니다.
+            LoadingManager.instance.LoadScene("Game");
         }
         else
         {
