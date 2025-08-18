@@ -206,13 +206,15 @@ public class GameNetworkManager : MonoBehaviour
 
         if (NetworkManager.Singleton.IsHost)
         {
-            // [수정됨] 호스트는 즉시 "LobbyGame" 씬으로 전환을 시작합니다.
             // 이 함수는 서버와 모든 클라이언트의 씬을 동기화하여 로드합니다.
-            NetworkManager.Singleton.SceneManager.LoadScene("LobbyGame", LoadSceneMode.Single);
+            LoadingManager.instance.LoadScene("LobbyGame");
+            
+            //NetworkManager.Singleton.SceneManager.LoadScene("LobbyGame", LoadSceneMode.Single);
         }
         else
         {
-            // [수정됨] 클라이언트는 서버에 연결하기만 하면 됩니다.
+            LoadingManager.instance.ShowLoadingScreen();
+            
             // 서버가 씬 전환을 관리하므로 클라이언트 측에서 씬을 로드할 필요가 없습니다.
             NetworkManager.Singleton.gameObject.GetComponent<FacepunchTransport>().targetSteamId = lobby.Owner.Id;
             NetworkManager.Singleton.StartClient();

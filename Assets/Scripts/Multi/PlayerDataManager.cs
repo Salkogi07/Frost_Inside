@@ -32,6 +32,20 @@ public class PlayerDataManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    
+    
+    //디버깅용
+    /*private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            foreach (var player in playerInfoMap)
+            {
+                Debug.Log(player.Value.SteamName);
+                Debug.Log(player.Value.SelectedCharacterId);
+            }
+        }
+    }*/
 
     public void AddPlayer(ulong clientId, ulong steamId, string steamName)
     {
