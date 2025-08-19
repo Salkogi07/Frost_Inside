@@ -1,31 +1,25 @@
 fileFormatVersion: 2
-guid: c6593000e5e45d34dab35b3aef1d68bd
+guid: fcda6b0dd93419f4a9c4a6af45e22cba
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 4567551707591153224
-    second: Explorer_Move-Sheet_0
+      213: 6225962677521000164
+    second: Explorer_Run-Sheet_0
   - first:
-      213: 5252103299887849365
-    second: Explorer_Move-Sheet_1
+      213: -4056542029611178871
+    second: Explorer_Run-Sheet_1
   - first:
-      213: -8279219250156225896
-    second: Explorer_Move-Sheet_2
+      213: -8410287462974318241
+    second: Explorer_Run-Sheet_2
   - first:
-      213: -7729116122240995584
-    second: Explorer_Move-Sheet_3
+      213: -6362705354786243087
+    second: Explorer_Run-Sheet_3
   - first:
-      213: 8578460319620272990
-    second: Explorer_Move-Sheet_4
+      213: -3574761153310508598
+    second: Explorer_Run-Sheet_4
   - first:
-      213: -4944844081752074678
-    second: Explorer_Move-Sheet_5
-  - first:
-      213: 7283026268990979362
-    second: Explorer_Move-Sheet_6
-  - first:
-      213: -162926183917575589
-    second: Explorer_Move-Sheet_7
+      213: 578690140225836410
+    second: Explorer_Run-Sheet_5
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -147,12 +141,12 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Explorer_Move-Sheet_0
+      name: Explorer_Run-Sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 19
+        width: 22
         height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -162,19 +156,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 84613300414336f30800000000000000
-      internalID: 4567551707591153224
+      spriteID: 4e6aa729110176650800000000000000
+      internalID: 6225962677521000164
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explorer_Move-Sheet_1
+      name: Explorer_Run-Sheet_1
       rect:
         serializedVersion: 2
-        x: 19
+        x: 22
         y: 0
-        width: 19
+        width: 22
         height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -184,19 +178,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 59fd879df1833e840800000000000000
-      internalID: 5252103299887849365
+      spriteID: 984659c348444b7c0800000000000000
+      internalID: -4056542029611178871
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explorer_Move-Sheet_2
+      name: Explorer_Run-Sheet_2
       rect:
         serializedVersion: 2
-        x: 38
+        x: 44
         y: 0
-        width: 19
+        width: 22
         height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -206,19 +200,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 89abcd805fd4a1d80800000000000000
-      internalID: -8279219250156225896
+      spriteID: f599e7eac18a84b80800000000000000
+      internalID: -8410287462974318241
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explorer_Move-Sheet_3
+      name: Explorer_Run-Sheet_3
       rect:
         serializedVersion: 2
-        x: 57
+        x: 66
         y: 0
-        width: 19
+        width: 22
         height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -228,19 +222,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 00fa41266d9acb490800000000000000
-      internalID: -7729116122240995584
+      spriteID: 1fd7d7dd03123b7a0800000000000000
+      internalID: -6362705354786243087
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explorer_Move-Sheet_4
+      name: Explorer_Run-Sheet_4
       rect:
         serializedVersion: 2
-        x: 76
+        x: 88
         y: 0
-        width: 19
+        width: 22
         height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -250,19 +244,19 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: e5310c6c530dc0770800000000000000
-      internalID: 8578460319620272990
+      spriteID: ac9bf04cba5e36ec0800000000000000
+      internalID: -3574761153310508598
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Explorer_Move-Sheet_5
+      name: Explorer_Run-Sheet_5
       rect:
         serializedVersion: 2
-        x: 95
+        x: 110
         y: 0
-        width: 19
+        width: 22
         height: 39
       alignment: 0
       pivot: {x: 0, y: 0}
@@ -272,52 +266,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: a46997da182606bb0800000000000000
-      internalID: -4944844081752074678
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explorer_Move-Sheet_6
-      rect:
-        serializedVersion: 2
-        x: 114
-        y: 0
-        width: 19
-        height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 22dbb05fdc1821560800000000000000
-      internalID: 7283026268990979362
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Explorer_Move-Sheet_7
-      rect:
-        serializedVersion: 2
-        x: 133
-        y: 0
-        width: 19
-        height: 39
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: b52abfabf7b2dbdf0800000000000000
-      internalID: -162926183917575589
+      spriteID: a759e23dd9be70800800000000000000
+      internalID: 578690140225836410
       vertices: []
       indices: 
       edges: []
@@ -326,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 3fa1e2005888bde4fa5682ac2fe81dff
+    spriteID: caac2f49c08ba7e468a64553f9cba1c2
     internalID: 0
     vertices: []
     indices: 
@@ -336,14 +286,12 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Explorer_Move-Sheet_0: 4567551707591153224
-      Explorer_Move-Sheet_1: 5252103299887849365
-      Explorer_Move-Sheet_2: -8279219250156225896
-      Explorer_Move-Sheet_3: -7729116122240995584
-      Explorer_Move-Sheet_4: 8578460319620272990
-      Explorer_Move-Sheet_5: -4944844081752074678
-      Explorer_Move-Sheet_6: 7283026268990979362
-      Explorer_Move-Sheet_7: -162926183917575589
+      Explorer_Run-Sheet_0: 6225962677521000164
+      Explorer_Run-Sheet_1: -4056542029611178871
+      Explorer_Run-Sheet_2: -8410287462974318241
+      Explorer_Run-Sheet_3: -6362705354786243087
+      Explorer_Run-Sheet_4: -3574761153310508598
+      Explorer_Run-Sheet_5: 578690140225836410
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
