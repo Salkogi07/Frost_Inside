@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-    public class Enemy_IdleState : Enemy_GroundedState
+    public class Enemy_IdleState : EnemyState
     {
         public Enemy_IdleState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
         {
@@ -18,7 +18,7 @@
         {
             base.Update();
             
-            if(stateTimer < 0 && enemy.MoveDirector != null)
-                enemyStateMachine.ChangeState(enemy.MoveDirector);
+            /*if(stateTimer < 0 && enemy. != null)
+                enemyStateMachine.ChangeState(enemy.MoveDirector);*/
         }
     }

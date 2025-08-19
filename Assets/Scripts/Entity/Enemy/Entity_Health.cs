@@ -70,9 +70,6 @@ public class Entity_Health : MonoBehaviour
     private void Die()
     {
         isDead = true;
-        entity.EntityDeath();
-        
-        
     }
 
     
@@ -90,8 +87,4 @@ public class Entity_Health : MonoBehaviour
     }
     // 대미지 비례 넉백량 증가
     private bool IsHeavyDamage(float damage) => damage / maxHealth > heavyDamageThreshold;
-    
-    
-
-
 }

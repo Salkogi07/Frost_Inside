@@ -1,5 +1,5 @@
 ﻿
-    public class Enemy_Skeleton : Enemy
+    public class Enemy_ArcticFox : Enemy
     {
         
         public Enemy_IdleState IdleState { get; private set; }
@@ -22,7 +22,5 @@
         protected override void Start()
         {
             base.Start();
-            
-            EnemyStateMachine.Initialize(IdleState);
         }
     }

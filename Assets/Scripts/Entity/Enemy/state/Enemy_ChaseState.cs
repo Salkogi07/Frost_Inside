@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class Enemy_ChaseState : Enemy_Battle_director_State
+public class Enemy_ChaseState : EnemyState
 {
     
     private Transform player;

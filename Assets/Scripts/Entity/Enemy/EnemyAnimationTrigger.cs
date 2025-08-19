@@ -3,18 +3,18 @@ using UnityEngine;
 
 public class EnemyAnimationTrigger : MonoBehaviour
 {
-    private Entity entity;
+    private Enemy enemy;
     private Enemy_Combat enemyCombat;
     
     private void Awake()
     {
-        entity = GetComponentInParent<Entity>();
+        enemy = GetComponentInParent<Enemy>();
         enemyCombat = GetComponentInParent<Enemy_Combat>();
     }
 
     public void CurrentStateTrigger()
     {
-        entity.CallAnimationTrigger();
+        enemy.CallAnimationTrigger();
     }
 
     public void AttackTrigger()

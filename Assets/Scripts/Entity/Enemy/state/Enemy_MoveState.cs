@@ -1,5 +1,5 @@
 ﻿
-    public class Enemy_MoveState : Enemy_Move_director_State
+    public class Enemy_MoveState : EnemyState
     {
         public Enemy_MoveState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
         {
@@ -18,8 +18,8 @@
         {
             base.Update();
 
-            if (enemy.IsGroundDetected == false|| enemy.IsWallDetected && enemy.IdleDirector != null)
-                enemyStateMachine.ChangeState(enemy.IdleDirector);
+            /*if (enemy.IsGroundDetected == false|| enemy.IsWallDetected && enemy.IdleDirector != null)
+                enemyStateMachine.ChangeState(enemy.IdleDirector);*/
         }
 
         public override void FiexedUpdate()
