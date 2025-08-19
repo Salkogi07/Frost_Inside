@@ -2,19 +2,13 @@ using UnityEngine;
 using Unity.Netcode;
 using Unity.Netcode.Components;
 
-[RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(NetworkTransform))]
-public class Player : NetworkBehaviour
+public class Player : Entity
 {
     public ParticleSystem Dust { get; private set; }
     public Player_Stats Stats { get; private set; }
     public Player_Condition Condition { get; private set; }
     public Player_TileMining TileMining { get; private set; }
-    public Animator Anim { get; private set; }
-    public Rigidbody2D Rigidbody { get; private set; }
-
-    private Player_StateMachine _playerStateMachine;
-
+    
     public Player_IdleState IdleState { get; private set; }
     public Player_WalkState WalkState { get; private set; }
     public Player_RunState RunState { get; private set; }
@@ -22,6 +16,7 @@ public class Player : NetworkBehaviour
     public Player_FallState FallState { get; private set; }
     public Player_MiningState MiningState { get; private set; }
 
+    private Player_StateMachine _playerStateMachine;
     [SerializeField] private GameObject playerObject;
 
     [Header("Movement details")] public float CurrentSpeed { get; private set; }
@@ -47,10 +42,8 @@ public class Player : NetworkBehaviour
         Stats = GetComponent<Player_Stats>();
         Condition = GetComponent<Player_Condition>();
         TileMining = GetComponent<Player_TileMining>();
-
-        Anim = GetComponentInChildren<Animator>();
+        
         Dust = GetComponentInChildren<ParticleSystem>();
-        Rigidbody = GetComponent<Rigidbody2D>();
 
         _playerStateMachine = new Player_StateMachine();
 
@@ -60,14 +53,6 @@ public class Player : NetworkBehaviour
         JumpState = new Player_JumpState(this, _playerStateMachine, "jumpFall");
         FallState = new Player_FallState(this, _playerStateMachine, "jumpFall");
         MiningState = new Player_MiningState(this, _playerStateMachine, "mining");
-    }
-
-    public override void OnNetworkSpawn()
-    {
-        if (!IsOwner)
-        {
-            this.enabled = false;
-        }
     }
 
     private void Start()
@@ -130,7 +115,10 @@ public class Player : NetworkBehaviour
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {
-        Rigidbody.linearVelocity = new Vector2(xVelocity, yVelocity);
+        if (isknocked)
+            return;
+        
+        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }
 

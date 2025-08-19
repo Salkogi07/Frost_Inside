@@ -3,6 +3,9 @@
 public class Enemy : Entity
 {
     protected Enemy_StateMachine EnemyStateMachine;
+    
+    private bool _isFacingRight = false;
+    public int FacingDirection { get; private set; } = -1;
 
     [Header("Collision detection [Ground]")] 
     [SerializeField] private LayerMask whatIsGround;
@@ -103,6 +106,31 @@ public class Enemy : Entity
     protected virtual void FixedUpdate()
     {
         EnemyStateMachine.FiexedUpdateActiveState();
+    }
+    
+    
+    public void HandleFlip(float xVelcoity)
+    {
+        if (xVelcoity > 0 && !_isFacingRight)
+            Flip();
+        else if (xVelcoity < 0 && _isFacingRight)
+            Flip();
+    }
+    
+    public void Flip()
+    {
+        transform.Rotate(0, 180, 0);
+        _isFacingRight = !_isFacingRight;
+        FacingDirection *= -1;
+    }
+    
+    public void SetVelocity(float xVelocity, float yVelocity)
+    {
+        if (isknocked)
+            return;
+
+        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
+        HandleFlip(xVelocity);
     }
     
     private void HandleCollisionDetection()

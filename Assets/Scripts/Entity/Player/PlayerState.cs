@@ -16,7 +16,7 @@ public abstract class PlayerState
         this.animBoolName = animBoolName;
 
         anim = player.Anim;
-        rigidbody = player.Rigidbody;
+        rigidbody = player.rb;
     }
 
     public virtual void Enter()
