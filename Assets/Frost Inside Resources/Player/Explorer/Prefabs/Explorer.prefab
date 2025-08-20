@@ -402,6 +402,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   temperatureDropRate: 0
   frozenHpDropRate: 2
+  staminaRegenDelay: 1.5
 --- !u!114 &8831513836135423732
 MonoBehaviour:
   m_ObjectHideFlags: 0
