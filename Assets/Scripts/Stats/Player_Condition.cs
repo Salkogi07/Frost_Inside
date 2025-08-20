@@ -11,13 +11,11 @@ public class Player_Condition : MonoBehaviour
     [SerializeField] private float temperatureDropRate = 1f;
     [SerializeField] private int frozenHpDropRate = 2;
     private float _frozenDamageTimer = 0f;
-
-    // --- 추가된 변수 ---
+    
     [Header("Stamina Settings")]
     [SerializeField] private float staminaRegenDelay = 1.5f; // 달리기를 멈춘 후 스테미나 회복이 시작되기까지의 지연 시간
     private float _staminaRegenTimer; // 지연 시간을 측정하기 위한 타이머
     private bool _isCurrentlySprinting; // 현재 달리기 상태인지 추적하는 변수
-    // --- ---
 
     #region current Stats
     private ReactiveProperty<float> _hpPropertiy;
@@ -79,12 +77,11 @@ public class Player_Condition : MonoBehaviour
         HandleTemperature();
         HandleFrozenHp();
 
-        // --- 수정된 부분: 달리고 있지 않을 때만 스테미나 회복 타이머를 증가시킵니다 ---
+        //달리고 있지 않을 때만 스테미나 회복 타이머를 증가시킵니다
         if (!_isCurrentlySprinting)
         {
             _staminaRegenTimer += Time.deltaTime;
         }
-        // --- ---
     }
 
     #region Get Stat Function
@@ -153,6 +150,7 @@ public class Player_Condition : MonoBehaviour
     }
 
     public bool CanSprint() => Stamina > 0; // 스테미나가 0보다 크기만 하면 달리기를 시도할 수 있습니다.
+
     #endregion
 
     #region PlayerDamage Function

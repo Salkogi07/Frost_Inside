@@ -20,18 +20,27 @@ public class Player_RunState : Player_GroundedState
     
     public override void Update()
     {
-        base.Update();
 
         player.Condition.UseStaminaToSprint();
-            
+
         if (player.MoveInput == 0)
+        {
             playerStateMachine.ChangeState(player.IdleState);
-            
+            return;
+        }
+
         if (Input.GetKeyUp(KeyManager.instance.GetKeyCodeByName("Sprint")))
+        {
             playerStateMachine.ChangeState(player.WalkState);
+            return;
+        }
 
         if (player.Condition.Stamina <= 0)
+        {
             playerStateMachine.ChangeState(player.WalkState);
+            return;
+        }
+        base.Update();
     }
 
     public override void FixedUpdate()
