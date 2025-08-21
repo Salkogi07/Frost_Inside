@@ -1,3 +1,4 @@
+using FMOD.Studio;
 using UnityEngine;
 
 public class Player_WalkState : Player_GroundedState
@@ -9,7 +10,7 @@ public class Player_WalkState : Player_GroundedState
     public override void Update()
     {
         base.Update();
-            
+        
         player.Condition.StaminaRecovery();
         
         if (player.MoveInput == 0)
@@ -19,8 +20,9 @@ public class Player_WalkState : Player_GroundedState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
-
+        
         player.SetMoveSpeed(player.Stats.WalkSpeed);
         player.SetVelocity(player.MoveInput * player.CurrentSpeed, rigidbody.linearVelocity.y);
     }
+
 }

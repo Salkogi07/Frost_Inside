@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using FMOD.Studio;
 
 public class Player_RunState : Player_GroundedState
 {
@@ -20,6 +21,7 @@ public class Player_RunState : Player_GroundedState
     
     public override void Update()
     {
+        base.Update();
 
         player.Condition.UseStaminaToSprint();
 

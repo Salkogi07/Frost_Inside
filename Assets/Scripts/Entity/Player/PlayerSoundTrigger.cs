@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using FMOD.Studio;
+using UnityEngine;
 
 public class PlayerSoundTrigger : MonoBehaviour
 {
-    public void WalkSound()
+    private EventInstance _playerSnowMove;
+
+    private void Awake()
     {
-        FMODUnity.RuntimeManager.PlayOneShot("event:/Walk Snow");   
+        _playerSnowMove = AudioManager.instance.CreateInstance(FMODEvents.instance.playerSnowMove);
+    }
+    
+    public void PlaySnowWalk()
+    {
+        _playerSnowMove.start();
     }
 }

@@ -1,6 +1,6 @@
+using FMOD.Studio;
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 
 public class Player : Entity
 {

@@ -47,6 +47,8 @@ public class InitializationLoader : MonoBehaviour
 
     private IEnumerator InitializationSequence()
     {
+        AudioManager.instance.InitializeAmbience(FMODEvents.instance.loading);
+        
         float startTime = Time.time;
 
         // --- 1단계: 스팀 초기화 시도 ---
@@ -89,9 +91,12 @@ public class InitializationLoader : MonoBehaviour
         }
         Debug.Log($"총 로딩 시간: {Time.time - startTime:F2}초");
 
+        AudioManager.instance.StopAmbience();
+        
         // --- 4단계: 메인 메뉴 씬 로드 ---
         Debug.Log("메뉴 씬을 로드합니다.");
         SceneManager.LoadScene("Menu");
+
     }
 
     private void HandleFailure(string message)
