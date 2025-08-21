@@ -1543,11 +1543,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 36520864720831461, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -31.49
+      value: -25.27
       objectReference: {fileID: 0}
     - target: {fileID: 36520864720831461, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50.060997
+      value: 49.69
       objectReference: {fileID: 0}
     - target: {fileID: 36520864720831461, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1584,6 +1584,10 @@ PrefabInstance:
     - target: {fileID: 2094093678723558631, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
       propertyPath: GlobalObjectIdHash
       value: 2498769510
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255006627929712995, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
+      propertyPath: m_BodyType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3830037776627040223, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2349,7 +2353,7 @@ Transform:
   m_GameObject: {fileID: 299409895}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.49, y: 50.060997, z: -10}
+  m_LocalPosition: {x: -25.27, y: 49.69, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4732,16 +4736,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1f501881307557499462d2e3c358182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
   groundCheck: {fileID: 1561153232}
   groundCheckDistance: 0.15
-  primaryWallCheck: {fileID: 1779518}
-  secondaryWallCheck: {fileID: 1779518}
   whatIsWall:
     serializedVersion: 2
     m_Bits: 8
+  primaryWallCheck: {fileID: 1779518}
+  secondaryWallCheck: {fileID: 1779518}
   wallCheckDistance: 0.35
   battleMoveSpeed: 3
   attackDistance: 2
@@ -13106,6 +13111,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 509788980795662491, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: targetcheckRadius
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 509788980795662491, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: whatIsTarget.m_Bits
       value: 64
       objectReference: {fileID: 0}
@@ -13214,16 +13223,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 101370337}
     - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: attackDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: battleMoveSpeed
       value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: retreatVelocity.x
-      value: 5
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: retreatVelocity.y
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: minRetreatDistance
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: whatIsPlayer.m_Bits
@@ -13253,8 +13270,41 @@ PrefabInstance:
     - {fileID: 748514528279752800, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3867197236472526811, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      insertIndex: 3
+      addedObject: {fileID: 1160284134}
   m_SourcePrefab: {fileID: 100100000, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+--- !u!1 &1160284133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3867197236472526811, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+  m_PrefabInstance: {fileID: 1160284132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1160284134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1160284133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 658670921
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1161184185
 GameObject:
   m_ObjectHideFlags: 0
@@ -14730,7 +14780,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e78728909c96fa14883c87af376da657, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  segments: 100
 --- !u!1 &1248099625
 GameObject:
   m_ObjectHideFlags: 0
@@ -17031,7 +17080,7 @@ Transform:
   m_GameObject: {fileID: 1609987808}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -31.49, y: 50.060997, z: -10}
+  m_LocalPosition: {x: -25.27, y: 49.69, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

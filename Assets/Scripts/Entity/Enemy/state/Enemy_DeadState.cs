@@ -1,7 +1,7 @@
 using UnityEngine;
 
 
-    public class Enemy_DeadState : EnemyState
+    public class Enemy_DeadState : Life_director
     {
         private Collider2D col;
         

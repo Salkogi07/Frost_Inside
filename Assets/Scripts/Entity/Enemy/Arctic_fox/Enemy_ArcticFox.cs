@@ -8,7 +8,7 @@
         public Enemy_ChaseState  ChaseState { get; private set; }
         public Enemy_DeadState  DeadState { get; private set; }
         
-        protected override void Awake()
+        protected virtual void Awake()
         {
             base.Awake();
             IdleState = new Enemy_IdleState(this, EnemyStateMachine, "idle");

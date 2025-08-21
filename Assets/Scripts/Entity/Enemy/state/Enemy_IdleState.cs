@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
 
-    public class Enemy_IdleState : EnemyState
+    public class Enemy_IdleState : Idle_director
     {
+        
         public Enemy_IdleState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
         {
+            
         }
 
         public override void Enter()
@@ -18,7 +20,9 @@
         {
             base.Update();
             
-            /*if(stateTimer < 0 && enemy. != null)
-                enemyStateMachine.ChangeState(enemy.MoveDirector);*/
+            if(stateTimer < 0)
+                 enemyStateMachine.ChangeState(enemy.MoveDirector);
+            
         }
+        
     }

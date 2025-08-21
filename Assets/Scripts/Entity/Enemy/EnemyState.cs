@@ -40,7 +40,8 @@
 
             anim.SetFloat("BattleAnimSpeedMultiplier",battleAnimSpeedMultiplier);
             anim.SetFloat("moveAnimSpeedMultiplier",enemy.moveAnimSpeedMultiplier);
-             anim.SetFloat("xVelocity", rigidbody.linearVelocity.x);
+             // anim.SetFloat("xVelocity", rigidbody.linearVelocity.x);
+             anim.SetFloat("xVelocity", Mathf.Clamp(rigidbody.linearVelocity.x, -1f, 1f));
         }
 
         public virtual void FiexedUpdate()

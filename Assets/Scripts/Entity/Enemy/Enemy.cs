@@ -1,8 +1,17 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class Enemy : Entity
 {
+    
+    // public Enemy_IdleState IdleState;
+    // public Enemy_MoveState  MoveState;
+    // public Enemy_ChaseState   ChaseState;
+    // public Enemy_AttackState AttackState;
+    // public Enemy_DeadState  DeadState;
+    
     protected Enemy_StateMachine EnemyStateMachine;
+    protected Dictionary<System.Type, EnemyState> States;
     
     private bool _isFacingRight = false;
     public int FacingDirection { get; private set; } = -1;
@@ -43,22 +52,37 @@ public class Enemy : Entity
 
     public Transform player { get; private set; }
 
+    public Idle_director IdleDirector;
+    public Move_director MoveDirector;
+    public Chase_director ChaseDirector;
+    // public Grounded_Idirector  GroundedDirector;
+    public Life_director LifeDirector;
+    
+
+    public T GetState<T>() where T : EnemyState
+    {
+        if (States.TryGetValue(typeof(T), out var state))
+            return state as T;
+
+        return null; // 없는 상태라면 null
+    }
+    
     public void TryEnterBattleState(Transform player)
     {
-        // if (BattleDirector == null || AttackState == null)
-        // {
-        //      return;
-        // }
-        // if (EnemyStateMachine.currentState == BattleDirector)
-        // {
-        //     return;
-        // }
-        // if(EnemyStateMachine.currentState == AttackState)
-        // {
-        //     return;
-        // }
-        // this.player =  player;
-        // EnemyStateMachine.ChangeState(BattleState);
+        if (GetState<Enemy_AttackState>() == null)
+        {
+             return;
+        }
+        if (EnemyStateMachine.currentState == ChaseDirector)
+        {
+            return;
+        }
+        if(EnemyStateMachine.currentState == GetState<Enemy_AttackState>())
+        {
+            return;
+        }
+        this.player =  player;
+        EnemyStateMachine.ChangeState(ChaseDirector);
     }
 
     public Transform GetPlayerReference()
@@ -89,6 +113,7 @@ public class Enemy : Entity
         base.Awake();
         
         EnemyStateMachine = new Enemy_StateMachine();
+        States = new Dictionary<System.Type, EnemyState>();
     }
 
 

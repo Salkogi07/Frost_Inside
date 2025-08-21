@@ -14,7 +14,7 @@ public class Enemy_GroundedState : EnemyState
 
         if (enemy.PlayerDetection() == true)
         {
-            //enemyStateMachine.ChangeState(enemy.BattleDirector);
+            enemyStateMachine.ChangeState(enemy.ChaseDirector);
         }
     }
 }
