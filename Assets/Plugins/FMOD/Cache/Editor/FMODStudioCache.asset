@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5159519294892059138
+--- !u!114 &-8186721208015282537
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,37 +9,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.bank
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Loading/Loading
   m_EditorClassIdentifier: 
-  Path: ../../FMod_file/Quity/Build/Desktop/Master.bank
-  Name: Master
-  StudioPath: bank:/Master
-  lastModified: 638907140269498167
-  FileSizes:
-  - Name: Desktop
-    Value: 80256
-  Exists: 1
---- !u!114 &-2308816773029167101
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
-  m_Name: bank:/Master.strings.bank
-  m_EditorClassIdentifier: 
-  Path: ../../FMod_file/Quity/Build/Desktop/Master.strings.bank
-  Name: Master.strings
-  StudioPath: bank:/Master.strings
-  lastModified: 638907140269508302
-  FileSizes:
-  - Name: Desktop
-    Value: 816
-  Exists: 1
+  Path: event:/Loading/Loading
+  Guid:
+    Data1: -1314729240
+    Data2: 1096068542
+    Data3: 166772612
+    Data4: -1377421393
+  Banks:
+  - {fileID: 5336837122218376525}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2289
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -53,24 +40,49 @@ MonoBehaviour:
   m_Name: FMODStudioCache
   m_EditorClassIdentifier: 
   EditorBanks:
-  - {fileID: -2308816773029167101}
-  - {fileID: -5159519294892059138}
+  - {fileID: 448354596783762299}
+  - {fileID: 5336837122218376525}
+  - {fileID: 6280964107919703565}
+  - {fileID: 8506045650571816193}
   EditorEvents:
-  - {fileID: 2306987966005952438}
-  - {fileID: 2832432060502077504}
+  - {fileID: 5599417682371273108}
+  - {fileID: -8186721208015282537}
+  - {fileID: 1530561487307898258}
   EditorParameters: []
   MasterBanks:
-  - {fileID: -5159519294892059138}
+  - {fileID: 6280964107919703565}
   StringsBanks:
-  - {fileID: -2308816773029167101}
+  - {fileID: 448354596783762299}
   cacheVersion: 131847
-  cacheTime: 638907140269508302
+  cacheTime: 638914171481105148
   SerializableEventsDict:
-  - key: event:/Walk Ice
+  - key: event:/Loading/Logo_Appears
     index: 0
-  - key: event:/Walk Snow
+  - key: event:/Loading/Loading
     index: 1
---- !u!114 &2306987966005952438
+  - key: event:/SFX/Player/PlayerSnowMove
+    index: 2
+--- !u!114 &448354596783762299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.strings.bank
+  m_EditorClassIdentifier: 
+  Path: ../../FMod_file/QuesPick/Build/Desktop/Master.strings.bank
+  Name: Master.strings
+  StudioPath: bank:/Master.strings
+  lastModified: 638914157421346658
+  FileSizes:
+  - Name: Desktop
+    Value: 982
+  Exists: 1
+--- !u!114 &1530561487307898258
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -80,47 +92,107 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Walk Ice
+  m_Name: event:/SFX/Player/PlayerSnowMove
   m_EditorClassIdentifier: 
-  Path: event:/Walk Ice
+  Path: event:/SFX/Player/PlayerSnowMove
   Guid:
-    Data1: 1050500035
-    Data2: 1268604162
-    Data3: -2089040762
-    Data4: -266497469
+    Data1: -1877368775
+    Data2: 1128303351
+    Data3: 1578361734
+    Data4: 1373769309
   Banks:
-  - {fileID: -5159519294892059138}
+  - {fileID: 8506045650571816193}
   IsStream: 0
   Is3D: 0
-  IsOneShot: 1
-  Parameters: []
-  MinDistance: 1
-  MaxDistance: 20
-  Length: 940
---- !u!114 &2832432060502077504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Walk Snow
-  m_EditorClassIdentifier: 
-  Path: event:/Walk Snow
-  Guid:
-    Data1: -1206491949
-    Data2: 1299587732
-    Data3: -1361197634
-    Data4: 1951342194
-  Banks:
-  - {fileID: -5159519294892059138}
-  IsStream: 0
-  Is3D: 0
-  IsOneShot: 1
+  IsOneShot: 0
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
   Length: 1500
+--- !u!114 &5336837122218376525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Laoding.bank
+  m_EditorClassIdentifier: 
+  Path: ../../FMod_file/QuesPick/Build/Desktop/Laoding.bank
+  Name: Laoding
+  StudioPath: bank:/Laoding
+  lastModified: 638914171481105148
+  FileSizes:
+  - Name: Desktop
+    Value: 1005632
+  Exists: 1
+--- !u!114 &5599417682371273108
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Loading/Logo_Appears
+  m_EditorClassIdentifier: 
+  Path: event:/Loading/Logo_Appears
+  Guid:
+    Data1: 2067896463
+    Data2: 1086719454
+    Data3: -1622083962
+    Data4: -652635880
+  Banks:
+  - {fileID: 5336837122218376525}
+  IsStream: 1
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 6000
+--- !u!114 &6280964107919703565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Master.bank
+  m_EditorClassIdentifier: 
+  Path: ../../FMod_file/QuesPick/Build/Desktop/Master.bank
+  Name: Master
+  StudioPath: bank:/Master
+  lastModified: 638914157421336482
+  FileSizes:
+  - Name: Desktop
+    Value: 1074
+  Exists: 1
+--- !u!114 &8506045650571816193
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/SFX.bank
+  m_EditorClassIdentifier: 
+  Path: ../../FMod_file/QuesPick/Build/Desktop/SFX.bank
+  Name: SFX
+  StudioPath: bank:/SFX
+  lastModified: 638914167124187632
+  FileSizes:
+  - Name: Desktop
+    Value: 47712
+  Exists: 1

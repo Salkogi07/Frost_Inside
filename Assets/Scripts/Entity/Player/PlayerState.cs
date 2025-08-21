@@ -1,4 +1,5 @@
 using UnityEngine;
+using Netcode;
 
 public abstract class PlayerState
 {
@@ -21,21 +22,25 @@ public abstract class PlayerState
 
     public virtual void Enter()
     {
-        anim.SetBool(animBoolName, true);
+        if(player.IsOwner)
+            anim.SetBool(animBoolName, true);
     }
 
     public virtual void Update()
     {
-        anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
+        if(player.IsOwner)
+            anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
     }
 
     public virtual void FixedUpdate()
     {
-        anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
+        if(player.IsOwner)
+            anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
     }
 
     public virtual void Exit()
     {
-        anim.SetBool(animBoolName, false);
+        if(player.IsOwner)
+            anim.SetBool(animBoolName, false);
     }
 }

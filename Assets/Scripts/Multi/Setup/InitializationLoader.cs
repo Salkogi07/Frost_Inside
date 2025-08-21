@@ -88,10 +88,11 @@ public class InitializationLoader : MonoBehaviour
             yield return new WaitForSeconds(minimumLoadTime - elapsedTime);
         }
         Debug.Log($"총 로딩 시간: {Time.time - startTime:F2}초");
-
+        
         // --- 4단계: 메인 메뉴 씬 로드 ---
         Debug.Log("메뉴 씬을 로드합니다.");
         SceneManager.LoadScene("Menu");
+
     }
 
     private void HandleFailure(string message)

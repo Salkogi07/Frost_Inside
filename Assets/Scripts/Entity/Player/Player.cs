@@ -1,6 +1,6 @@
+using FMOD.Studio;
 using UnityEngine;
 using Unity.Netcode;
-using Unity.Netcode.Components;
 
 public class Player : Entity
 {
@@ -19,7 +19,8 @@ public class Player : Entity
     private Player_StateMachine _playerStateMachine;
     [SerializeField] private GameObject playerObject;
 
-    [Header("Movement details")] public float CurrentSpeed { get; private set; }
+    [Header("Movement details")] 
+    public float CurrentSpeed { get; private set; }
     public float JumpForce;
 
     [Range(0, 1)] public float inAirMoveMultiplier = .7f;
@@ -35,10 +36,30 @@ public class Player : Entity
     [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
     [SerializeField] private LayerMask whatIsGround;
     public bool IsGroundDetected { get; private set; }
-
-
-    private void Awake()
+    
+    private NetworkVariable<Vector2> _networkPosition = new NetworkVariable<Vector2>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<bool> _networkIsFacingRight = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    
+    private Vector2 _lerpStartPos;
+    private Vector2 _lerpTargetPos;
+    private float _lerpTime;
+    private float _lerpDuration = 0.05f; 
+    
+    public override void OnNetworkSpawn()
     {
+        base.OnNetworkSpawn();
+        // Owner가 아닌 클라이언트에서는 물리 시뮬레이션을 비활성화하여
+        // 네트워크로부터 받은 위치로만 움직이게 함
+        if (!IsOwner && rb != null)
+        {
+            rb.isKinematic = true;
+        }
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        
         Stats = GetComponent<Player_Stats>();
         Condition = GetComponent<Player_Condition>();
         TileMining = GetComponent<Player_TileMining>();
@@ -62,15 +83,49 @@ public class Player : Entity
 
     private void Update()
     {
-        if (ChatManager.instance != null && ChatManager.instance.IsChatting)
+        if (IsOwner)
         {
-            _playerStateMachine.ChangeState(IdleState);
-            return;
-        }
+            // --- Owner 로직 (입력 및 상태 머신 업데이트) ---
+            if (ChatManager.instance != null && ChatManager.instance.IsChatting)
+            {
+                _playerStateMachine.ChangeState(IdleState);
+                return;
+            }
         
-        ProcessKeyboardInput();
+            ProcessKeyboardInput();
+            _playerStateMachine.UpdateActiveState();
 
-        _playerStateMachine.UpdateActiveState();
+            // 위치 및 방향 데이터를 네트워크 변수에 업데이트
+            _networkPosition.Value = transform.position;
+            _networkIsFacingRight.Value = _isFacingRight;
+        }
+        else
+        {
+            // 네트워크 위치 값이 변경되면 새로운 보간 시작
+            if (_lerpTargetPos != _networkPosition.Value)
+            {
+                _lerpStartPos = transform.position;
+                _lerpTargetPos = _networkPosition.Value;
+                _lerpTime = 0;
+            }
+
+            // 보간 진행
+            if (_lerpTime < _lerpDuration)
+            {
+                _lerpTime += Time.deltaTime;
+                transform.position = Vector2.Lerp(_lerpStartPos, _lerpTargetPos, _lerpTime / _lerpDuration);
+            }
+            else
+            {
+                transform.position = _lerpTargetPos; // 보간이 끝나면 목표 위치로 정확히 이동
+            }
+
+            // 바라보는 방향 동기화
+            if (_isFacingRight != _networkIsFacingRight.Value)
+            {
+                FlipVisualsOnly();
+            }
+        }
     }
 
     private void FixedUpdate()
@@ -140,6 +195,17 @@ public class Player : Entity
         playerObject.transform.localScale = currentScale;
         _isFacingRight = !_isFacingRight;
         FacingDirection *= -1;
+    }
+    
+    // Non-Owner 클라이언트를 위한 시각적 Flip (파티클 재생 없음)
+    private void FlipVisualsOnly()
+    {
+        _isFacingRight = _networkIsFacingRight.Value;
+        FacingDirection = _isFacingRight ? 1 : -1;
+
+        Vector3 currentScale = playerObject.transform.localScale;
+        currentScale.x = Mathf.Abs(currentScale.x) * FacingDirection * -1; // 초기 방향에 맞게 조정
+        playerObject.transform.localScale = currentScale;
     }
 
     private void HandleCollisionDetection()

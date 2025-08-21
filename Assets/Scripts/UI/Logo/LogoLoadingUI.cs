@@ -1,4 +1,6 @@
 using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
@@ -23,7 +25,7 @@ public class LogoLoadingUI : MonoBehaviour
 
     [Tooltip("로고 씬 이후에 불러올 씬의 이름")]
     [SerializeField] private string nextSceneName = "Setup";
-
+    
     void Start()
     {
         // 코루틴을 시작합니다.
@@ -44,7 +46,7 @@ public class LogoLoadingUI : MonoBehaviour
 
         // 4. Fade Out (서서히 사라지기)
         yield return StartCoroutine(Fade(1f, 0f, fadeOutTime));
-
+        
         // 5. 다음 씬으로 이동
         SceneManager.LoadScene(nextSceneName);
     }

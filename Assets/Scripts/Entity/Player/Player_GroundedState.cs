@@ -29,8 +29,7 @@ public class Player_GroundedState : PlayerState
             if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Sprint")) && player.MoveInput != 0)
                 playerStateMachine.ChangeState(player.RunState);
 
-        if (player.Condition.CanJump())
-            if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
-                playerStateMachine.ChangeState(player.JumpState);
+        if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Jump")))
+            playerStateMachine.ChangeState(player.JumpState);
     }
 }

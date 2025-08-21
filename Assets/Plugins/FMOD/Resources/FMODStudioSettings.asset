@@ -682,8 +682,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../../FMod_file/Quity/Quity.fspro
-  sourceBankPath: ../../FMod_file/Quity/Build
+  sourceProjectPath: ../../FMod_file/QuesPick/QuesPick.fspro
+  sourceBankPath: ../../FMod_file/QuesPick/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -706,7 +706,9 @@ MonoBehaviour:
   Plugins: []
   MasterBanks:
   - Master
-  Banks: []
+  Banks:
+  - Laoding
+  - SFX
   BanksToLoad: []
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0

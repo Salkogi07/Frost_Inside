@@ -18,7 +18,6 @@
             this.enemy = enemy;
             this.enemyStateMachine = enemyStateMachine;
             this.animBoolName = animBoolName;
-
             
             anim = enemy.Anim;
             rigidbody = enemy.rb;
