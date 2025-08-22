@@ -2,7 +2,7 @@
 using UnityEngine.Tilemaps;
 using System.Collections.Generic;
 
-public class Player_TileMining : BaseTileMiner
+public class TestPlayer_TileMining : BaseTileMiner
 {
     [Header("Drop Settings")]
     [SerializeField] private GameObject dropPrefab;         // 드롭할 프리팹

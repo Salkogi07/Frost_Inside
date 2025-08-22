@@ -37,6 +37,9 @@ public class Player : Entity
     [SerializeField] private LayerMask whatIsGround;
     public bool IsGroundDetected { get; private set; }
     
+    [Header("Mining")]
+    public bool CanMine = true;
+    
     private NetworkVariable<Vector2> _networkPosition = new NetworkVariable<Vector2>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private NetworkVariable<bool> _networkIsFacingRight = new NetworkVariable<bool>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     

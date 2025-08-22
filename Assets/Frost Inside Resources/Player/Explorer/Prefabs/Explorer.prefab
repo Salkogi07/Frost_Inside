@@ -183,12 +183,12 @@ GameObject:
   - component: {fileID: 3316583795968269838}
   - component: {fileID: 6439846600469785769}
   - component: {fileID: 7283335558516981223}
-  - component: {fileID: 8831513836135423732}
   - component: {fileID: 8710203413524532382}
   - component: {fileID: 8632942042615940793}
   - component: {fileID: -4578731868711547750}
   - component: {fileID: -4094357913834435788}
   - component: {fileID: 6811224819524031968}
+  - component: {fileID: -3421009123787721408}
   m_Layer: 6
   m_Name: Explorer
   m_TagString: Player
@@ -388,6 +388,8 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 8
+  CanMine: 1
+  IsTest: 0
 --- !u!114 &7283335558516981223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,28 +405,6 @@ MonoBehaviour:
   temperatureDropRate: 0
   frozenHpDropRate: 2
   staminaRegenDelay: 1.5
---- !u!114 &8831513836135423732
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148b3047e622f6e4eaeef57964986dbd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tilemaps: []
-  player: {fileID: 0}
-  miningRange: 5
-  miningTime: 2
-  miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
-  highlightTilemap: {fileID: 0}
-  borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
-  blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
-  isMining: 0
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
 --- !u!114 &8710203413524532382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -492,6 +472,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   nameText: {fileID: 7048437721639184899}
+--- !u!114 &-3421009123787721408
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e39c6ad9f8d44ff5ab4a346cf7769d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemaps: []
+  miningRange: 5
+  miningTime: 2
+  miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
+  highlightTilemap: {fileID: 0}
+  borderTile: {fileID: 11400000, guid: 31b4b6a303ad5a44186a673e735dedfa, type: 2}
+  blockedBorderTile: {fileID: 11400000, guid: d410249aa558bd54ba4ffee5ef09b17f, type: 2}
+  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
 --- !u!1 &6627346968656088041
 GameObject:
   m_ObjectHideFlags: 0
