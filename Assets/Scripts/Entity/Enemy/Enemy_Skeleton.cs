@@ -20,7 +20,7 @@
             // States[typeof(Enemy_DeadState)] = new Enemy_DeadState(this, EnemyStateMachine, "dead");
             IdleState = new Enemy_IdleState(this, EnemyStateMachine, "idle");
             MoveState = new Enemy_MoveState(this, EnemyStateMachine, "move");
-            BattleState = new Enemy_BattleState(this, EnemyStateMachine, "Battle");
+            BattleState = new Enemy_BattleState(this, EnemyStateMachine, "battle");
             // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
             // AttackState = new Enemy_AttackState(this, EnemyStateMachine, "attack");
             DeadState = new Enemy_DeadState(this, EnemyStateMachine, "dead");

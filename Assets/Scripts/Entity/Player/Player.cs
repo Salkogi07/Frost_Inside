@@ -43,7 +43,9 @@ public class Player : Entity
     private Vector2 _lerpStartPos;
     private Vector2 _lerpTargetPos;
     private float _lerpTime;
-    private float _lerpDuration = 0.05f; 
+    private float _lerpDuration = 0.05f;
+
+    [SerializeField] private bool IsTest = false;
     
     public override void OnNetworkSpawn()
     {
@@ -83,6 +85,13 @@ public class Player : Entity
 
     private void Update()
     {
+        if (IsTest)
+        {
+            ProcessKeyboardInput();
+            _playerStateMachine.UpdateActiveState();
+            return;
+        }
+        
         if (IsOwner)
         {
             // --- Owner 로직 (입력 및 상태 머신 업데이트) ---
