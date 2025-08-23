@@ -17,22 +17,13 @@ public class Player_TileMining : MonoBehaviour
     [Tooltip("각 타일별 방어력 및 채굴 가능 여부를 관리하는 SO")]
     public TileStrengthSettings miningSettings;
 
-    [Header("Highlight Settings")]
-    public Tilemap highlightTilemap;
-    public Tile borderTile;
-    public Tile blockedBorderTile;
-
     [Header("Drop Settings")]
     [SerializeField] private GameObject dropPrefab;
     private SpreadTilemap spreadTilemap;
     private MakeRandomMap mapGenerator;
 
-    [Header("Tool Settings")]
-    private float _toolPower = 10f;
-
     // 채굴 관련 상태 변수
     private Dictionary<Vector3Int, float> tileAlphaDict = new Dictionary<Vector3Int, float>();
-    private Vector3Int? lastHighlightedTile = null;
     private Vector3Int? currentMiningTile = null;
     public bool isMining { get; private set; } = false;
 
@@ -51,9 +42,6 @@ public class Player_TileMining : MonoBehaviour
                 tilemaps[i] = gos[i].GetComponent<Tilemap>();
             }
         }
-
-        if (highlightTilemap == null)
-            highlightTilemap = GameObject.Find("mining_Check").GetComponent<Tilemap>();
     }
 
     private void Start()
@@ -74,18 +62,29 @@ public class Player_TileMining : MonoBehaviour
     // Player_MiningState에서 매 프레임 호출될 메서드
     public void HandleMiningUpdate()
     {
+        // CanMine이 false이면 로직을 중단합니다.
+        if (!player.CanMine)
+        {
+            StopMining();
+            return;
+        }
+
         Vector3Int mouseTilePos = GetMouseTilePosition();
 
         var candidateMaps = tilemaps.Where(tm => tm.HasTile(mouseTilePos)).ToList();
         bool hasAnyTile = candidateMaps.Count > 0;
 
+        if (!hasAnyTile)
+        {
+             StopMining();
+             return;
+        }
+
         bool inRange = candidateMaps.Any(tm =>
             Vector3.Distance(tm.GetCellCenterWorld(mouseTilePos), player.transform.position) <= miningRange);
 
         bool canSee = candidateMaps.Any(tm => inRange && CheckLineOfSight(tm, tm.WorldToCell(player.transform.position), mouseTilePos));
-
-        UpdateHighlight(mouseTilePos, hasAnyTile, inRange, canSee);
-
+        
         if (inRange && canSee)
         {
             var map = GetTilemapAt(mouseTilePos);
@@ -108,27 +107,6 @@ public class Player_TileMining : MonoBehaviour
         }
     }
 
-    private void UpdateHighlight(Vector3Int tilePos, bool hasTile, bool inRange, bool canSee)
-    {
-        if (lastHighlightedTile.HasValue && lastHighlightedTile.Value != tilePos)
-        {
-            highlightTilemap.SetTile(lastHighlightedTile.Value, null);
-            lastHighlightedTile = null;
-        }
-
-        if (hasTile && inRange)
-        {
-            Tile toUse = canSee ? borderTile : blockedBorderTile;
-            highlightTilemap.SetTile(tilePos, toUse);
-            lastHighlightedTile = tilePos;
-        }
-        else if (lastHighlightedTile.HasValue)
-        {
-            highlightTilemap.SetTile(lastHighlightedTile.Value, null);
-            lastHighlightedTile = null;
-        }
-    }
-
     private void UpdateMiningProgress(Vector3Int tilePos)
     {
         if (!tileAlphaDict.ContainsKey(tilePos))
@@ -138,7 +116,10 @@ public class Player_TileMining : MonoBehaviour
         var tileBase = map.GetTile(tilePos);
 
         float defense = miningSettings.GetDefense(tileBase);
-        float timeToMine = miningTime * (defense / Mathf.Max(_toolPower, 0.0001f));
+        
+        float miningPower = player.Stats.Mining.GetValue();
+        
+        float timeToMine = miningTime * (defense / Mathf.Max(miningPower, 1f));
         float decrease = (timeToMine > 0) ? Time.deltaTime / timeToMine : 1.0f;
 
         tileAlphaDict[tilePos] -= decrease;
@@ -150,7 +131,6 @@ public class Player_TileMining : MonoBehaviour
     
     private void ApplyTileAlpha(Vector3Int tilePos, float alpha)
     {
-        // 해당 좌표에 타일이 있는 Tilemap을 찾아 적용
         var map = GetTilemapAt(tilePos);
         if (map == null) return;
 
@@ -184,12 +164,6 @@ public class Player_TileMining : MonoBehaviour
         }
        
         spreadTilemap.OreTilemap.RefreshTile(tilePos);
-
-        if (lastHighlightedTile.HasValue)
-        {
-            highlightTilemap.SetTile(lastHighlightedTile.Value, null);
-            lastHighlightedTile = null;
-        }
 
         tileAlphaDict.Remove(tilePos);
         StopMining();
@@ -234,10 +208,5 @@ public class Player_TileMining : MonoBehaviour
             if (e2 < dx) { err += dx; y0 += sy; }
         }
         return true;
-    }
-
-    public void SetToolPower(float power)
-    {
-        _toolPower = power;
     }
 }
