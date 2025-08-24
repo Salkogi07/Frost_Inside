@@ -349,7 +349,7 @@ MonoBehaviour:
     baseValue: 100
     Modifiers: 
   Mining:
-    baseValue: 10
+    baseValue: 50
     Modifiers: 
   Defense:
     Armor:

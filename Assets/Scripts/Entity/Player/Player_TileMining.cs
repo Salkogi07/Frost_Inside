@@ -62,47 +62,43 @@ public class Player_TileMining : MonoBehaviour
     // Player_MiningState에서 매 프레임 호출될 메서드
     public void HandleMiningUpdate()
     {
-        // CanMine이 false이면 로직을 중단합니다.
         if (!player.CanMine)
         {
             StopMining();
             return;
         }
 
-        Vector3Int mouseTilePos = GetMouseTilePosition();
+        RaycastHit2D hit = player.Laser.LastHit;
 
-        var candidateMaps = tilemaps.Where(tm => tm.HasTile(mouseTilePos)).ToList();
-        bool hasAnyTile = candidateMaps.Count > 0;
-
-        if (!hasAnyTile)
+        if (hit.collider != null)
         {
-             StopMining();
-             return;
-        }
+            // 레이저가 충돌한 지점의 타일 좌표를 가져옵니다.
+            Vector3Int tilePos = tilemaps[0].WorldToCell(hit.point);
 
-        bool inRange = candidateMaps.Any(tm =>
-            Vector3.Distance(tm.GetCellCenterWorld(mouseTilePos), player.transform.position) <= miningRange);
-
-        bool canSee = candidateMaps.Any(tm => inRange && CheckLineOfSight(tm, tm.WorldToCell(player.transform.position), mouseTilePos));
-        
-        if (inRange && canSee)
-        {
-            var map = GetTilemapAt(mouseTilePos);
-            var tile = map?.GetTile(mouseTilePos);
+            var map = GetTilemapAt(tilePos);
+            var tile = map?.GetTile(tilePos);
 
             if (tile != null && miningSettings.IsMineable(tile))
             {
+                // 다른 타일을 조준하기 시작했다면, 이전 타겟에 대한 채굴을 중지합니다.
+                if (currentMiningTile.HasValue && currentMiningTile.Value != tilePos)
+                {
+                    StopMining();
+                }
+
                 isMining = true;
-                currentMiningTile = mouseTilePos;
-                UpdateMiningProgress(mouseTilePos);
+                currentMiningTile = tilePos;
+                UpdateMiningProgress(tilePos);
             }
             else
             {
+                // 채굴 불가능한 타겟을 조준하고 있다면 채굴을 멈춥니다.
                 StopMining();
             }
         }
         else
         {
+            // 레이저가 아무것에도 닿지 않았다면 채굴을 멈춥니다.
             StopMining();
         }
     }

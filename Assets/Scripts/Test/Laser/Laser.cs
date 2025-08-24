@@ -14,7 +14,11 @@ public class Laser : MonoBehaviour
     private List<ParticleSystem> particles = new List<ParticleSystem>();
     
     [SerializeField] private LayerMask layerMask;
-    
+
+    // 레이저 관련 프로퍼티 추가
+    public float maxDistance = 10f; // 최대 사거리
+    public RaycastHit2D LastHit { get; private set; }
+
     private void Awake()
     {
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
@@ -26,27 +30,7 @@ public class Laser : MonoBehaviour
         DisableLaser();
     }
 
-    private void Update()
-    {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            EnableLaser();
-        }
-
-        if (Input.GetButton("Fire1"))
-        {
-            UpdateLaser();
-        }
-
-        if (Input.GetButtonUp("Fire1"))
-        {
-            DisableLaser();
-        }
-        
-        RotateToMouse();
-    }
-
-    void EnableLaser()
+    public void EnableLaser()
     {
         lineRenderer.enabled = true;
 
@@ -54,7 +38,7 @@ public class Laser : MonoBehaviour
             particles[i].Play();
     }
 
-    void UpdateLaser()
+    public void UpdateLaser()
     {
         var mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
         var firePointPos = (Vector2)firePoint.position;
@@ -62,20 +46,28 @@ public class Laser : MonoBehaviour
         lineRenderer.SetPosition(0, firePointPos);
         startVFX.transform.position = firePointPos;
         
-        lineRenderer.SetPosition(1, mousePos);
+        RotateToMouse(); // 마우스 방향으로 회전하는 로직은 계속 실행
         
-        Vector2 direction = mousePos - firePointPos;
-        RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction.normalized, direction.magnitude, layerMask);
+        Vector2 direction = (mousePos - firePointPos).normalized;
+        LastHit = Physics2D.Raycast(firePointPos, direction, maxDistance, layerMask);
 
-        if (hit)
+        Vector2 endPoint;
+        if (LastHit.collider != null)
         {
-            lineRenderer.SetPosition(1, hit.point);
+            // Raycast에 충돌한 지점까지 레이저를 그립니다.
+            endPoint = LastHit.point;
+        }
+        else
+        {
+            // 충돌한 지점이 없으면 최대 사거리까지 레이저를 그립니다.
+            endPoint = firePointPos + direction * maxDistance;
         }
         
-        endVFX.transform.position = lineRenderer.GetPosition(1);
+        lineRenderer.SetPosition(1, endPoint);
+        endVFX.transform.position = endPoint;
     }
     
-    void DisableLaser()
+    public void DisableLaser()
     {
         lineRenderer.enabled = false;
         
@@ -100,6 +92,7 @@ public class Laser : MonoBehaviour
                 particles.Add(ps);
         }
 
+        // 오류가 발생했던 부분을 수정한 for 루프입니다.
         for (int i = 0; i < endVFX.transform.childCount; i++)
         {
             var ps = endVFX.transform.GetChild(i).GetComponent<ParticleSystem>();
