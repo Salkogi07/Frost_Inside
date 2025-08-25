@@ -22,7 +22,8 @@
             if (enemy.IsGroundDetected == false|| enemy.IsWallDetected)
                 enemyStateMachine.ChangeState(enemy.IdleDirector);
             
-            
+
+
         }
 
         public override void FiexedUpdate()

@@ -17,7 +17,6 @@ public class Enemy_BattleState : Chase_director
     {
         
         base.Enter();
-        Debug.Log($"[BattleState] Enter - animBoolName: {animBoolName}, Animator Bool Value: {anim.GetBool(animBoolName)}");
         UpdateBattleTimer();
         
         if (player == null)
@@ -49,6 +48,14 @@ public class Enemy_BattleState : Chase_director
         if (WithinAttackRange() && enemy.PlayerDetection()&& enemy.GetState<Enemy_AttackState>() != null)
         {
             enemyStateMachine.ChangeState(enemy.GetState<Enemy_AttackState>());
+        }
+
+        if(player.transform.position.y > enemy.transform.position.y+1f && enemy.GetState<Enemy_JumpState>()  != null)
+        {
+            Debug.Log("Player "+player.transform.position.y +"enemy "+enemy.transform.position.y );
+            enemy.GetState<Enemy_JumpState>().StateName = "Chase_director";
+            enemyStateMachine.ChangeState(enemy.GetState<Enemy_JumpState>());
+            
         }
         else
         {
