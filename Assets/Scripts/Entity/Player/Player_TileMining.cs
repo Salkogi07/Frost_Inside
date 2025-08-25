@@ -35,20 +35,24 @@ public class Player_TileMining : MonoBehaviour
         Vector2 direction = (mouseWorldPos - firePointPos).normalized;
 
         RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, miningRange, miningLayerMask);
-
+        
         if (hit.collider != null)
         {
+            Debug.Log("Hit" + hit.collider.name);
             // 1. 레이캐스트에 감지된 오브젝트에서 Tilemap 컴포넌트를 가져옵니다.
             Tilemap hitTilemap = hit.collider.GetComponent<Tilemap>();
-
             // 2. Tilemap 컴포넌트가 존재하는지 확인합니다.
             if (hitTilemap != null)
             {
+                Debug.Log("HitTile" + hitTilemap.name);
                 // 레이저 끝점을 맞은 위치로 업데이트
                 player.Laser.UpdateLaser(hit.point);
 
                 Vector3Int tilePosition = hitTilemap.WorldToCell(hit.point);
+                Debug.Log("tilePosition:" + tilePosition);
+                
                 TileBase tile = hitTilemap.GetTile(tilePosition);
+                Debug.Log("tile:" + tile);
 
                 // 3. 해당 타일이 존재하고, 채굴 가능한 타일인지 확인합니다.
                 if (tile != null && miningSettings.IsMineable(tile))
