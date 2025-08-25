@@ -1,213 +1,120 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
-using System.Collections.Generic;
-using System.Linq;
 
 public class Player_TileMining : MonoBehaviour
-{
+{ 
     private Player player;
 
     [Header("Mining Settings")]
-    public Tilemap[] tilemaps;
-    public float miningRange = 5f;
-    public float miningTime = 2f;
-    [SerializeField] private LayerMask miningLayerMask;
+    [SerializeField] private float miningRange = 5f; // 레이저의 기본 사거리
+    [SerializeField] private LayerMask miningLayerMask; // 채굴 가능한 오브젝트들의 레이어 마스크
 
     [Header("Strength Settings")]
-    public TileStrengthSettings miningSettings;
+    [SerializeField] private TileStrengthSettings miningSettings; // 타일 강도 설정 ScriptableObject
 
-    [Header("Drop Settings")]
-    [SerializeField] private GameObject dropPrefab;
-    private SpreadTilemap spreadTilemap;
-    private MakeRandomMap mapGenerator;
+    // 현재 채굴 중인 타겟에 대한 정보
+    private Tilemap currentMiningTilemap;      // 현재 채굴 중인 타일맵
+    private Vector3Int currentMiningTilePosition; // 현재 채굴 중인 타일의 위치
+    private TileBase currentMiningTileBase;       // 현재 채굴 중인 타일의 정보
     
-    // --- 디버깅 옵션 ---
-    [Header("Debug")]
-    [Tooltip("활성화하면 콘솔에 상세한 채굴 과정을 출력합니다.")]
-    public bool enableDebugLogs = true;
-    // ---
-
-    private Dictionary<Vector3Int, float> tileAlphaDict = new Dictionary<Vector3Int, float>();
-    private Vector3Int? currentMiningTile = null;
-    public bool isMining { get; private set; } = false;
+    private float currentMiningProgress = 0f; // 현재 채굴 진행도
 
     private void Awake()
     {
-        player = GetComponent<Player>();
-        spreadTilemap = FindObjectOfType<SpreadTilemap>();
-        mapGenerator = FindObjectOfType<MakeRandomMap>();
-
-        if (tilemaps == null || tilemaps.Length == 0)
-        {
-            GameObject[] gos = GameObject.FindGameObjectsWithTag("Mining_Tile");
-            tilemaps = new Tilemap[gos.Length];
-            for (int i = 0; i < gos.Length; i++)
-            {
-                tilemaps[i] = gos[i].GetComponent<Tilemap>();
-            }
-        }
+        if (player == null)
+            player = GetComponent<Player>();
     }
 
-    private void Start()
-    {
-        foreach (var map in tilemaps)
-        {
-            foreach (var pos in map.cellBounds.allPositionsWithin)
-                if (map.HasTile(pos))
-                    tileAlphaDict[pos] = 1f;
-        }
-    }
-
-    public Vector3Int? GetCurrentMiningTile()
-    {
-        return currentMiningTile;
-    }
-
+    /// <summary>
+    /// Player_MiningState에서 매 프레임 호출되어 채굴 로직과 레이저 업데이트를 처리합니다.
+    /// </summary>
     public void HandleMiningAndLaserUpdate()
     {
-        var mousePos = (Vector2)player.Laser.cam.ScreenToWorldPoint(Input.mousePosition);
-        var firePointPos = (Vector2)player.Laser.firePoint.position;
-        Vector2 direction = (mousePos - firePointPos).normalized;
+        Vector2 firePointPos = player.Laser.firePoint.position;
+        Vector2 mouseWorldPos = player.Laser.cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mouseWorldPos - firePointPos).normalized;
 
         RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, miningRange, miningLayerMask);
 
-        // --- 디버깅 코드 시작 ---
-        // Scene 뷰에서 레이저 경로를 시각적으로 표시합니다.
-        // 초록색: 충돌 O, 빨간색: 충돌 X
-        if (enableDebugLogs)
-        {
-            Color rayColor = hit.collider != null ? Color.green : Color.red;
-            Debug.DrawRay(firePointPos, direction * miningRange, rayColor);
-        }
-        // --- 디버깅 코드 끝 ---
-
-        Vector2 endPoint = (hit.collider != null) ? hit.point : firePointPos + direction * miningRange;
-        player.Laser.UpdateLaser(endPoint);
-
-        if (!player.CanMine)
-        {
-            StopMining();
-            return;
-        }
-
         if (hit.collider != null)
         {
-            // --- 디버깅 코드 시작 ---
-            if (enableDebugLogs)
-                Debug.Log($"[채굴] 레이저 충돌: {hit.collider.name}, 레이어: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
-            // --- 디버깅 코드 끝 ---
+            // 1. 레이캐스트에 감지된 오브젝트에서 Tilemap 컴포넌트를 가져옵니다.
+            Tilemap hitTilemap = hit.collider.GetComponent<Tilemap>();
 
-            Vector3Int tilePos = tilemaps[0].WorldToCell(hit.point);
-            var map = GetTilemapAt(tilePos);
-            var tile = map?.GetTile(tilePos);
-
-            if (tile != null && miningSettings.IsMineable(tile))
+            // 2. Tilemap 컴포넌트가 존재하는지 확인합니다.
+            if (hitTilemap != null)
             {
-                if (currentMiningTile.HasValue && currentMiningTile.Value != tilePos)
+                // 레이저 끝점을 맞은 위치로 업데이트
+                player.Laser.UpdateLaser(hit.point);
+
+                Vector3Int tilePosition = hitTilemap.WorldToCell(hit.point);
+                TileBase tile = hitTilemap.GetTile(tilePosition);
+
+                // 3. 해당 타일이 존재하고, 채굴 가능한 타일인지 확인합니다.
+                if (tile != null && miningSettings.IsMineable(tile))
                 {
+                    // 이전에 캐던 타일과 다른 타일을 조준한 경우, 진행도를 초기화합니다.
+                    // 또는 다른 타일맵을 조준한 경우에도 초기화합니다.
+                    if (tilePosition != currentMiningTilePosition || hitTilemap != currentMiningTilemap)
+                    {
+                        StopMining();
+                        currentMiningTilemap = hitTilemap; // 새로 감지된 타일맵을 현재 타겟으로 설정
+                        currentMiningTilePosition = tilePosition;
+                        currentMiningTileBase = tile;
+                    }
+                    
+                    // 채굴 진행
+                    UpdateMiningProgress();
+                }
+                else
+                {
+                    // 채굴 불가능한 타일(기반암 등)이거나 빈 공간을 조준한 경우
                     StopMining();
                 }
-
-                isMining = true;
-                currentMiningTile = tilePos;
-                UpdateMiningProgress(tilePos);
             }
             else
             {
-                if (enableDebugLogs && tile == null) Debug.LogWarning($"[채굴] 충돌 지점에 타일이 없습니다. 좌표: {tilePos}");
-                else if (enableDebugLogs && tile != null && !miningSettings.IsMineable(tile)) Debug.LogWarning($"[채굴] '{tile.name}' 타일은 채굴 불가능합니다.");
-                
+                // miningLayerMask에 있지만 Tilemap 컴포넌트가 없는 오브젝트에 맞은 경우
                 StopMining();
+                player.Laser.UpdateLaser(hit.point);
             }
         }
         else
         {
-            if (enableDebugLogs) Debug.Log("[채굴] 레이저가 아무것에도 닿지 않음. 채굴 중지.");
+            // 레이저가 아무것에도 닿지 않았을 때
+            StopMining();
+            player.Laser.UpdateLaser(firePointPos + direction * miningRange); // 기본 사거리로 레이저 표시
+        }
+    }
+
+    /// <summary>
+    /// 채굴 진행도를 업데이트하고, 완료되면 타일을 파괴합니다.
+    /// </summary>
+    private void UpdateMiningProgress()
+    {
+        if (currentMiningTilemap == null || currentMiningTileBase == null) return;
+
+        float miningStatValue = Mathf.Max(1, player.Stats.Mining.GetValue());
+        float tileDefense = miningSettings.GetDefense(currentMiningTileBase);
+        float timeToMine = tileDefense / miningStatValue;
+
+        currentMiningProgress += Time.deltaTime;
+
+        if (currentMiningProgress >= timeToMine)
+        {
+            // 현재 채굴 중인 타일맵에서 해당 타일을 제거합니다.
+            currentMiningTilemap.SetTile(currentMiningTilePosition, null);
             StopMining();
         }
     }
 
-    private void UpdateMiningProgress(Vector3Int tilePos)
-    {
-        if (!tileAlphaDict.ContainsKey(tilePos))
-            tileAlphaDict[tilePos] = 1f;
-
-        var map = GetTilemapAt(tilePos);
-        var tileBase = map.GetTile(tilePos);
-
-        float defense = miningSettings.GetDefense(tileBase);
-        float miningPower = player.Stats.Mining.GetValue();
-        float timeToMine = miningTime * (defense / Mathf.Max(miningPower, 1f));
-        float decrease = (timeToMine > 0) ? Time.deltaTime / timeToMine : 1.0f;
-
-        tileAlphaDict[tilePos] -= decrease;
-        
-        // --- 디버깅 코드 시작 ---
-        if (enableDebugLogs)
-            Debug.Log($"[채굴] 타일 [{tilePos}] 채굴 진행... 남은 내구도: {tileAlphaDict[tilePos]:F2}");
-        // --- 디버깅 코드 끝 ---
-        
-        ApplyTileAlpha(tilePos, Mathf.Clamp01(tileAlphaDict[tilePos]));
-
-        if (tileAlphaDict[tilePos] <= 0f)
-            FinishMining(tilePos);
-    }
-    
-    private void ApplyTileAlpha(Vector3Int tilePos, float alpha)
-    {
-        var map = GetTilemapAt(tilePos);
-        if (map == null) return;
-
-        map.SetTileFlags(tilePos, TileFlags.None);
-        Color c = map.GetColor(tilePos);
-        c.a = Mathf.Clamp01(alpha);
-        map.SetColor(tilePos, c);
-    }
-
-    private void FinishMining(Vector3Int tilePos)
-    {
-        // --- 디버깅 코드 시작 ---
-        if (enableDebugLogs)
-            Debug.Log($"[채굴] 타일 [{tilePos}] 채굴 완료!");
-        // --- 디버깅 코드 끝 ---
-        
-        Vector3 worldPos = spreadTilemap.OreTilemap.CellToWorld(tilePos) + new Vector3(0.5f, 0.5f);
-        Vector2Int key = new Vector2Int(tilePos.x, tilePos.y);
-
-        if (mapGenerator.oreTileDict.TryGetValue(key, out var ore))
-        {
-            var dropObj = Instantiate(dropPrefab, worldPos + Vector3.up * 0.5f, Quaternion.identity);
-            var itemObject = dropObj.GetComponent<ItemObject>();
-            itemObject.SetupItem(ore.dropItem, Vector2.zero);
-            
-            Inventory_Item data = itemObject.item;
-            int price = Random.Range(data.data.priceRange.x, data.data.priceRange.y + 1);
-            data.price = price;
-            mapGenerator.oreTileDict.Remove(key);
-        }
-
-        var map = GetTilemapAt(tilePos);
-        if (map != null)
-        {
-             map.SetTile(tilePos, null);
-        }
-       
-        spreadTilemap.OreTilemap.RefreshTile(tilePos);
-        tileAlphaDict.Remove(tilePos);
-        StopMining();
-    }
-
+    /// <summary>
+    /// 채굴을 멈추고 관련 변수들을 초기화합니다.
+    /// </summary>
     public void StopMining()
     {
-        if (isMining && enableDebugLogs)
-             Debug.Log("[채굴] StopMining() 호출됨. 현재 타겟: " + (currentMiningTile.HasValue ? currentMiningTile.Value.ToString() : "없음"));
-
-        isMining = false;
-        currentMiningTile = null;
-    }
-    
-    private Tilemap GetTilemapAt(Vector3Int pos)
-    {
-        return tilemaps.FirstOrDefault(tm => tm.HasTile(pos));
+        currentMiningProgress = 0f;
+        currentMiningTilemap = null;
+        currentMiningTileBase = null;
     }
 }
