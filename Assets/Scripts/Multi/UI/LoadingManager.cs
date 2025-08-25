@@ -11,6 +11,9 @@ public class LoadingManager : NetworkBehaviour
     [Header("Objects")]
     [SerializeField] private GameObject loadingScreenObj;
     [SerializeField] private Animator animator;
+    
+    [SerializeField] private GameObject backgroundObj;
+    [SerializeField] private GameObject imageObj;
 
     private readonly int hashShaderOut = Animator.StringToHash("Shader_Out");
     private readonly int hashShaderIn = Animator.StringToHash("Shader_In");
@@ -31,24 +34,22 @@ public class LoadingManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        if (NetworkManager.Singleton != null && NetworkManager.Singleton.SceneManager != null)
+        if (NetworkManager.Singleton?.SceneManager != null)
         {
             NetworkManager.Singleton.SceneManager.OnSceneEvent += HandleSceneEvent;
         }
         
-        // 클라이언트 본인이 정상적으로 방에 입장할 때 수동 처리
         if(!IsServer || !IsHost)
             NetworkManager.Singleton.OnClientConnectedCallback += OnClientConnected;
     }
 
     public override void OnNetworkDespawn()
     {
-        if (NetworkManager.Singleton != null && NetworkManager.Singleton.SceneManager != null)
+        if (NetworkManager.Singleton?.SceneManager != null)
         {
             NetworkManager.Singleton.SceneManager.OnSceneEvent -= HandleSceneEvent;
         }
         
-        // 콜백 해제
         if(!IsServer || !IsHost)
             NetworkManager.Singleton.OnClientConnectedCallback -= OnClientConnected;
     }
@@ -61,56 +62,50 @@ public class LoadingManager : NetworkBehaviour
         }
     }
 
-    /// <summary>
-    /// (호스트 전용) 네트워크 씬 로딩을 시작합니다.
-    /// </summary>
-    public void LoadScene(string sceneName)
-    {
-        if (!IsServer) return;
-        
-        StartCoroutine(HostLoadSceneCoroutine(sceneName));
-    }
-
-    private IEnumerator HostLoadSceneCoroutine(string sceneName)
-    {
-        loadingScreenObj.SetActive(true);
-        animator.Play(hashShaderOut);
-        yield return new WaitForSeconds(GetAnimationLength("Shader_Out"));
-
-        NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
-    }
-    
-    private void HandleSceneEvent(SceneEvent sceneEvent)
-    {
-        Debug.Log($"[LoadingManager] SceneEvent received: {sceneEvent.SceneEventType}");
-        switch (sceneEvent.SceneEventType)
-        {
-            case SceneEventType.Load:
-            case SceneEventType.Synchronize:
-                if (!IsServer)
-                {
-                    ShowLoadingScreen();
-                }
-                break;
-
-            case SceneEventType.LoadEventCompleted:
-                StartCoroutine(FadeInCoroutine());
-                break;
-        }
-    }
-
+    // NetworkTransmission에서 직접 호출될 함수
     public void ShowLoadingScreen()
     {
+        backgroundObj.SetActive(true);
+        imageObj.SetActive(true);
         loadingScreenObj.SetActive(true);
         animator.Play(hashShaderOut);
+    }
+    
+    // NetworkTransmission에서 직접 호출될 함수
+    public void HideLoadingScreen()
+    {
+        StartCoroutine(FadeInCoroutine());
+    }
+
+    private void HandleSceneEvent(SceneEvent sceneEvent)
+    {
+        // 이제 이 이벤트 핸들러는 오직 '로컬 클라이언트의 로딩이 끝났음'을 감지하는 역할만 합니다.
+        if (sceneEvent.SceneEventType == SceneEventType.LoadEventCompleted)
+        {
+            // 이 이벤트는 각 클라이언트 자신에게만 발생합니다.
+            if (sceneEvent.ClientId == NetworkManager.Singleton.LocalClientId)
+            {
+                Debug.Log($"[Client {sceneEvent.ClientId}] Scene load complete. Notifying server.");
+                // 서버에게 "나 로딩 끝났어요" 라고 보고합니다.
+                NetworkTransmission.instance.NotifyServerSceneLoadedServerRpc();
+            }
+        }
     }
     
     private IEnumerator FadeInCoroutine()
     {
         animator.Play(hashShaderIn);
         yield return new WaitForSeconds(GetAnimationLength("Shader_In"));
-        
         loadingScreenObj.SetActive(false);
+    }
+
+    public void AnimLate(string clipName, string sceneName) => StartCoroutine(AnimLateCoroutine(clipName, sceneName));
+
+    private IEnumerator AnimLateCoroutine(string clipName, string sceneName)
+    {
+        yield return new WaitForSeconds(GetAnimationLength(clipName));
+        
+        NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
     
     private float GetAnimationLength(string clipName)
