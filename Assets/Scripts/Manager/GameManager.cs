@@ -34,7 +34,7 @@ public class GameManager : NetworkBehaviour
     private Observable<int> _minutesObservable;
     public Observable<int> MinutesObservable => _minutesObservable ??= _minutesPropertiy.AsObservable();
 
-    private float timeSpeed = 1.875f; // 1.875초 = 게임 내 1분
+    private float timeSpeed = 1f; // 1.875초 = 게임 내 1분
 
     private void Awake()
     {

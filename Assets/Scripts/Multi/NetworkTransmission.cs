@@ -1,11 +1,7 @@
-﻿// NetworkTransmission.cs
-// 역할: 클라이언트와 서버 간의 모든 RPC 통신을 중앙에서 처리합니다.
-
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Netcode;
-
 
 public class NetworkTransmission : NetworkBehaviour
 {
@@ -172,27 +168,57 @@ public class NetworkTransmission : NetworkBehaviour
         FindObjectOfType<PlayerSpawner>().RespawnPlayerCharacter(clientId, newCharacterId);
     }
     
+    // --- Game Flow ---
     [ServerRpc(RequireOwnership = false)]
     public void RequestStartGameServerRpc(ServerRpcParams rpcParams = default)
     {
-        // 이 RPC는 호스트만 호출할 수 있도록 UI에서 제어해야 합니다.
         if (!IsServer) return;
 
-        // 모든 플레이어가 준비되었는지 서버 측에서 한 번 더 확인합니다.
         if (PlayerDataManager.instance.AreAllPlayersReady())
         {
-            // 1. 로비를 잠가 더 이상 새로운 플레이어가 들어오지 못하게 합니다.
             GameNetworkManager.instance.LockLobby();
-            
-            // 2. 변경된 부분: LoadingManager를 통해 씬 로딩을 시작합니다.
-            // 이렇게 하면 호스트의 로딩 화면 표시와 Netcode의 씬 로드가 함께 처리됩니다.
-            LoadingManager.instance.LoadScene("Game");
+            PlayerDataManager.instance.ClearLoadedClients();
+
+            // 모든 클라이언트에게 씬 로드 전에 로딩 화면을 먼저 켜도록 명령
+            ShowLoadingScreenClientRpc();
+
+            // LoadingManager를 거치지 않고 서버가 직접 씬 로드를 시작
+            LoadingManager.instance.AnimLate("Shader_Out", "Game");
         }
         else
         {
-            // 만약의 경우를 대비한 로그
-            ulong senderId = rpcParams.Receive.SenderClientId;
-            Debug.LogWarning($"Client {senderId} requested game start, but not all players are ready.");
+            Debug.LogWarning($"Client {rpcParams.Receive.SenderClientId} requested game start, but not all players are ready.");
         }
+    }
+
+    /// <summary>
+    /// (서버 -> 클라이언트) 모든 클라이언트에게 로딩 화면을 표시하라고 명령합니다.
+    /// </summary>
+    [ClientRpc]
+    private void ShowLoadingScreenClientRpc()
+    {
+        // 모든 클라이언트가 자신의 LoadingManager를 통해 로딩 화면을 즉시 켭니다.
+        LoadingManager.instance.ShowLoadingScreen();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void NotifyServerSceneLoadedServerRpc(ServerRpcParams rpcParams = default)
+    {
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        PlayerDataManager.instance.AddLoadedClient(clientId);
+
+        // 모든 클라이언트가 로드를 완료했는지 확인 (호스트 포함)
+        if (PlayerDataManager.instance.GetLoadedClientCount() >= NetworkManager.Singleton.ConnectedClients.Count)
+        {
+            Debug.Log("[Server] All clients have loaded the scene. Starting game.");
+            AllClientsLoadedStartGameClientRpc();
+        }
+    }
+
+    [ClientRpc]
+    private void AllClientsLoadedStartGameClientRpc()
+    {
+        Debug.Log("[Client] Received game start signal from server. Hiding loading screen.");
+        LoadingManager.instance.HideLoadingScreen();
     }
 }

@@ -34,7 +34,7 @@ TagManager:
   - monster
   - Truck
   - Enemy
-  - 
+  - Effect
   - 
   - 
   - 
@@ -74,6 +74,9 @@ TagManager:
     locked: 0
   - name: Layer
     uniqueID: 578131231
+    locked: 0
+  - name: Laser
+    uniqueID: 1387032461
     locked: 0
   m_RenderingLayers:
   - Default

@@ -3,15 +3,8 @@ using UnityEngine;
 
 public class PlayerSoundTrigger : MonoBehaviour
 {
-    private EventInstance _playerSnowMove;
-
-    private void Awake()
+    public void PlaySnowMove()
     {
-        _playerSnowMove = AudioManager.instance.CreateInstance(FMODEvents.instance.playerSnowMove);
-    }
-    
-    public void PlaySnowWalk()
-    {
-        _playerSnowMove.start();
+        //AudioManager.instance.PlayOneShot(FMODEvents.instance.playerSnowMove, gameObject.transform.position);
     }
 }

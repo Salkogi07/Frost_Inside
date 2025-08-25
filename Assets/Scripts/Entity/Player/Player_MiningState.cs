@@ -2,8 +2,6 @@
 
 public class Player_MiningState : Player_GroundedState
 {
-    private Vector3Int? lastMinedTile;
-
     public Player_MiningState(Player player, Player_StateMachine playerStateMachine, string animBoolName) : base(player,
         playerStateMachine, animBoolName)
     {
@@ -13,6 +11,7 @@ public class Player_MiningState : Player_GroundedState
     {
         base.Enter();
         player.SetVelocity(0, rigidbody.linearVelocity.y); // 채굴 시작 시 수평 이동 정지
+        player.Laser.EnableLaser();
     }
 
     public override void Update()
@@ -27,17 +26,7 @@ public class Player_MiningState : Player_GroundedState
         }
         
         // 플레이어의 TileMining 로직을 호출하여 채굴을 업데이트합니다.
-        player.TileMining.HandleMiningUpdate();
-
-        // 채굴 중인 타일이 바뀌면 상태를 잠시 나갔다가 다시 들어와서 속도를 0으로 만듭니다.
-        var currentMiningTile = player.TileMining.GetCurrentMiningTile();
-        if (lastMinedTile.HasValue && currentMiningTile.HasValue && lastMinedTile.Value != currentMiningTile.Value)
-        {
-            playerStateMachine.ChangeState(player.IdleState);
-            return;
-        }
-
-        lastMinedTile = currentMiningTile;
+        player.TileMining.HandleMiningAndLaserUpdate();
     }
 
     public override void FixedUpdate()
@@ -50,6 +39,6 @@ public class Player_MiningState : Player_GroundedState
     {
         base.Exit();
         player.TileMining.StopMining(); // 상태를 나갈 때 채굴 관련 변수 초기화
-        lastMinedTile = null;
+        player.Laser.DisableLaser(); // 레이저 비활성화
     }
 }

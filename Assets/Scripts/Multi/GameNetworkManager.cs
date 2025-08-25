@@ -207,9 +207,9 @@ public class GameNetworkManager : MonoBehaviour
         if (NetworkManager.Singleton.IsHost)
         {
             // 이 함수는 서버와 모든 클라이언트의 씬을 동기화하여 로드합니다.
-            LoadingManager.instance.LoadScene("LobbyGame");
-            
-            //NetworkManager.Singleton.SceneManager.LoadScene("LobbyGame", LoadSceneMode.Single);
+            LoadingManager.instance.ShowLoadingScreen();
+
+            LoadingManager.instance.AnimLate("Shader_Out", "LobbyGame");
         }
         else
         {

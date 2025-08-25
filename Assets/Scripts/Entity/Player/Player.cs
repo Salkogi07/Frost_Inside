@@ -8,6 +8,7 @@ public class Player : Entity
     public Player_Stats Stats { get; private set; }
     public Player_Condition Condition { get; private set; }
     public Player_TileMining TileMining { get; private set; }
+    public Laser Laser { get; private set; }
     
     public Player_IdleState IdleState { get; private set; }
     public Player_WalkState WalkState { get; private set; }
@@ -68,6 +69,7 @@ public class Player : Entity
         Stats = GetComponent<Player_Stats>();
         Condition = GetComponent<Player_Condition>();
         TileMining = GetComponent<Player_TileMining>();
+        Laser = GetComponentInChildren<Laser>();
         
         Dust = GetComponentInChildren<ParticleSystem>();
 
