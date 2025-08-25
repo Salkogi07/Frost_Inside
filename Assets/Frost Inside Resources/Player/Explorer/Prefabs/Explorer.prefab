@@ -488,6 +488,9 @@ MonoBehaviour:
   tilemaps: []
   miningRange: 5
   miningTime: 2
+  miningLayerMask:
+    serializedVersion: 2
+    m_Bits: 8
   miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
   dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
 --- !u!1 &6627346968656088041

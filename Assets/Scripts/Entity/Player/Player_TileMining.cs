@@ -5,24 +5,28 @@ using System.Linq;
 
 public class Player_TileMining : MonoBehaviour
 {
-    private Player player; // Player 스크립트 참조
+    private Player player;
 
     [Header("Mining Settings")]
-    [Tooltip("채굴 대상이 될 Tilemap들을 배열로 지정하세요")]
     public Tilemap[] tilemaps;
     public float miningRange = 5f;
     public float miningTime = 2f;
+    [SerializeField] private LayerMask miningLayerMask;
 
     [Header("Strength Settings")]
-    [Tooltip("각 타일별 방어력 및 채굴 가능 여부를 관리하는 SO")]
     public TileStrengthSettings miningSettings;
 
     [Header("Drop Settings")]
     [SerializeField] private GameObject dropPrefab;
     private SpreadTilemap spreadTilemap;
     private MakeRandomMap mapGenerator;
+    
+    // --- 디버깅 옵션 ---
+    [Header("Debug")]
+    [Tooltip("활성화하면 콘솔에 상세한 채굴 과정을 출력합니다.")]
+    public bool enableDebugLogs = true;
+    // ---
 
-    // 채굴 관련 상태 변수
     private Dictionary<Vector3Int, float> tileAlphaDict = new Dictionary<Vector3Int, float>();
     private Vector3Int? currentMiningTile = null;
     public bool isMining { get; private set; } = false;
@@ -59,28 +63,46 @@ public class Player_TileMining : MonoBehaviour
         return currentMiningTile;
     }
 
-    // Player_MiningState에서 매 프레임 호출될 메서드
-    public void HandleMiningUpdate()
+    public void HandleMiningAndLaserUpdate()
     {
+        var mousePos = (Vector2)player.Laser.cam.ScreenToWorldPoint(Input.mousePosition);
+        var firePointPos = (Vector2)player.Laser.firePoint.position;
+        Vector2 direction = (mousePos - firePointPos).normalized;
+
+        RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, miningRange, miningLayerMask);
+
+        // --- 디버깅 코드 시작 ---
+        // Scene 뷰에서 레이저 경로를 시각적으로 표시합니다.
+        // 초록색: 충돌 O, 빨간색: 충돌 X
+        if (enableDebugLogs)
+        {
+            Color rayColor = hit.collider != null ? Color.green : Color.red;
+            Debug.DrawRay(firePointPos, direction * miningRange, rayColor);
+        }
+        // --- 디버깅 코드 끝 ---
+
+        Vector2 endPoint = (hit.collider != null) ? hit.point : firePointPos + direction * miningRange;
+        player.Laser.UpdateLaser(endPoint);
+
         if (!player.CanMine)
         {
             StopMining();
             return;
         }
 
-        RaycastHit2D hit = player.Laser.LastHit;
-
         if (hit.collider != null)
         {
-            // 레이저가 충돌한 지점의 타일 좌표를 가져옵니다.
-            Vector3Int tilePos = tilemaps[0].WorldToCell(hit.point);
+            // --- 디버깅 코드 시작 ---
+            if (enableDebugLogs)
+                Debug.Log($"[채굴] 레이저 충돌: {hit.collider.name}, 레이어: {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+            // --- 디버깅 코드 끝 ---
 
+            Vector3Int tilePos = tilemaps[0].WorldToCell(hit.point);
             var map = GetTilemapAt(tilePos);
             var tile = map?.GetTile(tilePos);
 
             if (tile != null && miningSettings.IsMineable(tile))
             {
-                // 다른 타일을 조준하기 시작했다면, 이전 타겟에 대한 채굴을 중지합니다.
                 if (currentMiningTile.HasValue && currentMiningTile.Value != tilePos)
                 {
                     StopMining();
@@ -92,13 +114,15 @@ public class Player_TileMining : MonoBehaviour
             }
             else
             {
-                // 채굴 불가능한 타겟을 조준하고 있다면 채굴을 멈춥니다.
+                if (enableDebugLogs && tile == null) Debug.LogWarning($"[채굴] 충돌 지점에 타일이 없습니다. 좌표: {tilePos}");
+                else if (enableDebugLogs && tile != null && !miningSettings.IsMineable(tile)) Debug.LogWarning($"[채굴] '{tile.name}' 타일은 채굴 불가능합니다.");
+                
                 StopMining();
             }
         }
         else
         {
-            // 레이저가 아무것에도 닿지 않았다면 채굴을 멈춥니다.
+            if (enableDebugLogs) Debug.Log("[채굴] 레이저가 아무것에도 닿지 않음. 채굴 중지.");
             StopMining();
         }
     }
@@ -112,13 +136,17 @@ public class Player_TileMining : MonoBehaviour
         var tileBase = map.GetTile(tilePos);
 
         float defense = miningSettings.GetDefense(tileBase);
-        
         float miningPower = player.Stats.Mining.GetValue();
-        
         float timeToMine = miningTime * (defense / Mathf.Max(miningPower, 1f));
         float decrease = (timeToMine > 0) ? Time.deltaTime / timeToMine : 1.0f;
 
         tileAlphaDict[tilePos] -= decrease;
+        
+        // --- 디버깅 코드 시작 ---
+        if (enableDebugLogs)
+            Debug.Log($"[채굴] 타일 [{tilePos}] 채굴 진행... 남은 내구도: {tileAlphaDict[tilePos]:F2}");
+        // --- 디버깅 코드 끝 ---
+        
         ApplyTileAlpha(tilePos, Mathf.Clamp01(tileAlphaDict[tilePos]));
 
         if (tileAlphaDict[tilePos] <= 0f)
@@ -138,6 +166,11 @@ public class Player_TileMining : MonoBehaviour
 
     private void FinishMining(Vector3Int tilePos)
     {
+        // --- 디버깅 코드 시작 ---
+        if (enableDebugLogs)
+            Debug.Log($"[채굴] 타일 [{tilePos}] 채굴 완료!");
+        // --- 디버깅 코드 끝 ---
+        
         Vector3 worldPos = spreadTilemap.OreTilemap.CellToWorld(tilePos) + new Vector3(0.5f, 0.5f);
         Vector2Int key = new Vector2Int(tilePos.x, tilePos.y);
 
@@ -160,49 +193,21 @@ public class Player_TileMining : MonoBehaviour
         }
        
         spreadTilemap.OreTilemap.RefreshTile(tilePos);
-
         tileAlphaDict.Remove(tilePos);
         StopMining();
     }
 
     public void StopMining()
     {
+        if (isMining && enableDebugLogs)
+             Debug.Log("[채굴] StopMining() 호출됨. 현재 타겟: " + (currentMiningTile.HasValue ? currentMiningTile.Value.ToString() : "없음"));
+
         isMining = false;
         currentMiningTile = null;
     }
     
-    // --- Helper Methods ---
-    private Vector3Int GetMouseTilePosition()
-    {
-        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        return tilemaps[0].WorldToCell(mouseWorld);
-    }
-
     private Tilemap GetTilemapAt(Vector3Int pos)
     {
         return tilemaps.FirstOrDefault(tm => tm.HasTile(pos));
-    }
-
-    private bool CheckLineOfSight(Tilemap map, Vector3Int start, Vector3Int end)
-    {
-        if (start == end) return true;
-        int x0 = start.x, y0 = start.y;
-        int x1 = end.x, y1 = end.y;
-        int dx = Mathf.Abs(x1 - x0), dy = Mathf.Abs(y1 - y0);
-        int sx = x0 < x1 ? 1 : -1, sy = y0 < y1 ? 1 : -1;
-        int err = dx - dy;
-
-        while (true)
-        {
-            if (!(x0 == start.x && y0 == start.y) && !(x0 == x1 && y0 == y1) && map.HasTile(new Vector3Int(x0, y0, 0)))
-                return false;
-
-            if (x0 == x1 && y0 == y1) break;
-
-            int e2 = 2 * err;
-            if (e2 > -dy) { err -= dy; x0 += sx; }
-            if (e2 < dx) { err += dx; y0 += sy; }
-        }
-        return true;
     }
 }

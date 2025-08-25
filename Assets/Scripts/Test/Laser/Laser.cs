@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Laser : MonoBehaviour
 {
-    private Camera cam;
+    public Camera cam;
     public LineRenderer lineRenderer;
     public Transform firePoint;
     public GameObject startVFX;
@@ -12,16 +11,11 @@ public class Laser : MonoBehaviour
     
     private Quaternion rotation;
     private List<ParticleSystem> particles = new List<ParticleSystem>();
-    
-    [SerializeField] private LayerMask layerMask;
-
-    // 레이저 관련 프로퍼티 추가
-    public float maxDistance = 10f; // 최대 사거리
-    public RaycastHit2D LastHit { get; private set; }
 
     private void Awake()
     {
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        if (cam == null)
+            cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
     }
     
     private void Start()
@@ -38,30 +32,15 @@ public class Laser : MonoBehaviour
             particles[i].Play();
     }
 
-    public void UpdateLaser()
+    // 물리 로직을 제거하고 외부에서 받은 endPoint로 레이저를 그리도록 변경
+    public void UpdateLaser(Vector2 endPoint)
     {
-        var mousePos = (Vector2)cam.ScreenToWorldPoint(Input.mousePosition);
         var firePointPos = (Vector2)firePoint.position;
         
         lineRenderer.SetPosition(0, firePointPos);
         startVFX.transform.position = firePointPos;
         
-        RotateToMouse(); // 마우스 방향으로 회전하는 로직은 계속 실행
-        
-        Vector2 direction = (mousePos - firePointPos).normalized;
-        LastHit = Physics2D.Raycast(firePointPos, direction, maxDistance, layerMask);
-
-        Vector2 endPoint;
-        if (LastHit.collider != null)
-        {
-            // Raycast에 충돌한 지점까지 레이저를 그립니다.
-            endPoint = LastHit.point;
-        }
-        else
-        {
-            // 충돌한 지점이 없으면 최대 사거리까지 레이저를 그립니다.
-            endPoint = firePointPos + direction * maxDistance;
-        }
+        RotateToMouse(); // 마우스 방향으로 회전하는 로직은 유지
         
         lineRenderer.SetPosition(1, endPoint);
         endVFX.transform.position = endPoint;
@@ -92,7 +71,6 @@ public class Laser : MonoBehaviour
                 particles.Add(ps);
         }
 
-        // 오류가 발생했던 부분을 수정한 for 루프입니다.
         for (int i = 0; i < endVFX.transform.childCount; i++)
         {
             var ps = endVFX.transform.GetChild(i).GetComponent<ParticleSystem>();

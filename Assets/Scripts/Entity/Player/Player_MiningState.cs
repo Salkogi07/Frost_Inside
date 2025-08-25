@@ -25,11 +25,8 @@ public class Player_MiningState : Player_GroundedState
             return;
         }
         
-        // 레이저 위치 및 상태 업데이트
-        player.Laser.UpdateLaser();
-        
         // 플레이어의 TileMining 로직을 호출하여 채굴을 업데이트합니다.
-        player.TileMining.HandleMiningUpdate();
+        player.TileMining.HandleMiningAndLaserUpdate();
     }
 
     public override void FixedUpdate()

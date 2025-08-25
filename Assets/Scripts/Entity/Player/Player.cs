@@ -86,11 +86,6 @@ public class Player : Entity
     private void Start()
     {
         _playerStateMachine.Initialize(IdleState);
-        
-        if (Laser != null && TileMining != null)
-        {
-            Laser.maxDistance = TileMining.miningRange;
-        }
     }
 
     private void Update()
