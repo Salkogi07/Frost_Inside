@@ -82,6 +82,8 @@ public class LoadingManager : NetworkBehaviour
         // 이제 이 이벤트 핸들러는 오직 '로컬 클라이언트의 로딩이 끝났음'을 감지하는 역할만 합니다.
         if (sceneEvent.SceneEventType == SceneEventType.LoadEventCompleted)
         {
+            Debug.Log($"[Client {sceneEvent.ClientId}] Scene load complete.");
+            Debug.Log($"Scene Client : {sceneEvent.ClientId} Scene Loacal: {NetworkManager.Singleton.LocalClientId}");
             // 이 이벤트는 각 클라이언트 자신에게만 발생합니다.
             if (sceneEvent.ClientId == NetworkManager.Singleton.LocalClientId)
             {

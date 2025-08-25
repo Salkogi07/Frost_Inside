@@ -39,14 +39,17 @@ public class PlayerDataManager : MonoBehaviour
     //디버깅용
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        /*if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            /*foreach (var player in playerInfoMap)
+            foreach (var player in playerInfoMap)
             {
                 Debug.Log(player.Value.SteamName);
                 Debug.Log(player.Value.SelectedCharacterId);
-            }*/
-            
+            }
+        }*/
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
             foreach (var player in clientsLoadedScene)
             {
                 Debug.Log(player);
@@ -59,6 +62,7 @@ public class PlayerDataManager : MonoBehaviour
     /// </summary>
     public void AddLoadedClient(ulong clientId)
     {
+        Debug.Log($"[PlayerDataManager] Client {clientId} loaded scene.");
         clientsLoadedScene.Add(clientId);
     }
 

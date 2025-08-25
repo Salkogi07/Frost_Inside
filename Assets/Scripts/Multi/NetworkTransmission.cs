@@ -179,10 +179,10 @@ public class NetworkTransmission : NetworkBehaviour
             GameNetworkManager.instance.LockLobby();
             PlayerDataManager.instance.ClearLoadedClients();
 
-            // 변경점 1: 모든 클라이언트에게 씬 로드 전에 로딩 화면을 먼저 켜도록 명령
+            // 모든 클라이언트에게 씬 로드 전에 로딩 화면을 먼저 켜도록 명령
             ShowLoadingScreenClientRpc();
 
-            // 변경점 2: LoadingManager를 거치지 않고 서버가 직접 씬 로드를 시작
+            // LoadingManager를 거치지 않고 서버가 직접 씬 로드를 시작
             LoadingManager.instance.AnimLate("Shader_Out", "Game");
         }
         else
