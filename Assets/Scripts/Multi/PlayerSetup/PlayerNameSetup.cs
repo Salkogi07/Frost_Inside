@@ -1,5 +1,3 @@
-// PlayerNameSetup.cs (수정된 버전)
-
 using Unity.Netcode;
 using Unity.Collections;
 using TMPro;

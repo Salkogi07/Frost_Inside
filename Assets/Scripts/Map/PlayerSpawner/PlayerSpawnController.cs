@@ -58,6 +58,13 @@ public class PlayerSpawnController : NetworkBehaviour
         // 4. 스폰 실행
         GameObject playerInstance = Instantiate(prefabToSpawn, spawnPosition, Quaternion.identity);
         NetworkObject networkObject = playerInstance.GetComponent<NetworkObject>();
+        
+        // 5. 플레이어 이름 설정
+        if (playerInstance.TryGetComponent<PlayerNameSetup>(out var playerNameSetup))
+        {
+            playerNameSetup.SetPlayerName(playerInfo.SteamName);
+        }
+        
         networkObject.SpawnAsPlayerObject(clientId, true);
         
         Debug.Log($"[Spawn Controller] {playerInfo.SteamName}을(를) {spawnPosition}에 스폰 완료.");
