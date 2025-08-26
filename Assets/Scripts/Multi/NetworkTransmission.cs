@@ -6,6 +6,8 @@ using Unity.Netcode;
 public class NetworkTransmission : NetworkBehaviour
 {
     public static NetworkTransmission instance;
+    
+    private bool isGameSetupInProgress = false;
 
     private void Awake()
     {
@@ -190,14 +192,10 @@ public class NetworkTransmission : NetworkBehaviour
             Debug.LogWarning($"Client {rpcParams.Receive.SenderClientId} requested game start, but not all players are ready.");
         }
     }
-
-    /// <summary>
-    /// (서버 -> 클라이언트) 모든 클라이언트에게 로딩 화면을 표시하라고 명령합니다.
-    /// </summary>
+    
     [ClientRpc]
     private void ShowLoadingScreenClientRpc()
     {
-        // 모든 클라이언트가 자신의 LoadingManager를 통해 로딩 화면을 즉시 켭니다.
         LoadingManager.instance.ShowLoadingScreen();
     }
 
@@ -207,18 +205,45 @@ public class NetworkTransmission : NetworkBehaviour
         ulong clientId = rpcParams.Receive.SenderClientId;
         PlayerDataManager.instance.AddLoadedClient(clientId);
 
-        // 모든 클라이언트가 로드를 완료했는지 확인 (호스트 포함)
+        if (isGameSetupInProgress) return;
+
         if (PlayerDataManager.instance.GetLoadedClientCount() >= NetworkManager.Singleton.ConnectedClients.Count)
         {
-            Debug.Log("[Server] All clients have loaded the scene. Starting game.");
-            AllClientsLoadedStartGameClientRpc();
+            isGameSetupInProgress = true;
+            Debug.Log("[Server] All clients have loaded the scene. Starting server-side setup...");
+            StartCoroutine(ServerGameSetupCoroutine());
         }
     }
 
-    [ClientRpc]
-    private void AllClientsLoadedStartGameClientRpc()
+    private IEnumerator ServerGameSetupCoroutine()
     {
-        Debug.Log("[Client] Received game start signal from server. Hiding loading screen.");
+        // PlayerSpawner가 플레이어들을 스폰할 시간을 벌기 위해 한 프레임 대기
+        yield return null;
+
+        // 여기에 추가적인 맵 생성, 아이템 배치 등 서버 전용 로직을 넣을 수 있습니다.
+        // ...
+        
+        // GameManager 인스턴스를 찾아 게임 타이머 시작을 명령합니다.
+        if (GameManager.instance != null)
+        {
+            GameManager.instance.StartGameTimer();
+        }
+        else
+        {
+            Debug.LogError("[NetworkTransmission] GameManager instance not found! The game timer will not start.");
+        }
+
+        Debug.Log("[Server] Server-side setup is complete. Notifying clients to start the game.");
+
+        // 모든 준비가 끝났으므로, 이제 클라이언트들에게 로딩 화면을 끄라고 명령합니다.
+        AllSetupCompleteStartGameClientRpc();
+    }
+
+
+    [ClientRpc]
+    private void AllSetupCompleteStartGameClientRpc()
+    {
+        Debug.Log("[Client] Received 'All Setup Complete' signal from server. Hiding loading screen.");
         LoadingManager.instance.HideLoadingScreen();
     }
 }
