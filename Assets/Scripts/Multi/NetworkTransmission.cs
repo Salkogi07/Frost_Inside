@@ -228,11 +228,16 @@ public class NetworkTransmission : NetworkBehaviour
             Debug.LogError("[NetworkTransmission] GameManager instance not found! The game timer will not start.");
             yield break;
         }
+        GameManager gameManager = GameManager.instance;
         
         Debug.Log("[Server] 모든 플레이어 스폰을 명령합니다.");
-        GameManager.instance.gamePlayerSpawner.SpawnAllPlayersForGame();
+        gameManager.gamePlayerSpawner.SpawnAllPlayersForGame();
+        while (!gameManager.gamePlayerSpawner.IsRunning)
+        {
+            yield return null;
+        }
 
-        GameManager.instance.StartGameTimer();
+        gameManager.StartGameTimer();
 
 
         Debug.Log("[Server] Server-side setup is complete. Notifying clients to start the game.");

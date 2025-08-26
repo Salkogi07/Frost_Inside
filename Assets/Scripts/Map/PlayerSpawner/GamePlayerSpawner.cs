@@ -3,6 +3,9 @@ using Unity.Netcode;
 
 public class GamePlayerSpawner : MonoBehaviour
 {
+    private bool _isRunning = false;
+    public bool IsRunning => _isRunning;
+    
     /// <summary>
     /// (서버 전용) 모든 플레이어를 게임 씬에 스폰하도록 요청합니다.
     /// </summary>
@@ -15,5 +18,7 @@ public class GamePlayerSpawner : MonoBehaviour
         {
             PlayerSpawnController.instance.SpawnPlayerForClient(playerInfo.ClientId);
         }
+        
+        _isRunning = true;
     }
 }
