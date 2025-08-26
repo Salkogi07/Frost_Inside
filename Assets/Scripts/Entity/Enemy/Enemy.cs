@@ -36,8 +36,6 @@ public class Enemy : Entity
     public float minRetreatDistance = 1;
 
     public Vector2 retreatVelocity;
-    // public float lastTimeWasInBattle;
-    // public float inGameTime;
 
     [Header("Player detection")] [SerializeField]
     private Transform playerCheck;
@@ -50,6 +48,8 @@ public class Enemy : Entity
 
     [Range(0, 10)] public float moveAnimSpeedMultiplier = 1;
 
+    
+    
     public Transform player { get; private set; }
 
     public Idle_director IdleDirector;
