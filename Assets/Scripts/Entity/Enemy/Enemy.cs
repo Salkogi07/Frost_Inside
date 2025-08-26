@@ -22,10 +22,10 @@ public class Enemy : Entity
     [SerializeField] private float groundCheckDistance;
     
     [Header("Collision detection [Wall]")] 
-    [SerializeField] private LayerMask whatIsWall;
+    [SerializeField] public LayerMask whatIsWall;
     [SerializeField] private Transform primaryWallCheck;
     [SerializeField] private Transform secondaryWallCheck;
-    [SerializeField] private float wallCheckDistance;
+    [SerializeField] public float wallCheckDistance;
     
     public bool IsGroundDetected { get; private set; }
     public bool IsWallDetected { get; private set; }

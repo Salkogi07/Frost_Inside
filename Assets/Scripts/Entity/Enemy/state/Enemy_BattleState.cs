@@ -52,7 +52,7 @@ public class Enemy_BattleState : Chase_director
 
         if(player.transform.position.y > enemy.transform.position.y+1f && enemy.GetState<Enemy_JumpState>()  != null)
         {
-            Debug.Log("Player "+player.transform.position.y +"enemy "+enemy.transform.position.y );
+            
             enemy.GetState<Enemy_JumpState>().StateName = "Chase_director";
             enemyStateMachine.ChangeState(enemy.GetState<Enemy_JumpState>());
             
