@@ -8,6 +8,8 @@ using System.Collections; // IEnumerator 사용을 위해 추가
 public class GameManager : NetworkBehaviour
 {
     public static GameManager instance;
+    
+    public GamePlayerSpawner gamePlayerSpawner;
 
     private NetworkVariable<int> networkTotalMinutes = new NetworkVariable<int>(
         8 * 60,

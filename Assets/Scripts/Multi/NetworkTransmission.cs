@@ -167,7 +167,7 @@ public class NetworkTransmission : NetworkBehaviour
         UpdatePlayerCharacterClientRpc(clientId, newCharacterId);
     
         // 이 부분이 핵심입니다. 서버가 PlayerSpawner를 통해 캐릭터 교체를 명령합니다.
-        FindObjectOfType<PlayerSpawner>().RespawnPlayerCharacter(clientId, newCharacterId);
+        FindObjectOfType<PlayerSpawnController>().RespawnPlayerCharacter(clientId, newCharacterId);
     }
     
     // --- Game Flow ---
@@ -217,21 +217,23 @@ public class NetworkTransmission : NetworkBehaviour
 
     private IEnumerator ServerGameSetupCoroutine()
     {
-        // PlayerSpawner가 플레이어들을 스폰할 시간을 벌기 위해 한 프레임 대기
+        Debug.Log("[Server] 맵 생성 및 초기 설정을 시작합니다.");
+        
+        // 맵 생성 로직
         yield return null;
 
-        // 여기에 추가적인 맵 생성, 아이템 배치 등 서버 전용 로직을 넣을 수 있습니다.
-        // ...
-        
         // GameManager 인스턴스를 찾아 게임 타이머 시작을 명령합니다.
-        if (GameManager.instance != null)
-        {
-            GameManager.instance.StartGameTimer();
-        }
-        else
+        if (GameManager.instance == null)
         {
             Debug.LogError("[NetworkTransmission] GameManager instance not found! The game timer will not start.");
+            yield break;
         }
+        
+        Debug.Log("[Server] 모든 플레이어 스폰을 명령합니다.");
+        GameManager.instance.gamePlayerSpawner.SpawnAllPlayersForGame();
+
+        GameManager.instance.StartGameTimer();
+
 
         Debug.Log("[Server] Server-side setup is complete. Notifying clients to start the game.");
 

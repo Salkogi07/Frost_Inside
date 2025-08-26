@@ -82,9 +82,16 @@ public class LoadingManager : NetworkBehaviour
         // 이제 이 이벤트 핸들러는 오직 '로컬 클라이언트의 로딩이 끝났음'을 감지하는 역할만 합니다.
         if (sceneEvent.SceneEventType == SceneEventType.LoadEventCompleted)
         {
-            Debug.Log($"[Client {sceneEvent.ClientId}] Scene load complete. Notifying server.");
-            // 서버에게 "나 로딩 끝났어요" 라고 보고합니다.
-            NetworkTransmission.instance.NotifyServerSceneLoadedServerRpc();
+            if (sceneEvent.SceneName == "Game")
+            {
+                Debug.Log($"[Client {sceneEvent.ClientId}] Scene load complete. Notifying server.");
+                // 서버에게 "나 로딩 끝났어요" 라고 보고합니다.
+                NetworkTransmission.instance.NotifyServerSceneLoadedServerRpc();
+            }
+            else
+            {
+                HideLoadingScreen();
+            }
         }
     }
     
