@@ -17,8 +17,8 @@ public class Enemy : Entity
     public int FacingDirection { get; private set; } = -1;
 
     [Header("Collision detection [Ground]")] 
-    [SerializeField] private LayerMask whatIsGround;
-    [SerializeField] private Transform groundCheck;
+    [SerializeField] public LayerMask whatIsGround;
+    [SerializeField] public Transform groundCheck;
     [SerializeField] private float groundCheckDistance;
     
     [Header("Collision detection [Wall]")] 
@@ -160,11 +160,14 @@ public class Enemy : Entity
     
     private void HandleCollisionDetection()
     {
-        IsGroundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
+       
+            IsGroundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
         IsWallDetected = Physics2D.Raycast(primaryWallCheck.position, Vector2.right * FacingDirection,
-                             wallCheckDistance, whatIsWall)
-                         && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * FacingDirection,
-                             wallCheckDistance, whatIsWall);
+                                         wallCheckDistance, whatIsWall)
+                                     && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * FacingDirection,
+                                         wallCheckDistance, whatIsWall);
+        
+        
     }
     
     protected virtual void OnDrawGizmos()

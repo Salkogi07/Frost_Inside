@@ -6,7 +6,7 @@ public class Enemy_JumpState : EnemyState
     private Entity _entity;
     public EnemyJumpData _jumpData;
     public string StateName;
-
+    private Vector2 originalGroundCheckLocalPos;
     public Enemy_JumpState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName,EnemyJumpData JumpData) : base(enemy, enemyStateMachine, animBoolName)
     {
         _jumpData =  JumpData;
@@ -15,11 +15,16 @@ public class Enemy_JumpState : EnemyState
     public override void Enter()
     {   
         base.Enter();
-        // enemy.SetVelocity(rigidbody.linearVelocity.x,_jumpData.jumpForce);
+        originalGroundCheckLocalPos = enemy.groundCheck.localPosition;
+
+        // X좌표만 0으로 변경 (Y,Z는 그대로 유지)
+        enemy.groundCheck.localPosition = new Vector2(0f, originalGroundCheckLocalPos.y);
         enemy.SetVelocity(rigidbody.linearVelocity.x,_jumpData.jumpForce);
         _jumpData.isJumping = true;
+         
+         
         
-        
+
     }
     
     public override void Update()
@@ -31,6 +36,7 @@ public class Enemy_JumpState : EnemyState
         if (_jumpData.isJumping && enemy.IsGroundDetected)
         {
             _jumpData.isJumping = false;
+            enemy.groundCheck.localPosition = originalGroundCheckLocalPos;
             ChangeStates(StateName);
         }
     }

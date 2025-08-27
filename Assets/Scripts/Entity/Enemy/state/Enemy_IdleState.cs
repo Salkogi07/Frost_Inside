@@ -19,9 +19,16 @@
         public override void Update()
         {
             base.Update();
-            
-            if(stateTimer < 0)
-                 enemyStateMachine.ChangeState(enemy.MoveDirector);
+
+            if (stateTimer < 0)
+            {
+                if (enemy.IsGroundDetected == false || enemy.IsWallDetected)
+                {
+                    enemy.Flip();
+                }
+                enemyStateMachine.ChangeState(enemy.MoveDirector);
+            }
+                
             
         }
         
