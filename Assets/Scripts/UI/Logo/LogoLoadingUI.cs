@@ -26,10 +26,15 @@ public class LogoLoadingUI : MonoBehaviour
     [Tooltip("로고 씬 이후에 불러올 씬의 이름")]
     [SerializeField] private string nextSceneName = "Setup";
     
+    [Header("로고 스킵")]
+    [SerializeField] private bool skipLogo = false;
+    
     void Start()
     {
-        // 코루틴을 시작합니다.
-        StartCoroutine(FadeSequence());
+        if(skipLogo)
+            SceneManager.LoadScene(nextSceneName);
+        else
+            StartCoroutine(FadeSequence());
     }
 
     private IEnumerator FadeSequence()

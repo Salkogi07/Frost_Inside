@@ -240,6 +240,7 @@ MonoBehaviour:
   stayTime: 1
   fadeOutTime: 2
   nextSceneName: Setup
+  skipLogo: 1
 --- !u!1 &530925172
 GameObject:
   m_ObjectHideFlags: 0
