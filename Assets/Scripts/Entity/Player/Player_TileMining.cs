@@ -53,12 +53,10 @@ public class Player_TileMining : MonoBehaviour
                 Debug.Log("tilePosition:" + tilePosition);
                 
                 TileBase tile = hitTilemap.GetTile(tilePosition);
-                
-                
                 Debug.Log("tile:" + tile);
 
                 // 3. 해당 타일이 존재하고, 채굴 가능한 타일인지 확인합니다.
-                if (tile != null && miningSettings.IsMineable(tile))
+                if (tile != null && miningSettings.GetIsMineable(tile))
                 {
                     // 이전에 캐던 타일과 다른 타일을 조준한 경우, 진행도를 초기화합니다.
                     // 또는 다른 타일맵을 조준한 경우에도 초기화합니다.
@@ -102,7 +100,15 @@ public class Player_TileMining : MonoBehaviour
         if (currentMiningTilemap == null || currentMiningTileBase == null) return;
 
         float miningStatValue = Mathf.Max(1, player.Stats.Mining.GetValue());
+        bool tileIsMine = miningSettings.GetIsMineable(currentMiningTileBase);
         float tileDefense = miningSettings.GetDefense(currentMiningTileBase);
+        
+        if (tileDefense == -1 || !tileIsMine)
+        {
+            StopMining();
+            return;
+        }
+        
         float timeToMine = tileDefense / miningStatValue;
 
         currentMiningProgress += Time.deltaTime;

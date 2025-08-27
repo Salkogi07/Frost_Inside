@@ -139,7 +139,7 @@ public abstract class BaseTileMiner : MonoBehaviour
             var map = GetTilemapAt(tilePos);
             var tile = map?.GetTile(tilePos);
             // ▶ 채굴 불가 타일이면 즉시 종료
-            if (tile == null || !miningSettings.IsMineable(tile))
+            if (tile == null || !miningSettings.GetIsMineable(tile))
             {
                 // TODO: 불가 이펙트/사운드 재생
                 StopMining();

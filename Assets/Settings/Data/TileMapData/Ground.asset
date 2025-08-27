@@ -19,6 +19,3 @@ MonoBehaviour:
   - tile: {fileID: 11400000, guid: b0a9aca525793ae4cab15e93eda3fb9d, type: 2}
     defense: 50
     canMine: 1
-  - tile: {fileID: 11400000, guid: ae8f37f6dad203340b5e6fedf9f9e49f, type: 2}
-    defense: 10000
-    canMine: 1
