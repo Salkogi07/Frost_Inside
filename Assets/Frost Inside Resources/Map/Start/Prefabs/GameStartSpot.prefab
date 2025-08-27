@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7999989566913055802}
   - component: {fileID: 1900821356776900239}
   m_Layer: 0
-  m_Name: CharacterChangePoint
+  m_Name: GameStartSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
