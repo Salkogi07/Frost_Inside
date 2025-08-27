@@ -10,6 +10,8 @@ public class GameManager : NetworkBehaviour
     public static GameManager instance;
     
     public GamePlayerSpawner gamePlayerSpawner;
+    public MakeRandomMap makeRandomMap;
+    public MonsterSpawner monsterSpawner;
 
     private NetworkVariable<int> networkTotalMinutes = new NetworkVariable<int>(
         8 * 60,

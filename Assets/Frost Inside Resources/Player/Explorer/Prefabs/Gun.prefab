@@ -19736,10 +19736,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca5b60655a1a2734a96657e75a087b34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cam: {fileID: 0}
   lineRenderer: {fileID: 7215533695957382147}
+  rotationPoint: {fileID: 7494021102814597514}
   firePoint: {fileID: 1523320119998611552}
   startVFX: {fileID: 4416957649938634530}
   endVFX: {fileID: 4284918916421537614}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 8

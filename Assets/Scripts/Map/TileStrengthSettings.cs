@@ -9,10 +9,10 @@ public class TileStrengthSettings : ScriptableObject
     public class TileStrength
     {
         public TileBase tile;
-        [Tooltip("°ªÀÌ Å¬¼ö·Ï Ã¤±¼ ½Ã°£ÀÌ ´õ ¿À·¡ °É¸³´Ï´Ù.")]
+        [Tooltip("ì±„ê´‘ ì‹œê°„")]
         public float defense = 1f;
-        [Tooltip("Ã¼Å© ÇØÁ¦ ½Ã ÀÌ Å¸ÀÏÀº Ã¤±¼ÇÒ ¼ö ¾ø½À´Ï´Ù.")]
-        public bool canMine = true;         // Ãß°¡µÈ ÇÊµå
+        [Tooltip("ì²´í¬ í•´ì œ ì‹œ ì´ íƒ€ì¼ì€ ì±„ê´‘í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤")]
+        public bool canMine = true;
     }
 
     public List<TileStrength> strengths = new List<TileStrength>();
@@ -33,21 +33,15 @@ public class TileStrengthSettings : ScriptableObject
                 unmineableLookup.Add(entry.tile);
         }
     }
-
-    /// <summary>
-    /// ÇØ´ç Å¸ÀÏÀÇ ¹æ¾î·Â ¹İÈ¯ (¾øÀ¸¸é ±âº» 1f)
-    /// </summary>
+    
     public float GetDefense(TileBase tile)
     {
         if (tile != null && defenseLookup.TryGetValue(tile, out var d))
             return d;
-        return 1f;
+        return -1f;
     }
-
-    /// <summary>
-    /// ÇØ´ç Å¸ÀÏÀÌ Ã¤±¼ °¡´ÉÇÑÁö ¿©ºÎ ¹İÈ¯
-    /// </summary>
-    public bool IsMineable(TileBase tile)
+    
+    public bool GetIsMineable(TileBase tile)
     {
         if (tile == null) return false;
         return !unmineableLookup.Contains(tile);

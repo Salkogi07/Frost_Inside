@@ -2,48 +2,56 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum TileMapType
+{
+    Ground,
+    Background,
+    Wall,
+    Ore,
+}
+
 public class SpreadTilemap : MonoBehaviour
 {
-    [Header("=== ±âÁ¸ Tilemap ===")]
-    [SerializeField] private Tilemap floor;
+    [Header("=== ê¸°ë³¸ íƒ€ì¼ë§µ ===")]
+    [SerializeField] private Tilemap ground;
+    [SerializeField] private Tilemap background;
     [SerializeField] private Tilemap wall;
     [SerializeField] private Tilemap corridor;
     [SerializeField] private Tilemap itemSpawn;
     [SerializeField] private Tilemap monsterSpawn;
 
-    [Header("=== Ore Àü¿ë Tilemap ===")]
+    [Header("=== ê´‘ì„ íƒ€ì¼ë§µ ===")]
     [SerializeField] private Tilemap ore;
 
     public Tilemap OreTilemap => ore;
-
     public Tilemap ItemSpawnTilemap => itemSpawn;
     public Tilemap MonsterSpawnTilemap => monsterSpawn;
 
-    [Header("=== ±âº» Tile ===")]
-    [SerializeField] private TileBase floorTile;
+    [Header("=== ê¸°ë³¸ íƒ€ì¼ ===")]
+    [SerializeField] private TileBase backgroundTile;
     [SerializeField] private TileBase wallTile;
     [SerializeField] private TileBase corridorTile;
     [SerializeField] private TileBase itemSpawnTile;
     [SerializeField] private TileBase monsterSpawnTile;
 
-    [Header("=== Ground Noise ¼³Á¤ ===")]
-    [Tooltip("¹æ¡¤º® Á¦¿ÜÇÑ ¿µ¿ª¿¡ Ã¤¿ï Tilemap")]
+    [Header("=== ì§€ë©´ ë…¸ì´ì¦ˆ ì„¤ì • ===")]
+    [Tooltip("ì§€ë©´ íƒ€ì¼ì„ ê·¸ë¦´ íƒ€ì¼ë§µ")]
     [SerializeField] private Tilemap groundTilemap;
-    [Tooltip("Perlin Noise·Î Ã¤¿ï Ground Å¸ÀÏ Á¾·ù")]
+    [Tooltip("Perlin ë…¸ì´ì¦ˆë¡œ ìƒì„±í•  ì§€ë©´ íƒ€ì¼ ì¢…ë¥˜ ë¦¬ìŠ¤íŠ¸")]
     [SerializeField] private List<TileBase> groundVariants;
-    [Tooltip("Noise ºóµµ (ÀÛ°Ô ÇÒ¼ö·Ï ³ĞÀº ÆĞÄ¡)")]
+    [Tooltip("ë…¸ì´ì¦ˆ ìŠ¤ì¼€ì¼ (ì‘ê²Œ í• ìˆ˜ë¡ ë””í…Œì¼ì´ ì»¤ì§)")]
     [SerializeField, Range(0.01f, 1f)] private float noiseScale = 0.1f;
 
-    [Header("=== Background Noise ¼³Á¤ ===")]
-    [Tooltip("¾îµÎ¿î ¹öÀüÀÇ Ground¸¦ ±ò Tilemap")]
+    [Header("=== ë°°ê²½ ë…¸ì´ì¦ˆ ì„¤ì • ===")]
+    [Tooltip("ë°°ê²½ì— ì‚¬ìš©í•  ì§€ë©´ íƒ€ì¼ë§µ")]
     [SerializeField] private Tilemap backgroundTilemap;
-    [Tooltip("¾îµÓ°Ô Ã³¸®ÇÒ »ö»ó (±âº» 80% ¹à±â)")]
+    [Tooltip("ë°°ê²½ì˜ ìƒ‰ìƒ(ê¸°ë³¸ê°’: 80% ë°ê¸°)")]
     [SerializeField] private Color backgroundTint = new Color(0.8f, 0.8f, 0.8f, 1f);
 
-    // ´ÜÀÏ Tile ½ºÇÁ·¹µå
-    public void SpreadFloorTilemap(HashSet<Vector2Int> positions)
+    // ê¸°ë³¸ íƒ€ì¼ í¼ëœ¨ë¦¬ê¸°
+    public void SpreadBackgroundTilemap(HashSet<Vector2Int> positions)
     {
-        SpreadTile(positions, floor, floorTile);
+        SpreadTile(positions, background, backgroundTile);
     }
 
     public void SpreadWallTilemap(HashSet<Vector2Int> positions)
@@ -66,10 +74,10 @@ public class SpreadTilemap : MonoBehaviour
         SpreadTile(positions, monsterSpawn, monsterSpawnTile);
     }
 
-    // ¿øº» Å¸ÀÏ(Dictionary)·Î ½ºÇÁ·¹µå
-    public void SpreadFloorTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
+    // ì§ì ‘ Tile ì§€ì •í•´ì„œ í¼ëœ¨ë¦¬ê¸°
+    public void SpreadBackgroundTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
     {
-        SpreadTileWithOriginal(tileDict, floor);
+        SpreadTileWithOriginal(tileDict, background);
     }
 
     public void SpreadWallTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
@@ -92,52 +100,51 @@ public class SpreadTilemap : MonoBehaviour
         SpreadTileWithOriginal(tileDict, monsterSpawn);
     }
 
-
-    // ¸ğµç Tilemap ÃÊ±âÈ­
+    // ëª¨ë“  íƒ€ì¼ë§µ ì´ˆê¸°í™”
     public void ClearAllTiles()
     {
-        floor.ClearAllTiles();
+        background.ClearAllTiles();
         wall.ClearAllTiles();
         corridor.ClearAllTiles();
         itemSpawn.ClearAllTiles();
         if (groundTilemap != null) groundTilemap.ClearAllTiles();
-        if (monsterSpawn != null) groundTilemap.ClearAllTiles();
+        if (monsterSpawn != null) monsterSpawn.ClearAllTiles();
     }
 
     /// <summary>
-    /// Corridor¿ë TilemapRenderer¸¦ ºñÈ°¼ºÈ­
+    /// ë³µë„ íƒ€ì¼ë§µì˜ ë Œë”ëŸ¬ë¥¼ ë¹„í™œì„±í™”í•©ë‹ˆë‹¤.
     /// </summary>
     public void HideCorridorRenderer()
     {
         var rend = corridor.GetComponent<TilemapRenderer>();
         if (rend != null)
-            rend.enabled = false;  // TilemapRenderer.enabled »ç¿ë :contentReference[oaicite:0]{index=0}
+            rend.enabled = false;
     }
 
     /// <summary>
-    /// ItemSpawn¿ë TilemapRenderer¸¦ ºñÈ°¼ºÈ­
+    /// ì•„ì´í…œ ìŠ¤í° íƒ€ì¼ë§µì˜ ë Œë”ëŸ¬ë¥¼ ë¹„í™œì„±í™”í•©ë‹ˆë‹¤.
     /// </summary>
     public void HideItemSpawnRenderer()
     {
         var rend = itemSpawn.GetComponent<TilemapRenderer>();
         if (rend != null)
-            rend.enabled = false;  // TilemapRenderer.enabled »ç¿ë :contentReference[oaicite:0]{index=0}
+            rend.enabled = false;
     }
 
     /// <summary>
-    /// MonsterSpawn¿ë TilemapRenderer¸¦ ºñÈ°¼ºÈ­
+    /// ëª¬ìŠ¤í„° ìŠ¤í° íƒ€ì¼ë§µì˜ ë Œë”ëŸ¬ë¥¼ ë¹„í™œì„±í™”í•©ë‹ˆë‹¤.
     /// </summary>
     public void HideMonsterSpawnRenderer()
     {
         var rend = monsterSpawn.GetComponent<TilemapRenderer>();
-        if (rend != null) rend.enabled = false; // :contentReference[oaicite:1]{index=1}
+        if (rend != null)
+            rend.enabled = false;
     }
 
     /// <summary>
-    /// mapMin~mapMax ¹üÀ§ ³»¿¡¼­ floor¡¤wall Á¦¿ÜÇÑ ¿µ¿ªÀ»
-    /// Perlin Noise ±â¹İÀ¸·Î variants Áß ÇÏ³ª¸¦ °ñ¶ó Ã¤¿ó´Ï´Ù.
-    /// ÁÂ¿ì¡¤»óÇÏ ´ëÄª Çö»óÀ» ¿ÏÈ­ÇÏ±â À§ÇØ ÀÔ·Â ÁÂÇ¥¸¦ È¸ÀüÇÏ°í
-    /// x, y Ãà¿¡ ¼­·Î ´Ù¸¥ ½Ãµå ¿ÀÇÁ¼ÂÀ» Àû¿ëÇÕ´Ï´Ù.
+    /// ì£¼ì–´ì§„ êµ¬ì—­(mapMin~mapMax)ì—ì„œ floorì™€ wallì´ ì•„ë‹Œ íƒ€ì¼ ìœ„ì¹˜ì—
+    /// Perlin ë…¸ì´ì¦ˆë¥¼ í™œìš©í•´ variants ì¤‘ í•˜ë‚˜ì˜ íƒ€ì¼ì„ ì„¤ì •í•©ë‹ˆë‹¤.
+    /// ë°°ê²½ íƒ€ì¼ì—ëŠ” ì§€ì •ëœ ìƒ‰ìƒì„ ì ìš©í•©ë‹ˆë‹¤.
     /// </summary>
     public void FillGroundWithNoise(
         Vector2Int mapMin,
@@ -147,11 +154,11 @@ public class SpreadTilemap : MonoBehaviour
         int seed
     )
     {
-        // 1) x, yÃà ¿ÀÇÁ¼Â ºĞ¸® (seed °ªÀ» ´Ù¸£°Ô »ç¿ë)
+        // 1) x, yì— ì”¨ë“œ(Seed) ì˜¤í”„ì…‹ ì¶”ê°€
         float seedOffsetX = (seed % 10000) * 0.0001f;
         float seedOffsetY = ((seed / 10000) % 10000) * 0.0001f;
 
-        // 2) ÀÓÀÇ °¢µµ·Î ÀÔ·Â ÁÂÇ¥ È¸Àü (0~359µµ)
+        // 2) ëœë¤ ê°ë„ ì„¤ì •(0~359ë„)
         float angle = (seed % 360) * Mathf.Deg2Rad;
         float cosAngle = Mathf.Cos(angle);
         float sinAngle = Mathf.Sin(angle);
@@ -162,18 +169,18 @@ public class SpreadTilemap : MonoBehaviour
             {
                 Vector2Int pos = new Vector2Int(x, y);
 
-                // floor ¶Ç´Â wall Å¸ÀÏÀº °Ç³Ê¶Ü
+                // floor ë˜ëŠ” wallì´ë©´ ê±´ë„ˆëœ€
                 if (floorTiles.Contains(pos) || wallTiles.Contains(pos))
                     continue;
 
-                // È¸ÀüµÈ ÁÂÇ¥ + ½ºÄÉÀÏ + Ãàº° ¿ÀÇÁ¼Â
+                // ì¢Œí‘œ ë³€í™˜ + ë…¸ì´ì¦ˆ ì ìš©
                 float nx = (x * cosAngle - y * sinAngle) * noiseScale + seedOffsetX;
                 float ny = (x * sinAngle + y * cosAngle) * noiseScale + seedOffsetY;
 
-                // Perlin Noise »ùÇÃ¸µ
+                // Perlin ë…¸ì´ì¦ˆ ê°’
                 float n = Mathf.PerlinNoise(nx, ny);
 
-                // variants Áß ÀÎµ¦½º ¼±ÅÃ
+                // variantsì—ì„œ íƒ€ì¼ ì„ íƒ
                 int idx = Mathf.Clamp(
                     Mathf.FloorToInt(n * groundVariants.Count),
                     0,
@@ -182,10 +189,10 @@ public class SpreadTilemap : MonoBehaviour
 
                 Vector3Int cellPos = (Vector3Int)pos;
 
-                // 1) Ground Å¸ÀÏ ¹èÄ¡
+                // 1) ì§€ë©´ íƒ€ì¼ ì ìš©
                 groundTilemap.SetTile(cellPos, groundVariants[idx]);
 
-                // 2) Background Å¸ÀÏ¿¡ ¾îµÓ°Ô Ã³¸®
+                // 2) ë°°ê²½ íƒ€ì¼ ë° ìƒ‰ìƒ ì ìš©
                 if (backgroundTilemap != null)
                 {
                     backgroundTilemap.SetTile(cellPos, groundVariants[idx]);
@@ -195,18 +202,50 @@ public class SpreadTilemap : MonoBehaviour
             }
         }
     }
-
-    // ³»ºÎ ÇïÆÛ: ´ÜÀÏ Å¸ÀÏ ½ºÇÁ·¹µå
+    
     private void SpreadTile(HashSet<Vector2Int> positions, Tilemap tilemap, TileBase tile)
     {
         foreach (var pos in positions)
-            tilemap.SetTile((Vector3Int)pos, tile);  // Tilemap.SetTile API :contentReference[oaicite:2]{index=2}
+            tilemap.SetTile((Vector3Int)pos, tile);
     }
-
-    // ³»ºÎ ÇïÆÛ: ¿øº» TileDictionary ½ºÇÁ·¹µå
+    
     private void SpreadTileWithOriginal(Dictionary<Vector2Int, TileBase> tileDict, Tilemap tilemap)
     {
         foreach (var pair in tileDict)
-            tilemap.SetTile((Vector3Int)pair.Key, pair.Value);  // Tilemap.SetTile API :contentReference[oaicite:3]{index=3}
+            tilemap.SetTile((Vector3Int)pair.Key, pair.Value);
+    }
+
+    public TileMapType GetTileMapType(Tilemap tilemap)
+    {
+        switch (tilemap.name)
+        {
+            case "Ground":
+                return TileMapType.Ground;
+            case "Background":
+                return TileMapType.Background;
+            case "Wall":
+                return TileMapType.Wall;
+            case "Ore":
+                return TileMapType.Ore;
+            default:
+                return TileMapType.Ground;
+        }
+    }
+
+    public Tilemap GetTileMap(TileMapType tileMapType)
+    {
+        switch (tileMapType)
+        {
+            case TileMapType.Ground:
+                return ground;
+            case TileMapType.Background:
+                return background;
+            case TileMapType.Wall:
+                return wall;
+            case TileMapType.Ore:
+                return ore;
+            default:
+                return ground;
+        }
     }
 }
