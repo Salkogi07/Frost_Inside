@@ -48,10 +48,13 @@ public class Player_TileMining : MonoBehaviour
                 // 레이저 끝점을 맞은 위치로 업데이트
                 player.Laser.UpdateLaser(hit.point);
 
-                Vector3Int tilePosition = hitTilemap.WorldToCell(hit.point);
+                Vector2 hitPoint = hit.point - hit.normal * 0.01f;
+                Vector3Int tilePosition = hitTilemap.WorldToCell(hitPoint);
                 Debug.Log("tilePosition:" + tilePosition);
                 
                 TileBase tile = hitTilemap.GetTile(tilePosition);
+                
+                
                 Debug.Log("tile:" + tile);
 
                 // 3. 해당 타일이 존재하고, 채굴 가능한 타일인지 확인합니다.
