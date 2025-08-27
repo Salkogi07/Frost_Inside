@@ -38,22 +38,22 @@ public class Player_TileMining : MonoBehaviour
         
         if (hit.collider != null)
         {
-            Debug.Log("Hit" + hit.collider.name);
+            //Debug.Log("Hit" + hit.collider.name);
             // 1. 레이캐스트에 감지된 오브젝트에서 Tilemap 컴포넌트를 가져옵니다.
             Tilemap hitTilemap = hit.collider.GetComponent<Tilemap>();
             // 2. Tilemap 컴포넌트가 존재하는지 확인합니다.
             if (hitTilemap != null)
             {
-                Debug.Log("HitTile" + hitTilemap.name);
+                //Debug.Log("HitTile" + hitTilemap.name);
                 // 레이저 끝점을 맞은 위치로 업데이트
                 player.Laser.UpdateLaser(hit.point);
 
                 Vector2 hitPoint = hit.point - hit.normal * 0.01f;
                 Vector3Int tilePosition = hitTilemap.WorldToCell(hitPoint);
-                Debug.Log("tilePosition:" + tilePosition);
+                //Debug.Log("tilePosition:" + tilePosition);
                 
                 TileBase tile = hitTilemap.GetTile(tilePosition);
-                Debug.Log("tile:" + tile);
+                //Debug.Log("tile:" + tile);
 
                 // 3. 해당 타일이 존재하고, 채굴 가능한 타일인지 확인합니다.
                 if (tile != null && miningSettings.GetIsMineable(tile))
@@ -116,7 +116,17 @@ public class Player_TileMining : MonoBehaviour
         if (currentMiningProgress >= timeToMine)
         {
             // 현재 채굴 중인 타일맵에서 해당 타일을 제거합니다.
-            currentMiningTilemap.SetTile(currentMiningTilePosition, null);
+            if (MapInteractionManager.Instance != null)
+            {
+                Debug.Log($"[Mining] Requesting to mine tile at {currentMiningTilePosition}");
+                TileMapType tileMapType = MapInteractionManager.Instance.spreadTilemap.GetTileMapType(currentMiningTilemap);
+                MapInteractionManager.Instance.RequestMineTileServerRpc(currentMiningTilePosition, tileMapType);
+            }
+            else
+            {
+                Debug.LogError("MapInteractionManager instance not found! Cannot send mining request.");
+            }
+            
             StopMining();
         }
     }

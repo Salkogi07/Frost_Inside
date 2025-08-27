@@ -217,18 +217,26 @@ public class NetworkTransmission : NetworkBehaviour
 
     private IEnumerator ServerGameSetupCoroutine()
     {
-        Debug.Log("[Server] 맵 생성 및 초기 설정을 시작합니다.");
+        Debug.Log("[Server] 초기 설정을 시작합니다.");
         
-        // 맵 생성 로직
-        yield return null;
-
-        // GameManager 인스턴스를 찾아 게임 타이머 시작을 명령합니다.
+        // GameManager 찾기
         if (GameManager.instance == null)
         {
-            Debug.LogError("[NetworkTransmission] GameManager instance not found! The game timer will not start.");
+            Debug.LogError("[NetworkTransmission] GameManager instance not found!");
             yield break;
         }
         GameManager gameManager = GameManager.instance;
+        
+        Debug.Log("[Server] 맵 생성을 시작합니다.");
+        int seed = System.Environment.TickCount;
+        
+        GenerateMapClientRpc(seed);
+        
+        gameManager.makeRandomMap.GenerateMapFromSeed(seed);
+        while (!gameManager.makeRandomMap.IsRunning)
+        {
+            yield return null;
+        }
         
         Debug.Log("[Server] 모든 플레이어 스폰을 명령합니다.");
         gameManager.gamePlayerSpawner.SpawnAllPlayersForGame();
@@ -252,5 +260,20 @@ public class NetworkTransmission : NetworkBehaviour
     {
         Debug.Log("[Client] Received 'All Setup Complete' signal from server. Hiding loading screen.");
         LoadingManager.instance.HideLoadingScreen();
+    }
+    
+    [ClientRpc]
+    public void GenerateMapClientRpc(int seed)
+    {
+        // 게임매니저 인스턴스를 찾아 맵 생성 함수를 호출합니다.
+        if (GameManager.instance != null && GameManager.instance.makeRandomMap != null)
+        {
+            Debug.Log($"[Client] Received command to generate map with seed: {seed}");
+            GameManager.instance.makeRandomMap.GenerateMapFromSeed(seed);
+        }
+        else
+        {
+            Debug.LogError("[Client] Could not find GameManager or MakeRandomMap to generate map.");
+        }
     }
 }

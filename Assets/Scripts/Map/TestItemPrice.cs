@@ -16,8 +16,7 @@ public class TestItemPrice : MonoBehaviour
     void StartSerch()
     {
         int sum = 0;
-
-        // ¡ç ¿©±â¿¡ Ãß°¡  
+        
         Dictionary<ItemType, int> typeCounts = new Dictionary<ItemType, int>();
 
         item = GetComponentsInChildren<ItemObject>();
@@ -26,8 +25,7 @@ public class TestItemPrice : MonoBehaviour
         {
             ItemData data = io.item.data;
             int price = io.item.price;
-
-            // ¡ç °¢ Å¸ÀÔº° °³¼ö Áý°è  
+            
             if (typeCounts.ContainsKey(data.itemType))
                 typeCounts[data.itemType]++;
             else
@@ -36,16 +34,16 @@ public class TestItemPrice : MonoBehaviour
             Vector2Int range = data.priceRange;
 
             if (price < range.x || price > range.y)
-                Debug.LogWarning($"[{data.itemName}] °¡°Ý({price})ÀÌ À¯È¿ ¹üÀ§({range.x}~{range.y})¸¦ ¹þ¾î³µ½À´Ï´Ù.", io);
+                Debug.LogWarning($"[{data.itemName}] ï¿½ï¿½ï¿½ï¿½({price})ï¿½ï¿½ ï¿½ï¿½È¿ ï¿½ï¿½ï¿½ï¿½({range.x}~{range.y})ï¿½ï¿½ ï¿½ï¿½ï¿½î³µï¿½ï¿½ï¿½Ï´ï¿½.", io);
 
             sum += price;
         }
 
-        Debug.Log($"ÀüÃ¼ ¾ÆÀÌÅÛ °¡°Ý ÇÕ°è: {sum}");
+        Debug.Log($"ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Õ°ï¿½: {sum}");
 
-        // ¡ç Áý°è °á°ú Ãâ·Â  
+        // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½  
         foreach (var kv in typeCounts)
-            Debug.Log($"{kv.Key} Å¸ÀÔ: {kv.Value}°³");
+            Debug.Log($"{kv.Key} Å¸ï¿½ï¿½: {kv.Value}ï¿½ï¿½");
     }
 
 }

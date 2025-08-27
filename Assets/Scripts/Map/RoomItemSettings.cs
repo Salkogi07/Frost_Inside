@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class RoomItemSettings : MonoBehaviour
 {
-    [Header("¾ÆÀÌÅÛ µå·Ó °³¼ö ¼³Á¤")]
-    [Tooltip("ÀÌ ¹æ¿¡¼­ ÃÖ´ë ¸î °³ÀÇ ¾ÆÀÌÅÛÀ» µå·ÓÇÒÁö")]
+    [Header("ëª¬ìŠ¤í„° ë“œë ì„¤ì •")]
+    [Tooltip("í•œ ëª¬ìŠ¤í„°ì—ì„œ ë–¨ì–´ì§ˆ ìˆ˜ ìˆëŠ” ìµœëŒ€ ë“œë ê°œìˆ˜")]
     public int maxDropCount = 3;
 
-    [Header("¸ó½ºÅÍ ½ºÆù ¼³Á¤")]
-    [Tooltip("ÀÌ ¹æ¿¡¼­ ½ºÆù °¡´ÉÇÑ ¸ó½ºÅÍ Prefab ¸®½ºÆ®")]
+    [Header("ëª¬ìŠ¤í„° í”„ë¦¬íŒ¹ ì„¤ì •")]
+    [Tooltip("í•œ ëª¬ìŠ¤í„°ê°€ ì†Œí™˜í•  ìˆ˜ ìˆëŠ” ëª¬ìŠ¤í„° í”„ë¦¬íŒ¹ ë¦¬ìŠ¤íŠ¸")]
     public GameObject[] monsterPrefabs;
+
 }

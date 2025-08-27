@@ -8425,7 +8425,7 @@ GameObject:
   - component: {fileID: 1750232923}
   - component: {fileID: 1750232922}
   m_Layer: 3
-  m_Name: ground
+  m_Name: Ground
   m_TagString: Mining_Tile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

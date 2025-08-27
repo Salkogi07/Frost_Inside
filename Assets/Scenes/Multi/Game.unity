@@ -3715,13 +3715,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c19cbcf9111185447b63f321146e36f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floor: {fileID: 875581948}
+  ground: {fileID: 1750232921}
+  background: {fileID: 875581948}
   wall: {fileID: 846961875}
   corridor: {fileID: 511520119}
   itemSpawn: {fileID: 1697556005}
   monsterSpawn: {fileID: 1459230449}
   ore: {fileID: 1621721204}
-  floorTile: {fileID: 11400000, guid: 1f007b85c38752f428d1c4bfb422771d, type: 2}
+  backgroundTile: {fileID: 0}
   wallTile: {fileID: 11400000, guid: b0a9aca525793ae4cab15e93eda3fb9d, type: 2}
   corridorTile: {fileID: 11400000, guid: 51a5dac259936cf40805fd2cffd4c3b2, type: 2}
   itemSpawnTile: {fileID: 11400000, guid: 68aadff8035a8f043b24e7858dc20c56, type: 2}
@@ -6558,6 +6559,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1142947451}
+  - component: {fileID: 1142947452}
+  - component: {fileID: 1142947453}
   m_Layer: 0
   m_Name: Map
   m_TagString: Untagged
@@ -6586,6 +6589,45 @@ Transform:
   - {fileID: 74730335}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1142947452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142947450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1414963714
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
+--- !u!114 &1142947453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1142947450}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb552bb153a64531be9393f1e9affb75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  spreadTilemap: {fileID: 608165600}
 --- !u!1 &1149275795
 GameObject:
   m_ObjectHideFlags: 0
@@ -7674,6 +7716,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   gamePlayerSpawner: {fileID: 74730338}
+  makeRandomMap: {fileID: 2089418185}
+  monsterSpawner: {fileID: 0}
 --- !u!4 &1378455370
 Transform:
   m_ObjectHideFlags: 0
@@ -12979,14 +13023,13 @@ MonoBehaviour:
   - {fileID: 7305855154435600090, guid: 1cb375d6b3bb2c84a9b7ad399dd31771, type: 3}
   maxRooms: 30
   spreadTilemap: {fileID: 608165600}
-  player_SpawnPos: {fileID: 0}
   seed: 1118484734
   useRandomSeed: 1
   roomMin: {x: -50, y: -30}
   roomMax: {x: 50, y: 30}
   mapMin: {x: -70, y: -40}
   mapMax: {x: 70, y: 40}
-  fillerFloorTile: {fileID: 0}
+  fillerBackgroundTile: {fileID: 0}
   dropParent: {fileID: 1197352826}
   monsterParent: {fileID: 1492779297}
   minSpawnInterval: 60
