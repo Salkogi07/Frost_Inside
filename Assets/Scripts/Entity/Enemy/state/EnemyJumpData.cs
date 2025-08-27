@@ -7,8 +7,9 @@ public class EnemyJumpData
     public float jumpForce;
     public float jumpCoolTime;
     public bool isJumping = false;
+    public float enemy_Ground_Check_Y_Coordinate;
     // [HideInInspector]
-    
+
     // public EnemyJumpData Clone()
     // {
     //     return new EnemyJumpData
