@@ -198,6 +198,13 @@ public class NetworkTransmission : NetworkBehaviour
     {
         LoadingManager.instance.ShowLoadingScreen();
     }
+    
+    [ServerRpc(RequireOwnership = false)]
+    public void NotifyServerMapGeneratedServerRpc(ServerRpcParams rpcParams = default)
+    {
+        ulong clientId = rpcParams.Receive.SenderClientId;
+        PlayerDataManager.instance.AddMapGeneratedClient(clientId);
+    }
 
     [ServerRpc(RequireOwnership = false)]
     public void NotifyServerSceneLoadedServerRpc(ServerRpcParams rpcParams = default)
@@ -227,16 +234,19 @@ public class NetworkTransmission : NetworkBehaviour
         }
         GameManager gameManager = GameManager.instance;
         
+        //초기 설정
+        PlayerDataManager.instance.GetLoadedClientCount();
+            
         Debug.Log("[Server] 맵 생성을 시작합니다.");
         int seed = System.Environment.TickCount;
         
         GenerateMapClientRpc(seed);
         
-        gameManager.makeRandomMap.GenerateMapFromSeed(seed);
-        while (!gameManager.makeRandomMap.IsRunning)
-        {
-            yield return null;
-        }
+        Debug.Log("[Server] 모든 클라이언트가 맵 생성을 완료할 때까지 기다리는 중입니다...");
+        yield return new WaitUntil(() => 
+            PlayerDataManager.instance.GetMapGeneratedClientCount() >= NetworkManager.Singleton.ConnectedClients.Count
+        );
+        Debug.Log("[Server] 모든 클라이언트가 맵 생성을 확인했습니다.");
         
         Debug.Log("[Server] 모든 플레이어 스폰을 명령합니다.");
         gameManager.gamePlayerSpawner.SpawnAllPlayersForGame();
@@ -265,7 +275,6 @@ public class NetworkTransmission : NetworkBehaviour
     [ClientRpc]
     public void GenerateMapClientRpc(int seed)
     {
-        // 게임매니저 인스턴스를 찾아 맵 생성 함수를 호출합니다.
         if (GameManager.instance != null && GameManager.instance.makeRandomMap != null)
         {
             Debug.Log($"[Client] Received command to generate map with seed: {seed}");

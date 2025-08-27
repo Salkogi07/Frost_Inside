@@ -9,9 +9,6 @@ using Random = UnityEngine.Random;
 
 public class MakeRandomMap : MonoBehaviour
 {
-    private bool _isRunning = false;
-    public bool IsRunning => _isRunning;
-    
     [Header("=== 방 프리팹 및 플레이어 설정 ===")]
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
@@ -172,7 +169,10 @@ public class MakeRandomMap : MonoBehaviour
             DropItems();
         }
         
-        _isRunning = true;
+        if (NetworkManager.Singleton.IsClient)
+        {
+            NetworkTransmission.instance.NotifyServerMapGeneratedServerRpc();
+        }
     }
 
     private void GenerateOres()

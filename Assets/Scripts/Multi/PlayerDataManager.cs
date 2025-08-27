@@ -16,6 +16,7 @@ public class PlayerDataManager : MonoBehaviour
     
     // --- 로딩 상태 추적을 위한 변수 추가 ---
     private readonly HashSet<ulong> clientsLoadedScene = new HashSet<ulong>();
+    private readonly HashSet<ulong> clientsMapGenerated = new HashSet<ulong>();
 
     public event Action<PlayerInfo> OnPlayerAdded;
     public event Action<ulong> OnPlayerRemoved;
@@ -48,13 +49,13 @@ public class PlayerDataManager : MonoBehaviour
             }
         }*/
 
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        /*if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             foreach (var player in clientsLoadedScene)
             {
                 Debug.Log(player);
             }
-        }
+        }*/
     }
     
     /// <summary>
@@ -65,6 +66,15 @@ public class PlayerDataManager : MonoBehaviour
         Debug.Log($"[PlayerDataManager] Client {clientId} loaded scene.");
         clientsLoadedScene.Add(clientId);
     }
+    
+    /// <summary>
+    /// (서버 전용) 맵 생성을 완료한 클라이언트를 등록합니다.
+    /// </summary>
+    public void AddMapGeneratedClient(ulong clientId)
+    {
+        Debug.Log($"[PlayerDataManager] Client {clientId} finished map generation.");
+        clientsMapGenerated.Add(clientId);
+    }
 
     /// <summary>
     /// (서버 전용) 로드된 클라이언트 목록을 초기화합니다.
@@ -73,6 +83,14 @@ public class PlayerDataManager : MonoBehaviour
     {
         clientsLoadedScene.Clear();
     }
+    
+    /// <summary>
+    /// (서버 전용) 맵 생성을 완료한 클라이언트 목록을 초기화합니다.
+    /// </summary>
+    public void ClearMapGeneratedClients()
+    {
+        clientsMapGenerated.Clear();
+    }
 
     /// <summary>
     /// (서버 전용) 로드된 클라이언트의 수를 반환합니다.
@@ -80,6 +98,14 @@ public class PlayerDataManager : MonoBehaviour
     public int GetLoadedClientCount()
     {
         return clientsLoadedScene.Count;
+    }
+    
+    /// <summary>
+    /// (서버 전용) 맵 생성을 완료한 클라이언트의 수를 반환합니다.
+    /// </summary>
+    public int GetMapGeneratedClientCount()
+    {
+        return clientsMapGenerated.Count;
     }
 
     public void AddPlayer(ulong clientId, ulong steamId, string steamName)
