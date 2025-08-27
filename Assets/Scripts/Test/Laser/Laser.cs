@@ -1,10 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Laser : MonoBehaviour
 {
     public Camera cam;
     public LineRenderer lineRenderer;
+    public Transform rotationPoint;
     public Transform firePoint;
     public GameObject startVFX;
     public GameObject endVFX;
@@ -37,7 +39,8 @@ public class Laser : MonoBehaviour
     {
         var firePointPos = (Vector2)firePoint.position;
         
-        lineRenderer.SetPosition(0, firePointPos);
+        //lineRenderer.SetPosition(0, firePointPos);
+        lineRenderer.SetPosition(0, firePoint.transform.position);
         startVFX.transform.position = firePointPos;
         
         RotateToMouse(); // 마우스 방향으로 회전하는 로직은 유지
@@ -56,7 +59,7 @@ public class Laser : MonoBehaviour
 
     void RotateToMouse()
     {
-        Vector2 direction = cam.ScreenToWorldPoint(Input.mousePosition) - firePoint.position;
+        Vector2 direction = cam.ScreenToWorldPoint(Input.mousePosition) - rotationPoint.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         rotation.eulerAngles = new Vector3(0, 0, angle);
         transform.rotation = rotation;

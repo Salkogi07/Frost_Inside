@@ -30,7 +30,7 @@ public class Player_TileMining : MonoBehaviour
     /// </summary>
     public void HandleMiningAndLaserUpdate()
     {
-        Vector2 firePointPos = player.Laser.firePoint.position;
+        Vector2 firePointPos = player.Laser.rotationPoint.position;
         Vector2 mouseWorldPos = player.Laser.cam.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mouseWorldPos - firePointPos).normalized;
 
