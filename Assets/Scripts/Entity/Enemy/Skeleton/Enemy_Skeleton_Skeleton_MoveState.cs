@@ -1,13 +1,13 @@
 ﻿
     using UnityEngine;
 
-    public class Enemy_MoveState : Move_director
+    public class Enemy_Skeleton_MoveState : EnemyState
     {
 
-        public Enemy_MoveState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy,
+        public Enemy_Skeleton_MoveState( Enemy_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(null,
             enemyStateMachine, animBoolName)
         {
-
+            
         }
 
         public override void Enter()

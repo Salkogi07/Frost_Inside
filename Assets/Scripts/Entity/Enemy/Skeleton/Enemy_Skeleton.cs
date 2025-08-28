@@ -1,17 +1,22 @@
-﻿/*using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine;
 
 public class Enemy_Skeleton : Entity
 {
 
-    public Enemy_IdleState IdleState { get; private set; }
-    public Enemy_MoveState MoveState { get; private set; }
-    public Enemy_BattleState BattleState { get; private set; }
+    public Enemy_Skeleton_IdleState IdleState { get; private set; }
+    public Enemy_Skeleton_MoveState MoveState { get; private set; }
+    public Enemy_Skeleton_BattleState BattleState { get; private set; }
     public Enemy_JumpState JumpState { get; private set; }
     public Enemy_AttackState AttackState { get; private set; }
     public Enemy_DeadState DeadState { get; private set; }
 
+    public Enemy Enemy;
+    Enemy_Skeleton _skeleton;
+
+    private BoxCollider2D coll;
+    
     protected Enemy_StateMachine EnemyStateMachine;
     protected Dictionary<System.Type, EnemyState> States;
     
@@ -119,20 +124,16 @@ public class Enemy_Skeleton : Entity
         EnemyStateMachine = new Enemy_StateMachine();
         States = new Dictionary<System.Type, EnemyState>();
 
-        States[typeof(Enemy_AttackState)] = new Enemy_AttackState(this, EnemyStateMachine, "attack");
-        IdleState = new Enemy_IdleState(this, EnemyStateMachine, "idle");
-        MoveState = new Enemy_MoveState(this, EnemyStateMachine, "move");
-        BattleState = new Enemy_BattleState(this, EnemyStateMachine, "battle");
+        // AttackState = new Enemy_AttackState(EnemyStateMachine, "attack",_skeleton);
+        IdleState = new Enemy_Skeleton_IdleState(EnemyStateMachine, "idle",_skeleton);
+        MoveState = new Enemy_Skeleton_MoveState(EnemyStateMachine, "move",_skeleton);
+        BattleState = new Enemy_Skeleton_BattleState(EnemyStateMachine, "battle",_skeleton);
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
-        // JumpState = new Enemy_JumpState(this,EnemyStateMachine, "jump", jumpData);
-        States[typeof(Enemy_JumpState)] = new Enemy_JumpState(this, EnemyStateMachine, "jump", jumpData);
+        // JumpState = new Enemy_JumpState(EnemyStateMachine, "jump",_skeleton, jumpData);
+        //
+        // DeadState = new Enemy_DeadState(EnemyStateMachine, "dead",_skeleton);
 
-        DeadState = new Enemy_DeadState(, EnemyStateMachine, "dead");
-
-        IdleDirector = IdleState;
-        MoveDirector = MoveState;
-        ChaseDirector = BattleState;
-        LifeDirector = DeadState;
+       
     }
 
 
@@ -244,4 +245,4 @@ public class Enemy_Skeleton : Entity
         // 모든 테스트 통과: 점프 가능
         return true;
     }
-}*/
+}

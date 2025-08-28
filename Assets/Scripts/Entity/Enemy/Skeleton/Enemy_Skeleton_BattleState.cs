@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class Enemy_BattleState : Chase_director
+public class Enemy_Skeleton_BattleState : Chase_director
 {
     
     private Transform player;
@@ -9,9 +9,8 @@ public class Enemy_BattleState : Chase_director
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
-    public Enemy_BattleState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
+    public Enemy_Skeleton_BattleState(Enemy_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(null, enemyStateMachine, animBoolName)
     {
-        
     }
     
     public override void Enter()
