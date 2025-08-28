@@ -16,22 +16,17 @@ public class Enemy_JumpState : EnemyState
     {   
         base.Enter();
         originalGroundCheckLocalPos = enemy.groundCheck.localPosition;
-
-        // X좌표만 0으로 변경 (Y,Z는 그대로 유지)
         enemy.groundCheck.localPosition = new Vector2(0f, originalGroundCheckLocalPos.y);
-        enemy.SetVelocity(rigidbody.linearVelocity.x,_jumpData.jumpForce);
-        _jumpData.isJumping = true;
-         
-         
-        
 
+        // 수평 속도와 수직 속도를 함께 적용하여 '도약' 구현
+        float horizontalVelocity = _jumpData.jumpVelocity * enemy.FacingDirection;
+        enemy.SetVelocity(horizontalVelocity, _jumpData.jumpForce);
+        _jumpData.isJumping = true;
     }
     
     public override void Update()
     {
         base.Update();
-        
-        
         
         if (_jumpData.isJumping && enemy.IsGroundDetected)
         {
@@ -43,10 +38,8 @@ public class Enemy_JumpState : EnemyState
 
     private void ChangeStates(string stateName)
     {
-        
         if (stateName == "Chase_director")
         {
-            Debug.Log("ddddd");
             enemyStateMachine.ChangeState(enemy.ChaseDirector);
         }
         if (stateName == "Move_director")
@@ -54,6 +47,4 @@ public class Enemy_JumpState : EnemyState
             enemyStateMachine.ChangeState(enemy.MoveDirector);
         }
     }
-    
-    
 }

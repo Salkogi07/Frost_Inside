@@ -1,15 +1,17 @@
-﻿using System.Collections.Generic;
+﻿/*using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine;
 
-public class Enemy : Entity
+public class Enemy_Skeleton : Entity
 {
-    
-    // public Enemy_IdleState IdleState;
-    // public Enemy_MoveState  MoveState;
-    // public Enemy_ChaseState   ChaseState;
-    // public Enemy_AttackState AttackState;
-    // public Enemy_DeadState  DeadState;
-    
+
+    public Enemy_IdleState IdleState { get; private set; }
+    public Enemy_MoveState MoveState { get; private set; }
+    public Enemy_BattleState BattleState { get; private set; }
+    public Enemy_JumpState JumpState { get; private set; }
+    public Enemy_AttackState AttackState { get; private set; }
+    public Enemy_DeadState DeadState { get; private set; }
+
     protected Enemy_StateMachine EnemyStateMachine;
     protected Dictionary<System.Type, EnemyState> States;
     
@@ -26,7 +28,9 @@ public class Enemy : Entity
     [SerializeField] private Transform primaryWallCheck;
     [SerializeField] private Transform secondaryWallCheck;
     [SerializeField] public float wallCheckDistance;
-    
+
+    [Header("Jump Config")] public EnemyJumpData jumpData;
+
     public bool IsGroundDetected { get; private set; }
     public bool IsWallDetected { get; private set; }
 
@@ -114,12 +118,27 @@ public class Enemy : Entity
         
         EnemyStateMachine = new Enemy_StateMachine();
         States = new Dictionary<System.Type, EnemyState>();
+
+        States[typeof(Enemy_AttackState)] = new Enemy_AttackState(this, EnemyStateMachine, "attack");
+        IdleState = new Enemy_IdleState(this, EnemyStateMachine, "idle");
+        MoveState = new Enemy_MoveState(this, EnemyStateMachine, "move");
+        BattleState = new Enemy_BattleState(this, EnemyStateMachine, "battle");
+        // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
+        // JumpState = new Enemy_JumpState(this,EnemyStateMachine, "jump", jumpData);
+        States[typeof(Enemy_JumpState)] = new Enemy_JumpState(this, EnemyStateMachine, "jump", jumpData);
+
+        DeadState = new Enemy_DeadState(, EnemyStateMachine, "dead");
+
+        IdleDirector = IdleState;
+        MoveDirector = MoveState;
+        ChaseDirector = BattleState;
+        LifeDirector = DeadState;
     }
 
 
     protected virtual void Start()
     {
-        
+        EnemyStateMachine.Initialize(IdleDirector);
     }
 
     protected virtual void Update()
@@ -192,4 +211,37 @@ public class Enemy : Entity
     {
         EnemyStateMachine.currentState.CallAnimationTrigger();
     }
-}
+
+    public bool CanPerformLeap()
+    {
+        var jumpState = GetState<Enemy_JumpState>();
+        if (jumpState == null)
+            return false;
+
+        // BoxCast 파라미터 설정
+        Vector2 boxSize = coll.size;
+        float jumpHeight = jumpState._jumpData.jumpForce * 0.5f; // 대략적인 점프 높이 예측
+        float leapDistance = jumpState._jumpData.jumpVelocity * 0.5f; // 대략적인 도약 거리 예측
+        Vector2 castOrigin = (Vector2)transform.position + new Vector2(0, boxSize.y / 2);
+
+        // 1. 머리 위 공간 확인 (수직 BoxCast)
+        RaycastHit2D ceilingHit = Physics2D.BoxCast(castOrigin, boxSize, 0f, Vector2.up, jumpHeight, whatIsWall);
+        if (ceilingHit.collider != null)
+        {
+            // Debug.Log("천장이 막혀 점프 불가!");
+            return false;
+        }
+
+        // 2. 전방 착지 공간 확인 (대각선 BoxCast)
+        Vector2 leapDirection = new Vector2(FacingDirection, 1).normalized;
+        RaycastHit2D forwardHit = Physics2D.BoxCast(castOrigin, boxSize, 0f, leapDirection, leapDistance, whatIsWall);
+        if (forwardHit.collider != null)
+        {
+            // Debug.Log("점프 경로에 장애물이 있어 점프 불가!");
+            return false;
+        }
+
+        // 모든 테스트 통과: 점프 가능
+        return true;
+    }
+}*/
