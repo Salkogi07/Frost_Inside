@@ -113,6 +113,12 @@ public class PlayerSpawnController : NetworkBehaviour
         
         GameObject playerInstance = Instantiate(prefabToSpawn, position, rotation);
         NetworkObject networkObject = playerInstance.GetComponent<NetworkObject>();
+        
+        if (playerInstance.TryGetComponent<PlayerNameSetup>(out var playerNameSetup))
+        {
+            playerNameSetup.SetPlayerName(playerInfo.SteamName);
+        }
+        
         networkObject.SpawnAsPlayerObject(clientId, true);
 
         Debug.Log($"[Spawn Controller] {playerInfo.SteamName}의 캐릭터를 {prefabToSpawn.name}(으)로 교체하여 {position}에 리스폰했습니다.");
