@@ -67,7 +67,7 @@ public class ItemSpawner : NetworkBehaviour
                                       : p < 0.85f ? ItemType.Normal
                                       : ItemType.Special;
 
-                // [수정됨] 데이터베이스에서 받아온 spawnableItems 리스트에서 아이템을 필터링합니다.
+                // 데이터베이스에서 받아온 spawnableItems 리스트에서 아이템을 필터링합니다.
                 var candidates = spawnableItems.Where(d => d.itemType == selectedType).ToList();
                 if (candidates.Count == 0) continue;
                 ItemData data = candidates[Random.Range(0, candidates.Count)];
@@ -98,6 +98,9 @@ public class ItemSpawner : NetworkBehaviour
             var networkObject = drop.GetComponent<NetworkObject>();
             
             networkObject.Spawn(true);
+            networkObject.TrySetParent(dropParent, false);
+            
+            Debug.Log("Item Code" + invItem);
             
             itemObject.SetupItemServerRpc(invItem, vel);
         }

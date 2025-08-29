@@ -6925,6 +6925,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1197352826}
   - component: {fileID: 1197352827}
+  - component: {fileID: 1197352829}
   - component: {fileID: 1197352828}
   m_Layer: 0
   m_Name: Items
@@ -6976,6 +6977,31 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   dropParent: {fileID: 1197352826}
   dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
+--- !u!114 &1197352829
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197352825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 1189950002
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 0
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &1205218520
 GameObject:
   m_ObjectHideFlags: 0
@@ -9048,6 +9074,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1492779297}
+  - component: {fileID: 1492779298}
   m_Layer: 0
   m_Name: Monsters
   m_TagString: Untagged
@@ -9070,52 +9097,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1142947451}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1499488020
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1499488021}
-  - component: {fileID: 1499488022}
-  - component: {fileID: 1499488023}
-  m_Layer: 0
-  m_Name: PlayerSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1499488021
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499488020}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1499488022
+--- !u!114 &1492779298
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499488020}
+  m_GameObject: {fileID: 1492779296}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3665662011
+  GlobalObjectIdHash: 3599023302
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -9128,24 +9122,6 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &1499488023
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1499488020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea594cd4e8fb7814aa2cd8355541e0ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  playerPrefabs:
-  - {fileID: 3867197236472526811, guid: 18225d0806210874ab2e15824726e6da, type: 3}
-  - {fileID: 3867197236472526811, guid: dada9fe415dfb264f822c9da044476eb, type: 3}
-  spawnPoints:
-  - {fileID: 0}
 --- !u!1 &1538127688
 GameObject:
   m_ObjectHideFlags: 0
@@ -13431,7 +13407,6 @@ SceneRoots:
   - {fileID: 1883571462}
   - {fileID: 1142947451}
   - {fileID: 2080268051}
-  - {fileID: 1499488021}
   - {fileID: 61249879}
   - {fileID: 1378455370}
   - {fileID: 1922936999}

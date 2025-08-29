@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using Unity.Netcode;
 
 [RequireComponent(typeof(NetworkObject), typeof(Rigidbody2D))]
@@ -6,6 +7,12 @@ public class ItemObject : NetworkBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer spriteRenderer;
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private readonly NetworkVariable<Inventory_Item> networkItem = new NetworkVariable<Inventory_Item>(
         Inventory_Item.Empty, // 기본값을 빈 아이템으로 설정
@@ -15,6 +22,7 @@ public class ItemObject : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        Debug.Log("OnNetworkSpawn");
         networkItem.OnValueChanged += OnNetworkItemChanged;
         UpdateVisuals(networkItem.Value);
     }
@@ -57,6 +65,7 @@ public class ItemObject : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SetupItemServerRpc(Inventory_Item itemData, Vector2 velocity)
     {
+        Debug.Log("SetupItemServerRpc"+ itemData.itemId);
         if (!IsServer) return;
         networkItem.Value = itemData;
         rb.linearVelocity = velocity;
