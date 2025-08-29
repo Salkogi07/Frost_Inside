@@ -19,17 +19,21 @@
 
         public override void Update()
         {
-            // base.Update();
-            // if (enemy.IsWallDetected && enemy.CanPerformLeap())
-            // {
-            //     enemy.GetState<Enemy_JumpState>().StateName = "Move_director";
-            //     enemyStateMachine.ChangeState(enemy.GetState<Enemy_JumpState>());
-            // }
-            // else if (!enemy.GetState<Enemy_JumpState>()._jumpData.isJumping && (enemy.IsWallDetected || !enemy.IsGroundDetected))
-            // {
-            //     enemyStateMachine.ChangeState(enemy.IdleDirector);
-            // }
+        // base.Update();
+        // if (enemy.IsWallDetected && enemy.CanPerformLeap())
+        // {
+        //     enemy.GetState<Enemy_JumpState>().StateName = "Move_director";
+        //     enemyStateMachine.ChangeState(enemy.GetState<Enemy_JumpState>());
+        // }
+        // else if (!enemy.GetState<Enemy_JumpState>()._jumpData.isJumping && (enemy.IsWallDetected || !enemy.IsGroundDetected))
+        // {
+        //     enemyStateMachine.ChangeState(enemy.IdleDirector);
+        // }
+        if (enemy.PlayerDetection() == true)
+        {
+            enemyStateMachine.ChangeState(enemy.ChaseDirector);
         }
+    }
 
         public override void FiexedUpdate()
         {

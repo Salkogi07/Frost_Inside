@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 
-    public class Enemy_Skeleton_IdleState : Idle_director
+    public class Enemy_Skeleton_IdleState : EnemyState
     {
         
         public Enemy_Skeleton_IdleState(Enemy_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(null, enemyStateMachine, animBoolName)
@@ -20,7 +20,12 @@
         {
             base.Update();
 
-            if (stateTimer < 0)
+        if (enemy.PlayerDetection() == true)
+        {
+            enemyStateMachine.ChangeState(enemy.ChaseDirector);
+        }
+
+        if (stateTimer < 0)
             {
                 if (enemy.IsGroundDetected == false || enemy.IsWallDetected)
                 {

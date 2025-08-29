@@ -47,7 +47,7 @@ GameObject:
   - component: {fileID: 2093785360371588388}
   - component: {fileID: 3255006627929712995}
   - component: {fileID: 3017641695211089111}
-  - component: {fileID: 7941363909139575587}
+  - component: {fileID: 45811418883981557}
   - component: {fileID: 3887468149059330943}
   - component: {fileID: 509788980795662491}
   - component: {fileID: 6403125614287489953}
@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 0
+  GlobalObjectIdHash: 658670921
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -167,7 +167,7 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
---- !u!114 &7941363909139575587
+--- !u!114 &45811418883981557
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,21 +176,33 @@ MonoBehaviour:
   m_GameObject: {fileID: 3867197236472526811}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe7ad6ec7f874f36bbf946d5558e8233, type: 3}
+  m_Script: {fileID: 11500000, guid: d0aebf2a7b655994595164adc7532054, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  Enemy: {fileID: 0}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8
-  groundCheck: {fileID: 6888678176120883945}
-  groundCheckDistance: 0.15
+    m_Bits: 0
+  groundCheck: {fileID: 0}
+  groundCheckDistance: 0
   whatIsWall:
     serializedVersion: 2
-    m_Bits: 8
-  primaryWallCheck: {fileID: 2724800033337947095}
-  secondaryWallCheck: {fileID: 2724800033337947095}
-  wallCheckDistance: 0.3
+    m_Bits: 0
+  primaryWallCheck: {fileID: 0}
+  secondaryWallCheck: {fileID: 0}
+  wallCheckDistance: 0
+  jumpData:
+    jumpForce: 0
+    jumpCoolTime: 0
+    isJumping: 0
+    jumpVelocity: 0
+    enemy_Ground_Check_Y_Coordinate: 0
+    whatIsJump:
+      serializedVersion: 2
+      m_Bits: 0
+    primaryJumpCheck: {fileID: 0}
+    jumpCheckDistance: 0
   battleMoveSpeed: 3
   attackDistance: 2
   battleTimeDuration: 5
@@ -199,21 +211,11 @@ MonoBehaviour:
   playerCheck: {fileID: 0}
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 0
   playerCheckDistance: 10
   IdleTime: 2
   MoveSpeed: 1.4
   moveAnimSpeedMultiplier: 1
-  jumpData:
-    jumpForce: 0
-    jumpCoolTime: 0
-    isJumping: 0
-    enemy_Ground_Check_Y_Coordinate: 0
-    whatIsJump:
-      serializedVersion: 2
-      m_Bits: 0
-    primaryJumpCheck: {fileID: 0}
-    jumpCheckDistance: 0
 --- !u!114 &3887468149059330943
 MonoBehaviour:
   m_ObjectHideFlags: 0

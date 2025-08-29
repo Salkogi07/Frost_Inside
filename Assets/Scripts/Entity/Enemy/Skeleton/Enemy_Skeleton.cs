@@ -122,6 +122,7 @@ public class Enemy_Skeleton : Entity
         base.Awake();
         
         EnemyStateMachine = new Enemy_StateMachine();
+        coll = GetComponent<BoxCollider2D>();
         States = new Dictionary<System.Type, EnemyState>();
 
         // AttackState = new Enemy_AttackState(EnemyStateMachine, "attack",_skeleton);

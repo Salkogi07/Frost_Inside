@@ -13704,6 +13704,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: groundCheck
+      value: 
+      objectReference: {fileID: 1160284136}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: playerCheck
+      value: 
+      objectReference: {fileID: 101370337}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: primaryWallCheck
+      value: 
+      objectReference: {fileID: 1160284135}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: wallCheckDistance
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: secondaryWallCheck
+      value: 
+      objectReference: {fileID: 1160284135}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: groundCheckDistance
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: whatIsGround.m_Bits
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: whatIsPlayer.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: moveAnimSpeedMultiplier
+      value: 5.45
+      objectReference: {fileID: 0}
     - target: {fileID: 341091927384374172, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -13890,6 +13930,7 @@ PrefabInstance:
     - {fileID: 2318531028366378217, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     - {fileID: 564989446788298968, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     - {fileID: 748514528279752800, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+    - {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3733507237557569488, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
@@ -13930,6 +13971,16 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!4 &1160284135 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2724800033337947095, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+  m_PrefabInstance: {fileID: 1160284132}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1160284136 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6888678176120883945, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+  m_PrefabInstance: {fileID: 1160284132}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1161184185
 GameObject:
   m_ObjectHideFlags: 0
