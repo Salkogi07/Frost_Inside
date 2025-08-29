@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
   m_Name: Knife
   m_EditorClassIdentifier: 
+  itemId: 10
   itemType: 2
   itemName: "\uB098\uC774\uD504"
   icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
     \uC720\uB9AC \uC6A9\uAE30\uC785\uB2C8\uB2E4. \uC785\uAD6C\uC5D0 \uC8FC\uB465\uC774\uAC00
     \uC788\uC5B4 \uBD93\uAE30 \uD3B8\uB9AC\uD569\uB2C8\uB2E4."
   priceRange: {x: 40, y: 55}
+  isSpawnable: 1

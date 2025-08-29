@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
   m_Name: Broken_Pistol
   m_EditorClassIdentifier: 
+  itemId: 2
   itemType: 2
   itemName: "\uAD8C\uCD1D(\uACE0\uC7A5\uB09C)"
   icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
     \uC8FC\uB85C \uAD70\xB7\uACBD\uCC30 \uD6C8\uB828\uC6A9 \uB354\uBBF8\uB85C \uC4F0\uC774\uAC70\uB098
     \uC218\uB9AC\uC6A9 \uBD80\uC18D\uD488\uC73C\uB85C \uD65C\uC6A9\uB429\uB2C8\uB2E4."
   priceRange: {x: 40, y: 50}
+  isSpawnable: 1

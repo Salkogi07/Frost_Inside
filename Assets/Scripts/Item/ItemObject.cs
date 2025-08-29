@@ -65,7 +65,6 @@ public class ItemObject : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SetupItemServerRpc(Inventory_Item itemData, Vector2 velocity)
     {
-        Debug.Log("SetupItemServerRpc"+ itemData.itemId);
         if (!IsServer) return;
         networkItem.Value = itemData;
         rb.linearVelocity = velocity;

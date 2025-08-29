@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
   m_Name: Magnifying_Glass
   m_EditorClassIdentifier: 
+  itemId: 13
   itemType: 2
   itemName: "\uB3CB\uBCF4\uAE30"
   icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
@@ -19,3 +20,4 @@ MonoBehaviour:
     \uC4F0\uB294 \uB80C\uC988 \uC7A5\uCE58\uB85C, \uBCF4\uC11D \uAC10\uC815\xB7\uC778\uC1C4\uBB3C
     \uD655\uC778\xB7\uACE4\uCDA9 \uAD00\uCC30 \uB4F1\uC5D0 \uD65C\uC6A9\uB429\uB2C8\uB2E4."
   priceRange: {x: 40, y: 50}
+  isSpawnable: 1

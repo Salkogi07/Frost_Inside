@@ -100,8 +100,6 @@ public class ItemSpawner : NetworkBehaviour
             networkObject.Spawn(true);
             networkObject.TrySetParent(dropParent, false);
             
-            Debug.Log("Item Code" + invItem);
-            
             itemObject.SetupItemServerRpc(invItem, vel);
         }
 

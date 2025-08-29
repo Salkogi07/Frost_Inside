@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
   m_Name: Electrical_Wire
   m_EditorClassIdentifier: 
+  itemId: 5
   itemType: 2
   itemName: "\uC804\uC120"
   icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
     \uAC00\uC815\xB7\uC0B0\uC5C5\uC6A9 \uC804\uAE30 \uBC30\uC120 \uBC0F \uD1B5\uC2E0
     \uCF00\uC774\uBE14\uC5D0 \uC0AC\uC6A9\uB429\uB2C8\uB2E4."
   priceRange: {x: 40, y: 55}
+  isSpawnable: 1

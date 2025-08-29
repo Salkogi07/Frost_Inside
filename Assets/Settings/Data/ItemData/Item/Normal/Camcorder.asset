@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
   m_Name: Camcorder
   m_EditorClassIdentifier: 
+  itemId: 3
   itemType: 2
   itemName: "\uCEA0\uCF54\uB354"
   icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
     \uD504\uB85C\uD398\uC154\uB110\uC6A9\uAE4C\uC9C0 \uD654\uC9C8\xB7\uAE30\uB2A5\uBCC4\uB85C
     \uAD6C\uBD84\uB429\uB2C8\uB2E4."
   priceRange: {x: 55, y: 70}
+  isSpawnable: 1

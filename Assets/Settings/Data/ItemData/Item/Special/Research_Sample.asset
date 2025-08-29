@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
   m_Name: Research_Sample
   m_EditorClassIdentifier: 
+  itemId: 21
   itemType: 3
   itemName: "\uC5F0\uAD6C\uC0D8\uD50C"
   icon: {fileID: 21300000, guid: f4ea2a287a673c94d833143ad78e604d, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
     \uC870\uC9C1, \uB370\uC774\uD130 \uB4F1\uC744 \uD3EC\uD568\uD558\uBA70 \uC5F0\uAD6C
     \uACB0\uACFC\uC758 \uC2E0\uB8B0\uC131\uC744 \uB192\uC785\uB2C8\uB2E4."
   priceRange: {x: 120, y: 140}
+  isSpawnable: 1

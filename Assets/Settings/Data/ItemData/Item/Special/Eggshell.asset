@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
   m_Name: Eggshell
   m_EditorClassIdentifier: 
+  itemId: 17
   itemType: 3
   itemName: "\uC54C\uAECD\uC9C8"
   icon: {fileID: 21300000, guid: f4ea2a287a673c94d833143ad78e604d, type: 3}
@@ -20,3 +21,4 @@ MonoBehaviour:
     \uAD6C\uC870\uC801 \uAC15\uB3C4\uC640 \uD638\uD761 \uAC00\uB2A5\uC131\uC744 \uB3D9\uC2DC\uC5D0
     \uC81C\uACF5\uD569\uB2C8\uB2E4."
   priceRange: {x: 120, y: 130}
+  isSpawnable: 1
