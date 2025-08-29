@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class ItemDrop : MonoBehaviour
 {
-    [SerializeField] private GameObject dropPrefab;
+    /*[SerializeField] private GameObject dropPrefab;
 
     protected void DropItem(Inventory_Item _itemData)
     {
@@ -21,5 +21,5 @@ public class ItemDrop : MonoBehaviour
         Vector2 randomVelocity = new Vector2(3 * transform.localScale.x * -1, 8);
 
         newDrop.GetComponent<ItemObject>().SetupItem(_itemData, randomVelocity);
-    }
+    }*/
 }

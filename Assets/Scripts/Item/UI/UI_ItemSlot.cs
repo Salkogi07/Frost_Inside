@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -31,7 +32,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     protected virtual void ThrowItem()
     {
         /*PlayerManager.instance.playerDrop
-                     .Inventory_Throw(item.data, inventorySlotIndex);*/
+                     .Inventory_Throw(item.data, inventorySlotIndex);#1#
 
         if (UIManager.instance.itemToolTip.gameObject.activeSelf)
         {
@@ -164,3 +165,4 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         UIManager.instance.itemToolTip.HideToolTip();
     }
 }
+*/

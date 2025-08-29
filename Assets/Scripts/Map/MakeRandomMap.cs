@@ -9,6 +9,9 @@ using Random = UnityEngine.Random;
 
 public class MakeRandomMap : MonoBehaviour
 {
+    [Header("=== 아이템 스포너 설정 ===")]
+    [SerializeField] private ItemSpawner itemSpawner;
+    
     [Header("=== 방 프리팹 및 플레이어 설정 ===")]
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
@@ -38,34 +41,6 @@ public class MakeRandomMap : MonoBehaviour
     private List<List<Vector2Int>> roomItemSpawnPositions = new List<List<Vector2Int>>();
     private List<RoomItemSettings> roomSettings = new List<RoomItemSettings>();
     private List<List<Vector2Int>> roomMonsterSpawnPositions = new List<List<Vector2Int>>();
-
-    [Header("=== 아이템 부모 설정===")]
-    [SerializeField] private Transform dropParent;
-
-    [Header("=== 몬스터 부모 설정 ===")]
-    [SerializeField] private Transform monsterParent;
-
-    [Header("몬스터 스폰 간격 설정")]
-    [Tooltip("다음 스폰까지 최소 대기 시간(초)")]
-    [SerializeField] private float minSpawnInterval = 10f;
-    [Tooltip("다음 스폰까지 최대 대기 시간(초)")]
-    [SerializeField] private float maxSpawnInterval = 30f;
-
-    [Header("몬스터 스폰 개수 설정")]
-    [Tooltip("한 사이클당 최소 소환할 몬스터 수")]
-    [SerializeField] private int minSpawnCount = 1;
-    [Tooltip("한 사이클당 최대 소환할 몬스터 수")]
-    [SerializeField] private int maxSpawnCount = 3;
-
-    [Header("=== 아이템 드롭 설정 ===")]
-    private const int minTotalPriceSum = 1800;
-    private const int maxTotalPriceSum = 2200;
-
-    [Tooltip("드롭할 프리팹을 할당하세요.")]
-    [SerializeField] private GameObject dropPrefab;
-
-    [Tooltip("드롭 가능한 아이템 데이터 리스트")]
-    [SerializeField] private List<ItemData> itemList;
 
     [Header("=== 광석 설정 ===")]
     [SerializeField] private List<OreSetting> oreSettings;     // Inspector에서 여러 종류 설정
@@ -166,7 +141,14 @@ public class MakeRandomMap : MonoBehaviour
         // 아이템 생성은 서버만 담당
         if (NetworkManager.Singleton.IsServer)
         {
-            DropItems();
+            if (itemSpawner != null)
+            {
+                itemSpawner.SpawnItemsOnMap(roomItemSpawnPositions, roomSettings, spreadTilemap);
+            }
+            else
+            {
+                Debug.LogError("[MakeRandomMap] ItemSpawner가 할당되지 않았습니다!");
+            }
         }
         
         if (NetworkManager.Singleton.IsClient)
@@ -198,67 +180,6 @@ public class MakeRandomMap : MonoBehaviour
                 oreTileDict[pos] = ore;
             }
         }
-    }
-
-
-    private void DropItems()
-    {
-        var dropInfos = new List<(ItemData data, Vector3 pos, Vector2 vel, int price)>();
-        int totalPriceSum = 0;
-        bool reachedMax = false;
-
-        for (int i = 0; i < roomItemSpawnPositions.Count && !reachedMax; i++)
-        {
-            var spawnPositions = roomItemSpawnPositions[i];
-            if (spawnPositions.Count == 0) continue;
-
-            var settings = roomSettings[i];
-            int maxDrops = settings != null ? settings.maxDropCount : 0;
-            int dropCount = Random.Range(1, maxDrops + 1);
-
-            for (int j = 0; j < dropCount; j++)
-            {
-                int idx = Random.Range(0, spawnPositions.Count);
-                Vector3Int cellPos = (Vector3Int)spawnPositions[idx];
-                Vector3 worldPos = spreadTilemap.ItemSpawnTilemap
-                                   .CellToWorld(cellPos) + new Vector3(0.5f, 0.5f, 0f);
-                Vector2 velocity = new Vector2(Random.Range(-5f, 5f), Random.Range(15f, 20f));
-
-                float p = Random.value;
-                ItemType selectedType = p < 0.25f ? ItemType.UseItem
-                                      : p < 0.85f ? ItemType.Normal
-                                      : ItemType.Special;
-
-                var candidates = itemList.Where(d => d.itemType == selectedType).ToList();
-                if (candidates.Count == 0) continue;
-                ItemData data = candidates[Random.Range(0, candidates.Count)];
-                int price = Random.Range(data.priceRange.x, data.priceRange.y + 1);
-
-                if (totalPriceSum + price > maxTotalPriceSum)
-                {
-                    reachedMax = true;
-                    break;
-                }
-                dropInfos.Add((data, worldPos, velocity, price));
-                totalPriceSum += price;
-            }
-        }
-
-        int targetSum = Mathf.Clamp(totalPriceSum, minTotalPriceSum, maxTotalPriceSum);
-        float adjustRatio = (float)targetSum / Mathf.Max(totalPriceSum, 1);
-
-        foreach (var (data, pos, vel, price) in dropInfos)
-        {
-            int adjustedPrice = Mathf.RoundToInt(price * adjustRatio);
-            var invItem = new Inventory_Item(data, adjustedPrice);
-
-            // 네트워크 오브젝트로 아이템 생성
-            var drop = Instantiate(dropPrefab, pos, Quaternion.identity, dropParent);
-            drop.GetComponent<ItemObject>().SetupItem(invItem, vel);
-            drop.GetComponent<NetworkObject>().Spawn(true); //서버에서 생성 후 모든 클라이언트에 동기화
-        }
-
-        Debug.Log($"[DropItems] OriginalSum: {totalPriceSum}, ClampedSum: {targetSum}");
     }
     
     private void PlaceRoom(GameObject roomPrefab, Vector2Int offset)

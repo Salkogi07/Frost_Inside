@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class Player_ItemDrop : ItemDrop
 {
-    public void GenerateDrop()
+    /*public void GenerateDrop()
     {
         Inventory inventory = Inventory.instance;
         var itemsToUnequip = new List<Inventory_Item>();
@@ -100,5 +100,5 @@ public class Player_ItemDrop : ItemDrop
             ThrowItem(item);
             Inventory.instance.Remove_QuickSlot_Item(index);
         }
-    }
+    }*/
 }
