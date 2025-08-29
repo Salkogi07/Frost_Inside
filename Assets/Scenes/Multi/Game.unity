@@ -6925,6 +6925,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1197352826}
   - component: {fileID: 1197352827}
+  - component: {fileID: 1197352828}
   m_Layer: 0
   m_Name: Items
   m_TagString: Untagged
@@ -6960,6 +6961,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: []
+--- !u!114 &1197352828
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197352825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2d74fda165443a09dea6bbdb70a1e05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  dropParent: {fileID: 1197352826}
+  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
 --- !u!1 &1205218520
 GameObject:
   m_ObjectHideFlags: 0
@@ -13016,6 +13032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daa047cf8159ef845b5c8c533260eb12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemSpawner: {fileID: 1197352828}
   roomPrefabs:
   - {fileID: 4598726474971685724, guid: 70b063b6055d15c4db15648bb1c16fba, type: 3}
   - {fileID: 7542970107553027502, guid: b60ef86ee48b8e04e869d599b00a8e63, type: 3}
@@ -13030,54 +13047,22 @@ MonoBehaviour:
   mapMin: {x: -70, y: -40}
   mapMax: {x: 70, y: 40}
   fillerBackgroundTile: {fileID: 0}
-  dropParent: {fileID: 1197352826}
-  monsterParent: {fileID: 1492779297}
-  minSpawnInterval: 60
-  maxSpawnInterval: 120
-  minSpawnCount: 1
-  maxSpawnCount: 3
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
-  itemList:
-  - {fileID: 11400000, guid: 9d7c19c19b353ec469b5131df4248624, type: 2}
-  - {fileID: 11400000, guid: 3f78d1d4851e34147b5f459094bcf126, type: 2}
-  - {fileID: 11400000, guid: ae719cd226bfe3c4bbb3905e3d9b8e16, type: 2}
-  - {fileID: 11400000, guid: d28d3e5fb69554946bae9bdd1ee35e0e, type: 2}
-  - {fileID: 11400000, guid: dc5cb497a67b6864cb5483f20f915a8d, type: 2}
-  - {fileID: 11400000, guid: 8a06ede11546dd143a644761b81cbee3, type: 2}
-  - {fileID: 11400000, guid: 8e120844a0fca5042b534cb884abb595, type: 2}
-  - {fileID: 11400000, guid: 7df0fefb92ff75f4091ef855270ac2e1, type: 2}
-  - {fileID: 11400000, guid: 4f769f3d1c298774e82b6a91d293a0b6, type: 2}
-  - {fileID: 11400000, guid: 9a97d1db897fbcc47988474ea020e57e, type: 2}
-  - {fileID: 11400000, guid: 32ccf2da221817946aac0f3996575cb1, type: 2}
-  - {fileID: 11400000, guid: 5db38e46540032b4b9c213ddafcda6fb, type: 2}
-  - {fileID: 11400000, guid: 95740a52ae13bb942a0929e0d6b21cbd, type: 2}
-  - {fileID: 11400000, guid: 1af0b98282831f448ad39a2f8d12189f, type: 2}
-  - {fileID: 11400000, guid: 48ca22142d5c2f64f9bc5fc1408a63c7, type: 2}
-  - {fileID: 11400000, guid: 4196a39504db9c349b1e3381f6b6c281, type: 2}
-  - {fileID: 11400000, guid: 2c7d80604beb2da4c9215336a2f610b4, type: 2}
-  - {fileID: 11400000, guid: c211738307c610344a9f0edf6ce8fc04, type: 2}
-  - {fileID: 11400000, guid: 3deab072efb4c664eb230ac2a189efba, type: 2}
-  - {fileID: 11400000, guid: c52d2582232527543b006d252f05dfeb, type: 2}
-  - {fileID: 11400000, guid: caf686fd47de6684f81ef7cd15afd89b, type: 2}
-  - {fileID: 11400000, guid: fe7c6eeb5924eb041a9bf90fd73a3a52, type: 2}
-  - {fileID: 11400000, guid: 2e966b2364cb3924cb47e8b5b3de5008, type: 2}
-  - {fileID: 11400000, guid: a3818d7bbc0e97d43b86e9c32a178bc9, type: 2}
   oreSettings:
   - oreTile: {fileID: 11400000, guid: cb6a60de8fb04324bac31a3e694ecbcb, type: 2}
     dropItem:
-      data: {fileID: 11400000, guid: fe7c6eeb5924eb041a9bf90fd73a3a52, type: 2}
+      itemId: 0
       price: 0
   - oreTile: {fileID: 11400000, guid: cb6a60de8fb04324bac31a3e694ecbcb, type: 2}
     dropItem:
-      data: {fileID: 11400000, guid: caf686fd47de6684f81ef7cd15afd89b, type: 2}
+      itemId: 0
       price: 0
   - oreTile: {fileID: 11400000, guid: cb6a60de8fb04324bac31a3e694ecbcb, type: 2}
     dropItem:
-      data: {fileID: 11400000, guid: 2c7d80604beb2da4c9215336a2f610b4, type: 2}
+      itemId: 0
       price: 0
   - oreTile: {fileID: 11400000, guid: cb6a60de8fb04324bac31a3e694ecbcb, type: 2}
     dropItem:
-      data: {fileID: 11400000, guid: c52d2582232527543b006d252f05dfeb, type: 2}
+      itemId: 0
       price: 0
   oreSpawnChance: 0.005
 --- !u!1 &2093138221

@@ -168,7 +168,7 @@ public class Player_Condition : MonoBehaviour
         }
         else
         {
-            UIManager.instance.ShowDamageEffect();
+            //UIManager.instance.ShowDamageEffect();
         }
     }
 
@@ -176,7 +176,7 @@ public class Player_Condition : MonoBehaviour
     {
         _isDead = true;
 
-        GetComponent<Player_ItemDrop>()?.GenerateDrop();
+        //GetComponent<Player_ItemDrop>()?.GenerateDrop();
         Debug.Log("죽음");
     }
     #endregion

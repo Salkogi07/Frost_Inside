@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory instance;
+    /*public static Inventory instance;
 
     public bool isPocket = false;
     public bool isInvenOpen = false;
@@ -392,5 +392,5 @@ public class Inventory : MonoBehaviour
         selectedQuickSlot = index;
         UIManager.instance.QuickSlotUpdate();
         //Debug.Log("Quick Slot Selected: " + index);
-    }
+    }*/
 }

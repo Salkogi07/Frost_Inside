@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -14,7 +15,7 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
     protected override void ThrowItem()
     {
         /*PlayerManager.instance.playerDrop
-                     .QuickSlot_Throw(item.data, quickslot_Index);*/
+                     .QuickSlot_Throw(item.data, quickslot_Index);#1#
 
         if (UIManager.instance.itemToolTip.gameObject.activeSelf)
         {
@@ -61,3 +62,4 @@ public class UI_QuickSlot : UI_ItemSlot, IPointerDownHandler, IBeginDragHandler,
         }
     }
 }
+*/

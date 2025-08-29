@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Player_UseItem : MonoBehaviour
 {
-    Transform playerPos;
+    /*Transform playerPos;
 
     private void Start()
     {
@@ -24,5 +24,5 @@ public class Player_UseItem : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }

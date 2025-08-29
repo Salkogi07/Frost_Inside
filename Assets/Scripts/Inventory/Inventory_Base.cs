@@ -1,4 +1,4 @@
-﻿using System;
+﻿/*using System;
 using System.Collections.Generic;
 using R3;
 using UnityEngine;
@@ -89,4 +89,4 @@ namespace Scripts.Inventory
             //Debug.Log("Quick Slot Selected: " + index);
         }
     }
-}
+}*/

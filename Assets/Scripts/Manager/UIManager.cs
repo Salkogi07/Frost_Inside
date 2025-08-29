@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -47,13 +48,13 @@ public class UIManager : MonoBehaviour
         //UpdateQuickSlot();
     }
 
-    private void UpdateQuickSlot()
+    /*private void UpdateQuickSlot()
     {
         for (int i = 0; i < quickSlot.Length; i++)
         {
             UpdateQuickSlo_View(Inventory.instance.quickSlotItems[i], i);
         }
-    }
+    }#1#
 
     public void UpdatePocket()
     {
@@ -75,7 +76,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateQuickSlo_View(Inventory_Item _newItem, int index)
+    /*public void UpdateQuickSlo_View(Inventory_Item _newItem, int index)
     {
         itemImage[index].color = Color.white;
 
@@ -89,6 +90,7 @@ public class UIManager : MonoBehaviour
             itemImage[index].color = Color.clear;
         }
     }
+    #1#
 
     private void UpdateInventory()
     {
@@ -144,3 +146,4 @@ public class UIManager : MonoBehaviour
         image.color = c;
     }
 }
+*/

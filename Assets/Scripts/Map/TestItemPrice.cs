@@ -5,7 +5,7 @@ public class TestItemPrice : MonoBehaviour
 {
     public ItemObject[] item;
 
-    private void Update()
+    /*private void Update()
     {
         if (Input.GetKeyDown(KeyCode.K))
         {
@@ -44,6 +44,6 @@ public class TestItemPrice : MonoBehaviour
         // �� ���� ��� ���  
         foreach (var kv in typeCounts)
             Debug.Log($"{kv.Key} Ÿ��: {kv.Value}��");
-    }
+    }*/
 
 }

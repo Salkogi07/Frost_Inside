@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -14,7 +15,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
     protected override void ThrowItem()
     {
         /*PlayerManager.instance.playerDrop
-                     .EquipmentSlot_Throw(item.data);*/
+                     .EquipmentSlot_Throw(item.data);#1#
 
         if (UIManager.instance.itemToolTip.gameObject.activeSelf)
         {
@@ -43,7 +44,7 @@ public class UI_EquipmentSlot : UI_ItemSlot
         else
         {
             /*var drop = PlayerManager.instance.playerStats.GetComponent<Player_ItemDrop>();
-            drop.Unequipment_ItemDrop(item.data);*/
+            drop.Unequipment_ItemDrop(item.data);#1#
             CleanUpSlot();
         }
     }
@@ -106,3 +107,4 @@ public class UI_EquipmentSlot : UI_ItemSlot
 
     public override void OnEndDrag(PointerEventData eventData) { }
 }
+*/

@@ -12,6 +12,7 @@ public enum ItemType
 [CreateAssetMenu(fileName = "New ItemData", menuName = "Data/Item")]
 public class ItemData : ScriptableObject
 {
+    public int itemId = -1;
     public ItemType itemType;
     public string itemName;
     public Sprite icon;
@@ -20,4 +21,7 @@ public class ItemData : ScriptableObject
 
     [Header("=== (Inspector) ===")]
     public Vector2Int priceRange = new Vector2Int(50, 100);
+    
+    [Tooltip("true로 설정하면 ItemSpawner에 의해 맵에 드롭될 수 있습니다.")]
+    public bool isSpawnable = true;
 }

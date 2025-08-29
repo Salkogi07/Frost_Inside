@@ -1,3 +1,4 @@
+/*
 using UnityEngine;
 
 public class Player_ItemPicker : MonoBehaviour
@@ -20,7 +21,7 @@ public class Player_ItemPicker : MonoBehaviour
     void Update()
     {
         /*if(stats.isDead || Inventory.instance.isInvenOpen)
-            return;*/
+            return;#1#
         
         if (Time.time >= nextPickupTime && Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Pick Up Item")))
         {
@@ -76,3 +77,4 @@ public class Player_ItemPicker : MonoBehaviour
         return nearest;
     }
 }
+*/
