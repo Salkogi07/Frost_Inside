@@ -1,9 +1,9 @@
 
 using UnityEngine;
 
-public class Enemy_AttackState : EnemyState
+public class Enemy_Skeleton_AttackState : EnemyState
 {
-    public Enemy_AttackState(Enemy enemy, Enemy_StateMachine stateMachine, string animBoolName) : base(enemy,
+    public Enemy_Skeleton_AttackState(Enemy enemy, Enemy_StateMachine stateMachine, string animBoolName) : base(enemy,
         stateMachine, animBoolName)
     {
         
