@@ -5,19 +5,19 @@ using UnityEngine;
 public class Enemy_Skeleton : Entity
 {
 
-    public Enemy_Skeleton_IdleState IdleState { get; private set; }
-    public Enemy_Skeleton_MoveState MoveState { get; private set; }
-    public Enemy_Skeleton_BattleState BattleState { get; private set; }
-    public Enemy_JumpState JumpState { get; private set; }
-    public Enemy_AttackState AttackState { get; private set; }
-    public Enemy_DeadState DeadState { get; private set; }
+    public Enemy_Skeleton_IdleState IdleState;
+    public Enemy_Skeleton_MoveState MoveState;
+    public Enemy_Skeleton_BattleState BattleState;
+    public Enemy_Skeleton_JumpState JumpState;
+    public Enemy_Skeleton_AttackState AttackState;
+    public Enemy_Skeleton_DeadState DeadState;
 
     public Enemy Enemy;
-    Enemy_Skeleton _skeleton;
+    
 
     private BoxCollider2D coll;
     
-    protected Enemy_StateMachine EnemyStateMachine;
+    protected Enemy_Skeleton_StateMachine EnemyStateMachine;
     protected Dictionary<System.Type, EnemyState> States;
     
     private bool _isFacingRight = false;
@@ -61,11 +61,7 @@ public class Enemy_Skeleton : Entity
     
     public Transform player { get; private set; }
 
-    public Idle_director IdleDirector;
-    public Move_director MoveDirector;
-    public Chase_director ChaseDirector;
-    // public Grounded_Idirector  GroundedDirector;
-    public Life_director LifeDirector;
+    
     
 
     public T GetState<T>() where T : EnemyState
@@ -78,20 +74,20 @@ public class Enemy_Skeleton : Entity
     
     public void TryEnterBattleState(Transform player)
     {
-        if (GetState<Enemy_AttackState>() == null)
+        if (AttackState == null)
         {
              return;
         }
-        if (EnemyStateMachine.currentState == ChaseDirector)
+        if (EnemyStateMachine.currentState == BattleState)
         {
             return;
         }
-        if(EnemyStateMachine.currentState == GetState<Enemy_AttackState>())
+        if(EnemyStateMachine.currentState == AttackState)
         {
             return;
         }
         this.player =  player;
-        EnemyStateMachine.ChangeState(ChaseDirector);
+        EnemyStateMachine.ChangeState(BattleState);
     }
 
     public Transform GetPlayerReference()
@@ -121,16 +117,16 @@ public class Enemy_Skeleton : Entity
     {
         base.Awake();
         
-        EnemyStateMachine = new Enemy_StateMachine();
+        EnemyStateMachine = new Enemy_Skeleton_StateMachine();
         coll = GetComponent<BoxCollider2D>();
         States = new Dictionary<System.Type, EnemyState>();
 
-        // AttackState = new Enemy_AttackState(EnemyStateMachine, "attack",_skeleton);
-        IdleState = new Enemy_Skeleton_IdleState(EnemyStateMachine, "idle",_skeleton);
-        MoveState = new Enemy_Skeleton_MoveState(EnemyStateMachine, "move",_skeleton);
-        BattleState = new Enemy_Skeleton_BattleState(EnemyStateMachine, "battle",_skeleton);
+        AttackState = new Enemy_Skeleton_AttackState(this,EnemyStateMachine, "attack");
+        IdleState = new Enemy_Skeleton_IdleState(EnemyStateMachine, "idle",this);
+        MoveState = new Enemy_Skeleton_MoveState(EnemyStateMachine, "move",this);
+        BattleState = new Enemy_Skeleton_BattleState(EnemyStateMachine, "battle",this);
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
-        // JumpState = new Enemy_JumpState(EnemyStateMachine, "jump",_skeleton, jumpData);
+        JumpState = new Enemy_Skeleton_JumpState(this,EnemyStateMachine, "jump", jumpData);
         //
         // DeadState = new Enemy_DeadState(EnemyStateMachine, "dead",_skeleton);
 
@@ -140,7 +136,7 @@ public class Enemy_Skeleton : Entity
 
     protected virtual void Start()
     {
-        EnemyStateMachine.Initialize(IdleDirector);
+        EnemyStateMachine.Initialize(IdleState);
     }
 
     protected virtual void Update()
@@ -216,16 +212,16 @@ public class Enemy_Skeleton : Entity
 
     public bool CanPerformLeap()
     {
-        var jumpState = GetState<Enemy_JumpState>();
-        if (jumpState == null)
+        // var jumpState = GetState<Enemy_JumpState>();
+        if (JumpState == null)
             return false;
-
+    
         // BoxCast 파라미터 설정
         Vector2 boxSize = coll.size;
-        float jumpHeight = jumpState._jumpData.jumpForce * 0.5f; // 대략적인 점프 높이 예측
-        float leapDistance = jumpState._jumpData.jumpVelocity * 0.5f; // 대략적인 도약 거리 예측
+        float jumpHeight = JumpState._jumpData.jumpForce * 0.5f; // 대략적인 점프 높이 예측
+        float leapDistance = JumpState._jumpData.jumpVelocity * 0.5f; // 대략적인 도약 거리 예측
         Vector2 castOrigin = (Vector2)transform.position + new Vector2(0, boxSize.y / 2);
-
+    
         // 1. 머리 위 공간 확인 (수직 BoxCast)
         RaycastHit2D ceilingHit = Physics2D.BoxCast(castOrigin, boxSize, 0f, Vector2.up, jumpHeight, whatIsWall);
         if (ceilingHit.collider != null)
@@ -233,7 +229,7 @@ public class Enemy_Skeleton : Entity
             // Debug.Log("천장이 막혀 점프 불가!");
             return false;
         }
-
+    
         // 2. 전방 착지 공간 확인 (대각선 BoxCast)
         Vector2 leapDirection = new Vector2(FacingDirection, 1).normalized;
         RaycastHit2D forwardHit = Physics2D.BoxCast(castOrigin, boxSize, 0f, leapDirection, leapDistance, whatIsWall);
@@ -242,7 +238,7 @@ public class Enemy_Skeleton : Entity
             // Debug.Log("점프 경로에 장애물이 있어 점프 불가!");
             return false;
         }
-
+    
         // 모든 테스트 통과: 점프 가능
         return true;
     }

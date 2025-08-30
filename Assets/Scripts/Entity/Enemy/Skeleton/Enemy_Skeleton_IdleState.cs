@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
 
-    public class Enemy_Skeleton_IdleState : EnemyState
+    public class Enemy_Skeleton_IdleState : Enemy_Skeleton_State
     {
         
-        public Enemy_Skeleton_IdleState(Enemy_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(null, enemyStateMachine, animBoolName)
+        public Enemy_Skeleton_IdleState(Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(null, enemyStateMachine, animBoolName)
         {
             
         }
@@ -13,26 +13,26 @@
         {
             base.Enter();
             
-            stateTimer = enemy.IdleTime;
+            stateTimer = enemySkeleton.IdleTime;
         }
 
         public override void Update()
         {
             base.Update();
 
-        if (enemy.PlayerDetection() == true)
+        if (enemySkeleton.PlayerDetection() == true)
         {
-            enemyStateMachine.ChangeState(enemy.ChaseDirector);
+            enemyStateMachine.ChangeState(enemySkeleton.BattleState);
         }
 
         if (stateTimer < 0)
-            {
-                if (enemy.IsGroundDetected == false || enemy.IsWallDetected)
+        {
+                if (enemySkeleton.IsGroundDetected == false || enemySkeleton.IsWallDetected)
                 {
-                    enemy.Flip();
+                    enemySkeleton.Flip();
                 }
-                enemyStateMachine.ChangeState(enemy.MoveDirector);
-            }
+                enemyStateMachine.ChangeState(enemySkeleton.MoveState);
+        }
                 
             
         }

@@ -2,20 +2,10 @@
 
 
 
-public abstract class EnemyState<T> : EnemyState where T : Enemy
+public abstract class Enemy_Skeleton_State
 {
-    protected new T enemy;
-
-    public EnemyState(T enemy, Enemy_StateMachine enemyStateMachine, string animBoolName)
-        : base(enemy, enemyStateMachine, animBoolName)
-    {
-        this.enemy = enemy; // 하위 클래스에서 타입 안전하게 사용 가능
-    }
-}
-public abstract class EnemyState
-{
-    protected Enemy enemy;
-    protected Enemy_StateMachine enemyStateMachine;
+    protected Enemy_Skeleton enemySkeleton;
+    protected Enemy_Skeleton_StateMachine enemyStateMachine;
     protected string animBoolName;
 
     protected Animator anim;
@@ -24,14 +14,14 @@ public abstract class EnemyState
     protected float stateTimer;
     protected bool triggerCalled;
 
-    public EnemyState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName)
+    public Enemy_Skeleton_State(Enemy_Skeleton enemySkeleton, Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName)
     {
-        this.enemy = enemy;
+        this.enemySkeleton = enemySkeleton;
         this.enemyStateMachine = enemyStateMachine;
         this.animBoolName = animBoolName;
 
-        anim = enemy.Anim;
-        rigidbody = enemy.rb;
+        anim = enemySkeleton.Anim;
+        rigidbody = enemySkeleton.rb;
     }
 
     public virtual void Enter()
@@ -44,17 +34,17 @@ public abstract class EnemyState
     {
         stateTimer -= Time.deltaTime;
 
-        float battleAnimSpeedMultiplier = enemy.battleMoveSpeed / enemy.MoveSpeed;
+        float battleAnimSpeedMultiplier = enemySkeleton.battleMoveSpeed / enemySkeleton.MoveSpeed;
 
         anim.SetFloat("BattleAnimSpeedMultiplier", battleAnimSpeedMultiplier);
-        anim.SetFloat("moveAnimSpeedMultiplier", enemy.moveAnimSpeedMultiplier);
+        anim.SetFloat("moveAnimSpeedMultiplier", enemySkeleton.moveAnimSpeedMultiplier);
         // anim.SetFloat("xVelocity", rigidbody.linearVelocity.x);
         anim.SetFloat("xVelocity", Mathf.Clamp(rigidbody.linearVelocityX, -1f, 1f));
     }
 
     public virtual void FiexedUpdate()
     {
-        anim.SetFloat("moveAnimSpeedMultiplier", enemy.moveAnimSpeedMultiplier);
+        anim.SetFloat("moveAnimSpeedMultiplier", enemySkeleton.moveAnimSpeedMultiplier);
         // anim.SetFloat("yVelocity", rigidbody.linearVelocity.y);
     }
 

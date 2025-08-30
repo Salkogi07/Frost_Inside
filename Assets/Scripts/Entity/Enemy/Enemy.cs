@@ -3,19 +3,31 @@ using UnityEngine;
 
 public class Enemy : Entity
 {
-    
-    // public Enemy_IdleState IdleState;
-    // public Enemy_MoveState  MoveState;
-    // public Enemy_ChaseState   ChaseState;
-    // public Enemy_AttackState AttackState;
-    // public Enemy_DeadState  DeadState;
+
+
+
+public class Enemy_Skeleton : Enemy
+    {
+        // Enemy_Skeleton 고유 필드 및 메서드
+    }
+
+    public class Enemy_kimTTagmi : Enemy
+    {
+        // Enemy_kimTTagmi 고유 필드 및 메서드
+    }
+  
+    public Enemy_IdleState IdleState;
+    public Enemy_MoveState  MoveState;
+    public Enemy_ChaseState   ChaseState;
+    public Enemy_AttackState AttackState;
+    public Enemy_DeadState  DeadState;
     
     protected Enemy_StateMachine EnemyStateMachine;
     protected Dictionary<System.Type, EnemyState> States;
     
     private bool _isFacingRight = false;
     public int FacingDirection { get; private set; } = -1;
-
+    
     [Header("Collision detection [Ground]")] 
     [SerializeField] public LayerMask whatIsGround;
     [SerializeField] public Transform groundCheck;
@@ -29,41 +41,41 @@ public class Enemy : Entity
     
     public bool IsGroundDetected { get; private set; }
     public bool IsWallDetected { get; private set; }
-
+    
     [Header("Battle details")] public float battleMoveSpeed = 3;
     public float attackDistance = 2;
     public float battleTimeDuration = 5;
     public float minRetreatDistance = 1;
-
+    
     public Vector2 retreatVelocity;
-
+    
     [Header("Player detection")] [SerializeField]
     private Transform playerCheck;
-
+    
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private float playerCheckDistance = 10;
-
+    
     [Header("Movement details")] public float IdleTime = 2;
     public float MoveSpeed = 1.4f;
-
+    
     [Range(0, 10)] public float moveAnimSpeedMultiplier = 1;
-
+    
     
     
     public Transform player { get; private set; }
-
+    
     public Idle_director IdleDirector;
     public Move_director MoveDirector;
     public Chase_director ChaseDirector;
     // public Grounded_Idirector  GroundedDirector;
     public Life_director LifeDirector;
     
-
+    
     public T GetState<T>() where T : EnemyState
     {
         if (States.TryGetValue(typeof(T), out var state))
             return state as T;
-
+    
         return null; // 없는 상태라면 null
     }
     
@@ -84,27 +96,27 @@ public class Enemy : Entity
         this.player =  player;
         EnemyStateMachine.ChangeState(ChaseDirector);
     }
-
+    
     public Transform GetPlayerReference()
     {
         if (player == null)
         {
             player = PlayerDetection().transform;
         }
-
+    
         return player;
     }
-
+    
     public RaycastHit2D PlayerDetection()
     {
         RaycastHit2D hit = Physics2D.Raycast(playerCheck.position, Vector2.right * FacingDirection, playerCheckDistance,
             whatIsPlayer | whatIsGround);
-
+    
         if (hit.collider == null || hit.collider.gameObject.layer != LayerMask.NameToLayer("Player"))
         {
             return default;
         }
-
+    
         return hit;
     }
     
@@ -115,19 +127,19 @@ public class Enemy : Entity
         EnemyStateMachine = new Enemy_StateMachine();
         States = new Dictionary<System.Type, EnemyState>();
     }
-
-
+    
+    
     protected virtual void Start()
     {
         
     }
-
+    
     protected virtual void Update()
     {
         HandleCollisionDetection();
         EnemyStateMachine.UpdateActiveState();
     }
-
+    
     protected virtual void FixedUpdate()
     {
         EnemyStateMachine.FiexedUpdateActiveState();
@@ -153,7 +165,7 @@ public class Enemy : Entity
     {
         if (isknocked)
             return;
-
+    
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }
@@ -168,7 +180,7 @@ public class Enemy : Entity
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
-
+    
         Gizmos.DrawLine(groundCheck.position, groundCheck.position + new Vector3(0, -groundCheckDistance));
         Gizmos.DrawLine(primaryWallCheck.position,
             primaryWallCheck.position + new Vector3(wallCheckDistance * FacingDirection, 0));
@@ -178,11 +190,11 @@ public class Enemy : Entity
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * playerCheckDistance), playerCheck.position.y));
-
+    
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * attackDistance), playerCheck.position.y));
-
+    
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * minRetreatDistance), playerCheck.position.y));
