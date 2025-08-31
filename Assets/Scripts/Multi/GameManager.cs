@@ -1,9 +1,7 @@
-// GameManager.cs (수정된 버전)
-
 using R3;
 using UnityEngine;
 using Unity.Netcode;
-using System.Collections; // IEnumerator 사용을 위해 추가
+using System.Collections; 
 
 public class GameManager : NetworkBehaviour
 {

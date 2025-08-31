@@ -48,6 +48,11 @@ public class Player : Entity
     private Vector2 _lerpTargetPos;
     private float _lerpTime;
     private float _lerpDuration = 0.05f;
+    
+    [Header("Network Optimization")]
+    [SerializeField] private float positionUpdateThreshold = 0.05f; // 이 거리 이상 움직여야 위치 전송
+    private Vector2 _lastSentPosition;
+    private bool _lastSentIsFacingRight;
 
     [SerializeField] private bool IsTest = false;
     
@@ -59,6 +64,11 @@ public class Player : Entity
         if (!IsOwner && rb != null)
         {
             rb.isKinematic = true;
+        }
+        else if (IsOwner)
+        {
+            _lastSentPosition = transform.position;
+            _lastSentIsFacingRight = _isFacingRight;
         }
     }
 
@@ -109,9 +119,7 @@ public class Player : Entity
             ProcessKeyboardInput();
             _playerStateMachine.UpdateActiveState();
 
-            // 위치 및 방향 데이터를 네트워크 변수에 업데이트
-            _networkPosition.Value = transform.position;
-            _networkIsFacingRight.Value = _isFacingRight;
+            UpdateNetworkVariablesIfNeeded();
         }
         else
         {
@@ -142,6 +150,23 @@ public class Player : Entity
         }
     }
 
+    private void UpdateNetworkVariablesIfNeeded()
+    {
+        // 위치 동기화: 마지막으로 보낸 위치와 현재 위치의 거리가 threshold보다 클 때만 전송
+        if (Vector2.Distance(_lastSentPosition, transform.position) > positionUpdateThreshold)
+        {
+            _networkPosition.Value = transform.position;
+            _lastSentPosition = transform.position;
+        }
+
+        // 방향 동기화: 마지막으로 보낸 방향과 현재 방향이 다를 때만 전송
+        if (_lastSentIsFacingRight != _isFacingRight)
+        {
+            _networkIsFacingRight.Value = _isFacingRight;
+            _lastSentIsFacingRight = _isFacingRight;
+        }
+    }
+    
     private void FixedUpdate()
     {
         HandleCollisionDetection();
