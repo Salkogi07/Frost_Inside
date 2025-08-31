@@ -12,24 +12,24 @@ public class Enemy_Skeleton : Entity
     public Enemy_Skeleton_AttackState AttackState;
     public Enemy_Skeleton_DeadState DeadState;
 
-    public Enemy Enemy;
-    
 
     private BoxCollider2D coll;
-    
+
     protected Enemy_Skeleton_StateMachine EnemyStateMachine;
-    protected Dictionary<System.Type, EnemyState> States;
-    
+
+
     private bool _isFacingRight = false;
     public int FacingDirection { get; private set; } = -1;
 
-    [Header("Collision detection [Ground]")] 
-    [SerializeField] public LayerMask whatIsGround;
+    [Header("Collision detection [Ground]")] [SerializeField]
+    public LayerMask whatIsGround;
+
     [SerializeField] public Transform groundCheck;
     [SerializeField] private float groundCheckDistance;
-    
-    [Header("Collision detection [Wall]")] 
-    [SerializeField] public LayerMask whatIsWall;
+
+    [Header("Collision detection [Wall]")] [SerializeField]
+    public LayerMask whatIsWall;
+
     [SerializeField] private Transform primaryWallCheck;
     [SerializeField] private Transform secondaryWallCheck;
     [SerializeField] public float wallCheckDistance;
@@ -57,36 +57,33 @@ public class Enemy_Skeleton : Entity
 
     [Range(0, 10)] public float moveAnimSpeedMultiplier = 1;
 
-    
-    
+
+
     public Transform player { get; private set; }
 
-    
-    
 
-    public T GetState<T>() where T : EnemyState
-    {
-        if (States.TryGetValue(typeof(T), out var state))
-            return state as T;
 
-        return null; // 없는 상태라면 null
-    }
-    
+
+
+
     public void TryEnterBattleState(Transform player)
     {
         if (AttackState == null)
         {
-             return;
+            return;
         }
+
         if (EnemyStateMachine.currentState == BattleState)
         {
             return;
         }
-        if(EnemyStateMachine.currentState == AttackState)
+
+        if (EnemyStateMachine.currentState == AttackState)
         {
             return;
         }
-        this.player =  player;
+
+        this.player = player;
         EnemyStateMachine.ChangeState(BattleState);
     }
 
@@ -112,25 +109,25 @@ public class Enemy_Skeleton : Entity
 
         return hit;
     }
-    
+
     protected virtual void Awake()
     {
         base.Awake();
-        
+
         EnemyStateMachine = new Enemy_Skeleton_StateMachine();
         coll = GetComponent<BoxCollider2D>();
-        States = new Dictionary<System.Type, EnemyState>();
 
-        AttackState = new Enemy_Skeleton_AttackState(this,EnemyStateMachine, "attack");
-        IdleState = new Enemy_Skeleton_IdleState(EnemyStateMachine, "idle",this);
-        MoveState = new Enemy_Skeleton_MoveState(EnemyStateMachine, "move",this);
-        BattleState = new Enemy_Skeleton_BattleState(EnemyStateMachine, "battle",this);
+
+        AttackState = new Enemy_Skeleton_AttackState(this, EnemyStateMachine, "attack");
+        IdleState = new Enemy_Skeleton_IdleState(this, EnemyStateMachine, "idle");
+        MoveState = new Enemy_Skeleton_MoveState(this, EnemyStateMachine, "move");
+        BattleState = new Enemy_Skeleton_BattleState(this, EnemyStateMachine, "battle");
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
-        JumpState = new Enemy_Skeleton_JumpState(this,EnemyStateMachine, "jump", jumpData);
+        JumpState = new Enemy_Skeleton_JumpState(this, EnemyStateMachine, "jump", jumpData);
         //
         // DeadState = new Enemy_DeadState(EnemyStateMachine, "dead",_skeleton);
 
-       
+
     }
 
 
@@ -149,8 +146,8 @@ public class Enemy_Skeleton : Entity
     {
         EnemyStateMachine.FiexedUpdateActiveState();
     }
-    
-    
+
+
     public void HandleFlip(float xVelcoity)
     {
         if (xVelcoity > 0 && !_isFacingRight)
@@ -158,14 +155,14 @@ public class Enemy_Skeleton : Entity
         else if (xVelcoity < 0 && _isFacingRight)
             Flip();
     }
-    
+
     public void Flip()
     {
         transform.Rotate(0, 180, 0);
         _isFacingRight = !_isFacingRight;
         FacingDirection *= -1;
     }
-    
+
     public void SetVelocity(float xVelocity, float yVelocity)
     {
         if (isknocked)
@@ -174,14 +171,16 @@ public class Enemy_Skeleton : Entity
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
         HandleFlip(xVelocity);
     }
-    
+
     private void HandleCollisionDetection()
     {
         IsGroundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
-        IsWallDetected = Physics2D.Raycast(primaryWallCheck.position, Vector2.right * FacingDirection,wallCheckDistance, whatIsWall)
-                                     && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * FacingDirection, wallCheckDistance, whatIsWall);
+        IsWallDetected = Physics2D.Raycast(primaryWallCheck.position, Vector2.right * FacingDirection,
+                             wallCheckDistance, whatIsWall)
+                         && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * FacingDirection,
+                             wallCheckDistance, whatIsWall);
     }
-    
+
     protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
@@ -191,7 +190,7 @@ public class Enemy_Skeleton : Entity
             primaryWallCheck.position + new Vector3(wallCheckDistance * FacingDirection, 0));
         Gizmos.DrawLine(secondaryWallCheck.position,
             secondaryWallCheck.position + new Vector3(wallCheckDistance * FacingDirection, 0));
-        
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * playerCheckDistance), playerCheck.position.y));
@@ -204,7 +203,7 @@ public class Enemy_Skeleton : Entity
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * minRetreatDistance), playerCheck.position.y));
     }
-    
+
     public void CallAnimationTrigger()
     {
         EnemyStateMachine.currentState.CallAnimationTrigger();
@@ -212,34 +211,41 @@ public class Enemy_Skeleton : Entity
 
     public bool CanPerformLeap()
     {
-        // var jumpState = GetState<Enemy_JumpState>();
-        if (JumpState == null)
-            return false;
-    
-        // BoxCast 파라미터 설정
-        Vector2 boxSize = coll.size;
-        float jumpHeight = JumpState._jumpData.jumpForce * 0.5f; // 대략적인 점프 높이 예측
-        float leapDistance = JumpState._jumpData.jumpVelocity * 0.5f; // 대략적인 도약 거리 예측
-        Vector2 castOrigin = (Vector2)transform.position + new Vector2(0, boxSize.y / 2);
-    
-        // 1. 머리 위 공간 확인 (수직 BoxCast)
-        RaycastHit2D ceilingHit = Physics2D.BoxCast(castOrigin, boxSize, 0f, Vector2.up, jumpHeight, whatIsWall);
-        if (ceilingHit.collider != null)
+        float jumpForce = JumpState._jumpData.jumpForce;
+        float gravity = Mathf.Abs(Physics2D.gravity.y * rb.gravityScale);
+        // 최대 높이 계산 (v^2 / (2g))
+        float maxJumpHeight = (jumpForce * jumpForce) / (2f * gravity);
+
+        // 시작 위치 (적이 바라보는 방향 앞쪽)
+        Vector2 startPoint = new Vector2(
+            transform.position.x + (wallCheckDistance * FacingDirection),
+            transform.position.y
+        );
+
+        Vector2 boxSize = new Vector2(0.8f, 0.8f);
+
+        // 계산된 최대 점프 높이까지 검사
+        for (float yOffset = 0; yOffset <= maxJumpHeight; yOffset += 0.05f)
         {
-            // Debug.Log("천장이 막혀 점프 불가!");
-            return false;
+            // 현재 높이에서 체크 지점
+            Vector2 checkPoint = new Vector2(startPoint.x, startPoint.y + yOffset);
+
+            // 현재 높이 기준 앞으로 벽/장애물 있는지 확인
+            Collider2D hit = Physics2D.OverlapBox(checkPoint, boxSize, 0f, whatIsWall);
+
+            if (hit == null)
+            {
+                // 박스 공간이 비어 있음 → 점프 가능
+                return true;
+            }
         }
-    
-        // 2. 전방 착지 공간 확인 (대각선 BoxCast)
-        Vector2 leapDirection = new Vector2(FacingDirection, 1).normalized;
-        RaycastHit2D forwardHit = Physics2D.BoxCast(castOrigin, boxSize, 0f, leapDirection, leapDistance, whatIsWall);
-        if (forwardHit.collider != null)
-        {
-            // Debug.Log("점프 경로에 장애물이 있어 점프 불가!");
-            return false;
-        }
-    
-        // 모든 테스트 통과: 점프 가능
-        return true;
+
+        return false;
     }
 }
+    
+
+
+
+
+

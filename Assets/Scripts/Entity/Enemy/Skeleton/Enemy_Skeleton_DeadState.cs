@@ -1,13 +1,13 @@
 using UnityEngine;
 
 
-    public class Enemy_Skeleton_DeadState : EnemyState
+    public class Enemy_Skeleton_DeadState : Enemy_Skeleton_State
     {
         private Collider2D col;
         
-        public Enemy_Skeleton_DeadState(Enemy enemy, Enemy_StateMachine enemyStateMachine, string animBoolName) : base(enemy, enemyStateMachine, animBoolName)
+        public Enemy_Skeleton_DeadState(Enemy_Skeleton enemySkeleton, Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName) : base(enemySkeleton, enemyStateMachine, animBoolName)
         {
-            col = enemy.GetComponent<Collider2D>();
+            col = enemySkeleton.GetComponent<Collider2D>();
         }
 
         public override void Enter()
@@ -16,8 +16,8 @@ using UnityEngine;
             anim.enabled = false;
             col.enabled = false;
             
-            rigidbody.gravityScale = 12;
-            rigidbody.linearVelocity = new Vector2(rigidbody.linearVelocity.x, 15);
+            rb.gravityScale = 12;
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 15);
             
             enemyStateMachine.SwitchOffStateMachine();
         }

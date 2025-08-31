@@ -4,7 +4,7 @@
     public class Enemy_Skeleton_IdleState : Enemy_Skeleton_State
     {
         
-        public Enemy_Skeleton_IdleState(Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(null, enemyStateMachine, animBoolName)
+        public Enemy_Skeleton_IdleState(Enemy_Skeleton enemySkeleton,Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName) : base(enemySkeleton, enemyStateMachine, animBoolName)
         {
             
         }

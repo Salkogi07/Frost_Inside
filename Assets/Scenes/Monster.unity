@@ -3022,12 +3022,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d16c9b4ed41104438b225d402691204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 355910707}
-  item:
-    data: {fileID: 0}
-    price: 0
-  inventorySlotIndex: 0
-  quickslot_Index: 2
 --- !u!114 &355910707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4070,16 +4064,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1bbb675982942d4fa6acd5ee2f73714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isPocket: 0
-  isInvenOpen: 0
-  startingItems: []
-  quickSlotItems: []
-  selectedQuickSlot: 0
-  equipment: []
-  inventoryItems: []
-  inventorySlotParent: {fileID: 1694495543}
-  equipmentSlotParent: {fileID: 1190695680}
-  quickSlotParent: {fileID: 462481779}
 --- !u!4 &670090523
 Transform:
   m_ObjectHideFlags: 0
@@ -4588,12 +4572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d16c9b4ed41104438b225d402691204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 731771596}
-  item:
-    data: {fileID: 0}
-    price: 0
-  inventorySlotIndex: 0
-  quickslot_Index: 1
 --- !u!114 &731771596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4964,6 +4942,7 @@ GameObject:
   - component: {fileID: 815643351}
   - component: {fileID: 815643350}
   - component: {fileID: 815643349}
+  - component: {fileID: 815643353}
   - component: {fileID: 815643348}
   - component: {fileID: 815643352}
   m_Layer: 8
@@ -4986,30 +4965,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  whatIsGround:
-    serializedVersion: 2
-    m_Bits: 8
-  groundCheck: {fileID: 1561153232}
-  groundCheckDistance: 0.15
-  whatIsWall:
-    serializedVersion: 2
-    m_Bits: 8
-  primaryWallCheck: {fileID: 1779518}
-  secondaryWallCheck: {fileID: 1779518}
-  wallCheckDistance: 0.35
-  battleMoveSpeed: 3
-  attackDistance: 2
-  battleTimeDuration: 5
-  minRetreatDistance: 1
-  retreatVelocity: {x: 0, y: 0}
-  playerCheck: {fileID: 0}
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 0
-  playerCheckDistance: 10
-  IdleTime: 2
-  MoveSpeed: 1.4
-  moveAnimSpeedMultiplier: 1
 --- !u!50 &815643349
 Rigidbody2D:
   serializedVersion: 5
@@ -5104,6 +5059,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6abd498f3df8b764b8552078d86602af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &815643353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 815643347}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2515532221
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  DeferredDespawnTick: 0
+  Ownership: 1
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
+  SyncOwnerTransformWhenParented: 1
+  AllowOwnerToParent: 0
 --- !u!1 &841158451
 GameObject:
   m_ObjectHideFlags: 0
@@ -5800,13 +5780,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dced2ce6a26184245b7082849405dc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 1059216638}
-  item:
-    data: {fileID: 0}
-    price: 0
-  inventorySlotIndex: 0
-  slotType: 1
-  equipmentSlot_Index: 0
 --- !u!114 &1059216638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13666,7 +13639,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 36520864720831461, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -140.2
+      value: -43.37
       objectReference: {fileID: 0}
     - target: {fileID: 36520864720831461, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: m_LocalPosition.y
@@ -13725,6 +13698,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: jumpData.jumpForce
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: secondaryWallCheck
       value: 
       objectReference: {fileID: 1160284135}
@@ -13741,8 +13718,24 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: jumpData.jumpVelocity
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: moveAnimSpeedMultiplier
       value: 5.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: jumpData.primaryJumpCheck
+      value: 
+      objectReference: {fileID: 633570731}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: jumpData.jumpCheckDistance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 45811418883981557, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: jumpData.whatIsJump.m_Bits
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 341091927384374172, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: m_Layer
@@ -13931,6 +13924,7 @@ PrefabInstance:
     - {fileID: 564989446788298968, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     - {fileID: 748514528279752800, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     - {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+    - {fileID: 7684268948642768014, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 3733507237557569488, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
@@ -14036,20 +14030,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4082e6d8bd7d7a74688db940f6bb0389, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagePanel: {fileID: 0}
-  damageImage: {fileID: 1410450979}
-  fadeDuration: 0.3
-  inventoryObject: {fileID: 1352681450}
-  quickSlot:
-  - {fileID: 1173516205}
-  - {fileID: 1991300319}
-  - {fileID: 1183330405}
-  pocket: {fileID: 1786432690}
-  itemImage:
-  - {fileID: 1115571377}
-  - {fileID: 247327538}
-  - {fileID: 2010674258}
-  itemToolTip: {fileID: 2016128948}
 --- !u!114 &1161184188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17735,12 +17715,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d16c9b4ed41104438b225d402691204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 1516516108}
-  item:
-    data: {fileID: 0}
-    price: 0
-  inventorySlotIndex: 0
-  quickslot_Index: 0
 --- !u!114 &1516516108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18993,13 +18967,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dced2ce6a26184245b7082849405dc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 1640007427}
-  item:
-    data: {fileID: 0}
-    price: 0
-  inventorySlotIndex: 0
-  slotType: 0
-  equipmentSlot_Index: 0
 --- !u!114 &1640007427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43355,13 +43322,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b706b8d3322f3dc47b8a95cfe35ac0b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemNameText: {fileID: 1542288514}
-  itemTypeText: {fileID: 2108692289}
-  itemCoinText: {fileID: 653378492}
-  itemExplanation: {fileID: 194679591}
-  minWidth: 250
-  horizontalPadding: 20
-  tooltipOffset: {x: 50, y: -50}
 --- !u!114 &2016128949
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,7 +1,7 @@
 
 
 
-    public class Tester : Enemy
+    public class Tester : Entity
     {
         // public Enemy_IdleState IdleState { get; private set; }
         // public Enemy_MoveState MoveState { get; private set; }

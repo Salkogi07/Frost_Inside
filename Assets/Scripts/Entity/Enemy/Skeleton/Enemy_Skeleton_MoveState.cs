@@ -4,7 +4,7 @@
     public class Enemy_Skeleton_MoveState : Enemy_Skeleton_State
     {
         
-        public Enemy_Skeleton_MoveState( Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(
+        public Enemy_Skeleton_MoveState(Enemy_Skeleton enemySkeleton, Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName) : base(
             enemySkeleton,enemyStateMachine, animBoolName)
         {
             
@@ -38,7 +38,7 @@
         {
             base.FiexedUpdate();
 
-            enemySkeleton.SetVelocity(enemySkeleton.MoveSpeed * enemySkeleton.FacingDirection, rigidbody.linearVelocity.y);
+            enemySkeleton.SetVelocity(enemySkeleton.MoveSpeed * enemySkeleton.FacingDirection, rb.linearVelocity.y);
         }
 
 

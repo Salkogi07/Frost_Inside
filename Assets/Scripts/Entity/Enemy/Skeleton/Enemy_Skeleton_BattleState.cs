@@ -9,7 +9,7 @@ public class Enemy_Skeleton_BattleState : Enemy_Skeleton_State
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
-    public Enemy_Skeleton_BattleState(Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName, Enemy_Skeleton enemySkeleton) : base(enemySkeleton, enemyStateMachine, animBoolName)
+    public Enemy_Skeleton_BattleState(Enemy_Skeleton enemySkeleton,Enemy_Skeleton_StateMachine enemyStateMachine, string animBoolName) : base(enemySkeleton, enemyStateMachine, animBoolName)
     {
     }
     
@@ -26,7 +26,7 @@ public class Enemy_Skeleton_BattleState : Enemy_Skeleton_State
         // player ??= enemy.GetPlayerReference();
         if (shouldRetreat())
         {
-            rigidbody.linearVelocity = new Vector2(enemySkeleton.retreatVelocity.x*-DirectionToPlayer(),enemySkeleton.retreatVelocity.y);
+            rb.linearVelocity = new Vector2(enemySkeleton.retreatVelocity.x*-DirectionToPlayer(),enemySkeleton.retreatVelocity.y);
             enemySkeleton.HandleFlip(DirectionToPlayer());
         }
         
@@ -59,7 +59,7 @@ public class Enemy_Skeleton_BattleState : Enemy_Skeleton_State
         }
         else
         {
-            enemySkeleton.SetVelocity(enemySkeleton.battleMoveSpeed * DirectionToPlayer(), rigidbody.linearVelocity.y);
+            enemySkeleton.SetVelocity(enemySkeleton.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
         }
     }
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;

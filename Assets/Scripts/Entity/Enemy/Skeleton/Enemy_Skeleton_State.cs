@@ -9,7 +9,7 @@ public abstract class Enemy_Skeleton_State
     protected string animBoolName;
 
     protected Animator anim;
-    protected Rigidbody2D rigidbody;
+    protected Rigidbody2D rb;
 
     protected float stateTimer;
     protected bool triggerCalled;
@@ -21,7 +21,7 @@ public abstract class Enemy_Skeleton_State
         this.animBoolName = animBoolName;
 
         anim = enemySkeleton.Anim;
-        rigidbody = enemySkeleton.rb;
+        rb = enemySkeleton.rb;
     }
 
     public virtual void Enter()
@@ -39,7 +39,7 @@ public abstract class Enemy_Skeleton_State
         anim.SetFloat("BattleAnimSpeedMultiplier", battleAnimSpeedMultiplier);
         anim.SetFloat("moveAnimSpeedMultiplier", enemySkeleton.moveAnimSpeedMultiplier);
         // anim.SetFloat("xVelocity", rigidbody.linearVelocity.x);
-        anim.SetFloat("xVelocity", Mathf.Clamp(rigidbody.linearVelocityX, -1f, 1f));
+        anim.SetFloat("xVelocity", Mathf.Clamp(rb.linearVelocityX, -1f, 1f));
     }
 
     public virtual void FiexedUpdate()
