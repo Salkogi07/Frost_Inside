@@ -227,13 +227,32 @@ public class Player : Entity
     private void Flip()
     {
         if (IsGroundDetected)
-            Dust.Play();
+            PlayDustEffectServerRpc();
 
         Vector3 currentScale = playerObject.transform.localScale;
         currentScale.x *= -1;
         playerObject.transform.localScale = currentScale;
         _isFacingRight = !_isFacingRight;
         FacingDirection *= -1;
+    }
+    
+    // 클라이언트가 서버에게 파티클 재생을 요청하는 RPC입니다.
+    [ServerRpc]
+    private void PlayDustEffectServerRpc()
+    {
+        // 서버가 모든 클라이언트에게 파티클 재생을 명령합니다.
+        PlayDustEffectClientRpc();
+    }
+
+    // 서버의 명령을 받아 모든 클라이언트에서 실행되는 RPC입니다.
+    [ClientRpc]
+    private void PlayDustEffectClientRpc()
+    {
+        // 모든 클라이언트에서 Dust 파티클을 재생합니다.
+        if (Dust != null)
+        {
+            Dust.Play();
+        }
     }
     
     // Non-Owner 클라이언트를 위한 시각적 Flip (파티클 재생 없음)
