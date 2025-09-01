@@ -21,4 +21,6 @@ MonoBehaviour:
     \uC720\uB9AC \uC6A9\uAE30\uC785\uB2C8\uB2E4. \uC785\uAD6C\uC5D0 \uC8FC\uB465\uC774\uAC00
     \uC788\uC5B4 \uBD93\uAE30 \uD3B8\uB9AC\uD569\uB2C8\uB2E4."
   priceRange: {x: 40, y: 50}
+  isOre: 0
+  oreTile: {fileID: 0}
   isSpawnable: 1
