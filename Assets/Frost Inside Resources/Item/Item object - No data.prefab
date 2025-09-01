@@ -131,6 +131,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   rb: {fileID: 7598768444187565975}
   spriteRenderer: {fileID: 0}
+  positionUpdateThreshold: 0.1
+  lerpDuration: 0.1
 --- !u!61 &6985642386723502538
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -175,7 +177,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.8, y: 0.8}
   m_EdgeRadius: 0
 --- !u!50 &7598768444187565975
 Rigidbody2D:

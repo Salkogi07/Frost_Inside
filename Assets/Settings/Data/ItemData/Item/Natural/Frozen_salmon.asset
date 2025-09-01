@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a08532076184ce4a96a2dc45af72dd6, type: 3}
+  m_Name: Frozen_salmon
+  m_EditorClassIdentifier: 
+  itemId: 23
+  itemType: 4
+  itemName: "\uC5BC\uC5B4\uBD99\uC740 \uC5F0\uC5B4"
+  icon: {fileID: 21300000, guid: c2f2087e07cb67e46b6ab5b225b0bb2d, type: 3}
+  explanation: "\uC5BC\uC5B4\uBC84\uB9B0 \uC5F0\uC5B4\uB2E4"
+  priceRange: {x: 80, y: 100}
+  isOre: 1
+  oreTile: {fileID: 11400000, guid: cb6a60de8fb04324bac31a3e694ecbcb, type: 2}
+  isSpawnable: 1

@@ -95,6 +95,11 @@ public class ItemDatabase : MonoBehaviour
     /// <returns>스폰 가능한 아이템 리스트</returns>
     public List<ItemData> GetSpawnableItems()
     {
-        return itemDataList.Where(item => item != null && item.isSpawnable).ToList();
+        return itemDataList.Where(item => item != null && item.isSpawnable && !item.isOre).ToList();
+    }
+    
+    public List<ItemData> GetOreDataList()
+    {
+        return itemDataList.Where(item => item != null && item.isOre).ToList();
     }
 }
