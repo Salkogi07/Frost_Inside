@@ -9,9 +9,6 @@ using Random = UnityEngine.Random;
 
 public class MakeRandomMap : MonoBehaviour
 {
-    [Header("=== 아이템 스포너 설정 ===")]
-    [SerializeField] private ItemSpawner itemSpawner;
-    
     [Header("=== 방 프리팹 및 플레이어 설정 ===")]
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
@@ -43,7 +40,6 @@ public class MakeRandomMap : MonoBehaviour
     private List<List<Vector2Int>> roomMonsterSpawnPositions = new List<List<Vector2Int>>();
 
     [Header("=== 광석 설정 ===")]
-    [SerializeField] private List<OreSetting> oreSettings;     // Inspector에서 여러 종류 설정
     [SerializeField][Range(0, 1f)] private float oreSpawnChance = 0.05f; // 타일당 등장 확률
 
     private HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
@@ -141,9 +137,9 @@ public class MakeRandomMap : MonoBehaviour
         // 아이템 생성은 서버만 담당
         if (NetworkManager.Singleton.IsServer)
         {
-            if (itemSpawner != null)
+            if (GameManager.instance.itemSpawner != null)
             {
-                itemSpawner.SpawnItemsOnMap(roomItemSpawnPositions, roomSettings, spreadTilemap);
+                GameManager.instance.itemSpawner.SpawnItemsOnMap(roomItemSpawnPositions, roomSettings, spreadTilemap);
             }
             else
             {
@@ -159,25 +155,46 @@ public class MakeRandomMap : MonoBehaviour
 
     private void GenerateOres()
     {
+        // ItemDatabase에서 광석 목록을 불러옵니다.
+        List<ItemData> availableOres = ItemDatabase.Instance.GetOreDataList();
+        
+        // 데이터베이스에 광석이 설정되어 있는지 확인
+        if (availableOres == null || availableOres.Count == 0)
+        {
+            Debug.LogWarning("[MakeRandomMap] 데이터베이스에 생성할 광석이 없습니다. 광석 생성을 건너뜁니다.");
+            return;
+        }
+
         for (int x = mapMin.x; x <= mapMax.x; x++)
         {
             for (int y = mapMin.y; y <= mapMax.y; y++)
             {
                 Vector2Int pos = new Vector2Int(x, y);
 
-                // ① 방 바닥 또는 벽 위에는 스폰하지 않음
+                // 방 바닥 또는 벽 위에는 스폰하지 않음
                 if (floorTiles.Contains(pos) || wallTiles.Contains(pos))
                     continue;
 
-                // ② oreSpawnChance 확률 체크
+                // oreSpawnChance 확률 체크
                 if (Random.value > oreSpawnChance)
                     continue;
 
-                // ③ 실제 광석 배치
-                var ore = oreSettings[Random.Range(0, oreSettings.Count)];
+                // 실제 광석 배치
+                // 데이터베이스에서 가져온 광석 중 하나를 무작위로 선택
+                ItemData selectedOreData = availableOres[Random.Range(0, availableOres.Count)];
+                
                 Vector3Int cellPos = new Vector3Int(x, y, 0);
-                spreadTilemap.OreTilemap.SetTile(cellPos, ore.oreTile);  // Tilemap.SetTile API :contentReference[oaicite:0]{index=0}
-                oreTileDict[pos] = ore;
+                spreadTilemap.OreTilemap.SetTile(cellPos, selectedOreData.oreTile);
+
+                // MapInteractionManager가 사용할 수 있도록 OreSetting 객체를 생성하여 딕셔너리에 저장
+                // 드롭될 아이템의 가격은 해당 광석의 가격 범위 내에서 무작위로 결정
+                int price = Random.Range(selectedOreData.priceRange.x, selectedOreData.priceRange.y + 1);
+                OreSetting oreInfo = new OreSetting
+                {
+                    oreTile = selectedOreData.oreTile,
+                    dropItem = new Inventory_Item(selectedOreData.itemId, price)
+                };
+                oreTileDict[pos] = oreInfo;
             }
         }
     }

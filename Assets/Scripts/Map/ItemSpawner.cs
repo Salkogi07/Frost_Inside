@@ -15,9 +15,6 @@ public class ItemSpawner : NetworkBehaviour
     [Tooltip("드롭할 프리팹을 할당하세요.")]
     [SerializeField] private GameObject dropPrefab;
 
-    // [수정됨] ItemSpawner가 자체적으로 리스트를 갖는 대신 데이터베이스를 사용하므로 이 줄을 삭제합니다.
-    // [SerializeField] private List<ItemData> itemList; 
-
     /// <summary>
     /// 서버에서만 호출되어 맵에 아이템을 스폰합니다.
     /// MakeRandomMap 스크립트가 맵 생성을 완료한 후 이 메서드를 호출합니다.
@@ -104,5 +101,33 @@ public class ItemSpawner : NetworkBehaviour
         }
 
         Debug.Log($"[ItemSpawner] OriginalSum: {totalPriceSum}, ClampedSum: {targetSum}, Items Dropped: {dropInfos.Count}");
+    }
+    
+    /// <summary>
+    /// 서버에서 단일 아이템을 지정된 위치에 스폰합니다. 서버 측에서만 호출되어야 합니다.
+    /// </summary>
+    /// <param name="itemToSpawn">스폰할 아이템의 Inventory_Item 데이터입니다.</param>
+    /// <param name="position">아이템을 스폰할 월드 좌표입니다.</param>
+    public void SpawnSingleItem(Inventory_Item itemToSpawn, Vector3 position)
+    {
+        if (!IsServer)
+        {
+            Debug.LogError("[ItemSpawner] SpawnSingleItem은 서버에서만 호출할 수 있습니다.");
+            return;
+        }
+
+        var drop = Instantiate(dropPrefab, position, Quaternion.identity, dropParent);
+        var itemObject = drop.GetComponent<ItemObject>();
+        var networkObject = drop.GetComponent<NetworkObject>();
+
+        networkObject.Spawn(true);
+        networkObject.TrySetParent(dropParent, false);
+        
+        // 아이템이 위로 살짝 튀어 오르는 효과
+        Vector2 velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(3f, 6f));
+
+        itemObject.SetupItemServerRpc(itemToSpawn, velocity);
+        
+        Debug.Log($"[ItemSpawner] 단일 아이템 스폰: {itemToSpawn.itemId} at {position}");
     }
 }
