@@ -18,7 +18,7 @@ public class Enemy_Skeleton_JumpState : Enemy_Skeleton_State
         enemySkeleton.groundCheck.localPosition = new Vector2(0f, originalGroundCheckLocalPos.y);
 
         // 수평 속도와 수직 속도를 함께 적용하여 '도약' 구현
-        float horizontalVelocity = _jumpData.jumpVelocity * enemySkeleton.FacingDirection;
+        float horizontalVelocity = enemySkeleton.battleMoveSpeed * enemySkeleton.FacingDirection;
         enemySkeleton.SetVelocity(horizontalVelocity, _jumpData.jumpForce);
         _jumpData.isJumping = true;
     }

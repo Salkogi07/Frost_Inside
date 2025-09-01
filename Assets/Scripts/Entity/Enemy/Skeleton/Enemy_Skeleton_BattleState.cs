@@ -57,11 +57,15 @@ public class Enemy_Skeleton_BattleState : Enemy_Skeleton_State
             enemyStateMachine.ChangeState(enemySkeleton.JumpState);
             
         }
-        else
-        {
-            enemySkeleton.SetVelocity(enemySkeleton.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
-        }
+        
     }
+
+    public override void FiexedUpdate()
+    {
+        base.FiexedUpdate();
+        enemySkeleton.SetVelocity(enemySkeleton.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
+    }
+
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
     private bool BattleTimeIsOver() =>Time.time > lastTimeWasInBattle + enemySkeleton.battleTimeDuration;
     private bool WithinAttackRange() => DistanceToPlayer() < enemySkeleton.attackDistance;

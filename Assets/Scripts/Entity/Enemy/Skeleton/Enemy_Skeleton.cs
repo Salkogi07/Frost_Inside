@@ -202,6 +202,10 @@ public class Enemy_Skeleton : Entity
         Gizmos.color = Color.cyan;
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * minRetreatDistance), playerCheck.position.y));
+        
+        Gizmos.color = Color.green;
+        Gizmos.DrawLine(JumpState._jumpData.primaryJumpCheck.position,
+            new Vector3(JumpState._jumpData.primaryJumpCheck.position.x + (FacingDirection * JumpState._jumpData.jumpCheckDistance), JumpState._jumpData.primaryJumpCheck.position.y));
     }
 
     public void CallAnimationTrigger()

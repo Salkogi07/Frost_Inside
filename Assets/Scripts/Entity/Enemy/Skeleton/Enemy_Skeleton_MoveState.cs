@@ -13,7 +13,10 @@
         public override void Enter()
         {
             base.Enter();
-
+            // if (enemySkeleton.IsGroundDetected == false || enemySkeleton.IsWallDetected)
+            // {
+            //     enemySkeleton.Flip();
+            // }
         }
 
         public override void Update()
