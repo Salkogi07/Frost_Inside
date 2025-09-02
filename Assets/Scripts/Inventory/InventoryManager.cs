@@ -160,11 +160,21 @@ public class InventoryManager : MonoBehaviour
         }
         
         // 장비 슬롯에서 아이템을 빼는 경우도 타입 검사 (다른 장비 슬롯으로 옮길 때)
-        if (sourceType == SlotType.Equipment && targetType == SlotType.Equipment)
+        if (!targetItem.IsEmpty() && sourceType == SlotType.Equipment)
         {
             if (targetItem.Data is ItemData_Equipment targetEquipData)
             {
-                 if ((int)targetEquipData.equipmentType != sourceIndex) return;
+                // 장비 타입이 시작 슬롯의 인덱스와 일치하는지 확인
+                if ((int)targetEquipData.equipmentType != sourceIndex)
+                {
+                    Debug.Log("이 슬롯에 장착할 수 없는 종류의 장비입니다.");
+                    return;
+                }
+            }
+            else // 장비 아이템이 아니면 장비 슬롯으로 들어올 수 없음
+            {
+                Debug.Log("장비가 아닌 아이템과 교체할 수 없습니다.");
+                return;
             }
         }
         
