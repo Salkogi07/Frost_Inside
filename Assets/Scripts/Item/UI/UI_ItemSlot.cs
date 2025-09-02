@@ -2,16 +2,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum SlotType { Inventory, QuickSlot, Equipment }
+public enum SlotType { Poket, QuickSlot, Equipment, QuickSlotViewer }
 
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected Image itemImage;
-    [SerializeField] protected GameObject highlight;
     
     protected Inventory_Item item;
     
-    public SlotType slotType = SlotType.Inventory;
+    public SlotType slotType = SlotType.Poket;
     public int slotIndex;
 
     public static UI_ItemSlot draggedSlot;
@@ -44,15 +43,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         item = Inventory_Item.Empty;
         itemImage.sprite = null;
         itemImage.color = new Color(1, 1, 1, 0);
-    }
-
-    // 퀵슬롯 하이라이트 설정
-    public virtual void SetHighlight(bool state)
-    {
-        if (highlight != null)
-        {
-            highlight.SetActive(state);
-        }
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData)

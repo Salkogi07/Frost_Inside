@@ -66,6 +66,7 @@ public class InventoryManager : MonoBehaviour
         UpdateInventory();
         HandleQuickSlotSelection();
         HandleItemThrowInput();
+        InventoryUI.Instance.UpdatePoketPanel();
     }
 
     private void UpdateInventory()
@@ -200,7 +201,7 @@ public class InventoryManager : MonoBehaviour
     {
         switch (slotType)
         {
-            case SlotType.Inventory: return inventoryItems[index];
+            case SlotType.Poket: return inventoryItems[index];
             case SlotType.QuickSlot: return quickSlotItems[index];
             case SlotType.Equipment: return equipmentItems[index];
             default: return Inventory_Item.Empty;
@@ -211,7 +212,7 @@ public class InventoryManager : MonoBehaviour
     {
         switch (slotType)
         {
-            case SlotType.Inventory: inventoryItems[index] = item; break;
+            case SlotType.Poket: inventoryItems[index] = item; break;
             case SlotType.QuickSlot: quickSlotItems[index] = item; break;
             case SlotType.Equipment: equipmentItems[index] = item; break;
         }
