@@ -184,7 +184,6 @@ GameObject:
   - component: {fileID: 6439846600469785769}
   - component: {fileID: 7283335558516981223}
   - component: {fileID: 8710203413524532382}
-  - component: {fileID: 8632942042615940793}
   - component: {fileID: -4578731868711547750}
   - component: {fileID: -4094357913834435788}
   - component: {fileID: 6811224819524031968}
@@ -390,6 +389,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   CanMine: 1
+  positionUpdateThreshold: 0.05
   IsTest: 0
 --- !u!114 &7283335558516981223
 MonoBehaviour:
@@ -413,26 +413,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de512a33e26ef7a48a4a6d80037f5339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pickupRange: 3
   pickupCooldown: 0.5
---- !u!114 &8632942042615940793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3867197236472526811}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b80c78004b8b3b4fb62d47e8dd5fe1e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
 --- !u!114 &-4578731868711547750
 MonoBehaviour:
   m_ObjectHideFlags: 0

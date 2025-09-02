@@ -100,6 +100,9 @@ public class Player : Entity
 
     private void Update()
     {
+        if(InventoryManager.Instance.isInvenOpen)
+            return;
+        
         if (IsTest)
         {
             ProcessKeyboardInput();

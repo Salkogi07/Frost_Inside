@@ -1,92 +1,76 @@
-/*
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+public enum SlotType { Inventory, QuickSlot, Equipment }
+
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
-    [SerializeField] private Image itemImage;
-    public Inventory_Item item;
-    public static UI_ItemSlot draggedSlot;
-    public static GameObject draggedItemIcon;
-    private HoverThrowSlot hoverTracker;
+    [SerializeField] protected Image itemImage;
+    [SerializeField] protected GameObject highlight;
+    
+    protected Inventory_Item item;
+    
+    public SlotType slotType = SlotType.Inventory;
+    public int slotIndex;
 
-    public int inventorySlotIndex;
+    public static UI_ItemSlot draggedSlot;
+    private static GameObject draggedItemIcon;
+    private Canvas rootCanvas;
 
     protected virtual void Awake()
     {
-        hoverTracker = GetComponent<HoverThrowSlot>()
-                       ?? gameObject.AddComponent<HoverThrowSlot>();
+        rootCanvas = GetComponentInParent<Canvas>();
     }
-
-    protected virtual void Update()
-    {
-        if (!hoverTracker.isPointerOver || item == null) return;
-        if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Throw Item")))
-        {
-            ThrowItem();
-            CleanUpSlot();
-        }
-    }
-
-    protected virtual void ThrowItem()
-    {
-        /*PlayerManager.instance.playerDrop
-                     .Inventory_Throw(item.data, inventorySlotIndex);#1#
-
-        if (UIManager.instance.itemToolTip.gameObject.activeSelf)
-        {
-            if (item != null)
-                UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
-            else
-                UIManager.instance.itemToolTip.HideToolTip();
-        }
-    }
-
-
+    
     public void UpdateSlot(Inventory_Item _newItem)
     {
         item = _newItem;
         itemImage.color = Color.white;
 
-        if (item != null && item.data != null)
+        if (!item.IsEmpty() && item.Data != null)
         {
-            itemImage.sprite = item.data.icon;
+            itemImage.sprite = item.Data.icon;
         }
         else
         {
             itemImage.sprite = null;
-            itemImage.color = Color.clear;
+            itemImage.color = new Color(1, 1, 1, 0); // 투명하게
         }
     }
 
     public void CleanUpSlot()
     {
-        item = null;
+        item = Inventory_Item.Empty;
         itemImage.sprite = null;
-        itemImage.color = Color.clear;
+        itemImage.color = new Color(1, 1, 1, 0);
     }
 
-    public virtual void OnPointerDown(PointerEventData eventData)
+    // 퀵슬롯 하이라이트 설정
+    public virtual void SetHighlight(bool state)
     {
-        if (item == null) return;
+        if (highlight != null)
+        {
+            highlight.SetActive(state);
+        }
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData)
     {
-        if (item == null || item.data == null) return;
+        if (item.IsEmpty()) return;
+
         draggedSlot = this;
         itemImage.raycastTarget = false;
 
-        if (draggedItemIcon == null)
-        {
-            draggedItemIcon = new GameObject("DraggedItemIcon");
-            Image iconImage = draggedItemIcon.AddComponent<Image>();
-            iconImage.sprite = itemImage.sprite;
-            iconImage.raycastTarget = false;
-            draggedItemIcon.transform.SetParent(transform.root);
-            draggedItemIcon.transform.SetAsLastSibling();
-        }
+        // 드래그 아이콘 생성
+        draggedItemIcon = new GameObject("DraggedIcon");
+        draggedItemIcon.transform.SetParent(rootCanvas.transform);
+        draggedItemIcon.transform.SetAsLastSibling();
+        draggedItemIcon.transform.localScale = Vector3.one;
+
+        Image newImage = draggedItemIcon.AddComponent<Image>();
+        newImage.sprite = item.Data.icon;
+        newImage.raycastTarget = false;
     }
 
     public virtual void OnDrag(PointerEventData eventData)
@@ -99,70 +83,35 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
 
     public virtual void OnEndDrag(PointerEventData eventData)
     {
-        draggedSlot = null;
         itemImage.raycastTarget = true;
-
         if (draggedItemIcon != null)
         {
             Destroy(draggedItemIcon);
-            draggedItemIcon = null;
         }
+        draggedSlot = null;
     }
 
     public virtual void OnDrop(PointerEventData eventData)
     {
-        if (draggedSlot == null || draggedSlot == this || draggedSlot.item == null) return;
-
-        Inventory_Item draggedItem = draggedSlot.item;
-        UI_QuickSlot draggedQS = draggedSlot as UI_QuickSlot;
-
-
-        if (draggedQS == null)
-        {
-            Inventory.instance.SwapInventoryItems(draggedSlot.inventorySlotIndex, inventorySlotIndex);
-        }
-        else
-        {
-            if (item != null && item.data != null)
-            {
-                Inventory.instance.SwapQuickAndInventoryItems(draggedQS.quickslot_Index, inventorySlotIndex);
-            }
-            else
-            {
-                Inventory.instance.Move_Item(draggedItem, inventorySlotIndex);
-                Inventory.instance.Remove_QuickSlot_Item(draggedQS.quickslot_Index);
-            }
-        }
-
-        if (UIManager.instance.itemToolTip.gameObject.activeSelf)
-        {
-            if (item != null)
-                UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
-            else
-                UIManager.instance.itemToolTip.HideToolTip();
-        }
-    }
-
-    private void SwapItems(UI_ItemSlot otherSlot)
-    {
-        Inventory_Item tempItem = item;
-        Inventory.instance.SwapInventoryItems(inventorySlotIndex, otherSlot.inventorySlotIndex);
+        if (draggedSlot == null || draggedSlot == this) return;
+        
+        // InventoryManager에 아이템 교환 요청
+        InventoryManager.Instance.SwapItems(draggedSlot.slotType, draggedSlot.slotIndex, this.slotType, this.slotIndex);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (item == null)
-            return;
-
-        UIManager.instance.itemToolTip.ShowToolTip(item, transform.position);
+        if (item.IsEmpty()) return;
+        // UIManager.instance.itemToolTip.ShowToolTip(item, transform.position); // 툴팁 표시
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (item == null)
-            return;
-
-        UIManager.instance.itemToolTip.HideToolTip();
+        // UIManager.instance.itemToolTip.HideToolTip(); // 툴팁 숨기기
+    }
+    
+    public virtual void OnPointerDown(PointerEventData eventData)
+    {
+        // 필요시 우클릭 등 이벤트 처리
     }
 }
-*/

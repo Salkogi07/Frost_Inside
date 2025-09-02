@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59923eb8644543e4885a657c6587d9d6, type: 3}
   m_Name: normal_armor
   m_EditorClassIdentifier: 
+  itemId: 25
   itemType: 0
   itemName: normal_chest
   icon: {fileID: 21300000, guid: 844553045c47baa428d75564f561a82e, type: 3}
   explanation: "\uC815\uB9D0 \uB300\uB2E8\uD574"
+  priceRange: {x: 1, y: 1}
+  isOre: 0
+  oreTile: {fileID: 0}
+  isSpawnable: 1
   equipmentType: 1
   itemEffect: []
   mining: 0

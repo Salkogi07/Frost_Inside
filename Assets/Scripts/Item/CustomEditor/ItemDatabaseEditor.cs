@@ -181,8 +181,7 @@ public class ItemDatabaseEditor : Editor
         {
             label = new GUIContent($"Element {index} (None)");
         }
-
-        // ===== 변경된 부분 시작 =====
+        
         // 이 아이템에 에러가 있는지 확인합니다.
         if (itemErrors.ContainsKey(index))
         {
@@ -190,7 +189,6 @@ public class ItemDatabaseEditor : Editor
             label.image = warningIcon.image;
             label.tooltip = itemErrors[index];
         }
-        // ===== 변경된 부분 끝 =====
         
         EditorGUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(itemProperty, label);

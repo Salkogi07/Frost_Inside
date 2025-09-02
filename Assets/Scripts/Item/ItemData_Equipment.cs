@@ -3,7 +3,8 @@ using UnityEngine;
 public enum EquipmentType
 {
     Back_Slot,
-    Tool
+    Shoulder_Slot,
+    Tool_Slot
 }
 
 [CreateAssetMenu(fileName = "New Item Data", menuName = "Data/Equipment")]

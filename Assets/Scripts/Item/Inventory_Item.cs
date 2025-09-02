@@ -6,7 +6,9 @@ public struct Inventory_Item : INetworkSerializable, IEquatable<Inventory_Item>
 {
     public int itemId;
     public int price;
-
+    
+    public ItemData Data => ItemDatabase.Instance.GetItemData(itemId);
+    
     public Inventory_Item(int _itemId, int _price)
     {
         itemId = _itemId;
