@@ -164,7 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dced2ce6a26184245b7082849405dc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImage: {fileID: 4660466433573698697}
+  itemImage: {fileID: 1729677921464518186}
   slotType: 2
   slotIndex: 0
   equipmentType: 0

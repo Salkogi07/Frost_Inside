@@ -14,8 +14,6 @@ public class UI_EquipmentSlot : UI_ItemSlot
         base.Awake();
         
         slotType = SlotType.Equipment;
-        
-        slotIndex = (int)equipmentType;
     }
     
     private void OnValidate()
