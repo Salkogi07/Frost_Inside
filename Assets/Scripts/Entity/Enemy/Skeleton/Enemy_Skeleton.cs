@@ -10,6 +10,7 @@ public class Enemy_Skeleton : Entity
     public Enemy_Skeleton_BattleState BattleState;
     public Enemy_Skeleton_JumpState JumpState;
     public Enemy_Skeleton_AttackState AttackState;
+    public Enemy_Skeleton_GroggyState  GroggyState;
     public Enemy_Skeleton_DeadState DeadState;
 
 
@@ -124,7 +125,7 @@ public class Enemy_Skeleton : Entity
         BattleState = new Enemy_Skeleton_BattleState(this, EnemyStateMachine, "battle");
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
         JumpState = new Enemy_Skeleton_JumpState(this, EnemyStateMachine, "jump", jumpData);
-        //
+        GroggyState = new Enemy_Skeleton_GroggyState(this,EnemyStateMachine, "groggy");
         // DeadState = new Enemy_DeadState(EnemyStateMachine, "dead",_skeleton);
 
 
@@ -179,6 +180,8 @@ public class Enemy_Skeleton : Entity
                              wallCheckDistance, whatIsWall)
                          && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * FacingDirection,
                              wallCheckDistance, whatIsWall);
+        JumpState._jumpData.IsJumpDetected = Physics2D.Raycast(JumpState._jumpData.primaryJumpCheck.position, Vector2.right* FacingDirection, JumpState._jumpData.jumpCheckDistance, JumpState._jumpData.whatIsJump);
+        
     }
 
     protected virtual void OnDrawGizmos()
@@ -222,7 +225,7 @@ public class Enemy_Skeleton : Entity
 
         // 시작 위치 (적이 바라보는 방향 앞쪽)
         Vector2 startPoint = new Vector2(
-            transform.position.x + (wallCheckDistance * FacingDirection),
+            transform.position.x + (JumpState._jumpData.jumpCheckDistance * FacingDirection),
             transform.position.y
         );
 
@@ -233,7 +236,7 @@ public class Enemy_Skeleton : Entity
         {
             // 현재 높이에서 체크 지점
             Vector2 checkPoint = new Vector2(startPoint.x, startPoint.y + yOffset);
-
+            // Debug.Log(checkPoint.y);
             // 현재 높이 기준 앞으로 벽/장애물 있는지 확인
             Collider2D hit = Physics2D.OverlapBox(checkPoint, boxSize, 0f, whatIsWall);
 
@@ -243,7 +246,7 @@ public class Enemy_Skeleton : Entity
                 return true;
             }
         }
-
+        
         return false;
     }
 }

@@ -9,12 +9,12 @@ public class EnemyJumpData
     public float jumpCoolTime;
     public bool isJumping = false;
     public float jumpVelocity;
-    public float enemy_Ground_Check_Y_Coordinate;
 
     [Header("Collision detection [Wall]")]
     public LayerMask whatIsJump;
     public Transform primaryJumpCheck;
     public float jumpCheckDistance;
+    public bool IsJumpDetected { get; set; }
 
     // [HideInInspector]
 

@@ -22,12 +22,18 @@
         public override void Update()
         {
         base.Update();
-        if (enemySkeleton.IsWallDetected && enemySkeleton.CanPerformLeap())
+        
+        if (enemySkeleton.JumpState._jumpData.IsJumpDetected )
         {
-            enemySkeleton.JumpState.StateName = "Move_director";
-            enemyStateMachine.ChangeState(enemySkeleton.JumpState);
+            if (enemySkeleton.CanPerformLeap())
+            {
+                
+                enemySkeleton.JumpState.StateName = "Move_director";
+                            enemyStateMachine.ChangeState(enemySkeleton.JumpState);
+            }
+            
         }
-        else if (!enemySkeleton.JumpState._jumpData.isJumping && (enemySkeleton.IsWallDetected || !enemySkeleton.IsGroundDetected))
+        if (!enemySkeleton.JumpState._jumpData.isJumping && (enemySkeleton.IsWallDetected || !enemySkeleton.IsGroundDetected))
         {
             enemyStateMachine.ChangeState(enemySkeleton.IdleState);
         }

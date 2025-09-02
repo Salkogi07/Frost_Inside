@@ -50,7 +50,7 @@ public class Enemy_Skeleton_BattleState : Enemy_Skeleton_State
             enemyStateMachine.ChangeState(enemySkeleton.AttackState);
         }
 
-        if(player.transform.position.y > enemySkeleton.transform.position.y+1f)
+        if( enemySkeleton.JumpState._jumpData.IsJumpDetected||player.transform.position.y > enemySkeleton.transform.position.y+1f)
         {
             
             enemySkeleton.JumpState.StateName = "Chase_director";
