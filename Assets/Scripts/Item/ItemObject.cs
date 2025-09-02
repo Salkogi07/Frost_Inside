@@ -148,4 +148,6 @@ public class ItemObject : NetworkBehaviour
         // 물리적 힘을 가해 아이템을 날림
         rb.AddForce(velocity, ForceMode2D.Impulse);
     }
+
+    public Inventory_Item GetItemData() => networkItem.Value;
 }
