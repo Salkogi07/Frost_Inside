@@ -30,6 +30,9 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (!item.IsEmpty() && item.Data != null)
         {
             itemImage.sprite = item.Data.icon;
+            
+            itemImage.type = Image.Type.Simple;
+            itemImage.preserveAspect = true;
         }
         else
         {
@@ -58,7 +61,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         draggedItemIcon.transform.SetAsLastSibling();
         draggedItemIcon.transform.localScale = Vector3.one;
 
-        Image newImage = draggedItemIcon.AddComponent<Image>();
+        Image newImage = draggedItemIcon.AddComponent<Image>(); 
         newImage.sprite = item.Data.icon;
         newImage.raycastTarget = false;
     }

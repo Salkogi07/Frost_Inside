@@ -18,4 +18,12 @@ public class UI_QuickSlotViewer : UI_ItemSlot
             highlight.SetActive(state);
         }
     }
+    
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        if (item.IsEmpty()) return;
+
+        draggedSlot = this;
+        itemImage.raycastTarget = false;
+    }
 }
