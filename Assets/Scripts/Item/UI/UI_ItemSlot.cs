@@ -30,6 +30,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (!item.IsEmpty() && item.Data != null)
         {
             itemImage.sprite = item.Data.icon;
+            itemImage.type = Image.Type.Simple;
+            itemImage.preserveAspect = true;
         }
         else
         {
