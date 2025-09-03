@@ -8,6 +8,7 @@ public class UI_QuickSlotViewer : UI_ItemSlot
     protected override void Awake()
     {
         base.Awake();
+        
         slotType = SlotType.QuickSlotViewer;
     }
     

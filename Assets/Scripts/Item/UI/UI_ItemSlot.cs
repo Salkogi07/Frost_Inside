@@ -30,9 +30,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (!item.IsEmpty() && item.Data != null)
         {
             itemImage.sprite = item.Data.icon;
-            
-            itemImage.type = Image.Type.Simple;
-            itemImage.preserveAspect = true;
         }
         else
         {
@@ -61,7 +58,7 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         draggedItemIcon.transform.SetAsLastSibling();
         draggedItemIcon.transform.localScale = Vector3.one;
 
-        Image newImage = draggedItemIcon.AddComponent<Image>(); 
+        Image newImage = draggedItemIcon.AddComponent<Image>();
         newImage.sprite = item.Data.icon;
         newImage.raycastTarget = false;
     }
@@ -82,6 +79,21 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             Destroy(draggedItemIcon);
         }
         draggedSlot = null;
+    }
+    
+    public static void CancelDrag()
+    {
+        if (draggedSlot != null)
+        {
+            draggedSlot.itemImage.raycastTarget = true; // 원래 슬롯의 레이캐스트를 다시 활성화
+            draggedSlot = null;
+        }
+        
+        if (draggedItemIcon != null)
+        {
+            Destroy(draggedItemIcon);
+            draggedItemIcon = null;
+        }
     }
 
     public virtual void OnDrop(PointerEventData eventData)

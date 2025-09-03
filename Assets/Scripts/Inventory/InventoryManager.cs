@@ -74,6 +74,12 @@ public class InventoryManager : MonoBehaviour
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Open Inventory")))
         {
             isInvenOpen = !isInvenOpen;
+            
+            if (!isInvenOpen)
+            {
+                UI_ItemSlot.CancelDrag();
+            }
+            
             InventoryUI.Instance.UpdateInventoryPanel();
         }
     }

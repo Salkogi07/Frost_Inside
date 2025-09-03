@@ -14,7 +14,7 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private Transform equipmentSlotParent;
     [SerializeField] private Transform quickSlotParent;
     [SerializeField] private Transform quickSlotViewerParent;
-
+    
     private UI_ItemSlot[] inventorySlots;
     private UI_EquipmentSlot[] equipmentSlots;
     private UI_QuickSlot[] quickSlots;
