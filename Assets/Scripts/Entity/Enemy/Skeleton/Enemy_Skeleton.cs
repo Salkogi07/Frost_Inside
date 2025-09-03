@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Stats;
 using UnityEngine;
 using UnityEngine;
 
@@ -11,10 +12,11 @@ public class Enemy_Skeleton : Entity
     public Enemy_Skeleton_JumpState JumpState;
     public Enemy_Skeleton_AttackState AttackState;
     public Enemy_Skeleton_GroggyState  GroggyState;
-    public Enemy_Skeleton_DeadState DeadState;
+    private Enemy_Skeleton_DeadState DeadState;
 
 
     private BoxCollider2D coll;
+    public Enemy_Stats  stats;
 
     protected Enemy_Skeleton_StateMachine EnemyStateMachine;
 
@@ -53,7 +55,7 @@ public class Enemy_Skeleton : Entity
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private float playerCheckDistance = 10;
 
-    [Header("Movement details")] public float IdleTime = 2;
+    [Header("Movement details")] public float IdleTime;
     public float MoveSpeed = 1.4f;
 
     [Range(0, 10)] public float moveAnimSpeedMultiplier = 1;
@@ -117,7 +119,7 @@ public class Enemy_Skeleton : Entity
 
         EnemyStateMachine = new Enemy_Skeleton_StateMachine();
         coll = GetComponent<BoxCollider2D>();
-
+        stats = GetComponent <Enemy_Stats>();
 
         AttackState = new Enemy_Skeleton_AttackState(this, EnemyStateMachine, "attack");
         IdleState = new Enemy_Skeleton_IdleState(this, EnemyStateMachine, "idle");
@@ -126,7 +128,7 @@ public class Enemy_Skeleton : Entity
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
         JumpState = new Enemy_Skeleton_JumpState(this, EnemyStateMachine, "jump", jumpData);
         GroggyState = new Enemy_Skeleton_GroggyState(this,EnemyStateMachine, "groggy");
-        // DeadState = new Enemy_DeadState(EnemyStateMachine, "dead",_skeleton);
+        DeadState = new Enemy_Skeleton_DeadState(this,EnemyStateMachine, "dead");
 
 
     }
@@ -136,7 +138,12 @@ public class Enemy_Skeleton : Entity
     {
         EnemyStateMachine.Initialize(IdleState);
     }
-
+public void Deading()
+    {
+        Debug.Log("d");
+        EnemyStateMachine.ChangeState(DeadState);
+        
+    }
     protected virtual void Update()
     {
         HandleCollisionDetection();
@@ -173,6 +180,7 @@ public class Enemy_Skeleton : Entity
         HandleFlip(xVelocity);
     }
 
+    
     private void HandleCollisionDetection()
     {
         IsGroundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);

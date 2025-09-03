@@ -3022,6 +3022,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d16c9b4ed41104438b225d402691204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemImage: {fileID: 0}
+  highlight: {fileID: 0}
+  slotType: 0
+  slotIndex: 0
 --- !u!114 &355910707
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4536,6 +4540,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d16c9b4ed41104438b225d402691204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemImage: {fileID: 0}
+  highlight: {fileID: 0}
+  slotType: 0
+  slotIndex: 0
 --- !u!114 &731771596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5707,7 +5715,7 @@ GameObject:
   - component: {fileID: 1059216638}
   - component: {fileID: 1059216637}
   m_Layer: 5
-  m_Name: Equipment slot - Tool
+  m_Name: Equipment Slot - Back_Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5744,6 +5752,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dced2ce6a26184245b7082849405dc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemImage: {fileID: 0}
+  highlight: {fileID: 0}
+  slotType: 0
+  slotIndex: 0
+  equipmentType: 0
 --- !u!114 &1059216638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13893,6 +13906,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8174644894935741058, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8174644894935741058, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+      propertyPath: maxHealth.baseValue
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8298345335872548018, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
       propertyPath: m_Icon
       value: 
@@ -13909,6 +13930,8 @@ PrefabInstance:
     - {fileID: 748514528279752800, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     - {fileID: 7941363909139575587, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     - {fileID: 7684268948642768014, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+    - {fileID: 3887468149059330943, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
+    - {fileID: 1241602051025749017, guid: 03b15815cdbcd514a9def2d5c1824ded, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -17697,6 +17720,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d16c9b4ed41104438b225d402691204, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemImage: {fileID: 0}
+  highlight: {fileID: 0}
+  slotType: 0
+  slotIndex: 0
 --- !u!114 &1516516108
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18917,7 +18944,7 @@ GameObject:
   - component: {fileID: 1640007427}
   - component: {fileID: 1640007426}
   m_Layer: 5
-  m_Name: Equipment slot - Back_Slot
+  m_Name: Equipment Slot - Back_Slot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18954,6 +18981,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dced2ce6a26184245b7082849405dc30, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemImage: {fileID: 0}
+  highlight: {fileID: 0}
+  slotType: 0
+  slotIndex: 0
+  equipmentType: 0
 --- !u!114 &1640007427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21137,6 +21169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8b7ac9b7b0ba4b4cbfa44214da93269, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speedUpKey: 282
+  fastTimeScale: 10
+  normalTimeScale: 1
 --- !u!114 &1811959724
 MonoBehaviour:
   m_ObjectHideFlags: 0

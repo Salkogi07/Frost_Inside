@@ -102,7 +102,7 @@ public class MonsterSpawner : NetworkBehaviour
             monsterInstance.GetComponent<NetworkObject>().Spawn(true);
             
             spawnedCount++;
-            Debug.Log($"[Spawned] #{spawnedCount} Room:{roomIdx} → diff:{chosen.GetComponent<Enemy_Stats>().difficulty}");
+            Debug.Log($"[Spawned] #{spawnedCount} Room:{roomIdx} → diff:{chosen.GetComponent<Stats.Enemy_Stats>().difficulty}");
         }
 
         Debug.Log($"[SpawnMonsters] Requested:{totalSpawnCount}, Spawned:{spawnedCount}");
@@ -129,7 +129,7 @@ public class MonsterSpawner : NetworkBehaviour
         var weightMap = new Dictionary<GameObject, float>();
         foreach (var p in prefabs)
         {
-            int diff = p.GetComponent<Enemy_Stats>().difficulty;
+            int diff = p.GetComponent<Stats.Enemy_Stats>().difficulty;
             weightMap[p] = (diff == 1 ? w1 : diff == 2 ? w2 : w3);
         }
         

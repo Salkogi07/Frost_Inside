@@ -1,4 +1,5 @@
 using UnityEngine;
+using Stats;
 
 public class Entity_Health : MonoBehaviour
 {
@@ -6,8 +7,8 @@ public class Entity_Health : MonoBehaviour
     private Entity entity;
     
 
-    [SerializeField] protected float health;
-    [SerializeField] protected float maxHealth = 100; 
+    [SerializeField] protected int health;
+    [SerializeField] protected Stat maxHealth; 
     [SerializeField] protected bool isDead;
     [Header("On Damage Knockback")]
     [SerializeField]  private float knockbackDuration = .2f;
@@ -23,7 +24,7 @@ public class Entity_Health : MonoBehaviour
         _entityVFX = GetComponent<Entity_VFX>();
         
         
-        health = maxHealth;
+        health = maxHealth.GetValue();
     }
     
     
@@ -32,16 +33,7 @@ public class Entity_Health : MonoBehaviour
     
     public virtual void TakeDamage(int damage , Transform damageDealer)
     {
-        // if (_entityVFX != null)
-        // {
-        //     Debug.Log("딱딱게이",damageDealer);
-        //     
-        // }
-        // else
-        // {
-        //     Debug.Log("애미",damageDealer);
-        //     
-        // }
+        
         
         Vector2 knockback = CalculateKnockback(damage,damageDealer);
         float duration = CalculateDuration(damage);
@@ -57,7 +49,7 @@ public class Entity_Health : MonoBehaviour
         
     }
 
-    private void ReduceHp(float damage)
+    private void ReduceHp(int damage)
     {
         health -= damage;
         // Debug.Log(health);
@@ -70,6 +62,7 @@ public class Entity_Health : MonoBehaviour
     private void Die()
     {
         isDead = true;
+        
     }
 
     
@@ -86,5 +79,5 @@ public class Entity_Health : MonoBehaviour
         return knockback;
     }
     // 대미지 비례 넉백량 증가
-    private bool IsHeavyDamage(float damage) => damage / maxHealth > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damage) => damage / maxHealth.GetValue() > heavyDamageThreshold;
 }
