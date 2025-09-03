@@ -1,6 +1,10 @@
-using UnityEngine;
+// Player_ItemPicker.cs
 
-public class Player_ItemPicker : MonoBehaviour
+using UnityEngine;
+using Unity.Netcode; // Netcode 네임스페이스 추가
+
+// NetworkBehaviour를 상속받아야 ServerRpc를 사용할 수 있습니다.
+public class Player_ItemPicker : NetworkBehaviour 
 {
     // Player_Stats stats; // 필요시 주석 해제하여 사용
 
@@ -19,6 +23,8 @@ public class Player_ItemPicker : MonoBehaviour
 
     void Update()
     {
+        if (!IsOwner) return;
+
         // if(stats.isDead) return;
 
         // 인벤토리가 열려있으면 아이템 줍기 비활성화
@@ -31,56 +37,68 @@ public class Player_ItemPicker : MonoBehaviour
             GameObject nearestItemObject = FindNearestItem();
             if (nearestItemObject != null)
             {
-                ItemObject itemPickupComponent = nearestItemObject.GetComponent<ItemObject>();
-                if (itemPickupComponent != null)
-                {
-                    // 아이템 줍기 시도
-                    TryPickupItem(nearestItemObject, itemPickupComponent);
-                }
+                // 아이템 줍기를 서버에 요청합니다.
+                RequestPickupItemServerRpc(nearestItemObject.GetComponent<NetworkObject>());
             }
         }
     }
 
     /// <summary>
-    /// 아이템 줍기를 시도하고, 성공하면 아이템을 파괴합니다.
+    /// [ServerRpc] 서버에게 아이템 줍기를 요청합니다.
     /// </summary>
-    /// <param name="itemObject">주울 아이템의 게임 오브젝트</param>
-    /// <param name="itemPickupComponent">아이템의 데이터가 담긴 ItemObject 컴포넌트</param>
-    private void TryPickupItem(GameObject itemObject, ItemObject itemPickupComponent)
+    [ServerRpc]
+    private void RequestPickupItemServerRpc(NetworkObjectReference itemNetworkObjectRef)
+    {
+        // NetworkObjectReference로부터 실제 NetworkObject를 가져옵니다.
+        if (itemNetworkObjectRef.TryGet(out NetworkObject itemNetworkObject))
+        {
+            // 서버에서 실제 거리와 같은 유효성 검사를 다시 수행하는 것이 안전합니다.
+            if (Vector3.Distance(transform.position, itemNetworkObject.transform.position) > pickupRange)
+            {
+                return; // 거리가 너무 멀면 무시
+            }
+
+            ItemObject itemPickupComponent = itemNetworkObject.GetComponent<ItemObject>();
+            if (itemPickupComponent != null)
+            {
+                // 서버에서 아이템 줍기를 시도합니다.
+                TryPickupItemOnServer(itemNetworkObject.gameObject, itemPickupComponent);
+            }
+        }
+    }
+
+    /// <summary>
+    /// (서버 전용 함수) 아이템 줍기를 시도하고, 성공하면 아이템을 파괴합니다.
+    /// </summary>
+    private void TryPickupItemOnServer(GameObject itemObject, ItemObject itemPickupComponent)
     {
         InventoryManager inventory = InventoryManager.Instance;
         Inventory_Item newItem = itemPickupComponent.GetItemData();
         
-        // 현재 선택된 퀵슬롯이 비어있으면 그곳에 아이템을 바로 추가
+        // 퀵슬롯이 비어있는 경우
         if (inventory.quickSlotItems[inventory.selectedQuickSlot].IsEmpty())
         {
-            // SetItem으로 아이템을 직접 할당
             inventory.SetItem(SlotType.QuickSlot, inventory.selectedQuickSlot, newItem);
-            // UI를 수동으로 갱신
             InventoryUI.Instance.UpdateAllSlots();
             
-            Destroy(itemObject);
-            nextPickupTime = Time.time + pickupCooldown; // 줍기 성공 시 쿨다운 적용
+            // 아이템 오브젝트를 네트워크에서 Despawn하고 파괴합니다.
+            itemObject.GetComponent<NetworkObject>().Despawn();
+            
             return;
         }
         
+        // 포켓(기본 인벤토리)에 공간이 있는 경우
         if (inventory.isPocket && inventory.CanAddItem())
         {
-            // AddItem은 내부적으로 빈 슬롯을 찾아 아이템을 추가하고 UI를 갱신
             inventory.AddItem(newItem);
             
-            Destroy(itemObject);
-            nextPickupTime = Time.time + pickupCooldown; // 줍기 성공 시 쿨다운 적용
+            itemObject.GetComponent<NetworkObject>().Despawn();
             return;
         }
         
-        Debug.Log("인벤토리가 가득 찼습니다!");
+        Debug.Log("인벤토리가 가득 찼습니다! (서버 로그)");
     }
     
-    /// <summary>
-    /// 설정된 범위 내에서 가장 가까운 "Item" 태그를 가진 게임 오브젝트를 찾습니다.
-    /// </summary>
-    /// <returns>가장 가까운 아이템 오브젝트 또는 null</returns>
     GameObject FindNearestItem()
     {
         GameObject[] items = GameObject.FindGameObjectsWithTag("Item");
