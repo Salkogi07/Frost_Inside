@@ -2,16 +2,15 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public enum SlotType { Inventory, QuickSlot, Equipment }
+public enum SlotType { Poket, QuickSlot, Equipment, QuickSlotViewer }
 
 public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected Image itemImage;
-    [SerializeField] protected GameObject highlight;
     
     protected Inventory_Item item;
     
-    public SlotType slotType = SlotType.Inventory;
+    public SlotType slotType = SlotType.Poket;
     public int slotIndex;
 
     public static UI_ItemSlot draggedSlot;
@@ -31,6 +30,8 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         if (!item.IsEmpty() && item.Data != null)
         {
             itemImage.sprite = item.Data.icon;
+            itemImage.type = Image.Type.Simple;
+            itemImage.preserveAspect = true;
         }
         else
         {
@@ -44,15 +45,6 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
         item = Inventory_Item.Empty;
         itemImage.sprite = null;
         itemImage.color = new Color(1, 1, 1, 0);
-    }
-
-    // 퀵슬롯 하이라이트 설정
-    public virtual void SetHighlight(bool state)
-    {
-        if (highlight != null)
-        {
-            highlight.SetActive(state);
-        }
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData)
@@ -89,6 +81,21 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
             Destroy(draggedItemIcon);
         }
         draggedSlot = null;
+    }
+    
+    public static void CancelDrag()
+    {
+        if (draggedSlot != null)
+        {
+            draggedSlot.itemImage.raycastTarget = true; // 원래 슬롯의 레이캐스트를 다시 활성화
+            draggedSlot = null;
+        }
+        
+        if (draggedItemIcon != null)
+        {
+            Destroy(draggedItemIcon);
+            draggedItemIcon = null;
+        }
     }
 
     public virtual void OnDrop(PointerEventData eventData)

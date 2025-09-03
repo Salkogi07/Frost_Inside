@@ -139,8 +139,8 @@ public class ItemObject : NetworkBehaviour
         }
     }
     
-    [ServerRpc(RequireOwnership = false)]
-    public void SetupItemServerRpc(Inventory_Item itemData, Vector2 velocity)
+    [ClientRpc]
+    public void SetupItemClientRpc(Inventory_Item itemData, Vector2 velocity)
     {
         if (!IsServer) return;
         networkItem.Value = itemData;
