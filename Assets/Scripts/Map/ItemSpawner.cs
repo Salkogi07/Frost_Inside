@@ -97,7 +97,7 @@ public class ItemSpawner : NetworkBehaviour
             networkObject.Spawn(true);
             networkObject.TrySetParent(dropParent, false);
             
-            itemObject.SetupItemServerRpc(invItem, vel);
+            itemObject.SetupItemClientRpc(invItem, vel);
         }
 
         Debug.Log($"[ItemSpawner] OriginalSum: {totalPriceSum}, ClampedSum: {targetSum}, Items Dropped: {dropInfos.Count}");
@@ -126,7 +126,7 @@ public class ItemSpawner : NetworkBehaviour
         // 아이템이 위로 살짝 튀어 오르는 효과
         Vector2 velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(3f, 6f));
 
-        itemObject.SetupItemServerRpc(itemToSpawn, velocity);
+        itemObject.SetupItemClientRpc(itemToSpawn, velocity);
         
         Debug.Log($"[ItemSpawner] 단일 아이템 스폰: {itemToSpawn.itemId} at {position}");
     }

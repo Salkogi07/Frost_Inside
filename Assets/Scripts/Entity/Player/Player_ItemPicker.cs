@@ -1,7 +1,6 @@
 using UnityEngine;
 using Unity.Netcode;
 
-// NetworkBehaviour를 상속받아 ServerRpc와 ClientRpc를 사용할 수 있도록 변경합니다.
 public class Player_ItemPicker : NetworkBehaviour
 {
     [Tooltip("아이템을 주울 수 있는 최대 거리")]
@@ -24,10 +23,10 @@ public class Player_ItemPicker : NetworkBehaviour
         if (InventoryManager.Instance.isInvenOpen || Time.time < nextPickupTime)
             return;
         
-        // 1. (클라이언트) 줍기 키를 눌렀을 때
+        // (클라이언트) 줍기 키를 눌렀을 때
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Pick Up Item")))
         {
-            // 2. (클라이언트) 인벤토리에 공간이 있는지 먼저 확인
+            // (클라이언트) 인벤토리에 공간이 있는지 먼저 확인
             bool canQuickSlot = InventoryManager.Instance.quickSlotItems[InventoryManager.Instance.selectedQuickSlot].IsEmpty();
             bool canPocket = InventoryManager.Instance.isPocket && InventoryManager.Instance.CanAddItem();
 
@@ -36,7 +35,7 @@ public class Player_ItemPicker : NetworkBehaviour
                 GameObject nearestItemObject = FindNearestItem();
                 if (nearestItemObject != null)
                 {
-                    // 3. (클라이언트 -> 서버) 서버에 아이템을 주워달라고 요청
+                    // (클라이언트 -> 서버) 서버에 아이템을 주워달라고 요청
                     PickupItemServerRpc(nearestItemObject.GetComponent<NetworkObject>());
                 }
             }
@@ -71,10 +70,10 @@ public class Player_ItemPicker : NetworkBehaviour
         ItemObject itemPickupComponent = itemNetworkObject.GetComponent<ItemObject>();
         if (itemPickupComponent == null) return;
 
-        // 4. (서버) 아이템 데이터를 가져옴
+        // (서버) 아이템 데이터를 가져옴
         Inventory_Item itemToPickup = itemPickupComponent.GetItemData();
         
-        // 5. (서버 -> 클라이언트) 요청을 보낸 "특정 클라이언트"에게 아이템을 추가하라고 명령
+        // (서버 -> 클라이언트) 요청을 보낸 "특정 클라이언트"에게 아이템을 추가하라고 명령
         ClientRpcParams clientRpcParams = new ClientRpcParams
         {
             Send = new ClientRpcSendParams
@@ -84,7 +83,7 @@ public class Player_ItemPicker : NetworkBehaviour
         };
         ConfirmPickupClientRpc(itemToPickup, clientRpcParams);
 
-        // 6. (서버) 모든 클라이언트에게서 아이템을 제거 (Despawn)
+        // (서버) 모든 클라이언트에게서 아이템을 제거 (Despawn)
         itemNetworkObject.Despawn(true);
     }
 
@@ -94,7 +93,7 @@ public class Player_ItemPicker : NetworkBehaviour
     [ClientRpc]
     private void ConfirmPickupClientRpc(Inventory_Item pickedUpItem, ClientRpcParams rpcParams = default)
     {
-        // 7. (클라이언트) 인벤토리에 아이템을 최종적으로 추가
+        // (클라이언트) 인벤토리에 아이템을 최종적으로 추가
         InventoryManager inventory = InventoryManager.Instance;
         
         // 퀵슬롯이 비어있으면 퀵슬롯에 먼저 추가
