@@ -1,0 +1,797 @@
+fileFormatVersion: 2
+guid: 5caa9d165a28d0e4c87bb73de6e718c8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4375654703931840162
+    second: Team_Logo-Animation-Sheet-4_0
+  - first:
+      213: -3743958661526459423
+    second: Team_Logo-Animation-Sheet-4_1
+  - first:
+      213: -4239081369644348071
+    second: Team_Logo-Animation-Sheet-4_2
+  - first:
+      213: -2646763593446677497
+    second: Team_Logo-Animation-Sheet-4_3
+  - first:
+      213: -714916626698510223
+    second: Team_Logo-Animation-Sheet-4_4
+  - first:
+      213: 5661283819949683007
+    second: Team_Logo-Animation-Sheet-4_5
+  - first:
+      213: 4449394882744241579
+    second: Team_Logo-Animation-Sheet-4_6
+  - first:
+      213: 3498536071918770518
+    second: Team_Logo-Animation-Sheet-4_7
+  - first:
+      213: 3073842891376554835
+    second: Team_Logo-Animation-Sheet-4_8
+  - first:
+      213: -650027920434956237
+    second: Team_Logo-Animation-Sheet-4_9
+  - first:
+      213: 935442878112482591
+    second: Team_Logo-Animation-Sheet-4_10
+  - first:
+      213: 2941221871809432802
+    second: Team_Logo-Animation-Sheet-4_11
+  - first:
+      213: -7263533666583646815
+    second: Team_Logo-Animation-Sheet-4_12
+  - first:
+      213: -5714422479794140043
+    second: Team_Logo-Animation-Sheet-4_13
+  - first:
+      213: 5709114972653877330
+    second: Team_Logo-Animation-Sheet-4_14
+  - first:
+      213: 2387596057919034514
+    second: Team_Logo-Animation-Sheet-4_15
+  - first:
+      213: -4152927918865180760
+    second: Team_Logo-Animation-Sheet-4_16
+  - first:
+      213: 6388099616812181103
+    second: Team_Logo-Animation-Sheet-4_17
+  - first:
+      213: -5992719430171462584
+    second: Team_Logo-Animation-Sheet-4_18
+  - first:
+      213: -2946700811391706953
+    second: Team_Logo-Animation-Sheet-4_19
+  - first:
+      213: 8668618410944778989
+    second: Team_Logo-Animation-Sheet-4_20
+  - first:
+      213: 2752110125698452307
+    second: Team_Logo-Animation-Sheet-4_21
+  - first:
+      213: -5618717120256655843
+    second: Team_Logo-Animation-Sheet-4_22
+  - first:
+      213: 3850138619350486629
+    second: Team_Logo-Animation-Sheet-4_23
+  - first:
+      213: -7116396910781830105
+    second: Team_Logo-Animation-Sheet-4_24
+  - first:
+      213: 5268525140371602353
+    second: Team_Logo-Animation-Sheet-4_25
+  - first:
+      213: 6182440057422500863
+    second: Team_Logo-Animation-Sheet-4_26
+  - first:
+      213: -1158275565079106940
+    second: Team_Logo-Animation-Sheet-4_27
+  - first:
+      213: -6387652956724238985
+    second: Team_Logo-Animation-Sheet-4_28
+  - first:
+      213: 893319130312845438
+    second: Team_Logo-Animation-Sheet-4_29
+  - first:
+      213: 7537136157242291697
+    second: Team_Logo-Animation-Sheet-4_30
+  - first:
+      213: 7274866562412142530
+    second: Team_Logo-Animation-Sheet-4_31
+  - first:
+      213: -8486859028813335104
+    second: Team_Logo-Animation-Sheet-4_32
+  - first:
+      213: -3891732512346814882
+    second: Team_Logo-Animation-Sheet-4_33
+  - first:
+      213: 8994185119792962397
+    second: Team_Logo-Animation-Sheet-4_34
+  - first:
+      213: 4629736642960380935
+    second: Team_Logo-Animation-Sheet-4_35
+  - first:
+      213: 6823422527466387334
+    second: Team_Logo-Animation-Sheet-4_36
+  - first:
+      213: -3925486919066472692
+    second: Team_Logo-Animation-Sheet-4_37
+  - first:
+      213: -7648875237642280549
+    second: Team_Logo-Animation-Sheet-4_38
+  - first:
+      213: 474520733833545497
+    second: Team_Logo-Animation-Sheet-4_39
+  - first:
+      213: -1247833861544707282
+    second: Team_Logo-Animation-Sheet-4_40
+  - first:
+      213: -1961168357096203378
+    second: Team_Logo-Animation-Sheet-4_41
+  - first:
+      213: -1446457979115794201
+    second: Team_Logo-Animation-Sheet-4_42
+  - first:
+      213: -391423442274641967
+    second: Team_Logo-Animation-Sheet-4_43
+  - first:
+      213: 8340267494854155337
+    second: Team_Logo-Animation-Sheet-4_44
+  - first:
+      213: -426008346993504137
+    second: Team_Logo-Animation-Sheet-4_45
+  - first:
+      213: 2753270476842422465
+    second: Team_Logo-Animation-Sheet-4_46
+  - first:
+      213: -205151902683822768
+    second: Team_Logo-Animation-Sheet-4_47
+  - first:
+      213: 1129120167897123389
+    second: Team_Logo-Animation-Sheet-4_48
+  - first:
+      213: -112107199136038349
+    second: Team_Logo-Animation-Sheet-4_49
+  - first:
+      213: -6269356561643803169
+    second: Team_Logo-Animation-Sheet-4_50
+  - first:
+      213: 1854681507523364103
+    second: Team_Logo-Animation-Sheet-4_51
+  - first:
+      213: 5555712180299772203
+    second: Team_Logo-Animation-Sheet-4_52
+  - first:
+      213: 1194042391655601439
+    second: Team_Logo-Animation-Sheet-4_53
+  - first:
+      213: 4657768499516052246
+    second: Team_Logo-Animation-Sheet-4_54
+  - first:
+      213: -6780144061742825142
+    second: Team_Logo-Animation-Sheet-4_55
+  - first:
+      213: 6540554274135919953
+    second: Team_Logo-Animation-Sheet-4_56
+  - first:
+      213: -3838211542990113525
+    second: Team_Logo-Animation-Sheet-4_57
+  - first:
+      213: 3369533834221741339
+    second: Team_Logo-Animation-Sheet-4_58
+  - first:
+      213: 4338797418333314192
+    second: Team_Logo-Animation-Sheet-4_59
+  - first:
+      213: 3733037375258463597
+    second: Team_Logo-Animation-Sheet-4_60
+  - first:
+      213: -2981346563401628197
+    second: Team_Logo-Animation-Sheet-4_61
+  - first:
+      213: -2146567572912069059
+    second: Team_Logo-Animation-Sheet-4_62
+  - first:
+      213: -9155023117557325619
+    second: Team_Logo-Animation-Sheet-4_63
+  - first:
+      213: -2311578707588315548
+    second: Team_Logo-Animation-Sheet-4_64
+  - first:
+      213: -8444420951566262893
+    second: Team_Logo-Animation-Sheet-4_65
+  - first:
+      213: -2946663207932473699
+    second: Team_Logo-Animation-Sheet-4_66
+  - first:
+      213: -5599188843247484888
+    second: Team_Logo-Animation-Sheet-4_67
+  - first:
+      213: -8755367263342659557
+    second: Team_Logo-Animation-Sheet-4_68
+  - first:
+      213: 4424445000990887107
+    second: Team_Logo-Animation-Sheet-4_69
+  - first:
+      213: -3988247948234121425
+    second: Team_Logo-Animation-Sheet-4_70
+  - first:
+      213: 4306075405263167307
+    second: Team_Logo-Animation-Sheet-4_71
+  - first:
+      213: 8769888403481937255
+    second: Team_Logo-Animation-Sheet-4_72
+  - first:
+      213: -2290623967563180990
+    second: Team_Logo-Animation-Sheet-4_73
+  - first:
+      213: 6412895462359634720
+    second: Team_Logo-Animation-Sheet-4_74
+  - first:
+      213: 8371641975936452168
+    second: Team_Logo-Animation-Sheet-4_75
+  - first:
+      213: -8952779985062619554
+    second: Team_Logo-Animation-Sheet-4_76
+  - first:
+      213: -5370457263748992072
+    second: Team_Logo-Animation-Sheet-4_77
+  - first:
+      213: -3268683299850324839
+    second: Team_Logo-Animation-Sheet-4_78
+  - first:
+      213: 3014195628140710919
+    second: Team_Logo-Animation-Sheet-4_79
+  - first:
+      213: -8740820972333045998
+    second: Team_Logo-Animation-Sheet-4_80
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e592060ea3d8643c0800000000000000
+      internalID: -4375654703931840162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_1
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ebe7f50f69ca0cc0800000000000000
+      internalID: -3743958661526459423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_2
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 95d4f5434f1cb25c0800000000000000
+      internalID: -4239081369644348071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_3
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 704ac20f88ec44bd0800000000000000
+      internalID: -2646763593446677497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_4
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1706d95ad1b1416f0800000000000000
+      internalID: -714916626698510223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_5
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3174c4b3abe09e40800000000000000
+      internalID: 5661283819949683007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_6
+      rect:
+        serializedVersion: 2
+        x: 1218
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bad496b621d6fbd30800000000000000
+      internalID: 4449394882744241579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_7
+      rect:
+        serializedVersion: 2
+        x: 1421
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 659db98750c4d8030800000000000000
+      internalID: 3498536071918770518
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_8
+      rect:
+        serializedVersion: 2
+        x: 1624
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 353fbd3e2db78aa20800000000000000
+      internalID: 3073842891376554835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_9
+      rect:
+        serializedVersion: 2
+        x: 1827
+        y: 137
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3387364ec03aaf6f0800000000000000
+      internalID: -650027920434956237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_10
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f154099675c5bfc00800000000000000
+      internalID: 935442878112482591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_11
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2ec8fca85b151d820800000000000000
+      internalID: 2941221871809432802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_12
+      rect:
+        serializedVersion: 2
+        x: 406
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 1ade0353d9eb23b90800000000000000
+      internalID: -7263533666583646815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_13
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57c0d5be70b42b0b0800000000000000
+      internalID: -5714422479794140043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_14
+      rect:
+        serializedVersion: 2
+        x: 812
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 258f5e6c1d9da3f40800000000000000
+      internalID: 5709114972653877330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_15
+      rect:
+        serializedVersion: 2
+        x: 1015
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2941363f6f1722120800000000000000
+      internalID: 2387596057919034514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_16
+      rect:
+        serializedVersion: 2
+        x: 1218
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8a71d3a9f06dd56c0800000000000000
+      internalID: -4152927918865180760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_17
+      rect:
+        serializedVersion: 2
+        x: 1421
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f6626e181c617a850800000000000000
+      internalID: 6388099616812181103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Team_Logo-Animation-Sheet-4_18
+      rect:
+        serializedVersion: 2
+        x: 1624
+        y: 0
+        width: 203
+        height: 137
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8447c06dd6595dca0800000000000000
+      internalID: -5992719430171462584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 6c1951fb2f8a0e2429b8e535e49dd004
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Team_Logo-Animation-Sheet-4_0: -4375654703931840162
+      Team_Logo-Animation-Sheet-4_1: -3743958661526459423
+      Team_Logo-Animation-Sheet-4_10: 935442878112482591
+      Team_Logo-Animation-Sheet-4_11: 2941221871809432802
+      Team_Logo-Animation-Sheet-4_12: -7263533666583646815
+      Team_Logo-Animation-Sheet-4_13: -5714422479794140043
+      Team_Logo-Animation-Sheet-4_14: 5709114972653877330
+      Team_Logo-Animation-Sheet-4_15: 2387596057919034514
+      Team_Logo-Animation-Sheet-4_16: -4152927918865180760
+      Team_Logo-Animation-Sheet-4_17: 6388099616812181103
+      Team_Logo-Animation-Sheet-4_18: -5992719430171462584
+      Team_Logo-Animation-Sheet-4_2: -4239081369644348071
+      Team_Logo-Animation-Sheet-4_3: -2646763593446677497
+      Team_Logo-Animation-Sheet-4_4: -714916626698510223
+      Team_Logo-Animation-Sheet-4_5: 5661283819949683007
+      Team_Logo-Animation-Sheet-4_6: 4449394882744241579
+      Team_Logo-Animation-Sheet-4_7: 3498536071918770518
+      Team_Logo-Animation-Sheet-4_8: 3073842891376554835
+      Team_Logo-Animation-Sheet-4_9: -650027920434956237
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
