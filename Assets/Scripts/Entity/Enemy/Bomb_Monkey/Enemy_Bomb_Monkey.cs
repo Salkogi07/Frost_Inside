@@ -2,22 +2,21 @@
 using Stats;
 using UnityEngine;
 
-public class Enemy_Skeleton : Entity
+public class Enemy_Bomb_Monkey : Entity
 {
 
-    public Enemy_Skeleton_IdleState IdleState;
-    public Enemy_Skeleton_MoveState MoveState;
-    public Enemy_Skeleton_BattleState BattleState;
-    public Enemy_Skeleton_JumpState JumpState;
-    public Enemy_Skeleton_AttackState AttackState;
-    public Enemy_Skeleton_GroggyState  GroggyState;
-    private Enemy_Skeleton_DeadState DeadState;
+    public Enemy_Bomb_Monkey_IdleState IdleState;
+    public Enemy_Bomb_Monkey_MoveState MoveState;
+    public Enemy_Bomb_Monkey_BattleState BattleState;
+    public Enemy_Bomb_Monkey_JumpState JumpState;
+    public Enemy_Bomb_Monkey_AttackState AttackState;
+    private Enemy_Bomb_Monkey_DeadState DeadState;
 
 
     private BoxCollider2D coll;
     public Enemy_Stats  stats;
 
-    protected Enemy_Skeleton_StateMachine EnemyStateMachine;
+    protected Enemy_Bomb_Monkey_StateMachine EnemyStateMachine;
 
 
     private bool _isFacingRight = false;
@@ -116,18 +115,17 @@ public class Enemy_Skeleton : Entity
     {
         base.Awake();
 
-        EnemyStateMachine = new Enemy_Skeleton_StateMachine();
+        EnemyStateMachine = new Enemy_Bomb_Monkey_StateMachine();
         coll = GetComponent<BoxCollider2D>();
         stats = GetComponent <Enemy_Stats>();
 
-        AttackState = new Enemy_Skeleton_AttackState(this, EnemyStateMachine, "attack");
-        IdleState = new Enemy_Skeleton_IdleState(this, EnemyStateMachine, "idle");
-        MoveState = new Enemy_Skeleton_MoveState(this, EnemyStateMachine, "move");
-        BattleState = new Enemy_Skeleton_BattleState(this, EnemyStateMachine, "battle");
+        AttackState = new Enemy_Bomb_Monkey_AttackState(this, EnemyStateMachine, "attack");
+        IdleState = new Enemy_Bomb_Monkey_IdleState(this, EnemyStateMachine, "idle");
+        MoveState = new Enemy_Bomb_Monkey_MoveState(this, EnemyStateMachine, "move");
+        BattleState = new Enemy_Bomb_Monkey_BattleState(this, EnemyStateMachine, "battle");
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
-        JumpState = new Enemy_Skeleton_JumpState(this, EnemyStateMachine, "jump", jumpData);
-        GroggyState = new Enemy_Skeleton_GroggyState(this,EnemyStateMachine, "groggy");
-        DeadState = new Enemy_Skeleton_DeadState(this,EnemyStateMachine, "dead");
+        JumpState = new Enemy_Bomb_Monkey_JumpState(this, EnemyStateMachine, "jump", jumpData);
+        DeadState = new Enemy_Bomb_Monkey_DeadState(this,EnemyStateMachine, "dead");
 
 
     }
