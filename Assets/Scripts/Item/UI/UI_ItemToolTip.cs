@@ -1,5 +1,4 @@
-﻿/*
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,14 +22,14 @@ public class UI_ItemToolTip : MonoBehaviour
     // 슬롯의 위치(slotPosition)를 받아 그 위치에 오프셋을 적용하여 툴팁을 표시
     public void ShowToolTip(Inventory_Item item, Vector3 slotPosition)
     {
-        if (item == null)
+        if (item.Data.itemId == -1)
             return;
 
         // 텍스트 업데이트
-        itemNameText.text = item?.data.itemName;
-        itemTypeText.text = item?.data.itemType.ToString();
+        itemNameText.text = item.Data.itemName;
+        itemTypeText.text = item.Data.itemType.ToString();
         itemCoinText.text = item.price.ToString();
-        itemExplanation.text = item?.data.explanation;
+        itemExplanation.text = item.Data.explanation;
 
         background = GetComponent<RectTransform>();
         originalSize = background.sizeDelta; // 시작 시 배경의 크기를 저장
@@ -61,4 +60,3 @@ public class UI_ItemToolTip : MonoBehaviour
         gameObject.SetActive(false);
     }
 }
-*/

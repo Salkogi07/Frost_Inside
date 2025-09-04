@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public enum SlotType { Poket, QuickSlot, Equipment, QuickSlotViewer }
 
-public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] protected Image itemImage;
     
@@ -109,16 +109,12 @@ public class UI_ItemSlot : MonoBehaviour, IPointerDownHandler, IBeginDragHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (item.IsEmpty()) return;
-        // UIManager.instance.itemToolTip.ShowToolTip(item, transform.position); // 툴팁 표시
+        //InventoryUI.Instance.itemToolTip.ShowToolTip(item, transform.position); // 툴팁 표시
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        // UIManager.instance.itemToolTip.HideToolTip(); // 툴팁 숨기기
-    }
-    
-    public virtual void OnPointerDown(PointerEventData eventData)
-    {
-        // 필요시 우클릭 등 이벤트 처리
+        if (item.IsEmpty()) return;
+        //InventoryUI.Instance.itemToolTip.HideToolTip(); // 툴팁 숨기기
     }
 }

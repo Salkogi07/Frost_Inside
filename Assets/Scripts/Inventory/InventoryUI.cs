@@ -8,6 +8,7 @@ public class InventoryUI : MonoBehaviour
     [Header("Inventory & Poket Panels")]
     [SerializeField] private GameObject inventoryPanel;
     [SerializeField] private GameObject poketPanel;
+    public UI_ItemToolTip itemToolTip;
     
     [Header("Slot Parents")]
     [SerializeField] private Transform poketSlotParent;
