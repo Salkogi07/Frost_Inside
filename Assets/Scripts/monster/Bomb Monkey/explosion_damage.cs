@@ -34,6 +34,7 @@ public class explosion_damage : MonoBehaviour
             {
                 hasExploded = true;
                 collider.GetComponent<Player_Condition>().TakeDamage(damage);
+                Debug.Log("Hit");
             }
             // if (collider.tag == "Player")
             // {

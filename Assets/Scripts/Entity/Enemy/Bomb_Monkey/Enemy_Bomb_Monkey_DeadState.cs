@@ -23,7 +23,9 @@ using UnityEngine;
             // rb.gravityScale = 12;
             // rb.linearVelocity = new Vector2(rb.linearVelocity.x, 15);
             Debug.Log("Entered");
+            
             enemyStateMachine.SwitchOffStateMachine();
+            Object.Destroy(bombMonkey.gameObject);
         }
     }
 

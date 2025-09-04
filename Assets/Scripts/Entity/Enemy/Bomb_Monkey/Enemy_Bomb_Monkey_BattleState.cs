@@ -6,6 +6,7 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
     
     private Transform player;
     private float lastTimeWasInBattle;
+    public bool Explosive =false;
 
     public Enemy_Bomb_Monkey_BattleState(Enemy_Bomb_Monkey bombMonkey, Enemy_Bomb_Monkey_StateMachine enemyStateMachine, string animBoolName) : base(bombMonkey, enemyStateMachine, animBoolName)
     {
@@ -38,7 +39,7 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
     public override void Update()
     {
         base.Update();
-        
+
         if (bombMonkey.PlayerDetection() == true)
         {
             UpdateBattleTimer();
@@ -48,11 +49,17 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
         {
             enemyStateMachine.ChangeState(bombMonkey.IdleState);
         }
-        if (WithinAttackRange() && bombMonkey.PlayerDetection())
+
+        if (bombMonkey.PlayerDetection())
         {
-            enemyStateMachine.ChangeState(bombMonkey.AttackState);
+            Explosive = true;
+        }
+        else
+        {
+            Explosive = false;
         }
 
+    
         if(bombMonkey.JumpState._jumpData.IsJumpDetected||player.transform.position.y > bombMonkey.transform.position.y+1f)
         {
 
@@ -71,7 +78,7 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
 
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
     private bool BattleTimeIsOver() =>Time.time > lastTimeWasInBattle + bombMonkey.battleTimeDuration;
-    private bool WithinAttackRange() => DistanceToPlayer() < bombMonkey.attackDistance;
+    
     private bool shouldRetreat() => DistanceToPlayer() < bombMonkey.minRetreatDistance;
         
     

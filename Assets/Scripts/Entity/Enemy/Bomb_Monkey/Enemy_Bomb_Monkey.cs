@@ -10,7 +10,7 @@ public class Enemy_Bomb_Monkey : Entity
     public Enemy_Bomb_Monkey_BattleState BattleState;
     public Enemy_Bomb_Monkey_JumpState JumpState;
     public Enemy_Bomb_Monkey_AttackState AttackState;
-    private Enemy_Bomb_Monkey_DeadState DeadState;
+    public Enemy_Bomb_Monkey_DeadState DeadState;
 
 
     private BoxCollider2D coll;
@@ -53,6 +53,11 @@ public class Enemy_Bomb_Monkey : Entity
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private float playerCheckDistance = 10;
 
+    [Header("Boob detection")] 
+    [SerializeField] private LayerMask whatIsBob;
+    [SerializeField] public GameObject prf;
+    [SerializeField] private Transform boobTargetChack;
+    [SerializeField] private float targetcheckRadius;
     [Header("Movement details")] public float IdleTime;
     public float MoveSpeed = 1.4f;
 
@@ -110,7 +115,25 @@ public class Enemy_Bomb_Monkey : Entity
 
         return hit;
     }
-
+    public void PerformAttack()
+    {
+        GetDetectedColliders();
+        // entityHealth?.TakeDamage(damage,transform);
+        if (BattleState.Explosive)
+        {
+            foreach (var target in GetDetectedColliders())
+            {
+                        EnemyStateMachine.ChangeState(AttackState);
+                        
+                        
+            }
+        }
+        
+    }
+    private Collider2D[] GetDetectedColliders()
+    {
+        return Physics2D.OverlapCircleAll(boobTargetChack.position, targetcheckRadius, whatIsBob);
+    }
     protected virtual void Awake()
     {
         base.Awake();
@@ -122,7 +145,7 @@ public class Enemy_Bomb_Monkey : Entity
         AttackState = new Enemy_Bomb_Monkey_AttackState(this, EnemyStateMachine, "attack");
         IdleState = new Enemy_Bomb_Monkey_IdleState(this, EnemyStateMachine, "idle");
         MoveState = new Enemy_Bomb_Monkey_MoveState(this, EnemyStateMachine, "move");
-        BattleState = new Enemy_Bomb_Monkey_BattleState(this, EnemyStateMachine, "battle");
+        BattleState = new Enemy_Bomb_Monkey_BattleState(this, EnemyStateMachine, "chase");
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
         JumpState = new Enemy_Bomb_Monkey_JumpState(this, EnemyStateMachine, "jump", jumpData);
         DeadState = new Enemy_Bomb_Monkey_DeadState(this,EnemyStateMachine, "dead");
@@ -144,12 +167,14 @@ public void Deading()
     protected virtual void Update()
     {
         HandleCollisionDetection();
+        PerformAttack();
         EnemyStateMachine.UpdateActiveState();
     }
 
     protected virtual void FixedUpdate()
     {
         EnemyStateMachine.FiexedUpdateActiveState();
+        
     }
 
 
@@ -203,18 +228,24 @@ public void Deading()
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * playerCheckDistance), playerCheck.position.y));
 
-        Gizmos.color = Color.blue;
-        Gizmos.DrawLine(playerCheck.position,
-            new Vector3(playerCheck.position.x + (FacingDirection * attackDistance), playerCheck.position.y));
 
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(playerCheck.position,
-            new Vector3(playerCheck.position.x + (FacingDirection * minRetreatDistance), playerCheck.position.y));
-        
-        Gizmos.color = Color.green;
-        Gizmos.DrawLine(JumpState._jumpData.primaryJumpCheck.position,
-            new Vector3(JumpState._jumpData.primaryJumpCheck.position.x + (FacingDirection * JumpState._jumpData.jumpCheckDistance), JumpState._jumpData.primaryJumpCheck.position.y));
+        if (JumpState != null && JumpState._jumpData != null && JumpState._jumpData.primaryJumpCheck != null)
+        {
+            Gizmos.color = Color.green;
+            Gizmos.DrawLine(JumpState._jumpData.primaryJumpCheck.position,
+                new Vector3(
+                    JumpState._jumpData.primaryJumpCheck.position.x +
+                    (FacingDirection * JumpState._jumpData.jumpCheckDistance),
+                    JumpState._jumpData.primaryJumpCheck.position.y));
+        }
+
+        if (boobTargetChack != null)
+        {
+            Gizmos.color = Color.white;
+            Gizmos.DrawWireSphere(boobTargetChack.position, targetcheckRadius);
+        }
     }
+    
 
     public void CallAnimationTrigger()
     {
