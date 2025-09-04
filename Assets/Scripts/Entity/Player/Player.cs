@@ -113,7 +113,7 @@ public class Player : Entity
         if (IsOwner)
         {
             // --- Owner 로직 (입력 및 상태 머신 업데이트) ---
-            if (ChatManager.instance != null && ChatManager.instance.IsChatting)
+            if (ChatManager.instance.IsChatting || InventoryManager.Instance.isInvenOpen)
             {
                 _playerStateMachine.ChangeState(IdleState);
                 return;

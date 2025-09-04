@@ -2,26 +2,23 @@ using System.Collections;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Playables;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class LogoLoadingUI : MonoBehaviour
 {
+    [SerializeField] private PlayableDirector logoDirector;
+    
     // 인스펙터에서 설정할 변수들
     [Tooltip("페이드 인/아웃될 로고 이미지")]
     [SerializeField] private Image logoImage;
     
     [Tooltip("로고가 페이드인까지 기다리는 시간")]
     [SerializeField] private float startTime = 1.0f;
-    
+
     [Tooltip("로고가 나타나는 데 걸리는 시간")]
     [SerializeField] private float fadeInTime = 2.0f;
-
-    [Tooltip("로고가 완전히 나타난 후 유지되는 시간")]
-    [SerializeField] private float stayTime = 2.0f;
-
-    [Tooltip("로고가 사라지는 데 걸리는 시간")]
-    [SerializeField] private float fadeOutTime = 2.0f;
 
     [Tooltip("로고 씬 이후에 불러올 씬의 이름")]
     [SerializeField] private string nextSceneName = "Setup";
@@ -32,27 +29,33 @@ public class LogoLoadingUI : MonoBehaviour
     void Start()
     {
         if(skipLogo)
+        {
             SceneManager.LoadScene(nextSceneName);
+        }
         else
-            StartCoroutine(FadeSequence());
+        {
+            StartCoroutine(FullSequence());
+        }
     }
 
-    private IEnumerator FadeSequence()
+    private IEnumerator FullSequence()
     {
-        logoImage.gameObject.SetActive(false);
+        logoDirector.gameObject.SetActive(false);
         yield return new WaitForSeconds(startTime);
-        logoImage.gameObject.SetActive(true);
+        logoDirector.gameObject.SetActive(true);
         
-        // 2. Fade In (서서히 나타나기)
+        // PlayableDirector 재생 및 완료 대기
+        if (logoDirector != null)
+        {
+            logoDirector.Play();
+            // 타임라인 재생 시간만큼 대기 (타임라인 길이를 가져와야 함)
+            yield return new WaitForSeconds((float)logoDirector.duration);
+        }
+        
+        // 로고 페이드 인
         yield return StartCoroutine(Fade(0f, 1f, fadeInTime));
-
-        // 3. Stay (잠시 대기)
-        yield return new WaitForSeconds(stayTime);
-
-        // 4. Fade Out (서서히 사라지기)
-        yield return StartCoroutine(Fade(1f, 0f, fadeOutTime));
         
-        // 5. 다음 씬으로 이동
+        // 다음 씬 로드
         SceneManager.LoadScene(nextSceneName);
     }
 
@@ -64,6 +67,7 @@ public class LogoLoadingUI : MonoBehaviour
     /// <param name="duration">지속 시간</param>
     private IEnumerator Fade(float startAlpha, float endAlpha, float duration)
     {
+        logoImage.gameObject.SetActive(true); // 페이드 시작 전에 항상 활성화
         float timer = 0f;
         Color currentColor = logoImage.color;
 
