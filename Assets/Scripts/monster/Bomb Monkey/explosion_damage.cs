@@ -7,22 +7,24 @@ public class explosion_damage : MonoBehaviour
     public Vector2 Boxsize = new Vector2(1f, 1f);
     public LayerMask groundLayer; // Ground
 
-    private Monster_stat stat;
-    private MimicBoxDirector boxDirector;
-    public int damage = 30;
+    public Enemy_Stats enemyStats;
+    private Enemy_Bomb_Monkey _bombMonkey;
+    
 
     private bool hasExploded = false;
     //public 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        stat = GetComponent<Monster_stat>();
-        boxDirector = GetComponent<MimicBoxDirector>();
+        
+        _bombMonkey = GetComponent<Enemy_Bomb_Monkey>();
         // Boxsize = new Vector2(stat.range.x, stat.range.y);
         //Boxsize = new Vector2(stat.range[0], stat.range[1]);
         StartCoroutine(Bombing());
     }
 
+
+    
     // Update is called once per frame
     void Update()
     {
@@ -33,14 +35,10 @@ public class explosion_damage : MonoBehaviour
             if (collider.tag == "Player")
             {
                 hasExploded = true;
-                collider.GetComponent<Player_Condition>().TakeDamage(damage);
-                Debug.Log("Hit");
+                collider.GetComponent<Player_Condition>().TakeDamage(enemyStats.damage.GetValue());
+                Debug.Log(enemyStats.damage.GetValue());
             }
-            // if (collider.tag == "Player")
-            // {
-            //     Debug.Log("sdsds");
-            //
-            // }
+            
         }
     }
     private void OnDrawGizmos()

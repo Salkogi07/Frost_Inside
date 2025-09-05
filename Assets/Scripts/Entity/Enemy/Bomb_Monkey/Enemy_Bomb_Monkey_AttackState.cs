@@ -1,4 +1,5 @@
 
+using Stats;
 using UnityEngine;
 
 public class Enemy_Bomb_Monkey_AttackState : Enemy_Bomb_Monkey_State
@@ -10,6 +11,7 @@ public class Enemy_Bomb_Monkey_AttackState : Enemy_Bomb_Monkey_State
     public override void Enter()
     {
         base.Enter();
+        bombMonkey.prf.GetComponent<explosion_damage>().enemyStats = bombMonkey.stats;
         Object.Instantiate(bombMonkey.prf, bombMonkey.transform.position, Quaternion.identity);
         enemyStateMachine.ChangeState(bombMonkey.DeadState);
     }

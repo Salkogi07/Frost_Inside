@@ -6,8 +6,8 @@ namespace Stats
     {
 
         [Header("Stat info")] 
-        [SerializeField] private Stat damage;
-        [SerializeField] private float armor;
+        [SerializeField] public Stat damage;
+        [SerializeField] public float armor;
         [SerializeField] public float Groggy;
         [SerializeField] public float speed;
         
