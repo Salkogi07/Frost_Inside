@@ -226,12 +226,20 @@ public class NetworkTransmission : NetworkBehaviour
     {
         Debug.Log("[Server] 초기 설정을 시작합니다.");
         
+        // TimeManager 찾기
+        if (TimerManager.instance == null)
+        {
+            Debug.LogError("[NetworkTransmission] TimeManager instance not found!");
+            yield break;
+        }
+        
         // GameManager 찾기
         if (GameManager.instance == null)
         {
             Debug.LogError("[NetworkTransmission] GameManager instance not found!");
             yield break;
         }
+        TimerManager timerManager = TimerManager.instance;
         GameManager gameManager = GameManager.instance;
         
         //초기 설정
@@ -255,7 +263,7 @@ public class NetworkTransmission : NetworkBehaviour
             yield return null;
         }
 
-        gameManager.StartGameTimer();
+        timerManager.StartGameTimer();
 
 
         Debug.Log("[Server] Server-side setup is complete. Notifying clients to start the game.");

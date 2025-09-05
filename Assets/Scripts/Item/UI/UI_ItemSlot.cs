@@ -35,8 +35,7 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         }
         else
         {
-            itemImage.sprite = null;
-            itemImage.color = new Color(1, 1, 1, 0); // 투명하게
+            CleanUpSlot();
         }
     }
 
@@ -61,6 +60,8 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         draggedItemIcon.transform.localScale = Vector3.one;
 
         Image newImage = draggedItemIcon.AddComponent<Image>();
+        newImage.type = Image.Type.Simple;
+        newImage.preserveAspect = true;
         newImage.sprite = item.Data.icon;
         newImage.raycastTarget = false;
     }

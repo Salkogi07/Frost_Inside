@@ -63,6 +63,11 @@ public class MakeRandomMap : MonoBehaviour
     public Vector2Int MapMin => mapMin;
     public Vector2Int MapMax => mapMax;
 
+    private void Awake()
+    {
+        GameManager.instance.makeRandomMap = this;
+    }
+
     public void GenerateMapFromSeed(int seed)
     {
         Random.InitState(seed);

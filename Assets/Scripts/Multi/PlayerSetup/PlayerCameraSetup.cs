@@ -1,10 +1,8 @@
-﻿// --- START OF NEW FILE PlayerCameraSetup.cs ---
-
-using Unity.Netcode;
+﻿using Unity.Netcode;
 using Unity.Cinemachine;
 using UnityEngine;
 
-// 이 스크립트는 플레이어 프리팹에 추가되어야 합니다.
+
 public class PlayerCameraSetup : NetworkBehaviour
 {
     private CinemachineCamera _camera;

@@ -14,6 +14,11 @@ public class ItemSpawner : NetworkBehaviour
 
     [Tooltip("드롭할 프리팹을 할당하세요.")]
     [SerializeField] private GameObject dropPrefab;
+    
+    private void Awake()
+    {
+        GameManager.instance.itemSpawner = this;
+    }
 
     /// <summary>
     /// 서버에서만 호출되어 맵에 아이템을 스폰합니다.
@@ -129,5 +134,25 @@ public class ItemSpawner : NetworkBehaviour
         itemObject.SetupItemClientRpc(itemToSpawn, velocity);
         
         Debug.Log($"[ItemSpawner] 단일 아이템 스폰: {itemToSpawn.itemId} at {position}");
+    }
+    
+    public void SpawnPlayerDroppedItem(Inventory_Item itemToSpawn, Vector3 position, Vector2 velocity)
+    {
+        if (!IsServer)
+        {
+            Debug.LogError("[ItemSpawner] SpawnPlayerDroppedItem은 서버에서만 호출할 수 있습니다.");
+            return;
+        }
+
+        var drop = Instantiate(dropPrefab, position, Quaternion.identity, dropParent);
+        var itemObject = drop.GetComponent<ItemObject>();
+        var networkObject = drop.GetComponent<NetworkObject>();
+
+        networkObject.Spawn(true);
+        networkObject.TrySetParent(dropParent, false);
+        
+        itemObject.SetupItemClientRpc(itemToSpawn, velocity);
+        
+        Debug.Log($"[ItemSpawner] 플레이어 아이템 드롭: {itemToSpawn.itemId} at {position}");
     }
 }

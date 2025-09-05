@@ -6,6 +6,11 @@ public class GamePlayerSpawner : MonoBehaviour
     private bool _isRunning = false;
     public bool IsRunning => _isRunning;
     
+    private void Awake()
+    {
+        GameManager.instance.gamePlayerSpawner = this;
+    }
+    
     /// <summary>
     /// (서버 전용) 모든 플레이어를 게임 씬에 스폰하도록 요청합니다.
     /// </summary>

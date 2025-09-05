@@ -1,104 +1,93 @@
+using System;
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.Netcode;
+using Random = UnityEngine.Random;
 
-public class Player_ItemDrop : ItemDrop
+public class Player_ItemDrop : NetworkBehaviour
 {
-    /*public void GenerateDrop()
+    [SerializeField] private float dropSpeed;
+    
+    public void DropItem(SlotType slotType, int slotIndex)
     {
-        Inventory inventory = Inventory.instance;
-        var itemsToUnequip = new List<Inventory_Item>();
-        var inventoryToDrop = new List<(Inventory_Item item, int index)>();
-        var quickSlotToDrop = new List<(Inventory_Item item, int index)>();
+        if(GameManager.instance.itemSpawner == null)
+            return;
         
-        foreach (Inventory_Item eqItem in inventory.GetEquipmentList())
+        Inventory_Item itemToDrop = InventoryManager.Instance.GetItem(slotType, slotIndex);
+        if (itemToDrop.IsEmpty()) return;
+
+        Vector2 dropPosition = transform.position;
+        Vector2 mouseDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        Vector2 velocity = mouseDirection * dropSpeed; // 던지는 속도
+
+        // 서버에 아이템 생성을 요청
+        SpawnItemServerRpc(itemToDrop, dropPosition, velocity);
+
+        // 해당 슬롯 비우기
+        InventoryManager.Instance.SetItem(slotType, slotIndex, Inventory_Item.Empty);
+        InventoryUI.Instance.UpdateAllSlots();
+    }
+
+    public void NotPocket_ItemDrop()
+    {
+        if(GameManager.instance.itemSpawner == null)
+            return;
+        
+        // 인벤토리 아이템 드롭
+        for (int i = 0; i < InventoryManager.Instance.inventoryItems.Length; i++)
         {
-            DropItem(eqItem);
-            itemsToUnequip.Add(eqItem);
+            DropItemWithRandomVelocity(InventoryManager.Instance.inventoryItems[i]);
+            InventoryManager.Instance.inventoryItems[i] = Inventory_Item.Empty;
         }
-        foreach (var eq in itemsToUnequip)
+    }
+    
+    public void DropAllItems()
+    {
+        if (!IsOwner) return;
+        
+        if(GameManager.instance.itemSpawner == null)
+            return;
+
+        // 인벤토리 아이템 드롭
+        for (int i = 0; i < InventoryManager.Instance.inventoryItems.Length; i++)
         {
-            inventory.UnequipItem(eq.data as ItemData_Equipment);
+            DropItemWithRandomVelocity(InventoryManager.Instance.inventoryItems[i]);
+            InventoryManager.Instance.inventoryItems[i] = Inventory_Item.Empty;
+        }
+
+        // 퀵슬롯 아이템 드롭
+        for (int i = 0; i < InventoryManager.Instance.quickSlotItems.Length; i++)
+        {
+            DropItemWithRandomVelocity(InventoryManager.Instance.quickSlotItems[i]);
+            InventoryManager.Instance.quickSlotItems[i] = Inventory_Item.Empty;
+        }
+
+        // 장비 아이템 드롭
+        for (int i = 0; i < InventoryManager.Instance.equipmentItems.Length; i++)
+        {
+            DropItemWithRandomVelocity(InventoryManager.Instance.equipmentItems[i]);
+            InventoryManager.Instance.equipmentItems[i] = Inventory_Item.Empty;
         }
         
-        Inventory_Item[] invList = inventory.GetInventoryList();
-        for (int i = 0; i < invList.Length; i++)
-        {
-            Inventory_Item invItem = invList[i];
-            if (invItem?.data != null)
-            {
-                DropItem(invItem);
-                inventoryToDrop.Add((invItem, i));
-            }
-        }
-        foreach (var pair in inventoryToDrop)
-        {
-            inventory.RemoveItem(pair.index);
-        }
+        InventoryUI.Instance.UpdateAllSlots();
+    }
+    
+    private void DropItemWithRandomVelocity(Inventory_Item item)
+    {
+        if(GameManager.instance.itemSpawner == null)
+            return;
         
-        Inventory_Item[] quickSlotItems = inventory.quickSlotItems;
-        for (int i = 0; i < quickSlotItems.Length; i++)
-        {
-            Inventory_Item quickItem = quickSlotItems[i];
-            if (quickItem?.data != null)
-            {
-                DropItem(quickItem);
-                quickSlotToDrop.Add((quickItem, i));
-            }
-        }
-        foreach (var pair in quickSlotToDrop)
-        {
-            inventory.Remove_QuickSlot_Item(pair.index);
-        }
+        if (item.IsEmpty()) return;
+        
+        Vector2 dropPosition = transform.position;
+        Vector2 velocity = new Vector2(Random.Range(-5,5), Random.Range(15,20));
+        SpawnItemServerRpc(item, dropPosition, velocity);
     }
     
-    public void Unequipment_ItemDrop(ItemData _itemData)
+    [ServerRpc]
+    private void SpawnItemServerRpc(Inventory_Item itemToSpawn, Vector3 position, Vector2 velocity)
     {
-        var eqList = Inventory.instance.GetEquipmentList();
-        Inventory_Item item = eqList.Find(x => x.data == _itemData);
-        if (item != null)
-        {
-            DropItem(item);
-        }
+        // 서버에서만 실행되는 코드
+        GameManager.instance.itemSpawner.SpawnPlayerDroppedItem(itemToSpawn, position, velocity);
     }
-    
-    public void Pocket_Inventory_Drop(ItemData _itemData, int index)
-    {
-        Inventory_Item item = Inventory.instance.GetInventoryList()[index];
-        if (item != null)
-        {
-            DropItem(item);
-            Inventory.instance.RemoveItem(index);
-        }
-    }
-    
-    public void Inventory_Throw(ItemData _itemData, int index)
-    {
-        Inventory_Item item = Inventory.instance.GetInventoryList()[index];
-        if (item != null)
-        {
-            ThrowItem(item);
-            Inventory.instance.RemoveItem(index);
-        }
-    }
-    
-    public void EquipmentSlot_Throw(ItemData _itemData)
-    {
-        var eqList = Inventory.instance.GetEquipmentList();
-        Inventory_Item item = eqList.Find(x => x.data == _itemData);
-        if (item != null)
-        {
-            ThrowItem(item);
-            Inventory.instance.UnequipItem(_itemData as ItemData_Equipment);
-        }
-    }
-    
-    public void QuickSlot_Throw(ItemData _itemData, int index)
-    {
-        Inventory_Item item = Inventory.instance.quickSlotItems[index];
-        if (item != null)
-        {
-            ThrowItem(item);
-            Inventory.instance.Remove_QuickSlot_Item(index);
-        }
-    }*/
 }

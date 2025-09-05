@@ -19,6 +19,11 @@ public class MonsterSpawner : NetworkBehaviour
     private MakeRandomMap mapData;
     private SpreadTilemap spreadTilemap; // 몬스터 위치 계산용
 
+    private void Awake()
+    {
+        GameManager.instance.monsterSpawner = this;
+    }
+    
     /// <summary>
     /// (서버 전용) 맵 생성 데이터를 받아 스폰을 시작하는 초기화 함수.
     /// </summary>
@@ -40,7 +45,7 @@ public class MonsterSpawner : NetworkBehaviour
 
         while (true)
         {
-            float rawHour = GameManager.instance.Hours + GameManager.instance.Minutes / 60f;
+            float rawHour = TimerManager.instance.Hours + TimerManager.instance.Minutes / 60f;
             float timeNorm = Mathf.Clamp01((rawHour - 7f) / 15f);
 
             float dynamicMin = Mathf.Lerp(maxSpawnInterval, minSpawnInterval, timeNorm);
@@ -58,7 +63,7 @@ public class MonsterSpawner : NetworkBehaviour
     {
         if (!IsServer || mapData == null) return;
         
-        float rawHour = GameManager.instance.Hours + GameManager.instance.Minutes / 60f;
+        float rawHour = TimerManager.instance.Hours + TimerManager.instance.Minutes / 60f;
         float timeNorm = Mathf.Clamp01((rawHour - 8f) / 14f);
         float smoothTime = Mathf.Pow(timeNorm, 2);
 
@@ -115,7 +120,7 @@ public class MonsterSpawner : NetworkBehaviour
         float centerY = mapData.RoomBounds[roomIdx].min.y + mapData.RoomBounds[roomIdx].size.y * 0.5f;
         float depthNorm = Mathf.Clamp01((mapData.MapMax.y - centerY) / (float)(mapData.MapMax.y - mapData.MapMin.y));
 
-        float rawHour = GameManager.instance.Hours + GameManager.instance.Minutes / 60f;
+        float rawHour = TimerManager.instance.Hours + TimerManager.instance.Minutes / 60f;
         float timeNorm = Mathf.Clamp01((rawHour - 8f) / 14f);
 
         float baseW1 = 3f, baseW2 = 2f, baseW3 = 0.05f;

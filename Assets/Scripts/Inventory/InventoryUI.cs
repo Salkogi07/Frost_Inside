@@ -31,9 +31,11 @@ public class InventoryUI : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        SettingUI();
     }
 
-    private void Start()
+    private void SettingUI()
     {
         inventorySlots = poketSlotParent.GetComponentsInChildren<UI_ItemSlot>();
         equipmentSlots = equipmentSlotParent.GetComponentsInChildren<UI_EquipmentSlot>();

@@ -16,6 +16,8 @@ public class InventoryManager : MonoBehaviour
     public bool isPocket = false;
     public bool isInvenOpen = false;
     public int selectedQuickSlot = 0;
+    
+    private bool hasBeenInitialized = false;
 
     private void Awake()
     {
@@ -32,45 +34,59 @@ public class InventoryManager : MonoBehaviour
 
     private void Start()
     {
-        // 장비 타입의 개수만큼 배열 초기화
-        int equipmentTypeCount = System.Enum.GetNames(typeof(EquipmentType)).Length;
-        equipmentItems = new Inventory_Item[equipmentTypeCount];
-        for (int i = 0; i < equipmentItems.Length; i++)
-        {
-            equipmentItems[i] = Inventory_Item.Empty;
-        }
-
-        // 인벤토리와 퀵슬롯은 UI에서 크기를 받아와야 하므로 InventoryUI에서 초기화
+        //시작 아이템 지급
+        AddStartingItems();
     }
     
     public void InitializeSlots(int inventorySize, int quickSlotSize)
     {
+        if (hasBeenInitialized)
+        {
+            // 새 씬의 UI가 기존 아이템 정보를 표시하도록 업데이트만 호출합니다.
+            InventoryUI.Instance.UpdateAllSlots();
+            return;
+        }
+        
+        int equipmentTypeCount = System.Enum.GetNames(typeof(EquipmentType)).Length;
+        equipmentItems = new Inventory_Item[equipmentTypeCount];
         inventoryItems = new Inventory_Item[inventorySize];
         quickSlotItems = new Inventory_Item[quickSlotSize];
-
+        
+        for (int i = 0; i < equipmentItems.Length; i++) equipmentItems[i] = Inventory_Item.Empty;
         for (int i = 0; i < inventoryItems.Length; i++) inventoryItems[i] = Inventory_Item.Empty;
         for (int i = 0; i < quickSlotItems.Length; i++) quickSlotItems[i] = Inventory_Item.Empty;
         
-        AddStartingItems();
+        hasBeenInitialized = true;
+        
         InventoryUI.Instance.UpdateAllSlots();
     }
 
 
     private void Update()
     {
-        if (!isPocket)
-        {
-            // NotPocket_ItemDrop(); // PlayerDrop 관련 로직으로 이동 필요
-        }
-
         UpdateInventory();
         HandleQuickSlotSelection();
         HandleItemThrowInput();
-        InventoryUI.Instance.UpdatePoketPanel();
+        
+    }
+
+    private void HandleItemThrowInput()
+    {
+        if (isInvenOpen || SettingManager.Instance.IsOpenSetting()) return;
+        
+        if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Throw Item")))
+        {
+            if (GameManager.instance != null)
+            {
+                GameManager.instance.playerPrefab.GetComponent<Player_ItemDrop>().DropItem(SlotType.QuickSlot, selectedQuickSlot);
+            }
+        }
     }
 
     private void UpdateInventory()
     {
+        if (SettingManager.Instance.IsOpenSetting()) return;
+        
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Open Inventory")))
         {
             isInvenOpen = !isInvenOpen;
@@ -95,22 +111,6 @@ public class InventoryManager : MonoBehaviour
         float scroll = Input.GetAxis("Mouse ScrollWheel");
         if (scroll < 0) SelectQuickSlot((selectedQuickSlot + 1) % quickSlotItems.Length);
         if (scroll > 0) SelectQuickSlot((selectedQuickSlot - 1 + quickSlotItems.Length) % quickSlotItems.Length);
-    }
-
-    private void HandleItemThrowInput()
-    {
-         if (isInvenOpen || SettingManager.Instance.IsOpenSetting()) return;
-         
-        if (Input.GetKey(KeyManager.instance.GetKeyCodeByName("Throw Item")))
-        {
-            if (!quickSlotItems[selectedQuickSlot].IsEmpty())
-            {
-                // PlayerManager.instance.playerDrop.QuickSlot_Throw(quickSlotItems[selectedQuickSlot].Data, selectedQuickSlot);
-                // 아이템을 버린 후에는 해당 슬롯을 비워야 합니다.
-                // quickSlotItems[selectedQuickSlot] = Inventory_Item.Empty;
-                // InventoryUI.Instance.UpdateAllSlots();
-            }
-        }
     }
 
     private void AddStartingItems()

@@ -100,8 +100,11 @@ public class Player : Entity
 
     private void Update()
     {
-        if(InventoryManager.Instance.isInvenOpen)
+        if (ChatManager.instance.IsChatting || InventoryManager.Instance.isInvenOpen)
+        {
+            _playerStateMachine.ChangeState(IdleState);
             return;
+        }
         
         if (IsTest)
         {
@@ -112,13 +115,6 @@ public class Player : Entity
         
         if (IsOwner)
         {
-            // --- Owner 로직 (입력 및 상태 머신 업데이트) ---
-            if (ChatManager.instance.IsChatting || InventoryManager.Instance.isInvenOpen)
-            {
-                _playerStateMachine.ChangeState(IdleState);
-                return;
-            }
-        
             ProcessKeyboardInput();
             _playerStateMachine.UpdateActiveState();
 

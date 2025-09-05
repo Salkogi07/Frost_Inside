@@ -9,7 +9,7 @@ public class GameTimerUIPresenter : MonoBehaviour
 
     private void Start()
     {
-        GameManager model = GameManager.instance;
+        TimerManager model = TimerManager.instance;
         model.HoursObservable.Subscribe(hours =>
         {
             view.UpdateTime(model.Hours, model.Minutes);
