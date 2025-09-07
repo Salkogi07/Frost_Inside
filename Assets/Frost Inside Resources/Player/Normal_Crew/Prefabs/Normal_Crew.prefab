@@ -392,6 +392,7 @@ MonoBehaviour:
     m_Bits: 8
   CanMine: 1
   positionUpdateThreshold: 0.05
+  lerpDuration: 0.05
   IsTest: 0
 --- !u!114 &7283335558516981223
 MonoBehaviour:
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  dropSpeed: 15
+  dropVec: {x: 5, y: 10}
 --- !u!114 &8710203413524532382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -435,7 +436,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  pickupRange: 3
+  pickupRange: 2
   pickupCooldown: 0.5
 --- !u!114 &4624253674458416205
 MonoBehaviour:

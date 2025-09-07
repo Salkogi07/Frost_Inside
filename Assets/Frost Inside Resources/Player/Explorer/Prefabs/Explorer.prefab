@@ -392,6 +392,7 @@ MonoBehaviour:
     m_Bits: 8
   CanMine: 1
   positionUpdateThreshold: 0.05
+  lerpDuration: 0.05
   IsTest: 0
 --- !u!114 &7283335558516981223
 MonoBehaviour:
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  pickupRange: 3
+  pickupRange: 2
   pickupCooldown: 0.5
 --- !u!114 &8632942042615940793
 MonoBehaviour:
@@ -436,7 +437,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  dropSpeed: 15
+  dropVec: {x: 5, y: 10}
 --- !u!114 &-4124883778717260690
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5677,7 +5678,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7494021102814597514, guid: 6127418a1c9a21b4fae567b18c52847d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 7494021102814597514, guid: 6127418a1c9a21b4fae567b18c52847d, type: 3}
       propertyPath: m_LocalPosition.z

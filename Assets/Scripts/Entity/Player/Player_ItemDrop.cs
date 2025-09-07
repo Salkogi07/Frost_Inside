@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Player_ItemDrop : NetworkBehaviour
 {
-    [SerializeField] private float dropSpeed;
+    [SerializeField] private Vector2 dropVec;
     
     public void DropItem(SlotType slotType, int slotIndex)
     {
@@ -16,12 +16,11 @@ public class Player_ItemDrop : NetworkBehaviour
         Inventory_Item itemToDrop = InventoryManager.Instance.GetItem(slotType, slotIndex);
         if (itemToDrop.IsEmpty()) return;
 
-        Vector2 dropPosition = transform.position;
-        Vector2 mouseDirection = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-        Vector2 velocity = mouseDirection * dropSpeed; // 던지는 속도
+        GameObject dropObject = gameObject.GetComponent<Player>().playerObject;
+        Vector2 velocity = new Vector2(dropVec.x * dropObject.transform.localScale.x * -1, dropVec.y);
 
         // 서버에 아이템 생성을 요청
-        SpawnItemServerRpc(itemToDrop, dropPosition, velocity);
+        SpawnItemServerRpc(itemToDrop, dropObject.transform.position, velocity);
 
         // 해당 슬롯 비우기
         InventoryManager.Instance.SetItem(slotType, slotIndex, Inventory_Item.Empty);

@@ -16,9 +16,11 @@ public class Player : Entity
     public Player_JumpState JumpState { get; private set; }
     public Player_FallState FallState { get; private set; }
     public Player_MiningState MiningState { get; private set; }
+    
+    public Player_DeathState DeathState { get; private set; }
 
     private Player_StateMachine _playerStateMachine;
-    [SerializeField] private GameObject playerObject;
+    public GameObject playerObject;
 
     [Header("Movement details")] 
     public float CurrentSpeed { get; private set; }
@@ -47,10 +49,10 @@ public class Player : Entity
     private Vector2 _lerpStartPos;
     private Vector2 _lerpTargetPos;
     private float _lerpTime;
-    private float _lerpDuration = 0.05f;
     
     [Header("Network Optimization")]
     [SerializeField] private float positionUpdateThreshold = 0.05f; // 이 거리 이상 움직여야 위치 전송
+    [SerializeField] private float lerpDuration = 0.05f;
     private Vector2 _lastSentPosition;
     private bool _lastSentIsFacingRight;
 
@@ -91,6 +93,7 @@ public class Player : Entity
         JumpState = new Player_JumpState(this, _playerStateMachine, "jumpFall");
         FallState = new Player_FallState(this, _playerStateMachine, "jumpFall");
         MiningState = new Player_MiningState(this, _playerStateMachine, "mining");
+        DeathState = new Player_DeathState(this, _playerStateMachine, "death");
     }
 
     private void Start()
@@ -131,10 +134,10 @@ public class Player : Entity
             }
 
             // 보간 진행
-            if (_lerpTime < _lerpDuration)
+            if (_lerpTime < lerpDuration)
             {
                 _lerpTime += Time.deltaTime;
-                transform.position = Vector2.Lerp(_lerpStartPos, _lerpTargetPos, _lerpTime / _lerpDuration);
+                transform.position = Vector2.Lerp(_lerpStartPos, _lerpTargetPos, _lerpTime / lerpDuration);
             }
             else
             {
@@ -205,6 +208,42 @@ public class Player : Entity
             MoveInput = 1;
         }
     }
+    
+    public void SetMiningAnimationByDirection(Vector2 aimDirection)
+    {
+        if (Anim == null) return;
+
+        // 플레이어가 바라보는 방향 벡터를 구합니다.
+        Vector2 forwardDirection = _isFacingRight ? Vector2.right : Vector2.left;
+
+        // 플레이어의 정면을 기준으로 한 로컬 조준 각도를 계산합니다. (-180 ~ 180)
+        float localAngle = Vector2.SignedAngle(forwardDirection, aimDirection);
+
+        // 정면 180도(-90 ~ 90) 범위 외의 값은 클램핑하여 뒤로 채굴하는 애니메이션을 방지합니다.
+        localAngle = Mathf.Clamp(localAngle, -90f, 90f);
+        
+        float adjustedAngle;
+        
+        // localAngle의 범위(-90 ~ 90)를 애니메이션 인덱스(0 ~ 12)로 변환합니다.
+        // 1. 각도에 90을 더해 범위를 (0 ~ 180)으로 조정합니다.
+        if (_isFacingRight)
+        {
+            // 오른쪽을 볼 때: 위(+90도)가 12번, 아래(-90도)가 0번이 되도록 계산
+            adjustedAngle = localAngle + 90f;
+        }
+        else
+        {
+            // 왼쪽을 볼 때: 위(+90도)가 0번, 아래(-90도)가 12번이 되도록 순서를 반전시켜 계산
+            adjustedAngle = -localAngle + 90f;
+        }
+
+        // 2. (0 ~ 180) 범위를 12개 구간으로 나눈 값(15)으로 나누어 인덱스를 계산합니다.
+        // RoundToInt를 사용하여 각 구간의 중앙값을 기준으로 인덱스를 결정합니다.
+        int animationIndex = Mathf.RoundToInt(adjustedAngle / 15f);
+
+        // 3. 계산된 인덱스를 애니메이터의 "miningAngle" 파라미터에 전달합니다.
+        Anim.SetFloat("miningAngle", animationIndex);
+    }
 
     public void SetVelocity(float xVelocity, float yVelocity)
     {
@@ -212,14 +251,14 @@ public class Player : Entity
             return;
         
         rb.linearVelocity = new Vector2(xVelocity, yVelocity);
-        HandleFlip(xVelocity);
+        CheckAndFlip(xVelocity);
     }
 
-    private void HandleFlip(float xVelcoity)
+    public void CheckAndFlip(float xDirection)
     {
-        if (xVelcoity > 0 && !_isFacingRight)
+        if (xDirection > 0 && !_isFacingRight)
             Flip();
-        else if (xVelcoity < 0 && _isFacingRight)
+        else if (xDirection < 0 && _isFacingRight)
             Flip();
     }
 
