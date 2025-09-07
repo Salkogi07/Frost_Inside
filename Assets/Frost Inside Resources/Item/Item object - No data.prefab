@@ -131,8 +131,8 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   rb: {fileID: 7598768444187565975}
   spriteRenderer: {fileID: 0}
-  positionUpdateThreshold: 0.1
-  lerpDuration: 0.1
+  positionUpdateThreshold: 0.05
+  lerpDuration: 0.05
 --- !u!61 &6985642386723502538
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -21,8 +21,6 @@ public class Player_RunState : Player_GroundedState
     
     public override void Update()
     {
-        base.Update();
-
         player.Condition.UseStaminaToSprint();
 
         if (player.MoveInput == 0)
@@ -42,6 +40,7 @@ public class Player_RunState : Player_GroundedState
             playerStateMachine.ChangeState(player.WalkState);
             return;
         }
+        
         base.Update();
     }
 

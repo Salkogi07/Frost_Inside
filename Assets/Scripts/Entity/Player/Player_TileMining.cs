@@ -33,6 +33,10 @@ public class Player_TileMining : MonoBehaviour
         Vector2 firePointPos = player.Laser.rotationPoint.position;
         Vector2 mouseWorldPos = player.Laser.cam.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mouseWorldPos - firePointPos).normalized;
+        
+        player.CheckAndFlip(direction.x);
+        
+        player.SetMiningAnimationByDirection(direction);
 
         RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, miningRange, miningLayerMask);
         
