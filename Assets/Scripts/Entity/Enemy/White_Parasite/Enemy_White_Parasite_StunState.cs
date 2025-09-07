@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Enemy_Skeleton1 : MonoBehaviour
+public class Enemy_White_Parasite_StunState : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
