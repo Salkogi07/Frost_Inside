@@ -263,4 +263,20 @@ public class InventoryManager : MonoBehaviour
         return equipmentItems.Where(item => !item.IsEmpty()).ToList();
     }
     #endregion
+
+    public void UpdatePlayerWeight()
+    {
+        GameManager.instance.playerPrefab.GetComponent<Player_Condition>().Weight = CalculateTotalWeight();
+    }
+    
+    private float CalculateTotalWeight()
+    {
+        float totalWeight = 0;
+
+        totalWeight += inventoryItems.Where(item => !item.IsEmpty()).Sum(item => item.Data.itemWeight);
+        totalWeight += quickSlotItems.Where(item => !item.IsEmpty()).Sum(item => item.Data.itemWeight);
+        totalWeight += equipmentItems.Where(item => !item.IsEmpty()).Sum(item => item.Data.itemWeight);
+
+        return totalWeight;
+    }
 }

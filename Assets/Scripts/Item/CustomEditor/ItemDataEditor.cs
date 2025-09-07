@@ -11,6 +11,7 @@ public class ItemDataEditor : Editor
         var itemId = serializedObject.FindProperty("itemId");
         var itemType = serializedObject.FindProperty("itemType");
         var itemName = serializedObject.FindProperty("itemName");
+        var itemWeight = serializedObject.FindProperty("itemWeight");
         var icon = serializedObject.FindProperty("icon");
         var explanation = serializedObject.FindProperty("explanation");
         var priceRange = serializedObject.FindProperty("priceRange");
@@ -22,6 +23,7 @@ public class ItemDataEditor : Editor
         EditorGUILayout.PropertyField(itemId);
         EditorGUILayout.PropertyField(itemType);
         EditorGUILayout.PropertyField(itemName);
+        EditorGUILayout.PropertyField(itemWeight);
         EditorGUILayout.PropertyField(icon);
         EditorGUILayout.PropertyField(explanation);
         EditorGUILayout.PropertyField(priceRange);

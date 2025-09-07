@@ -20,7 +20,7 @@ public class Player_Stats : MonoBehaviour
     public Stat MaxTemperature;
     
     public Stat Mining;
-    
-    public Stat_DefenseGrup Defense;
-    public Stat_OffenseGroup Offense;
+    public Stat Damage;
+    public Stat Armor;
+    public Stat Lagging;
 }

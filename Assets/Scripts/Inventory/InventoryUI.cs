@@ -58,6 +58,7 @@ public class InventoryUI : MonoBehaviour
         UpdateQuickSlots();
         UpdateEquipmentSlots();
         UpdateQuickSlotsViewer();
+        InventoryManager.Instance.UpdatePlayerWeight();
     }
 
     private void UpdateInventorySlots()

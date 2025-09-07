@@ -15,9 +15,12 @@ MonoBehaviour:
   itemId: 8
   itemType: 2
   itemName: "\uAE30\uC5B4"
+  itemWeight: 2
   icon: {fileID: 21300000, guid: a37151011b196a2459563d7d4eba210e, type: 3}
   explanation: "\uB3D9\uB825 \uC804\uB2EC \uC7A5\uCE58\uC758 \uAE30\uBCF8 \uC694\uC18C\uB85C,
     \uD1B1\uB2C8\uAC00 \uB9DE\uBB3C\uB824 \uD68C\uC804 \uC6B4\uB3D9\uC744 \uC804\uB2EC\uD569\uB2C8\uB2E4.
     \uAE30\uACC4\uC758 \uC18D\uB3C4\xB7\uD1A0\uD06C \uBCC0\uD658\uC5D0 \uC0AC\uC6A9\uB429\uB2C8\uB2E4."
   priceRange: {x: 50, y: 65}
+  isOre: 0
+  oreTile: {fileID: 0}
   isSpawnable: 1

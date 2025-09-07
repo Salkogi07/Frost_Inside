@@ -16,6 +16,7 @@ public class ItemData : ScriptableObject
     public int itemId = -1;
     public ItemType itemType;
     public string itemName;
+    public float itemWeight = 0;
     public Sprite icon;
     [TextArea(3, 10)]
     public string explanation = "";

@@ -15,6 +15,7 @@ MonoBehaviour:
   itemId: 22
   itemType: 3
   itemName: "\uCCA0\uAC15"
+  itemWeight: 10
   icon: {fileID: 21300000, guid: f4ea2a287a673c94d833143ad78e604d, type: 3}
   explanation: "\uCCA0\uACFC \uD0C4\uC18C\uB97C \uC8FC\uC131\uBD84\uC73C\uB85C \uD55C
     \uD569\uAE08\uC73C\uB85C, \uB192\uC740 \uAC15\uB3C4\uC640 \uC800\uB834\uD55C

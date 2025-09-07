@@ -17,6 +17,7 @@ public class ItemData_Equipment : ItemData
     public int mining;
     public int armor;
     public int lagging;
+    public int damage;
 
     public int Hp;
     public int Temperature;
@@ -39,23 +40,25 @@ public class ItemData_Equipment : ItemData
 
     public void AddModifiers()
     {
-        /*Player_Stats playerStats = PlayerManager.instance.playerStats;
+        Player_Stats playerStats = GameManager.instance.playerPrefab.GetComponent<Player_Stats>();
 
-        playerStats.mining.AddModifier(mining);
-        playerStats.armor.AddModifier(armor);
-        playerStats.lagging.AddModifier(lagging);
+        playerStats.Mining.AddModifier(mining);
+        playerStats.Armor.AddModifier(armor);
+        playerStats.Lagging.AddModifier(lagging);
+        playerStats.Damage.AddModifier(damage);
         playerStats.MaxHp.AddModifier(Hp);
-        playerStats.MaxTemperature.AddModifier(Temperature);*/
+        playerStats.MaxTemperature.AddModifier(Temperature);
     }
 
     public void RemoveModifiers()
     {
-        /*Player_Stats playerStats = PlayerManager.instance.playerStats;
+        Player_Stats playerStats = GameManager.instance.playerPrefab.GetComponent<Player_Stats>();
 
-        playerStats.mining.RemoveModifier(mining);
-        playerStats.armor.RemoveModifier(armor);
-        playerStats.lagging.RemoveModifier(lagging);
+        playerStats.Mining.RemoveModifier(mining);
+        playerStats.Armor.RemoveModifier(armor);
+        playerStats.Lagging.RemoveModifier(lagging);
+        playerStats.Damage.RemoveModifier(damage);
         playerStats.MaxHp.RemoveModifier(Hp);
-        playerStats.MaxTemperature.RemoveModifier(Temperature);*/
+        playerStats.MaxTemperature.RemoveModifier(Temperature);
     }
 }

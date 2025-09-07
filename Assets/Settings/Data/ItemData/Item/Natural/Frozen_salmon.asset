@@ -15,6 +15,7 @@ MonoBehaviour:
   itemId: 23
   itemType: 4
   itemName: "\uC5BC\uC5B4\uBD99\uC740 \uC5F0\uC5B4"
+  itemWeight: 2
   icon: {fileID: 21300000, guid: c2f2087e07cb67e46b6ab5b225b0bb2d, type: 3}
   explanation: "\uC5BC\uC5B4\uBC84\uB9B0 \uC5F0\uC5B4\uB2E4"
   priceRange: {x: 80, y: 100}
