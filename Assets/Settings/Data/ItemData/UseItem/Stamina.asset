@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedab2c181ff6334eb287fad9fdea586, type: 3}
   m_Name: Stamina
   m_EditorClassIdentifier: 
+  itemId: 26
   itemType: 1
   itemName: Stamina
+  itemWeight: 0
   icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
   explanation: "\uC2A4\uD14C\uBBF8\uB098 \uCC44\uC6CC\uC9D0"
   priceRange: {x: 50, y: 120}
+  isOre: 0
+  oreTile: {fileID: 0}
+  isSpawnable: 1
   itemEffect:
   - {fileID: 11400000, guid: e4279f65bd8000146b29000dee9becd3, type: 2}

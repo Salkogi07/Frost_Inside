@@ -12845,6 +12845,10 @@ MonoBehaviour:
     price: 0
   - itemId: 25
     price: 0
+  - itemId: 26
+    price: 0
+  - itemId: 27
+    price: 0
   inventoryItems:
   - itemId: 0
     price: 0

@@ -104,7 +104,7 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
         if (draggedSlot == null || draggedSlot == this) return;
         
         // InventoryManager에 아이템 교환 요청
-        InventoryManager.Instance.SwapItems(draggedSlot.slotType, draggedSlot.slotIndex, this.slotType, this.slotIndex);
+        InventoryManager.instance.SwapItems(draggedSlot.slotType, draggedSlot.slotIndex, this.slotType, this.slotIndex);
     }
 
     public void OnPointerEnter(PointerEventData eventData)

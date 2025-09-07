@@ -5,7 +5,7 @@ public class Pocket_Effect : Equipment_Effect
 {
     public override void ExecuteEffect()
     {
-        InventoryManager.Instance.isPocket = true;
+        InventoryManager.instance.isPocket = true;
         
         InventoryUI.Instance.UpdatePoketPanel();
         UI_ItemSlot.CancelDrag();
@@ -13,9 +13,9 @@ public class Pocket_Effect : Equipment_Effect
 
     public override void UnExecuteEffect()
     {
-        InventoryManager.Instance.isPocket = false;
+        InventoryManager.instance.isPocket = false;
         
-        if (!InventoryManager.Instance.isPocket)
+        if (!InventoryManager.instance.isPocket)
         {
             GameManager.instance.playerPrefab.GetComponent<Player_ItemDrop>().NotPocket_ItemDrop();
         }

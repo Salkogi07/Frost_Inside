@@ -93,6 +93,12 @@ public class Player_Condition : MonoBehaviour
     #endregion
 
     #region Stamina Function
+
+    public void AddStamina(float value)
+    {
+        Stamina += value;
+        Stamina = Mathf.Clamp(Stamina, 0f, _stats.MaxStamina.Value);
+    }
     
     public void SetSprintingStatus(bool isSprinting)
     {
@@ -149,7 +155,7 @@ public class Player_Condition : MonoBehaviour
         Stamina = Mathf.Clamp(Stamina, 0f, _stats.MaxStamina.Value);
     }
 
-    public bool CanSprint() => Stamina > 0; // 스테미나가 0보다 크기만 하면 달리기를 시도할 수 있습니다.
+    public bool CanSprint() => Stamina > 0;
 
     #endregion
 
@@ -175,9 +181,7 @@ public class Player_Condition : MonoBehaviour
     void Die()
     {
         _isDead = true;
-
-        //GetComponent<Player_ItemDrop>()?.GenerateDrop();
-        Debug.Log("죽음");
+        
     }
     #endregion
 

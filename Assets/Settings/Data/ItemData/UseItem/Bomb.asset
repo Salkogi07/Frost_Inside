@@ -12,10 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedab2c181ff6334eb287fad9fdea586, type: 3}
   m_Name: Bomb
   m_EditorClassIdentifier: 
+  itemId: 27
   itemType: 1
   itemName: Bomb
+  itemWeight: 0
   icon: {fileID: 21300000, guid: ca1988bab6c99a44a855b43096ac9633, type: 3}
   explanation: "\uD3ED\uBC14\uB77C\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\uBC1C"
   priceRange: {x: 50, y: 120}
+  isOre: 0
+  oreTile: {fileID: 0}
+  isSpawnable: 1
   itemEffect:
   - {fileID: 11400000, guid: 2672d6f8d18fcc342b13647f8245e0f2, type: 2}

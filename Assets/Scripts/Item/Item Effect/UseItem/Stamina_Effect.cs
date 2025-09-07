@@ -5,7 +5,7 @@ public class Stamina_Effect : UseItem_Effect
 {
     public override void ExecuteEffect(Transform _playerPos)
     {
-        //PlayerManager.instance.playerStats.AddStamina(10);
+        GameManager.instance.playerPrefab.GetComponent<Player_Condition>().AddStamina(10);
     }
 }
 

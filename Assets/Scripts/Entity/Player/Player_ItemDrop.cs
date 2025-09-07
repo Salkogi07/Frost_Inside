@@ -13,7 +13,7 @@ public class Player_ItemDrop : NetworkBehaviour
         if(GameManager.instance.itemSpawner == null)
             return;
         
-        Inventory_Item itemToDrop = InventoryManager.Instance.GetItem(slotType, slotIndex);
+        Inventory_Item itemToDrop = InventoryManager.instance.GetItem(slotType, slotIndex);
         if (itemToDrop.IsEmpty()) return;
 
         GameObject dropObject = gameObject.GetComponent<Player>().playerObject;
@@ -23,7 +23,7 @@ public class Player_ItemDrop : NetworkBehaviour
         SpawnItemServerRpc(itemToDrop, dropObject.transform.position, velocity);
 
         // 해당 슬롯 비우기
-        InventoryManager.Instance.SetItem(slotType, slotIndex, Inventory_Item.Empty);
+        InventoryManager.instance.SetItem(slotType, slotIndex, Inventory_Item.Empty);
         InventoryUI.Instance.UpdateAllSlots();
     }
 
@@ -33,10 +33,10 @@ public class Player_ItemDrop : NetworkBehaviour
             return;
         
         // 인벤토리 아이템 드롭
-        for (int i = 0; i < InventoryManager.Instance.inventoryItems.Length; i++)
+        for (int i = 0; i < InventoryManager.instance.inventoryItems.Length; i++)
         {
-            DropItemWithRandomVelocity(InventoryManager.Instance.inventoryItems[i]);
-            InventoryManager.Instance.inventoryItems[i] = Inventory_Item.Empty;
+            DropItemWithRandomVelocity(InventoryManager.instance.inventoryItems[i]);
+            InventoryManager.instance.inventoryItems[i] = Inventory_Item.Empty;
         }
     }
     
@@ -48,24 +48,24 @@ public class Player_ItemDrop : NetworkBehaviour
             return;
 
         // 인벤토리 아이템 드롭
-        for (int i = 0; i < InventoryManager.Instance.inventoryItems.Length; i++)
+        for (int i = 0; i < InventoryManager.instance.inventoryItems.Length; i++)
         {
-            DropItemWithRandomVelocity(InventoryManager.Instance.inventoryItems[i]);
-            InventoryManager.Instance.inventoryItems[i] = Inventory_Item.Empty;
+            DropItemWithRandomVelocity(InventoryManager.instance.inventoryItems[i]);
+            InventoryManager.instance.inventoryItems[i] = Inventory_Item.Empty;
         }
 
         // 퀵슬롯 아이템 드롭
-        for (int i = 0; i < InventoryManager.Instance.quickSlotItems.Length; i++)
+        for (int i = 0; i < InventoryManager.instance.quickSlotItems.Length; i++)
         {
-            DropItemWithRandomVelocity(InventoryManager.Instance.quickSlotItems[i]);
-            InventoryManager.Instance.quickSlotItems[i] = Inventory_Item.Empty;
+            DropItemWithRandomVelocity(InventoryManager.instance.quickSlotItems[i]);
+            InventoryManager.instance.quickSlotItems[i] = Inventory_Item.Empty;
         }
 
         // 장비 아이템 드롭
-        for (int i = 0; i < InventoryManager.Instance.equipmentItems.Length; i++)
+        for (int i = 0; i < InventoryManager.instance.equipmentItems.Length; i++)
         {
-            DropItemWithRandomVelocity(InventoryManager.Instance.equipmentItems[i]);
-            InventoryManager.Instance.equipmentItems[i] = Inventory_Item.Empty;
+            DropItemWithRandomVelocity(InventoryManager.instance.equipmentItems[i]);
+            InventoryManager.instance.equipmentItems[i] = Inventory_Item.Empty;
         }
         
         InventoryUI.Instance.UpdateAllSlots();

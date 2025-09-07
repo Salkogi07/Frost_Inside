@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance { get; private set; }
+    public static InventoryManager instance { get; private set; }
 
     [Header("Data")]
     public List<Inventory_Item> startingItems;
@@ -21,9 +21,9 @@ public class InventoryManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance == null)
+        if (instance == null)
         {
-            Instance = this;
+            instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -67,7 +67,24 @@ public class InventoryManager : MonoBehaviour
         UpdateInventory();
         HandleQuickSlotSelection();
         HandleItemThrowInput();
-        
+    }
+    
+    public void UseItemInQuickSlot()
+    {
+        // 선택된 퀵슬롯의 아이템을 가져옵니다.
+        Inventory_Item itemToUse = quickSlotItems[selectedQuickSlot];
+
+        // 아이템이 비어있지 않고, 사용 가능한 아이템(ItemData_UseItem)인지 확인합니다.
+        if (!itemToUse.IsEmpty() && itemToUse.Data.itemType == ItemType.UseItem)
+        {
+            if (itemToUse.Data is ItemData_UseItem useItemData)
+            {
+                useItemData.ExecuteItemEffect(GameManager.instance.playerPrefab.transform);
+                quickSlotItems[selectedQuickSlot] = Inventory_Item.Empty;
+
+                InventoryUI.Instance.UpdateAllSlots();
+            }
+        }
     }
 
     private void HandleItemThrowInput()

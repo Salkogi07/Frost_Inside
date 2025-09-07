@@ -103,7 +103,7 @@ public class Player : Entity
 
     private void Update()
     {
-        if (ChatManager.instance.IsChatting || InventoryManager.Instance.isInvenOpen)
+        if (ChatManager.instance.IsChatting || InventoryManager.instance.isInvenOpen)
         {
             _playerStateMachine.ChangeState(IdleState);
             return;

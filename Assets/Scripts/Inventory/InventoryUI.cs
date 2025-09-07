@@ -49,7 +49,7 @@ public class InventoryUI : MonoBehaviour
         for (int i = 0; i < quickSlotsViewer.Length; i++) quickSlotsViewer[i].slotIndex = i;
 
         // InventoryManager에 슬롯 크기 정보 전달
-        InventoryManager.Instance.InitializeSlots(inventorySlots.Length, quickSlots.Length);
+        InventoryManager.instance.InitializeSlots(inventorySlots.Length, quickSlots.Length);
     }
     
     public void UpdateAllSlots()
@@ -58,14 +58,14 @@ public class InventoryUI : MonoBehaviour
         UpdateQuickSlots();
         UpdateEquipmentSlots();
         UpdateQuickSlotsViewer();
-        InventoryManager.Instance.UpdatePlayerWeight();
+        InventoryManager.instance.UpdatePlayerWeight();
     }
 
     private void UpdateInventorySlots()
     {
         for (int i = 0; i < inventorySlots.Length; i++)
         {
-            inventorySlots[i].UpdateSlot(InventoryManager.Instance.inventoryItems[i]);
+            inventorySlots[i].UpdateSlot(InventoryManager.instance.inventoryItems[i]);
         }
     }
 
@@ -73,7 +73,7 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < quickSlots.Length; i++)
         {
-            quickSlots[i].UpdateSlot(InventoryManager.Instance.quickSlotItems[i]);
+            quickSlots[i].UpdateSlot(InventoryManager.instance.quickSlotItems[i]);
         }
     }
     
@@ -81,10 +81,10 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < quickSlotsViewer.Length; i++)
         {
-            quickSlotsViewer[i].UpdateSlot(InventoryManager.Instance.quickSlotItems[i]);
+            quickSlotsViewer[i].UpdateSlot(InventoryManager.instance.quickSlotItems[i]);
             
             // 선택된 퀵슬롯 UI 처리
-            quickSlotsViewer[i].SetHighlight(i == InventoryManager.Instance.selectedQuickSlot);
+            quickSlotsViewer[i].SetHighlight(i == InventoryManager.instance.selectedQuickSlot);
         }
     }
 
@@ -92,17 +92,17 @@ public class InventoryUI : MonoBehaviour
     {
         for (int i = 0; i < equipmentSlots.Length; i++)
         {
-            equipmentSlots[i].UpdateSlot(InventoryManager.Instance.equipmentItems[i]);
+            equipmentSlots[i].UpdateSlot(InventoryManager.instance.equipmentItems[i]);
         }
     }
 
     public void UpdateInventoryPanel()
     {
-        inventoryPanel.gameObject.SetActive(InventoryManager.Instance.isInvenOpen);
+        inventoryPanel.gameObject.SetActive(InventoryManager.instance.isInvenOpen);
     }
     
     public void UpdatePoketPanel()
     {
-        poketPanel.gameObject.SetActive(InventoryManager.Instance.isPocket);
+        poketPanel.gameObject.SetActive(InventoryManager.instance.isPocket);
     }
 }

@@ -20,15 +20,15 @@ public class Player_ItemPicker : NetworkBehaviour
         if (!IsOwner) return;
 
         // 인벤토리가 열려있거나 쿨다운 중이면 줍기 불가
-        if (InventoryManager.Instance.isInvenOpen || Time.time < nextPickupTime)
+        if (InventoryManager.instance.isInvenOpen || Time.time < nextPickupTime)
             return;
         
         // (클라이언트) 줍기 키를 눌렀을 때
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Pick Up Item")))
         {
             // (클라이언트) 인벤토리에 공간이 있는지 먼저 확인
-            bool canQuickSlot = InventoryManager.Instance.quickSlotItems[InventoryManager.Instance.selectedQuickSlot].IsEmpty();
-            bool canPocket = InventoryManager.Instance.isPocket && InventoryManager.Instance.CanAddItem();
+            bool canQuickSlot = InventoryManager.instance.quickSlotItems[InventoryManager.instance.selectedQuickSlot].IsEmpty();
+            bool canPocket = InventoryManager.instance.isPocket && InventoryManager.instance.CanAddItem();
 
             if (canQuickSlot || canPocket)
             {
@@ -94,7 +94,7 @@ public class Player_ItemPicker : NetworkBehaviour
     private void ConfirmPickupClientRpc(Inventory_Item pickedUpItem, ClientRpcParams rpcParams = default)
     {
         // (클라이언트) 인벤토리에 아이템을 최종적으로 추가
-        InventoryManager inventory = InventoryManager.Instance;
+        InventoryManager inventory = InventoryManager.instance;
         
         // 퀵슬롯이 비어있으면 퀵슬롯에 먼저 추가
         if (inventory.quickSlotItems[inventory.selectedQuickSlot].IsEmpty())
