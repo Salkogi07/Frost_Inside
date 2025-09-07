@@ -88,7 +88,7 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     {
         if (draggedSlot != null)
         {
-            draggedSlot.itemImage.raycastTarget = true; // 원래 슬롯의 레이캐스트를 다시 활성화
+            draggedSlot.itemImage.raycastTarget = true;
             draggedSlot = null;
         }
         
@@ -110,12 +110,12 @@ public class UI_ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndD
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (item.IsEmpty()) return;
-        //InventoryUI.Instance.itemToolTip.ShowToolTip(item, transform.position); // 툴팁 표시
+        InventoryUI.Instance.itemToolTip.ShowToolTip(item); // 툴팁 표시
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         if (item.IsEmpty()) return;
-        //InventoryUI.Instance.itemToolTip.HideToolTip(); // 툴팁 숨기기
+        InventoryUI.Instance.itemToolTip.HideToolTip(); // 툴팁 숨기기
     }
 }
