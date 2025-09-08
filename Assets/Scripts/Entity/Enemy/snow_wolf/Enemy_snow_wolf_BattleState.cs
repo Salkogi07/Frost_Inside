@@ -9,7 +9,7 @@ public class Enemy_snow_wolf_BattleState : Enemy_snow_wolf_State
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
 
-    public Enemy_snow_wolf_BattleState(Enemy_snow_wolf SnowWolf, Enemy_snow_wolf_StateMachine enemyStateMachine, string animBoolName, Transform player, float lastTimeWasInBattle) : base(SnowWolf, enemyStateMachine, animBoolName)
+    public Enemy_snow_wolf_BattleState(Enemy_snow_wolf SnowWolf, Enemy_snow_wolf_StateMachine enemyStateMachine, string animBoolName) : base(SnowWolf, enemyStateMachine, animBoolName)
     {
         // this.player = player;
         // this.lastTimeWasInBattle = lastTimeWasInBattle;

@@ -126,8 +126,8 @@ public class Enemy_snow_wolf : Entity
         BattleState = new Enemy_snow_wolf_BattleState(this, EnemyStateMachine, "battle");
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
         JumpState = new Enemy_snow_wolf_JumpState(this, EnemyStateMachine, "jump", jumpData);
-        GroggyState = new Enemy_snow_wolf_GroggyState(this,EnemyStateMachine, "groggy");
-        DeadState = new Enemy_snow_wolf_DeadState(this,EnemyStateMachine, "dead");
+        GroggyState = new Enemy_snow_wolf_GroggyState(this,EnemyStateMachine, "groggy",stats.Groggy);
+        DeadState = new Enemy_snow_wolf_DeadState(this,EnemyStateMachine, "dead",coll);
 
 
     }
