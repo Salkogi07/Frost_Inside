@@ -180,6 +180,8 @@ public class Player_Condition : Entity_Health
         
         EntityMaxHealth = _stats.MaxHp.Value;
         
+        Debug.Log("Player Damage: " + _damage);
+        
         Hp -= _damage;
         if (Hp <= 0)
         {

@@ -1,6 +1,5 @@
-
-using Stats;
 using UnityEngine;
+using System.Collections.Generic;
 
 public class Enemy_Bomb_Monkey_AttackState : Enemy_Bomb_Monkey_State
 {
@@ -11,22 +10,11 @@ public class Enemy_Bomb_Monkey_AttackState : Enemy_Bomb_Monkey_State
     public override void Enter()
     {
         base.Enter();
-        bombMonkey.prf.GetComponent<explosion_damage>().enemyStats = bombMonkey.stats;
-        Object.Instantiate(bombMonkey.prf, bombMonkey.transform.position, Quaternion.identity);
+        
+        GameObject boomEffect = Object.Instantiate(bombMonkey.prf, bombMonkey.transform.position, Quaternion.identity);
+        boomEffect.GetComponent<explosion_damage>().damage = bombMonkey.stats.damage.GetValue();
+        Debug.Log(boomEffect.GetComponent<explosion_damage>().damage);
+        
         enemyStateMachine.ChangeState(bombMonkey.DeadState);
     }
-    
-    // public override void Update()
-    // {
-    //     base.Update();
-    //     
-    //     if(triggerCalled)
-    //     {
-    //         enemyStateMachine.ChangeState(bombMonkey.BattleState);
-    //         // 끝없는 추격
-    //     }
-    //     
-    //     
-    //         
-    // }
 }
