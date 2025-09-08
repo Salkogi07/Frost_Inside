@@ -48,7 +48,7 @@ public class Robot_Shockwave : MonoBehaviour
             if (collider.tag == "Player")
             {
                 hasExploded = true;
-                collider.GetComponent<Player_Condition>().TakeDamage(damage);
+                collider.GetComponent<Entity_Health>().TakeDamage(damage, transform);
             }
             // if (collider.tag == "Player")
             // {

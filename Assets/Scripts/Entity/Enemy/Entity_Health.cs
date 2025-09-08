@@ -3,12 +3,10 @@ using UnityEngine;
 public class Entity_Health : MonoBehaviour
 {
     private Entity_VFX _entityVFX;
-    private Entity entity;
+    private Entity _entity;
     
-
-    [SerializeField] protected int health;
-    [SerializeField] protected Stat maxHealth; 
-    [SerializeField] protected bool isDead;
+    public static float EntiyMaxHealth;
+    
     [Header("On Damage Knockback")]
     [SerializeField]  private float knockbackDuration = .2f;
     [SerializeField]  private Vector2 KnockbackPower = new Vector2(1.5f, 2.5f);
@@ -19,51 +17,20 @@ public class Entity_Health : MonoBehaviour
     
     protected virtual void Awake()
     {
-        entity = GetComponent<Entity>();
+        _entity = GetComponent<Entity>();
         _entityVFX = GetComponent<Entity_VFX>();
-        
-        
-        health = maxHealth.GetValue();
     }
     
-    
-    
-    
-    
-    public virtual void TakeDamage(int damage , Transform damageDealer)
+    public virtual void TakeDamage(int damage, Transform damageDealer)
     {
-        
-        
         Vector2 knockback = CalculateKnockback(damage,damageDealer);
         float duration = CalculateDuration(damage);
         
-        
-        // enemy?.Reciveknockback(knockback, knockbackDuration);
-        
         // 대미지 비례 넉백량 증가
-        entity?.Reciveknockback(knockback, duration);
+        _entity?.Reciveknockback(knockback, duration);
         
         _entityVFX?.PlayOnDamageVfx();
-        ReduceHp(damage);
-        
     }
-
-    private void ReduceHp(int damage)
-    {
-        health -= damage;
-        // Debug.Log(health);
-        if (health <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        isDead = true;
-        
-    }
-
     
     // 대미지 비례 넉백량 증가
     private float CalculateDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
@@ -73,10 +40,10 @@ public class Entity_Health : MonoBehaviour
         
         Vector2 knockback = IsHeavyDamage(damage) ? heavyKnockbackpower : KnockbackPower;
         
-        knockback.x = knockback.x * direction;
+        knockback.x *= direction;
         
         return knockback;
     }
     // 대미지 비례 넉백량 증가
-    private bool IsHeavyDamage(float damage) => damage / maxHealth.GetValue() > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damage) => damage / EntiyMaxHealth > heavyDamageThreshold;
 }

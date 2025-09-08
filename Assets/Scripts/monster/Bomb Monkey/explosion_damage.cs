@@ -38,7 +38,7 @@ public class explosion_damage : MonoBehaviour
                 if (collider.tag == "Player")
                 {
                     hasExploded = true;
-                    collider.GetComponent<Player_Condition>().TakeDamage(enemyStats.damage.GetValue());
+                    collider.GetComponent<Entity_Health>().TakeDamage(enemyStats.damage.GetValue(), transform);
                     Debug.Log(enemyStats.damage.GetValue());
                 }
 

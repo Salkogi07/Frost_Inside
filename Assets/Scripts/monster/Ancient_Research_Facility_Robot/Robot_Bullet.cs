@@ -42,7 +42,7 @@ public class Robot_Bullet : MonoBehaviour
                 if (collider.tag == "Player")
                 {
 
-                    collider.GetComponent<Player_Condition>().TakeDamage(damage);
+                    collider.GetComponent<Entity_Health>().TakeDamage(damage, transform);
                     hasHit = true; // 더 이상 데미지를 주지 않도록
                     break;
                 }

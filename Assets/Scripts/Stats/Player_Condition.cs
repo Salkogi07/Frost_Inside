@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 using R3;
 
-public class Player_Condition : MonoBehaviour
+public class Player_Condition : Entity_Health
 {
     private Player_Stats _stats;
-    // private Entity_VFX _vfx;
 
     [Header("Player info")] private bool _isDead = false;
 
@@ -160,28 +160,41 @@ public class Player_Condition : MonoBehaviour
     #endregion
 
     #region PlayerDamage Function
-    public void TakeDamage(int _damage)
+    public void EffectTakeDamage(int _damage)
     {
         if (_isDead)
             return;
 
         Hp -= _damage;
-        // _vfx.PlayOnDamageVfx();
         if (Hp <= 0)
         {
             Hp = 0;
             Die();
         }
-        else
+    }
+
+    public override void TakeDamage(int _damage, Transform damageDealer)
+    {
+        if (_isDead)
+            return;
+        
+        EntiyMaxHealth = _stats.MaxHp.Value;
+        
+        base.TakeDamage(_damage, damageDealer);
+        
+        Hp -= _damage;
+        if (Hp <= 0)
         {
-            //UIManager.instance.ShowDamageEffect();
+            Hp = 0;
+            Die();
         }
     }
 
     void Die()
     {
         _isDead = true;
-        
+        var player = gameObject.GetComponent<Player>();
+        player.SetStateMachine(player.DeathState);
     }
     #endregion
 
@@ -218,7 +231,7 @@ public class Player_Condition : MonoBehaviour
 
             if (_frozenDamageTimer >= 1f)
             {
-                TakeDamage(frozenHpDropRate);
+                EffectTakeDamage(frozenHpDropRate);
                 _frozenDamageTimer = 0f;
             }
         }

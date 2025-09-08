@@ -16,7 +16,6 @@ public class Player : Entity
     public Player_JumpState JumpState { get; private set; }
     public Player_FallState FallState { get; private set; }
     public Player_MiningState MiningState { get; private set; }
-    
     public Player_DeathState DeathState { get; private set; }
 
     private Player_StateMachine _playerStateMachine;
@@ -33,8 +32,8 @@ public class Player : Entity
     private KeyCode _lastKey = KeyCode.None;
     public float MoveInput { get; private set; } = 0f;
 
-    [Header("Collision detection")] [SerializeField]
-    private Transform groundCheck;
+    [Header("Collision detection")] 
+    [SerializeField] private Transform groundCheck;
 
     [SerializeField] private Vector2 groundCheckSize = new Vector2(1f, 0.1f);
     [SerializeField] private LayerMask whatIsGround;
@@ -312,6 +311,11 @@ public class Player : Entity
     public void SetMoveSpeed(float speed)
     {
         CurrentSpeed = speed;
+    }
+
+    public void SetStateMachine(PlayerState changeState)
+    {
+        _playerStateMachine.ChangeState(changeState);
     }
 
     private void OnDrawGizmos()
