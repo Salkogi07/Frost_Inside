@@ -5,7 +5,7 @@ public class Entity_Health : MonoBehaviour
     private Entity_VFX _entityVFX;
     private Entity _entity;
     
-    public static float EntiyMaxHealth;
+    protected float EntityMaxHealth;
     
     [Header("On Damage Knockback")]
     [SerializeField]  private float knockbackDuration = .2f;
@@ -45,5 +45,5 @@ public class Entity_Health : MonoBehaviour
         return knockback;
     }
     // 대미지 비례 넉백량 증가
-    private bool IsHeavyDamage(float damage) => damage / EntiyMaxHealth > heavyDamageThreshold;
+    private bool IsHeavyDamage(float damage) => damage / EntityMaxHealth > heavyDamageThreshold;
 }

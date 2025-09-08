@@ -7,7 +7,6 @@ public class Bomb_Effect : UseItem_Effect
 
     public override void ExecuteEffect(Transform _playerPos)
     {
-        GameObject bombEffect = Instantiate(boomObj, _playerPos.position, Quaternion.identity);
-        Destroy(bombEffect, 3f);
+        Instantiate(boomObj, _playerPos.position, Quaternion.identity);
     }
 }

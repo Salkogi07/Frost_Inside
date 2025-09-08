@@ -178,9 +178,7 @@ public class Player_Condition : Entity_Health
         if (_isDead)
             return;
         
-        EntiyMaxHealth = _stats.MaxHp.Value;
-        
-        base.TakeDamage(_damage, damageDealer);
+        EntityMaxHealth = _stats.MaxHp.Value;
         
         Hp -= _damage;
         if (Hp <= 0)
@@ -188,13 +186,13 @@ public class Player_Condition : Entity_Health
             Hp = 0;
             Die();
         }
+        
+        base.TakeDamage(_damage, damageDealer);
     }
 
     void Die()
     {
         _isDead = true;
-        var player = gameObject.GetComponent<Player>();
-        player.SetStateMachine(player.DeathState);
     }
     #endregion
 

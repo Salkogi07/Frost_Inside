@@ -102,6 +102,12 @@ public class Player : Entity
 
     private void Update()
     {
+        if (Condition.CheckIsDead())
+        {
+            _playerStateMachine.ChangeState(DeathState);
+            return;
+        }
+        
         if (ChatManager.instance.IsChatting || InventoryManager.instance.isInvenOpen)
         {
             _playerStateMachine.ChangeState(IdleState);
@@ -110,6 +116,7 @@ public class Player : Entity
         
         if (IsTest)
         {
+            if (isknocked) return;
             ProcessKeyboardInput();
             _playerStateMachine.UpdateActiveState();
             return;
@@ -117,8 +124,11 @@ public class Player : Entity
         
         if (IsOwner)
         {
-            ProcessKeyboardInput();
-            _playerStateMachine.UpdateActiveState();
+            if (!isknocked)
+            {
+                ProcessKeyboardInput();
+                _playerStateMachine.UpdateActiveState();
+            }
 
             UpdateNetworkVariablesIfNeeded();
         }
@@ -171,6 +181,9 @@ public class Player : Entity
     private void FixedUpdate()
     {
         HandleCollisionDetection();
+        
+        if (isknocked)
+            return;
 
         _playerStateMachine.FiexedUpdateActiveState();
     }
@@ -311,11 +324,6 @@ public class Player : Entity
     public void SetMoveSpeed(float speed)
     {
         CurrentSpeed = speed;
-    }
-
-    public void SetStateMachine(PlayerState changeState)
-    {
-        _playerStateMachine.ChangeState(changeState);
     }
 
     private void OnDrawGizmos()
