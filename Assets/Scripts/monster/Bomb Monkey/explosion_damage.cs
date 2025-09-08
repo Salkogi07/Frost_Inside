@@ -12,6 +12,7 @@ public class explosion_damage : MonoBehaviour
     
 
     private bool hasExploded = false;
+    private bool closing = false;
     //public 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,15 +31,18 @@ public class explosion_damage : MonoBehaviour
     {
         if (hasExploded) return;
         Collider2D[] hit = Physics2D.OverlapBoxAll(transform.position, Boxsize, 0f);
-        foreach (Collider2D collider in hit)
+        if (!closing)
         {
-            if (collider.tag == "Player")
+            foreach (Collider2D collider in hit)
             {
-                hasExploded = true;
-                collider.GetComponent<Player_Condition>().TakeDamage(enemyStats.damage.GetValue());
-                Debug.Log(enemyStats.damage.GetValue());
+                if (collider.tag == "Player")
+                {
+                    hasExploded = true;
+                    collider.GetComponent<Player_Condition>().TakeDamage(enemyStats.damage.GetValue());
+                    Debug.Log(enemyStats.damage.GetValue());
+                }
+
             }
-            
         }
     }
     private void OnDrawGizmos()
@@ -49,6 +53,12 @@ public class explosion_damage : MonoBehaviour
     IEnumerator Bombing()
     {
         yield return new WaitForSeconds(0.1f);
+        closing = true;
+    }
+
+    public void Destroy()
+    {
         Destroy(gameObject);
     }
+    
 }
