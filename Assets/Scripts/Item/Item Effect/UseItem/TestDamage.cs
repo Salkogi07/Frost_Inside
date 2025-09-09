@@ -8,8 +8,11 @@ public class TestDamage : MonoBehaviour
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3);
         foreach (var collider in colliders)
         {
-            collider.GetComponent<Entity_Health>().TakeDamage(50, transform);
-            Destroy(gameObject,.5f);
+            if (collider.tag == "Player")
+            {
+                collider.GetComponent<Entity_Health>().TakeDamage(50, transform);
+                Destroy(gameObject,.5f);
+            }
         }
     }
 }
