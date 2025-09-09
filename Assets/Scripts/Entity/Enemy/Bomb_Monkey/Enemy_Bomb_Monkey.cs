@@ -63,7 +63,7 @@ public class Enemy_Bomb_Monkey : Entity
 
     [Range(0, 10)] public float moveAnimSpeedMultiplier = 1;
     [Header("bouns speed Movement")]
-    public float speedIncreaseRate = 1f;       // 초당 속도 증가량
+    public float speedIncreaseRate = 0.65f;       // 초당 속도 증가량
     public float maxSpeedBoost = 3f; 
 
 

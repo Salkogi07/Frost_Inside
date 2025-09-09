@@ -37,6 +37,16 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
         }
     }
 
+    public override void FiexedUpdate()
+    {
+        base.FiexedUpdate();
+        bombMonkey.BattleState.acceleration();
+    }
+
+    
+    
+    
+
     private void ChangeStates(string stateName)
     {
         if (stateName == "Chase_director")

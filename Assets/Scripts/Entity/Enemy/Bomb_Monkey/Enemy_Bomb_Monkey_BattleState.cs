@@ -77,24 +77,7 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
     public override void FiexedUpdate()
     {
         base.FiexedUpdate();
-        int currentDirection = DirectionToPlayer();
-
-        // 방향이 바뀌었는지 확인
-        if (currentDirection != lastDirectionToPlayer)
-        {
-            moveSpeedBoost = 0f; // 방향이 바뀌면 속도 증가 초기화
-            lastDirectionToPlayer = currentDirection;
-        }
-        else
-        {
-            // 계속 같은 방향이면 속도 점점 증가
-            moveSpeedBoost += bombMonkey.speedIncreaseRate * Time.fixedDeltaTime;
-            moveSpeedBoost = Mathf.Clamp(moveSpeedBoost, 0f, bombMonkey.maxSpeedBoost); // 최대 제한
-        }
-
-        float finalSpeed = bombMonkey.battleMoveSpeed + moveSpeedBoost;
-        
-        bombMonkey.SetVelocity(bombMonkey.battleMoveSpeed * DirectionToPlayer(), rb.linearVelocity.y);
+        acceleration();
     }
 
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
@@ -107,8 +90,30 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
         return false;
     }  
     private bool shouldRetreat() => DistanceToPlayer() < bombMonkey.minRetreatDistance;
+
+    public void acceleration()
+    {
+        int currentDirection = DirectionToPlayer();
         
-    
+                // 방향이 바뀌었는지 확인
+                if (currentDirection != lastDirectionToPlayer) 
+                {
+                    moveSpeedBoost = 0f; // 방향이 바뀌면 속도 증가 초기화
+                    lastDirectionToPlayer = currentDirection;
+                }
+        else
+        {
+            if (moveSpeedBoost < bombMonkey.maxSpeedBoost)
+            {
+                moveSpeedBoost += bombMonkey.speedIncreaseRate * Time.fixedDeltaTime;
+                moveSpeedBoost = Mathf.Min(moveSpeedBoost, bombMonkey.maxSpeedBoost);
+            }
+        }
+        
+        float finalSpeed = bombMonkey.battleMoveSpeed + moveSpeedBoost;
+                
+        bombMonkey.SetVelocity(finalSpeed * DirectionToPlayer(), rb.linearVelocity.y);
+    }
     
     private float DistanceToPlayer()
     {
