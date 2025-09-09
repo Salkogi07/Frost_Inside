@@ -9,6 +9,7 @@ public class explosion_damage : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         other.GetComponent<Entity_Health>().TakeDamage(damage, transform);
+        Debug.Log(damage);
         Destroy(gameObject,.5f);
     }
 }
