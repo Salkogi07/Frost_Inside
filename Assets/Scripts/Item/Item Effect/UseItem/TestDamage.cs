@@ -3,9 +3,13 @@ using UnityEngine;
 
 public class TestDamage : MonoBehaviour
 {
-    private void OnTriggerEnter2D(Collider2D other)
+    private void Start()
     {
-        other.GetComponent<Entity_Health>().TakeDamage(1000, transform);
-        Destroy(gameObject,.5f);
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3);
+        foreach (var collider in colliders)
+        {
+            collider.GetComponent<Entity_Health>().TakeDamage(50, transform);
+            Destroy(gameObject,.5f);
+        }
     }
 }

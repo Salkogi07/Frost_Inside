@@ -1,6 +1,7 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class Entity_Health : MonoBehaviour
+public class Entity_Health : NetworkBehaviour
 {
     private Entity_VFX _entityVFX;
     private Entity _entity;
