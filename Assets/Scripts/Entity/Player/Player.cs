@@ -61,6 +61,7 @@ public class Player : Entity
     private NetworkVariable<Quaternion> _laserRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
     private Vector2 _lerpLaserTargetPos;
     private float _lerpLaserTime;
+    private bool _wasLaserActiveLastFrame = false; 
 
     [SerializeField] private bool IsTest = false;
     
@@ -109,6 +110,7 @@ public class Player : Entity
 
     private void Update()
     {
+        Debug.Log(Condition.CheckIsDead());
         if (Condition.CheckIsDead())
         {
             _playerStateMachine.ChangeState(DeathState);
@@ -160,11 +162,32 @@ public class Player : Entity
                 transform.position = _lerpTargetPos; // 보간이 끝나면 목표 위치로 정확히 이동
             }
             
+            // 바라보는 방향 동기화
+            if (_isFacingRight != _networkIsFacingRight.Value)
+            {
+                FlipVisualsOnly();
+            }
+            
+            // 네트워크로 받은 레이저 활성 상태(_isLaserActive)가 이전 프레임과 다를 경우에만 파티클을 제어합니다.
+            if (_isLaserActive.Value != _wasLaserActiveLastFrame)
+            {
+                if (_isLaserActive.Value)
+                {
+                    // 레이저와 파티클을 켭니다.
+                    Laser.EnableLaser();
+                }
+                else
+                {
+                    // 레이저와 파티클을 끕니다.
+                    Laser.DisableLaser();
+                }
+                // 현재 상태를 '이전 상태'로 기억하여 다음 프레임에서 중복 호출을 방지합니다.
+                _wasLaserActiveLastFrame = _isLaserActive.Value;
+            }
+
+            // 레이저가 활성화 상태일 때만 매 프레임 위치와 각도를 업데이트합니다.
             if (_isLaserActive.Value)
             {
-                Laser.EnableLaser();
-
-                // 네트워크 위치 값이 변경되면 새로운 보간 시작
                 if (_lerpLaserTargetPos != _laserEndPoint.Value)
                 {
                     _lerpLaserTargetPos = _laserEndPoint.Value;
@@ -172,7 +195,6 @@ public class Player : Entity
                 }
                 
                 Vector2 interpolatedEndPoint;
-                // 보간 진행
                 if (_lerpLaserTime < lerpDuration)
                 {
                     _lerpLaserTime += Time.deltaTime;
@@ -180,20 +202,11 @@ public class Player : Entity
                 }
                 else
                 {
-                    interpolatedEndPoint = _lerpLaserTargetPos; // 보간이 끝나면 목표 위치로 정확히 이동
+                    interpolatedEndPoint = _lerpLaserTargetPos;
                 }
                 
+                // 파티클의 위치/회전도 이 메서드 안에서 함께 갱신됩니다.
                 Laser.UpdateLaserVisuals(interpolatedEndPoint, _laserRotation.Value);
-            }
-            else
-            {
-                Laser.DisableLaser();
-            }
-
-            // 바라보는 방향 동기화
-            if (_isFacingRight != _networkIsFacingRight.Value)
-            {
-                FlipVisualsOnly();
             }
         }
     }
