@@ -54,6 +54,13 @@ public class Player : Entity
     [SerializeField] private float lerpDuration = 0.05f;
     private Vector2 _lastSentPosition;
     private bool _lastSentIsFacingRight;
+    
+    [Header("Laser Synchronization")]
+    private NetworkVariable<bool> _isLaserActive = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<Vector2> _laserEndPoint = new NetworkVariable<Vector2>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private NetworkVariable<Quaternion> _laserRotation = new NetworkVariable<Quaternion>(Quaternion.identity, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+    private Vector2 _lerpLaserTargetPos;
+    private float _lerpLaserTime;
 
     [SerializeField] private bool IsTest = false;
     
@@ -152,6 +159,36 @@ public class Player : Entity
             {
                 transform.position = _lerpTargetPos; // 보간이 끝나면 목표 위치로 정확히 이동
             }
+            
+            if (_isLaserActive.Value)
+            {
+                Laser.EnableLaser();
+
+                // 네트워크 위치 값이 변경되면 새로운 보간 시작
+                if (_lerpLaserTargetPos != _laserEndPoint.Value)
+                {
+                    _lerpLaserTargetPos = _laserEndPoint.Value;
+                    _lerpLaserTime = 0;
+                }
+                
+                Vector2 interpolatedEndPoint;
+                // 보간 진행
+                if (_lerpLaserTime < lerpDuration)
+                {
+                    _lerpLaserTime += Time.deltaTime;
+                    interpolatedEndPoint = Vector2.Lerp(Laser.lineRenderer.GetPosition(1), _lerpLaserTargetPos, _lerpLaserTime / lerpDuration);
+                }
+                else
+                {
+                    interpolatedEndPoint = _lerpLaserTargetPos; // 보간이 끝나면 목표 위치로 정확히 이동
+                }
+                
+                Laser.UpdateLaserVisuals(interpolatedEndPoint, _laserRotation.Value);
+            }
+            else
+            {
+                Laser.DisableLaser();
+            }
 
             // 바라보는 방향 동기화
             if (_isFacingRight != _networkIsFacingRight.Value)
@@ -175,6 +212,18 @@ public class Player : Entity
         {
             _networkIsFacingRight.Value = _isFacingRight;
             _lastSentIsFacingRight = _isFacingRight;
+        }
+    }
+    
+    public void UpdateLaserState(bool isActive, Vector2 endPoint, Quaternion rotation)
+    {
+        if (!IsOwner) return;
+
+        _isLaserActive.Value = isActive;
+        if (isActive)
+        {
+            _laserEndPoint.Value = endPoint;
+            _laserRotation.Value = rotation;
         }
     }
     
@@ -236,22 +285,22 @@ public class Player : Entity
         
         float adjustedAngle;
         
-        // localAngle의 범위(-90 ~ 90)를 애니메이션 인덱스(0 ~ 12)로 변환합니다.
+        // localAngle의 범위(-90 ~ 90)를 애니메이션 인덱스(0 ~ 18)로 변환합니다.
         // 1. 각도에 90을 더해 범위를 (0 ~ 180)으로 조정합니다.
         if (_isFacingRight)
         {
-            // 오른쪽을 볼 때: 위(+90도)가 12번, 아래(-90도)가 0번이 되도록 계산
+            // 오른쪽을 볼 때: 위(+90도)가 18번, 아래(-90도)가 0번이 되도록 계산
             adjustedAngle = localAngle + 90f;
         }
         else
         {
-            // 왼쪽을 볼 때: 위(+90도)가 0번, 아래(-90도)가 12번이 되도록 순서를 반전시켜 계산
+            // 왼쪽을 볼 때: 위(+90도)가 0번, 아래(-90도)가 18번이 되도록 순서를 반전시켜 계산
             adjustedAngle = -localAngle + 90f;
         }
 
-        // 2. (0 ~ 180) 범위를 12개 구간으로 나눈 값(15)으로 나누어 인덱스를 계산합니다.
+        // 2. (0 ~ 180) 범위를 18개 구간으로 나눈 값(10)으로 나누어 인덱스를 계산합니다.
         // RoundToInt를 사용하여 각 구간의 중앙값을 기준으로 인덱스를 결정합니다.
-        int animationIndex = Mathf.RoundToInt(adjustedAngle / 15f);
+        int animationIndex = Mathf.RoundToInt(adjustedAngle / 10f);
 
         // 3. 계산된 인덱스를 애니메이터의 "miningAngle" 파라미터에 전달합니다.
         Anim.SetFloat("miningAngle", animationIndex);

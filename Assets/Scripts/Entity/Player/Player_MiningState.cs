@@ -39,6 +39,10 @@ public class Player_MiningState : Player_GroundedState
     {
         base.Exit();
         player.TileMining.StopMining(); // 상태를 나갈 때 채굴 관련 변수 초기화
-        player.Laser.DisableLaser(); // 레이저 비활성화
+        if (player.IsOwner)
+        {
+            player.UpdateLaserState(false, Vector2.zero, Quaternion.identity);
+        }
+        player.Laser.DisableLaser(); // 로컬 레이저 즉시 비활성화
     }
 }

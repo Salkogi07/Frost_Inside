@@ -35,64 +35,59 @@ public class Player_TileMining : MonoBehaviour
         Vector2 direction = (mouseWorldPos - firePointPos).normalized;
         
         player.CheckAndFlip(direction.x);
-        
         player.SetMiningAnimationByDirection(direction);
 
         RaycastHit2D hit = Physics2D.Raycast(firePointPos, direction, miningRange, miningLayerMask);
         
+        Vector2 laserEndPoint; // 레이저 끝점을 저장할 변수
+
         if (hit.collider != null)
         {
-            //Debug.Log("Hit" + hit.collider.name);
-            // 1. 레이캐스트에 감지된 오브젝트에서 Tilemap 컴포넌트를 가져옵니다.
+            laserEndPoint = hit.point; // 레이저 끝점을 맞은 위치로 설정
+            
             Tilemap hitTilemap = hit.collider.GetComponent<Tilemap>();
-            // 2. Tilemap 컴포넌트가 존재하는지 확인합니다.
             if (hitTilemap != null)
             {
-                //Debug.Log("HitTile" + hitTilemap.name);
-                // 레이저 끝점을 맞은 위치로 업데이트
-                player.Laser.UpdateLaser(hit.point);
-
                 Vector2 hitPoint = hit.point - hit.normal * 0.01f;
                 Vector3Int tilePosition = hitTilemap.WorldToCell(hitPoint);
-                //Debug.Log("tilePosition:" + tilePosition);
-                
                 TileBase tile = hitTilemap.GetTile(tilePosition);
-                //Debug.Log("tile:" + tile);
 
-                // 3. 해당 타일이 존재하고, 채굴 가능한 타일인지 확인합니다.
                 if (tile != null && miningSettings.GetIsMineable(tile))
                 {
-                    // 이전에 캐던 타일과 다른 타일을 조준한 경우, 진행도를 초기화합니다.
-                    // 또는 다른 타일맵을 조준한 경우에도 초기화합니다.
                     if (tilePosition != currentMiningTilePosition || hitTilemap != currentMiningTilemap)
                     {
                         StopMining();
-                        currentMiningTilemap = hitTilemap; // 새로 감지된 타일맵을 현재 타겟으로 설정
+                        currentMiningTilemap = hitTilemap;
                         currentMiningTilePosition = tilePosition;
                         currentMiningTileBase = tile;
                     }
-                    
-                    // 채굴 진행
                     UpdateMiningProgress();
                 }
                 else
                 {
-                    // 채굴 불가능한 타일(기반암 등)이거나 빈 공간을 조준한 경우
                     StopMining();
                 }
             }
             else
             {
-                // miningLayerMask에 있지만 Tilemap 컴포넌트가 없는 오브젝트에 맞은 경우
                 StopMining();
-                player.Laser.UpdateLaser(hit.point);
             }
         }
         else
         {
-            // 레이저가 아무것에도 닿지 않았을 때
+            laserEndPoint = firePointPos + direction * miningRange; // 기본 사거리로 레이저 끝점 설정
             StopMining();
-            player.Laser.UpdateLaser(firePointPos + direction * miningRange); // 기본 사거리로 레이저 표시
+        }
+
+        // --- 수정된 코드 ---
+        // Owner 클라이언트에서만 레이저를 직접 업데이트하고, 네트워크 변수 갱신
+        if (player.IsOwner)
+        {
+            // 1. 로컬 레이저 시각적 요소 업데이트
+            player.Laser.UpdateLaser(laserEndPoint); 
+            
+            // 2. 네트워크를 통해 다른 클라이언트에 레이저 상태 전송
+            player.UpdateLaserState(true, laserEndPoint, player.Laser.transform.rotation);
         }
     }
 

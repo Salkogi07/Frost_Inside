@@ -37,13 +37,18 @@ public class Laser : MonoBehaviour
     // 물리 로직을 제거하고 외부에서 받은 endPoint로 레이저를 그리도록 변경
     public void UpdateLaser(Vector2 endPoint)
     {
+        RotateToMouse(); // 마우스 방향으로 회전하는 로직은 Owner만 실행
+        UpdateLaserVisuals(endPoint, transform.rotation);
+    }
+    
+    public void UpdateLaserVisuals(Vector2 endPoint, Quaternion newRotation)
+    {
+        transform.rotation = newRotation;
+
         var firePointPos = (Vector2)firePoint.position;
-        
-        //lineRenderer.SetPosition(0, firePointPos);
+        lineRenderer.widthMultiplier = .2f;
         lineRenderer.SetPosition(0, firePoint.transform.position);
         startVFX.transform.position = firePointPos;
-        
-        RotateToMouse(); // 마우스 방향으로 회전하는 로직은 유지
         
         lineRenderer.SetPosition(1, endPoint);
         endVFX.transform.position = endPoint;
