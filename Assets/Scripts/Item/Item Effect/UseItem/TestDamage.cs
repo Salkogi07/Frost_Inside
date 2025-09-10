@@ -6,8 +6,6 @@ public class TestDamage : NetworkBehaviour
 {
     public override void OnNetworkSpawn()
     {
-        if (!IsServer) return;
-
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3);
         foreach (var collider in colliders)
         {
