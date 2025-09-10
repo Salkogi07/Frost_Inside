@@ -1,4 +1,4 @@
-﻿// ItemObject.cs (수정된 버전)
+﻿// ItemObject.cs (수정된 최종 버전)
 
 using UnityEngine;
 using Unity.Netcode;
@@ -84,6 +84,11 @@ public class ItemObject : NetworkBehaviour
             _lerpTime += Time.deltaTime;
             transform.position = Vector2.Lerp(_lerpStartPos, _lerpTargetPos, _lerpTime / lerpDuration);
         }
+        else
+        {
+            // Lerp가 끝나면 타겟 위치에 정확히 고정
+            transform.position = _lerpTargetPos;
+        }
     }
 
     private void OnPositionChanged(Vector2 previousValue, Vector2 newValue)
@@ -132,26 +137,34 @@ public class ItemObject : NetworkBehaviour
 
         networkItem.Value = itemData;
         
-        // 물리적 힘을 가해 아이템을 날림
-        rb.linearVelocity = Vector2.zero; // 이전 속도 초기화
+        rb.linearVelocity = Vector2.zero;
         rb.AddForce(velocity, ForceMode2D.Impulse);
-
-        // 클라이언트에게도 동일한 효과를 주기 위해 ClientRpc 호출
-        LaunchClientRpc(velocity);
+        
+        StartVisualsClientRpc(transform.position);
     }
 
+    /// <summary>
+    /// [ClientRpc] 모든 클라이언트에서 아이템의 시작 위치를 강제로 설정하여
+    /// 순간이동 문제를 해결하고 Lerp를 부드럽게 시작하도록 준비합니다.
+    /// </summary>
     [ClientRpc]
-    private void LaunchClientRpc(Vector2 velocity)
+    private void StartVisualsClientRpc(Vector3 startPosition)
     {
-        // 클라이언트에서는 물리 시뮬레이션이 없으므로 시각적인 효과만 필요하다면 여기에 구현
-        // 현재 구조에서는 위치 동기화로 충분하므로 비워둡니다.
+        // 서버는 물리 시뮬레이션을 직접 하므로 이 로직이 필요 없습니다.
+        if (IsServer) return;
+
+        // 아이템의 위치를 서버가 알려준 정확한 시작점으로 즉시 이동시킵니다.
+        transform.position = startPosition;
+
+        // Lerp 변수들도 이 시작점으로 초기화하여, 다음 NetworkVariable 업데이트를
+        // 부드럽게 이어받을 수 있도록 준비합니다.
+        _lerpStartPos = startPosition;
+        _lerpTargetPos = startPosition;
+        _lerpTime = 0f;
     }
 
     public Inventory_Item GetItemData() => networkItem.Value;
 
-    /// <summary>
-    /// (서버 전용) 풀에 반환되기 전 오브젝트를 리셋합니다.
-    /// </summary>
     public void ResetForPool()
     {
         if (!IsServer) return;
