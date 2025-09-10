@@ -77,9 +77,31 @@ public class MonsterSpawner : NetworkBehaviour
 
         Debug.Log($"[Spawn Count] TimeNorm:{timeNorm:P2} Weights(1:{cw1:F2},2:{cw2:F2},3:{cw3:F2}) Selector:{rc:F2} → count:{totalSpawnCount}");
 
-        // 플레이어 위치는 서버에서 직접 찾아야 함
-        // (단순화를 위해 이 예제에서는 플레이어 위치 추적 로직은 생략. 필요 시 추가해야 함)
-        int currentRoomIdx = -1; // 플레이어가 있는 방 인덱스 (계산 로직 필요)
+        // 플레이어가 현재 있는 방을 확인하여 스폰 후보에서 제외합니다.
+        HashSet<int> occupiedRoomIndices = new HashSet<int>();
+        List<GameObject> allPlayers = PlayerDataManager.instance.GetAllPlayerObjects();
+
+        if (allPlayers != null && allPlayers.Count > 0)
+        {
+            foreach (var player in allPlayers)
+            {
+                if (player == null) continue;
+                Vector3 playerPos = player.transform.position;
+                Vector3Int playerCellPos = Vector3Int.FloorToInt(playerPos);
+
+                for (int i = 0; i < mapData.RoomBounds.Count; i++)
+                {
+                    if (mapData.RoomBounds[i].Contains(playerCellPos))
+                    {
+                        occupiedRoomIndices.Add(i);
+                        break; // 이 플레이어의 방을 찾았으니 다음 플레이어로 넘어감
+                    }
+                }
+            }
+        }
+        
+        if(occupiedRoomIndices.Count > 0)
+            Debug.Log($"[MonsterSpawner] Players are in rooms: {string.Join(",", occupiedRoomIndices)}. These rooms will be excluded.");
 
         int spawnedCount = 0;
         for (int s = 0; s < totalSpawnCount; s++)
@@ -87,12 +109,22 @@ public class MonsterSpawner : NetworkBehaviour
             var candidates = new List<int>();
             for (int i = 0; i < mapData.RoomMonsterSpawnPositions.Count; i++)
             {
-                if (i == currentRoomIdx) continue;
+                // 플레이어가 있는 방은 제외
+                if (occupiedRoomIndices.Contains(i)) continue;
+                
+                // 스폰 위치가 있고, 해당 방 설정에 몬스터 프리팹이 있는 경우만 후보에 추가
                 if (mapData.RoomMonsterSpawnPositions[i].Count > 0 &&
+                    mapData.RoomSettings[i] != null && 
                     mapData.RoomSettings[i].monsterPrefabs.Length > 0)
+                {
                     candidates.Add(i);
+                }
             }
-            if (candidates.Count == 0) break;
+            if (candidates.Count == 0)
+            {
+                Debug.LogWarning("[MonsterSpawner] No valid rooms to spawn monsters.");
+                break;
+            }
 
             int roomIdx = candidates[Random.Range(0, candidates.Count)];
             var positions = mapData.RoomMonsterSpawnPositions[roomIdx];

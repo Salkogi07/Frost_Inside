@@ -17,6 +17,7 @@ public class PlayerDataManager : MonoBehaviour
     // --- 로딩 상태 추적을 위한 변수 추가 ---
     private readonly HashSet<ulong> clientsLoadedScene = new HashSet<ulong>();
     private readonly HashSet<ulong> clientsMapGenerated = new HashSet<ulong>();
+    private readonly HashSet<ulong> clientsPlayerSpawned = new HashSet<ulong>();
 
     public event Action<PlayerInfo> OnPlayerAdded;
     public event Action<ulong> OnPlayerRemoved;
@@ -75,6 +76,15 @@ public class PlayerDataManager : MonoBehaviour
         Debug.Log($"[PlayerDataManager] Client {clientId} finished map generation.");
         clientsMapGenerated.Add(clientId);
     }
+    
+    /// <summary>
+    /// (서버 전용) 플레이어 스폰을 완료한 클라이언트를 등록합니다.
+    /// </summary>
+    public void AddPlayerSpawnedClient(ulong clientId)
+    {
+        Debug.Log($"[PlayerDataManager] Client {clientId} has its player spawned.");
+        clientsPlayerSpawned.Add(clientId);
+    }
 
     /// <summary>
     /// (서버 전용) 로드된 클라이언트 목록을 초기화합니다.
@@ -90,6 +100,14 @@ public class PlayerDataManager : MonoBehaviour
     public void ClearMapGeneratedClients()
     {
         clientsMapGenerated.Clear();
+    }
+    
+    /// <summary>
+    /// (서버 전용) 플레이어 스폰을 완료한 클라이언트 목록을 초기화합니다.
+    /// </summary>
+    public void ClearPlayerSpawnedClients()
+    {
+        clientsPlayerSpawned.Clear();
     }
 
     /// <summary>
@@ -107,6 +125,15 @@ public class PlayerDataManager : MonoBehaviour
     {
         return clientsMapGenerated.Count;
     }
+    
+    /// <summary>
+    /// (서버 전용) 플레이어 스폰을 완료한 클라이언트의 수를 반환합니다.
+    /// </summary>
+    public int GetPlayerSpawnedClientCount()
+    {
+        return clientsPlayerSpawned.Count;
+    }
+
 
     public void AddPlayer(ulong clientId, ulong steamId, string steamName)
     {
@@ -156,6 +183,38 @@ public class PlayerDataManager : MonoBehaviour
         playerInfoMap.TryGetValue(clientId, out var info);
         return info;
     }
+    
+    public GameObject GetPlayerObject(ulong clientId)
+    {
+        if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
+        {
+            if (NetworkManager.Singleton.ConnectedClients.TryGetValue(clientId, out var client))
+            {
+                return client.PlayerObject != null ? client.PlayerObject.gameObject : null;
+            }
+        }
+        return null;
+    }
+
+    public List<GameObject> GetAllPlayerObjects()
+    {
+        var playerObjects = new List<GameObject>();
+        if (NetworkManager.Singleton == null || !NetworkManager.Singleton.IsServer)
+        {
+            Debug.LogWarning("[PlayerDataManager] GetAllPlayerObjects can only be called on the server.");
+            return playerObjects;
+        }
+
+        foreach (var clientId in playerInfoMap.Keys)
+        {
+            GameObject playerObj = GetPlayerObject(clientId);
+            if (playerObj != null)
+            {
+                playerObjects.Add(playerObj);
+            }
+        }
+        return playerObjects;
+    }
 
     public IEnumerable<PlayerInfo> GetAllPlayers() => playerInfoMap.Values;
 
@@ -173,5 +232,8 @@ public class PlayerDataManager : MonoBehaviour
             RemovePlayer(id);
         }
         playerInfoMap.Clear();
+        clientsLoadedScene.Clear();
+        clientsMapGenerated.Clear();
+        clientsPlayerSpawned.Clear();
     }
 }

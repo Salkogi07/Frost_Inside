@@ -1,6 +1,4 @@
-﻿// ItemObject.cs (수정된 최종 버전)
-
-using UnityEngine;
+﻿using UnityEngine;
 using Unity.Netcode;
 
 [RequireComponent(typeof(NetworkObject), typeof(Rigidbody2D))]

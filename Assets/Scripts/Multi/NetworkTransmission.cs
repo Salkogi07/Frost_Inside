@@ -226,45 +226,62 @@ public class NetworkTransmission : NetworkBehaviour
     {
         Debug.Log("[Server] 초기 설정을 시작합니다.");
         
+        TimerManager timerManager = TimerManager.instance;
         // TimeManager 찾기
-        if (TimerManager.instance == null)
+        if (timerManager == null)
         {
             Debug.LogError("[NetworkTransmission] TimeManager instance not found!");
             yield break;
         }
         
+        GameManager gameManager = GameManager.instance;
         // GameManager 찾기
-        if (GameManager.instance == null)
+        if (gameManager == null)
         {
             Debug.LogError("[NetworkTransmission] GameManager instance not found!");
             yield break;
         }
-        TimerManager timerManager = TimerManager.instance;
-        GameManager gameManager = GameManager.instance;
         
-        //초기 설정
-        PlayerDataManager.instance.GetLoadedClientCount();
-            
+        // 1. 카운터 초기화
+        PlayerDataManager.instance.ClearMapGeneratedClients();
+        PlayerDataManager.instance.ClearPlayerSpawnedClients();
+
+        // 2. 맵 생성 명령 및 대기 (아이템 스폰은 맵 생성 마지막 단계에 서버에서 자동으로 실행됨)
         Debug.Log("[Server] 맵 생성을 시작합니다.");
         int seed = System.Environment.TickCount;
-        
         GenerateMapClientRpc(seed);
-        
+
         Debug.Log("[Server] 모든 클라이언트가 맵 생성을 완료할 때까지 기다리는 중입니다...");
-        yield return new WaitUntil(() => 
+        yield return new WaitUntil(() =>
             PlayerDataManager.instance.GetMapGeneratedClientCount() >= NetworkManager.Singleton.ConnectedClients.Count
         );
-        Debug.Log("[Server] 모든 클라이언트가 맵 생성을 확인했습니다.");
-        
+        Debug.Log("[Server] 모든 클라이언트가 맵 생성을 확인했습니다. 아이템 스폰이 완료되었습니다.");
+
+        // 3. 플레이어 스폰 명령 및 대기
         Debug.Log("[Server] 모든 플레이어 스폰을 명령합니다.");
         gameManager.gamePlayerSpawner.SpawnAllPlayersForGame();
-        while (!gameManager.gamePlayerSpawner.IsRunning)
-        {
-            yield return null;
-        }
 
+        Debug.Log("[Server] 모든 플레이어가 스폰될 때까지 기다리는 중입니다...");
+        yield return new WaitUntil(() =>
+            PlayerDataManager.instance.GetPlayerSpawnedClientCount() >= NetworkManager.Singleton.ConnectedClients.Count
+        );
+        Debug.Log("[Server] 모든 플레이어가 스폰되었습니다.");
+
+        // 4. 게임 타이머 시작
+        Debug.Log("[Server] 게임 타이머를 시작합니다.");
         timerManager.StartGameTimer();
-
+        
+        // 5. 몬스터 스포너 초기화 및 시작
+        Debug.Log("[Server] 몬스터 스포너를 초기화하고 시작합니다.");
+        MakeRandomMap mapComponent = gameManager.makeRandomMap;
+        if (mapComponent != null && gameManager.monsterSpawner != null)
+        {
+            gameManager.monsterSpawner.InitializeAndStartSpawning(mapComponent, mapComponent.spreadTilemap);
+        }
+        else
+        {
+            Debug.LogError("[Server] MakeRandomMap 또는 MonsterSpawner를 찾을 수 없어 몬스터 스폰을 시작할 수 없습니다!");
+        }
 
         Debug.Log("[Server] Server-side setup is complete. Notifying clients to start the game.");
 

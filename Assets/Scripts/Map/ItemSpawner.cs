@@ -30,8 +30,7 @@ public class ItemSpawner : NetworkBehaviour
             Debug.LogWarning("[ItemSpawner] 아이템 스폰은 서버에서만 가능합니다.");
             return;
         }
-
-        // ... (기존 아이템 선택 로직은 동일) ...
+        
         List<ItemData> spawnableItems = ItemDatabase.Instance.GetSpawnableItems();
         if (spawnableItems == null || spawnableItems.Count == 0)
         {

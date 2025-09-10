@@ -12,7 +12,7 @@ public class MakeRandomMap : MonoBehaviour
     [Header("=== 방 프리팹 및 플레이어 설정 ===")]
     [SerializeField] private List<GameObject> roomPrefabs;
     [SerializeField] private int maxRooms = 5;
-    [SerializeField] private SpreadTilemap spreadTilemap;
+    public SpreadTilemap spreadTilemap;
 
     [Header("=== 시드 설정 ===")]
     [SerializeField] private int seed;

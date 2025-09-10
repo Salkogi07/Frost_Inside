@@ -3,9 +3,6 @@ using Unity.Netcode;
 
 public class GamePlayerSpawner : MonoBehaviour
 {
-    private bool _isRunning = false;
-    public bool IsRunning => _isRunning;
-    
     private void Awake()
     {
         GameManager.instance.gamePlayerSpawner = this;
@@ -22,8 +19,8 @@ public class GamePlayerSpawner : MonoBehaviour
         foreach (var playerInfo in PlayerDataManager.instance.GetAllPlayers())
         {
             PlayerSpawnController.instance.SpawnPlayerForClient(playerInfo.ClientId);
+            
+            PlayerDataManager.instance.AddPlayerSpawnedClient(playerInfo.ClientId);
         }
-        
-        _isRunning = true;
     }
 }
