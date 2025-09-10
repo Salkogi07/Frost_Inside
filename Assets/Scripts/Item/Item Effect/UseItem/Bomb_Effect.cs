@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "bomb", menuName = "Data/UseItem Effect/Bomb Effect")]
@@ -7,6 +8,8 @@ public class Bomb_Effect : UseItem_Effect
 
     public override void ExecuteEffect(Transform _playerPos)
     {
-        Instantiate(boomObj, _playerPos.position, Quaternion.identity);
+        GameObject bombInstance = Instantiate(boomObj, _playerPos.position, Quaternion.identity);
+        
+        bombInstance.GetComponent<NetworkObject>().Spawn();
     }
 }

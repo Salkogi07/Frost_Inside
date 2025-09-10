@@ -17,12 +17,6 @@ public class Player_Condition : Entity_Health
     [SerializeField] private float staminaRegenDelay = 1.5f; // 달리기를 멈춘 후 스테미나 회복이 시작되기까지의 지연 시간
     private float _staminaRegenTimer; // 지연 시간을 측정하기 위한 타이머
     private bool _isCurrentlySprinting; // 현재 달리기 상태인지 추적하는 변수
-    
-    // HP 동기화를 위한 NetworkVariable 추가
-    // 서버만 값을 쓸 수 있도록 설정 (Server-Authoritative)
-    private NetworkVariable<float> _networkHp = new NetworkVariable<float>(writePerm: NetworkVariableWritePermission.Server);
-    // 사망 상태 동기화를 위한 NetworkVariable
-    private NetworkVariable<bool> _networkIsDead = new NetworkVariable<bool>(false, writePerm: NetworkVariableWritePermission.Server);
 
     #region current Stats
     private ReactiveProperty<float> _hpPropertiy;
@@ -78,45 +72,6 @@ public class Player_Condition : Entity_Health
         _weightPropertiy = new ReactiveProperty<float>(0);
         _temperaturePropertiy = new ReactiveProperty<float>(_stats.MaxTemperature.Value);
     }
-    
-    public override void OnNetworkSpawn()
-    {
-        // 서버라면, 초기 HP 값을 설정합니다. 이 값은 클라이언트들에게 자동으로 동기화됩니다.
-        if (IsServer)
-        {
-            _networkHp.Value = _stats.MaxHp.Value;
-            _networkIsDead.Value = false; // 서버에서 초기 사망 상태 설정
-        }
-
-        // 값 변경 콜백 구독
-        _networkHp.OnValueChanged += OnHpChanged;
-        _networkIsDead.OnValueChanged += OnIsDeadChanged;
-
-        // 초기 값 적용
-        OnHpChanged(0, _networkHp.Value);
-        OnIsDeadChanged(false, _networkIsDead.Value);
-    }
-
-    // 네트워크 객체가 사라질 때 호출됩니다.
-    public override void OnNetworkDespawn()
-    {
-        // 구독을 해제하여 메모리 누수를 방지합니다.
-        _networkHp.OnValueChanged -= OnHpChanged;
-        _networkIsDead.OnValueChanged -= OnIsDeadChanged;
-    }
-
-    // _networkHp 값이 변경되었을 때 실행되는 콜백 함수입니다.
-    private void OnHpChanged(float previousValue, float newValue)
-    {
-        Hp = newValue;
-    }
-    
-    // 사망 상태가 변경될 때 모든 클라이언트에서 호출되는 함수
-    private void OnIsDeadChanged(bool previousValue, bool newValue)
-    {
-        _isDead = newValue;
-    }
-
     private void Update()
     {
         HandleTemperature();
@@ -207,25 +162,24 @@ public class Player_Condition : Entity_Health
     #region PlayerDamage Function
     public void EffectTakeDamage(int _damage)
     {
-        // 서버만 대미지를 적용할 수 있도록 합니다.
-        if (!IsServer) return;
+        // 오너만 대미지를 적용할 수 있도록 합니다.
+        if (!IsOwner) return;
 
         if (_isDead)
             return;
 
-        float newHp = _networkHp.Value - _damage;
-        _networkHp.Value = Mathf.Max(newHp, 0); // 네트워크 변수 값을 변경합니다.
-        
-        if (_networkHp.Value <= 0)
+        Hp -= _damage;
+        if (Hp <= 0)
         {
+            Hp = 0;
             Die();
         }
     }
 
     public override void TakeDamage(int _damage, Transform damageDealer)
     {
-        // 서버만 대미지를 적용할 수 있도록 합니다.
-        if (!IsServer) return;
+        // 오너만 대미지를 적용할 수 있도록 합니다.
+        if (!IsOwner) return;
         
         if (_isDead)
             return;
@@ -234,11 +188,10 @@ public class Player_Condition : Entity_Health
         
         Debug.Log("Player Damage: " + _damage);
         
-        float newHp = _networkHp.Value - _damage;
-        _networkHp.Value = Mathf.Max(newHp, 0);
-        
-        if (_networkHp.Value <= 0)
+        Hp -= _damage;
+        if (Hp <= 0)
         {
+            Hp = 0;
             Die();
         }
         

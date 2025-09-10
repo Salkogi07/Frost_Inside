@@ -1,18 +1,33 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
-public class TestDamage : MonoBehaviour
+public class TestDamage : NetworkBehaviour
 {
-    private void Start()
+    public override void OnNetworkSpawn()
     {
+        if (!IsServer) return;
+
         Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, 3);
         foreach (var collider in colliders)
         {
-            if (collider.tag == "Player")
+            if (collider.CompareTag("Player"))
             {
-                collider.GetComponent<Entity_Health>().TakeDamage(50, transform);
-                Destroy(gameObject,.5f);
+                if(collider.TryGetComponent<Entity_Health>(out Entity_Health health))
+                {
+                    health.TakeDamage(50, gameObject.transform);
+                }
             }
+        }
+        
+        Invoke(nameof(DestroySelf), 0.5f);
+    }
+    
+    private void DestroySelf()
+    {
+        if (IsServer)
+        {
+            NetworkObject.Despawn();
         }
     }
 }
