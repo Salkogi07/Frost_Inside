@@ -1,3 +1,4 @@
+using Unity.Netcode;
 using UnityEngine;
 
 public enum EquipmentType
@@ -40,7 +41,8 @@ public class ItemData_Equipment : ItemData
 
     public void AddModifiers()
     {
-        Player_Stats playerStats = GameManager.instance.playerPrefab.GetComponent<Player_Stats>();
+        GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+        Player_Stats playerStats = playerObj.GetComponent<Player_Stats>();
 
         playerStats.Mining.AddModifier(mining);
         playerStats.Armor.AddModifier(armor);
@@ -52,7 +54,8 @@ public class ItemData_Equipment : ItemData
 
     public void RemoveModifiers()
     {
-        Player_Stats playerStats = GameManager.instance.playerPrefab.GetComponent<Player_Stats>();
+        GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+        Player_Stats playerStats = playerObj.GetComponent<Player_Stats>();
 
         playerStats.Mining.RemoveModifier(mining);
         playerStats.Armor.RemoveModifier(armor);

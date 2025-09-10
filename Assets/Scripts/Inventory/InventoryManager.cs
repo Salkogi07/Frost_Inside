@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -79,7 +80,8 @@ public class InventoryManager : MonoBehaviour
         {
             if (itemToUse.Data is ItemData_UseItem useItemData)
             {
-                useItemData.ExecuteItemEffect(GameManager.instance.playerPrefab.transform);
+                GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+                useItemData.ExecuteItemEffect(playerObj.transform);
                 quickSlotItems[selectedQuickSlot] = Inventory_Item.Empty;
 
                 InventoryUI.Instance.UpdateAllSlots();
@@ -95,7 +97,8 @@ public class InventoryManager : MonoBehaviour
         {
             if (GameManager.instance != null)
             {
-                GameManager.instance.playerPrefab.GetComponent<Player_ItemDrop>().DropItem(SlotType.QuickSlot, selectedQuickSlot);
+                GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+                playerObj.GetComponent<Player_ItemDrop>().DropItem(SlotType.QuickSlot, selectedQuickSlot);
             }
         }
     }
@@ -283,7 +286,8 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdatePlayerWeight()
     {
-        GameManager.instance.playerPrefab.GetComponent<Player_Condition>().Weight = CalculateTotalWeight();
+        GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+        playerObj.GetComponent<Player_Condition>().Weight = CalculateTotalWeight();
     }
     
     private float CalculateTotalWeight()

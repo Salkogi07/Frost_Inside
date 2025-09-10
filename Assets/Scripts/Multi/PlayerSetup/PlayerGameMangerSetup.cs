@@ -1,4 +1,4 @@
-﻿using Unity.Netcode;
+﻿/*using Unity.Netcode;
 using UnityEngine;
 
 public class PlayerGameMangerSetup : NetworkBehaviour
@@ -15,4 +15,4 @@ public class PlayerGameMangerSetup : NetworkBehaviour
             }   
         }
     }
-}
+}*/
