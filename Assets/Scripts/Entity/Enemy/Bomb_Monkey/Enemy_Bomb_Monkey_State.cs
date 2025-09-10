@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 
-
 public abstract class Enemy_Bomb_Monkey_State
 {
     protected Enemy_Bomb_Monkey bombMonkey;
@@ -14,7 +13,8 @@ public abstract class Enemy_Bomb_Monkey_State
     protected float stateTimer;
     protected bool triggerCalled;
 
-    public Enemy_Bomb_Monkey_State(Enemy_Bomb_Monkey bombMonkey, Enemy_Bomb_Monkey_StateMachine enemyStateMachine, string animBoolName)
+    public Enemy_Bomb_Monkey_State(Enemy_Bomb_Monkey bombMonkey, Enemy_Bomb_Monkey_StateMachine enemyStateMachine,
+        string animBoolName)
     {
         this.bombMonkey = bombMonkey;
         this.enemyStateMachine = enemyStateMachine;

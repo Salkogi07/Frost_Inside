@@ -7,14 +7,15 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
     public string StateName;
     private Vector2 originalGroundCheckLocalPos;
 
-    public Enemy_Bomb_Monkey_JumpState(Enemy_Bomb_Monkey bombMonkey, Enemy_Bomb_Monkey_StateMachine enemyStateMachine, string animBoolName,EnemyJumpData JumpData) : base(bombMonkey, enemyStateMachine, animBoolName)
+    public Enemy_Bomb_Monkey_JumpState(Enemy_Bomb_Monkey bombMonkey, Enemy_Bomb_Monkey_StateMachine enemyStateMachine,
+        string animBoolName, EnemyJumpData JumpData) : base(bombMonkey, enemyStateMachine, animBoolName)
     {
         _jumpData = JumpData;
     }
 
-    
+
     public override void Enter()
-    {   
+    {
         base.Enter();
         originalGroundCheckLocalPos = bombMonkey.groundCheck.localPosition;
         bombMonkey.groundCheck.localPosition = new Vector2(0f, originalGroundCheckLocalPos.y);
@@ -24,11 +25,11 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
         bombMonkey.SetVelocity(horizontalVelocity, _jumpData.jumpForce);
         _jumpData.isJumping = true;
     }
-    
+
     public override void Update()
     {
         base.Update();
-        
+
         if (_jumpData.isJumping && bombMonkey.IsGroundDetected)
         {
             _jumpData.isJumping = false;
@@ -43,9 +44,6 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
         bombMonkey.BattleState.acceleration();
     }
 
-    
-    
-    
 
     private void ChangeStates(string stateName)
     {
@@ -53,6 +51,7 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
         {
             enemyStateMachine.ChangeState(bombMonkey.BattleState);
         }
+
         if (stateName == "Move_director")
         {
             enemyStateMachine.ChangeState(bombMonkey.MoveState);

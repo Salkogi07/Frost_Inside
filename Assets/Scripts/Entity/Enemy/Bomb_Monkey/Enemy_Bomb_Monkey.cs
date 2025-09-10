@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Enemy_Bomb_Monkey : Entity
 {
-
     public Enemy_Bomb_Monkey_IdleState IdleState;
     public Enemy_Bomb_Monkey_MoveState MoveState;
     public Enemy_Bomb_Monkey_BattleState BattleState;
@@ -14,7 +13,7 @@ public class Enemy_Bomb_Monkey : Entity
 
 
     private BoxCollider2D coll;
-    public Enemy_Stats  stats;
+    public Enemy_Stats stats;
 
     protected Enemy_Bomb_Monkey_StateMachine EnemyStateMachine;
 
@@ -53,8 +52,9 @@ public class Enemy_Bomb_Monkey : Entity
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private float playerCheckDistance = 10;
 
-    [Header("Boob detection")] 
-    [SerializeField] private LayerMask whatIsBob;
+    [Header("Boob detection")] [SerializeField]
+    private LayerMask whatIsBob;
+
     [SerializeField] public GameObject prf;
     [SerializeField] private Transform boobTargetChack;
     [SerializeField] private float targetcheckRadius;
@@ -62,17 +62,10 @@ public class Enemy_Bomb_Monkey : Entity
     public float MoveSpeed = 1.4f;
 
     [Range(0, 10)] public float moveAnimSpeedMultiplier = 1;
-    [Header("bouns speed Movement")]
-    public float speedIncreaseRate = 0.65f;       // 초당 속도 증가량
-    public float maxSpeedBoost = 3f; 
-
+    [Header("bouns speed Movement")] public float speedIncreaseRate = 0.65f; // 초당 속도 증가량
+    public float maxSpeedBoost = 3f;
 
     public Transform player { get; private set; }
-
-
-
-
-
 
     public void TryEnterBattleState(Transform player)
     {
@@ -117,6 +110,7 @@ public class Enemy_Bomb_Monkey : Entity
 
         return hit;
     }
+
     public void PerformAttack()
     {
         GetDetectedColliders();
@@ -125,24 +119,23 @@ public class Enemy_Bomb_Monkey : Entity
         {
             foreach (var target in GetDetectedColliders())
             {
-                        EnemyStateMachine.ChangeState(AttackState);
-                        
-                        
+                EnemyStateMachine.ChangeState(AttackState);
             }
         }
-        
     }
+
     private Collider2D[] GetDetectedColliders()
     {
         return Physics2D.OverlapCircleAll(boobTargetChack.position, targetcheckRadius, whatIsBob);
     }
+
     protected virtual void Awake()
     {
         base.Awake();
 
         EnemyStateMachine = new Enemy_Bomb_Monkey_StateMachine();
         coll = GetComponent<BoxCollider2D>();
-        stats = GetComponent <Enemy_Stats>();
+        stats = GetComponent<Enemy_Stats>();
 
         AttackState = new Enemy_Bomb_Monkey_AttackState(this, EnemyStateMachine, "attack");
         IdleState = new Enemy_Bomb_Monkey_IdleState(this, EnemyStateMachine, "idle");
@@ -150,22 +143,20 @@ public class Enemy_Bomb_Monkey : Entity
         BattleState = new Enemy_Bomb_Monkey_BattleState(this, EnemyStateMachine, "chase");
         // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
         JumpState = new Enemy_Bomb_Monkey_JumpState(this, EnemyStateMachine, "jump", jumpData);
-        DeadState = new Enemy_Bomb_Monkey_DeadState(this,EnemyStateMachine, "dead");
-
-
+        DeadState = new Enemy_Bomb_Monkey_DeadState(this, EnemyStateMachine, "dead");
     }
-
-
+    
     protected virtual void Start()
     {
         EnemyStateMachine.Initialize(IdleState);
     }
-public void Deading()
+
+    public void Deading()
     {
         Debug.Log("d");
         EnemyStateMachine.ChangeState(DeadState);
-        
     }
+
     protected virtual void Update()
     {
         HandleCollisionDetection();
@@ -176,7 +167,6 @@ public void Deading()
     protected virtual void FixedUpdate()
     {
         EnemyStateMachine.FiexedUpdateActiveState();
-        
     }
 
 
@@ -204,7 +194,7 @@ public void Deading()
         HandleFlip(xVelocity);
     }
 
-    
+
     private void HandleCollisionDetection()
     {
         IsGroundDetected = Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, whatIsGround);
@@ -212,8 +202,8 @@ public void Deading()
                              wallCheckDistance, whatIsWall)
                          && Physics2D.Raycast(secondaryWallCheck.position, Vector2.right * FacingDirection,
                              wallCheckDistance, whatIsWall);
-        JumpState._jumpData.IsJumpDetected = Physics2D.Raycast(JumpState._jumpData.primaryJumpCheck.position, Vector2.right* FacingDirection, JumpState._jumpData.jumpCheckDistance, JumpState._jumpData.whatIsJump);
-        
+        JumpState._jumpData.IsJumpDetected = Physics2D.Raycast(JumpState._jumpData.primaryJumpCheck.position,
+            Vector2.right * FacingDirection, JumpState._jumpData.jumpCheckDistance, JumpState._jumpData.whatIsJump);
     }
 
     protected virtual void OnDrawGizmos()
@@ -248,7 +238,6 @@ public void Deading()
         }
     }
     
-
     public void CallAnimationTrigger()
     {
         EnemyStateMachine.currentState.CallAnimationTrigger();
@@ -288,9 +277,3 @@ public void Deading()
         return false;
     }
 }
-    
-
-
-
-
-

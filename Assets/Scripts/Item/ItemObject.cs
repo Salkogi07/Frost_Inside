@@ -9,8 +9,9 @@ public class ItemObject : NetworkBehaviour
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private SpriteRenderer spriteRenderer;
 
-    [Header("Network Sync")]
-    [SerializeField] private float positionUpdateThreshold = 0.1f;
+    [Header("Network Sync")] [SerializeField]
+    private float positionUpdateThreshold = 0.1f;
+
     [SerializeField] private float lerpDuration = 0.1f;
 
     private readonly NetworkVariable<Inventory_Item> networkItem = new NetworkVariable<Inventory_Item>(
@@ -28,7 +29,7 @@ public class ItemObject : NetworkBehaviour
     private Vector2 _lerpStartPos;
     private Vector2 _lerpTargetPos;
     private float _lerpTime;
-    
+
     private Vector2 _lastSentPosition;
 
     private void Awake()
@@ -40,30 +41,30 @@ public class ItemObject : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         networkItem.OnValueChanged += OnNetworkItemChanged;
-        
+
         if (IsServer)
         {
             _lastSentPosition = transform.position;
         }
-        else 
+        else
         {
             rb.isKinematic = true;
             _networkPosition.OnValueChanged += OnPositionChanged;
         }
-        
+
         UpdateVisuals(networkItem.Value);
     }
 
     public override void OnNetworkDespawn()
     {
         networkItem.OnValueChanged -= OnNetworkItemChanged;
-        
+
         if (!IsServer)
         {
             _networkPosition.OnValueChanged -= OnPositionChanged;
         }
     }
-    
+
     private void FixedUpdate()
     {
         if (!IsServer || !gameObject.activeInHierarchy) return;
@@ -78,7 +79,7 @@ public class ItemObject : NetworkBehaviour
     private void Update()
     {
         if (IsServer) return;
-        
+
         if (_lerpTime < lerpDuration)
         {
             _lerpTime += Time.deltaTime;
@@ -127,7 +128,7 @@ public class ItemObject : NetworkBehaviour
             gameObject.name = "Item - Empty (Pooled)";
         }
     }
-    
+
     /// <summary>
     /// (서버 전용) 풀에서 꺼낸 아이템을 설정하고 발사합니다.
     /// </summary>
@@ -136,10 +137,10 @@ public class ItemObject : NetworkBehaviour
         if (!IsServer) return;
 
         networkItem.Value = itemData;
-        
+
         rb.linearVelocity = Vector2.zero;
         rb.AddForce(velocity, ForceMode2D.Impulse);
-        
+
         StartVisualsClientRpc(transform.position);
     }
 
@@ -168,7 +169,7 @@ public class ItemObject : NetworkBehaviour
     public void ResetForPool()
     {
         if (!IsServer) return;
-        
+
         networkItem.Value = Inventory_Item.Empty;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;

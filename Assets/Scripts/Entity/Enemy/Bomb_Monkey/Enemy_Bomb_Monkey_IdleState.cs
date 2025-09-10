@@ -1,22 +1,23 @@
 ﻿using UnityEngine;
 
 
-    public class Enemy_Bomb_Monkey_IdleState : Enemy_Bomb_Monkey_State
+public class Enemy_Bomb_Monkey_IdleState : Enemy_Bomb_Monkey_State
 {
-    public Enemy_Bomb_Monkey_IdleState(Enemy_Bomb_Monkey bombMonkey, Enemy_Bomb_Monkey_StateMachine enemyStateMachine, string animBoolName) : base(bombMonkey, enemyStateMachine, animBoolName)
+    public Enemy_Bomb_Monkey_IdleState(Enemy_Bomb_Monkey bombMonkey, Enemy_Bomb_Monkey_StateMachine enemyStateMachine,
+        string animBoolName) : base(bombMonkey, enemyStateMachine, animBoolName)
     {
     }
 
     public override void Enter()
-        {
-            base.Enter();
-            
-            stateTimer = bombMonkey.IdleTime;
-        }
+    {
+        base.Enter();
 
-        public override void Update()
-        {
-            base.Update();
+        stateTimer = bombMonkey.IdleTime;
+    }
+
+    public override void Update()
+    {
+        base.Update();
 
         if (bombMonkey.PlayerDetection() == true)
         {
@@ -25,14 +26,12 @@
 
         if (stateTimer < 0)
         {
-                if (bombMonkey.IsGroundDetected == false || bombMonkey.IsWallDetected)
-                {
-                    bombMonkey.Flip();
-                }
-                enemyStateMachine.ChangeState(bombMonkey.MoveState);
+            if (bombMonkey.IsGroundDetected == false || bombMonkey.IsWallDetected)
+            {
+                bombMonkey.Flip();
+            }
+
+            enemyStateMachine.ChangeState(bombMonkey.MoveState);
         }
-                
-            
-        }
-        
     }
+}
