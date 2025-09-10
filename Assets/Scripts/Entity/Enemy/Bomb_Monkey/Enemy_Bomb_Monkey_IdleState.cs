@@ -11,7 +11,7 @@ public class Enemy_Bomb_Monkey_IdleState : Enemy_Bomb_Monkey_State
     public override void Enter()
     {
         base.Enter();
-
+        bombMonkey.BattleState.moveSpeedBoost = 0f;
         stateTimer = bombMonkey.IdleTime;
     }
 

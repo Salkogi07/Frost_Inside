@@ -3,8 +3,8 @@ using UnityEngine;
 public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
 {
     private Transform player;
-    public float lastTimeWasInBattle;
-    private float moveSpeedBoost = 0f;
+    private float lastTimeWasInBattle;
+    public float moveSpeedBoost = 0f;
     private int lastDirectionToPlayer = 0;
 
     public bool Explosive = false;
@@ -18,7 +18,7 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
     public override void Enter()
     {
         base.Enter();
-        UpdateBattleTimer();
+        
 
         if (player == null)
         {
@@ -38,26 +38,33 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
     {
         base.Update();
         distanceX();
+        Debug.Log(lastTimeWasInBattle);
+        
+        
         if (bombMonkey.PlayerDetection() == true)
         {
             UpdateBattleTimer();
-        }
-
-        if (BattleTimeIsOver())
-        {
-            enemyStateMachine.ChangeState(bombMonkey.IdleState);
-        }
-        
-        if (bombMonkey.PlayerDetection())
-        {
             Explosive = true;
         }
         else
         {
-            Explosive = false;
+             Explosive = false;
+             
+             if (BattleTimeIsOver())
+             {
+                 enemyStateMachine.ChangeState(bombMonkey.IdleState);
+                 
+             }
         }
 
 
+        
+    }
+
+    public override void FiexedUpdate()
+    {
+        base.FiexedUpdate();
+        acceleration();
         if (bombMonkey.JumpState._jumpData.IsJumpDetected || distanceX())
         {
             bombMonkey.JumpState.StateName = "Chase_director";
@@ -65,14 +72,8 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
         }
     }
 
-    public override void FiexedUpdate()
-    {
-        base.FiexedUpdate();
-        acceleration();
-    }
-
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
-    private bool BattleTimeIsOver() => Time.time > lastTimeWasInBattle + bombMonkey.battleTimeDuration;
+    public bool BattleTimeIsOver() => Time.time > lastTimeWasInBattle + bombMonkey.battleTimeDuration;
 
     private bool distanceX()
     {
