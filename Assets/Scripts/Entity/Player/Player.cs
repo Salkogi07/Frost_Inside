@@ -110,7 +110,6 @@ public class Player : Entity
 
     private void Update()
     {
-        Debug.Log(Condition.CheckIsDead());
         if (Condition.CheckIsDead())
         {
             _playerStateMachine.ChangeState(DeathState);
