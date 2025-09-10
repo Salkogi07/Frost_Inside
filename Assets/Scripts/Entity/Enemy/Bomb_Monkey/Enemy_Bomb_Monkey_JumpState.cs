@@ -29,7 +29,7 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
     public override void Update()
     {
         base.Update();
-
+        
         if (_jumpData.isJumping && bombMonkey.IsGroundDetected)
         {
             _jumpData.isJumping = false;
@@ -37,10 +37,7 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
             ChangeStates(StateName);
         }
 
-        if (bombMonkey.BattleState.lastTimeWasInBattle >= bombMonkey.battleTimeDuration)
-        {
-            enemyStateMachine.ChangeState(bombMonkey.MoveState);
-        }
+        
         
     }
 
