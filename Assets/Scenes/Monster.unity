@@ -46012,6 +46012,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6514348181608736322, guid: f2495d88f4f12434aa64c8208d0f236c, type: 3}
+      propertyPath: battleTimeDuration
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

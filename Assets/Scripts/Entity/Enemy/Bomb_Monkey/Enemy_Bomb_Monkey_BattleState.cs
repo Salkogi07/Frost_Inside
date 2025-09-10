@@ -3,7 +3,7 @@ using UnityEngine;
 public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
 {
     private Transform player;
-    private float lastTimeWasInBattle;
+    public float lastTimeWasInBattle;
     private float moveSpeedBoost = 0f;
     private int lastDirectionToPlayer = 0;
 
@@ -47,7 +47,7 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
         {
             enemyStateMachine.ChangeState(bombMonkey.IdleState);
         }
-
+        
         if (bombMonkey.PlayerDetection())
         {
             Explosive = true;
