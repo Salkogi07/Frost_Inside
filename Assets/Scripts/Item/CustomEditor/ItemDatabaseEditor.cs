@@ -1,9 +1,8 @@
-﻿using UnityEngine;
+﻿#if UNITY_EDITOR
+using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
-using System.Linq;
 
-// ItemDatabase 클래스의 인스펙터를 커스터마이징합니다.
 [CustomEditor(typeof(ItemDatabase))]
 public class ItemDatabaseEditor : Editor
 {
@@ -209,3 +208,4 @@ public class ItemDatabaseEditor : Editor
         EditorGUILayout.EndHorizontal();
     }
 }
+#endif

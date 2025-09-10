@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+using UnityEditor;
 using UnityEngine;
 
 [CustomEditor(typeof(ItemData))]
@@ -39,3 +40,4 @@ public class ItemDataEditor : Editor
         serializedObject.ApplyModifiedProperties();
     }
 }
+#endif
