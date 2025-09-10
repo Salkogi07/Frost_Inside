@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// ItemObject.cs (수정된 버전)
+
+using UnityEngine;
 using Unity.Netcode;
 
 [RequireComponent(typeof(NetworkObject), typeof(Rigidbody2D))]
@@ -8,29 +10,25 @@ public class ItemObject : NetworkBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
 
     [Header("Network Sync")]
-    [SerializeField] private float positionUpdateThreshold = 0.1f; // 이 거리 이상 움직여야 위치 전송
-    [SerializeField] private float lerpDuration = 0.1f; // 클라이언트에서의 보간 시간
+    [SerializeField] private float positionUpdateThreshold = 0.1f;
+    [SerializeField] private float lerpDuration = 0.1f;
 
-    // --- 아이템 정보 동기화 변수 ---
     private readonly NetworkVariable<Inventory_Item> networkItem = new NetworkVariable<Inventory_Item>(
         Inventory_Item.Empty,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
 
-    // --- 위치 동기화 변수 (추가된 부분) ---
     private readonly NetworkVariable<Vector2> _networkPosition = new NetworkVariable<Vector2>(
         default,
         NetworkVariableReadPermission.Everyone,
         NetworkVariableWritePermission.Server
     );
 
-    // 클라이언트 보간용 변수
     private Vector2 _lerpStartPos;
     private Vector2 _lerpTargetPos;
     private float _lerpTime;
     
-    // 서버 최적화용 변수
     private Vector2 _lastSentPosition;
 
     private void Awake()
@@ -41,31 +39,23 @@ public class ItemObject : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        // 아이템 정보 변경 이벤트 구독
         networkItem.OnValueChanged += OnNetworkItemChanged;
         
-        // 서버/클라이언트에 따라 역할 분리
         if (IsServer)
         {
-            // 서버는 현재 위치를 마지막 전송 위치로 초기화
             _lastSentPosition = transform.position;
         }
-        else // IsClient
+        else 
         {
-            // 클라이언트는 물리 시뮬레이션을 비활성화
             rb.isKinematic = true;
-            
-            // 위치 변경 이벤트 구독
             _networkPosition.OnValueChanged += OnPositionChanged;
         }
         
-        // 스폰 시 첫 시각적 업데이트
         UpdateVisuals(networkItem.Value);
     }
 
     public override void OnNetworkDespawn()
     {
-        // 이벤트 구독 해제 (메모리 누수 방지)
         networkItem.OnValueChanged -= OnNetworkItemChanged;
         
         if (!IsServer)
@@ -74,12 +64,10 @@ public class ItemObject : NetworkBehaviour
         }
     }
     
-    // 서버가 물리 업데이트 주기에 맞춰 위치 변화를 감지하고 전송
     private void FixedUpdate()
     {
-        if (!IsServer) return;
+        if (!IsServer || !gameObject.activeInHierarchy) return;
 
-        // 마지막으로 보낸 위치와 현재 위치의 거리가 threshold보다 크면 위치 업데이트
         if (Vector2.Distance(transform.position, _lastSentPosition) > positionUpdateThreshold)
         {
             _networkPosition.Value = transform.position;
@@ -87,12 +75,10 @@ public class ItemObject : NetworkBehaviour
         }
     }
 
-    // 클라이언트는 매 프레임 보간 처리
     private void Update()
     {
         if (IsServer) return;
         
-        // 보간 진행
         if (_lerpTime < lerpDuration)
         {
             _lerpTime += Time.deltaTime;
@@ -100,10 +86,8 @@ public class ItemObject : NetworkBehaviour
         }
     }
 
-    // (클라이언트 전용) 서버로부터 새로운 위치 값을 받았을 때 호출됨
     private void OnPositionChanged(Vector2 previousValue, Vector2 newValue)
     {
-        // 새로운 보간 시작
         _lerpStartPos = transform.position;
         _lerpTargetPos = newValue;
         _lerpTime = 0;
@@ -135,19 +119,45 @@ public class ItemObject : NetworkBehaviour
         else
         {
             spriteRenderer.sprite = null;
-            gameObject.name = "Item - Empty";
+            gameObject.name = "Item - Empty (Pooled)";
         }
     }
     
-    [ClientRpc]
-    public void SetupItemClientRpc(Inventory_Item itemData, Vector2 velocity)
+    /// <summary>
+    /// (서버 전용) 풀에서 꺼낸 아이템을 설정하고 발사합니다.
+    /// </summary>
+    public void SetupAndLaunch(Inventory_Item itemData, Vector2 velocity)
     {
         if (!IsServer) return;
+
         networkItem.Value = itemData;
         
         // 물리적 힘을 가해 아이템을 날림
+        rb.linearVelocity = Vector2.zero; // 이전 속도 초기화
         rb.AddForce(velocity, ForceMode2D.Impulse);
+
+        // 클라이언트에게도 동일한 효과를 주기 위해 ClientRpc 호출
+        LaunchClientRpc(velocity);
+    }
+
+    [ClientRpc]
+    private void LaunchClientRpc(Vector2 velocity)
+    {
+        // 클라이언트에서는 물리 시뮬레이션이 없으므로 시각적인 효과만 필요하다면 여기에 구현
+        // 현재 구조에서는 위치 동기화로 충분하므로 비워둡니다.
     }
 
     public Inventory_Item GetItemData() => networkItem.Value;
+
+    /// <summary>
+    /// (서버 전용) 풀에 반환되기 전 오브젝트를 리셋합니다.
+    /// </summary>
+    public void ResetForPool()
+    {
+        if (!IsServer) return;
+        
+        networkItem.Value = Inventory_Item.Empty;
+        rb.linearVelocity = Vector2.zero;
+        rb.angularVelocity = 0f;
+    }
 }

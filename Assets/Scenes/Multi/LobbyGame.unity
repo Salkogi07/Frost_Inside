@@ -13000,15 +13000,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a78f599e0bf4472a9ae778f7c501d87b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingItems:
-  - itemId: 24
-    price: 0
-  - itemId: 25
-    price: 0
-  - itemId: 26
-    price: 0
-  - itemId: 27
-    price: 0
+  startingItems: []
   inventoryItems:
   - itemId: 0
     price: 0

@@ -7814,6 +7814,7 @@ GameObject:
   - component: {fileID: 1197352827}
   - component: {fileID: 1197352829}
   - component: {fileID: 1197352828}
+  - component: {fileID: 1197352830}
   m_Layer: 0
   m_Name: Items
   m_TagString: Untagged
@@ -7863,7 +7864,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   dropParent: {fileID: 1197352826}
-  dropPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
 --- !u!114 &1197352829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7889,6 +7889,22 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &1197352830
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1197352825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c4bd126541f10142b8a5d3819bfe1d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  poolParent: {fileID: 1197352826}
+  itemPrefab: {fileID: 7688624664225595237, guid: f0a4fe581bea68f459dac7a9a5bbce9c, type: 3}
+  initialPoolSize: 40
 --- !u!1 &1205218520
 GameObject:
   m_ObjectHideFlags: 0

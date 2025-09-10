@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// ItemSpawner.cs (수정된 버전)
+
+using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Netcode;
@@ -7,23 +9,17 @@ public class ItemSpawner : NetworkBehaviour
 {
     [Header("=== 아이템 부모 설정 ===")]
     [SerializeField] private Transform dropParent;
-
+    
     [Header("=== 아이템 드롭 설정 ===")]
     private const int minTotalPriceSum = 1800;
     private const int maxTotalPriceSum = 2200;
 
-    [Tooltip("드롭할 프리팹을 할당하세요.")]
-    [SerializeField] private GameObject dropPrefab;
-    
     private void Awake()
     {
         GameManager.instance.itemSpawner = this;
     }
 
-    /// <summary>
-    /// 서버에서만 호출되어 맵에 아이템을 스폰합니다.
-    /// MakeRandomMap 스크립트가 맵 생성을 완료한 후 이 메서드를 호출합니다.
-    /// </summary>
+    // SpawnItemsOnMap 메서드의 로직은 거의 동일하지만, Instantiate 부분을 변경합니다.
     public void SpawnItemsOnMap(
         List<List<Vector2Int>> roomItemSpawnPositions,
         List<RoomItemSettings> roomSettings,
@@ -35,7 +31,7 @@ public class ItemSpawner : NetworkBehaviour
             return;
         }
 
-        // ItemDatabase 싱글턴 인스턴스에서 스폰 가능한 아이템 리스트를 불러옵니다.
+        // ... (기존 아이템 선택 로직은 동일) ...
         List<ItemData> spawnableItems = ItemDatabase.Instance.GetSpawnableItems();
         if (spawnableItems == null || spawnableItems.Count == 0)
         {
@@ -69,7 +65,6 @@ public class ItemSpawner : NetworkBehaviour
                                       : p < 0.85f ? ItemType.Normal
                                       : ItemType.Special;
 
-                // 데이터베이스에서 받아온 spawnableItems 리스트에서 아이템을 필터링합니다.
                 var candidates = spawnableItems.Where(d => d.itemType == selectedType).ToList();
                 if (candidates.Count == 0) continue;
                 ItemData data = candidates[Random.Range(0, candidates.Count)];
@@ -91,28 +86,21 @@ public class ItemSpawner : NetworkBehaviour
         foreach (var (data, pos, vel, price) in dropInfos)
         {
             int adjustedPrice = Mathf.RoundToInt(price * adjustRatio);
-            
-            // 데이터베이스에서 불러온 아이템 데이터의 고유 ID(itemId)를 사용하여 Inventory_Item을 생성합니다.
             var invItem = new Inventory_Item(data.itemId, adjustedPrice);
 
-            var drop = Instantiate(dropPrefab, pos, Quaternion.identity, dropParent);
-            var itemObject = drop.GetComponent<ItemObject>();
-            var networkObject = drop.GetComponent<NetworkObject>();
+            // === 오브젝트 풀링 사용 부분 ===
+            var networkObject = NetworkObjectPool.Instance.GetObject(pos, Quaternion.identity);
+            if(networkObject == null) continue;
             
-            networkObject.Spawn(true);
+            var itemObject = networkObject.GetComponent<ItemObject>();
             networkObject.TrySetParent(dropParent, false);
             
-            itemObject.SetupItemClientRpc(invItem, vel);
+            itemObject.SetupAndLaunch(invItem, vel); // 새로운 초기화 메서드 호출
         }
 
         Debug.Log($"[ItemSpawner] OriginalSum: {totalPriceSum}, ClampedSum: {targetSum}, Items Dropped: {dropInfos.Count}");
     }
     
-    /// <summary>
-    /// 서버에서 단일 아이템을 지정된 위치에 스폰합니다. 서버 측에서만 호출되어야 합니다.
-    /// </summary>
-    /// <param name="itemToSpawn">스폰할 아이템의 Inventory_Item 데이터입니다.</param>
-    /// <param name="position">아이템을 스폰할 월드 좌표입니다.</param>
     public void SpawnSingleItem(Inventory_Item itemToSpawn, Vector3 position)
     {
         if (!IsServer)
@@ -121,17 +109,15 @@ public class ItemSpawner : NetworkBehaviour
             return;
         }
 
-        var drop = Instantiate(dropPrefab, position, Quaternion.identity, dropParent);
-        var itemObject = drop.GetComponent<ItemObject>();
-        var networkObject = drop.GetComponent<NetworkObject>();
-
-        networkObject.Spawn(true);
+        // === 오브젝트 풀링 사용 부분 ===
+        var networkObject = NetworkObjectPool.Instance.GetObject(position, Quaternion.identity);
+        if(networkObject == null) return;
+        
+        var itemObject = networkObject.GetComponent<ItemObject>();
         networkObject.TrySetParent(dropParent, false);
         
-        // 아이템이 위로 살짝 튀어 오르는 효과
         Vector2 velocity = new Vector2(Random.Range(-2f, 2f), Random.Range(3f, 6f));
-
-        itemObject.SetupItemClientRpc(itemToSpawn, velocity);
+        itemObject.SetupAndLaunch(itemToSpawn, velocity);
         
         Debug.Log($"[ItemSpawner] 단일 아이템 스폰: {itemToSpawn.itemId} at {position}");
     }
@@ -144,14 +130,14 @@ public class ItemSpawner : NetworkBehaviour
             return;
         }
 
-        var drop = Instantiate(dropPrefab, position, Quaternion.identity, dropParent);
-        var itemObject = drop.GetComponent<ItemObject>();
-        var networkObject = drop.GetComponent<NetworkObject>();
-
-        networkObject.Spawn(true);
-        networkObject.TrySetParent(dropParent, false);
+        // === 오브젝트 풀링 사용 부분 ===
+        var networkObject = NetworkObjectPool.Instance.GetObject(position, Quaternion.identity);
+        if(networkObject == null) return;
         
-        itemObject.SetupItemClientRpc(itemToSpawn, velocity);
+        var itemObject = networkObject.GetComponent<ItemObject>();
+        networkObject.TrySetParent(dropParent, false);
+
+        itemObject.SetupAndLaunch(itemToSpawn, velocity);
         
         Debug.Log($"[ItemSpawner] 플레이어 아이템 드롭: {itemToSpawn.itemId} at {position}");
     }
