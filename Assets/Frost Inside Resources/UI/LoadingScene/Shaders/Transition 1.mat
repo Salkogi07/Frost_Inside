@@ -72,7 +72,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Lerp: 0.98542213
+    - _Lerp: 0.97585315
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ZWrite: 0
