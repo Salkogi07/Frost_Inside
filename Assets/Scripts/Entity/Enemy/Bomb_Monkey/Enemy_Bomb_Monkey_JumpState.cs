@@ -36,6 +36,12 @@ public class Enemy_Bomb_Monkey_JumpState : Enemy_Bomb_Monkey_State
             bombMonkey.groundCheck.localPosition = originalGroundCheckLocalPos;
             ChangeStates(StateName);
         }
+
+        if (bombMonkey.BattleState.lastTimeWasInBattle >= bombMonkey.battleTimeDuration)
+        {
+            enemyStateMachine.ChangeState(bombMonkey.MoveState);
+        }
+        
     }
 
     public override void FiexedUpdate()
