@@ -6,9 +6,6 @@ using Unity.Netcode;
 
 public class MonsterSpawner : NetworkBehaviour
 {
-    [Header("몬스터 부모 설정")]
-    [SerializeField] private Transform monsterParent;
-
     [Header("몬스터 스폰 간격 설정")]
     [Tooltip("다음 스폰까지 최소 대기 시간(초)")]
     [SerializeField] private float minSpawnInterval = 10f;
@@ -132,14 +129,23 @@ public class MonsterSpawner : NetworkBehaviour
             Vector3 worldPos = spreadTilemap.MonsterSpawnTilemap
                 .CellToWorld((Vector3Int)cell) + new Vector3(0.5f, 0.5f, 0f);
 
-            GameObject chosen = ChooseWeightedPrefab(mapData.RoomSettings[roomIdx].monsterPrefabs, roomIdx);
+            GameObject chosenPrefab = ChooseWeightedPrefab(mapData.RoomSettings[roomIdx].monsterPrefabs, roomIdx);
+            if (chosenPrefab == null) continue;
             
-            // 네트워크 오브젝트로 몬스터 스폰
-            GameObject monsterInstance = Instantiate(chosen, worldPos, Quaternion.identity, monsterParent);
-            monsterInstance.GetComponent<NetworkObject>().Spawn(true);
-            
-            spawnedCount++;
-            Debug.Log($"[Spawned] #{spawnedCount} Room:{roomIdx} → diff:{chosen.GetComponent<Stats.Enemy_Stats>().difficulty}");
+            // NetworkMonsterPool을 사용하여 몬스터 스폰
+            var monsterNetworkObject = NetworkMonsterPool.Instance.GetObject(chosenPrefab, worldPos, Quaternion.identity);
+            if (monsterNetworkObject != null)
+            {
+                var baseMonster = monsterNetworkObject.GetComponent<Entity>();
+                if (baseMonster != null)
+                {
+                    // 몬스터 활성화 및 초기 설정
+                    //baseMonster.SetupAndSpawn();
+                }
+
+                spawnedCount++;
+                Debug.Log($"[Spawned] #{spawnedCount} Room:{roomIdx} → Prefab:{chosenPrefab.name}");
+            }
         }
 
         Debug.Log($"[SpawnMonsters] Requested:{totalSpawnCount}, Spawned:{spawnedCount}");

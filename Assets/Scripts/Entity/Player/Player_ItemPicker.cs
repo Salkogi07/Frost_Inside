@@ -62,7 +62,7 @@ public class Player_ItemPicker : NetworkBehaviour
         // 1. 재사용을 위해 아이템 상태를 리셋합니다.
         itemPickupComponent.ResetForPool();
         // 2. 오브젝트를 파괴하는 대신 풀에 반환합니다.
-        NetworkObjectPool.Instance.ReturnObjectToPool(itemNetworkObject);
+        NetworkItemPool.Instance.ReturnObjectToPool(itemNetworkObject);
     }
 
     [ClientRpc]

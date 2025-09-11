@@ -88,7 +88,7 @@ public class ItemSpawner : NetworkBehaviour
             var invItem = new Inventory_Item(data.itemId, adjustedPrice);
 
             // === 오브젝트 풀링 사용 부분 ===
-            var networkObject = NetworkObjectPool.Instance.GetObject(pos, Quaternion.identity);
+            var networkObject = NetworkItemPool.Instance.GetObject(pos, Quaternion.identity);
             if(networkObject == null) continue;
             
             var itemObject = networkObject.GetComponent<ItemObject>();
@@ -109,7 +109,7 @@ public class ItemSpawner : NetworkBehaviour
         }
 
         // === 오브젝트 풀링 사용 부분 ===
-        var networkObject = NetworkObjectPool.Instance.GetObject(position, Quaternion.identity);
+        var networkObject = NetworkItemPool.Instance.GetObject(position, Quaternion.identity);
         if(networkObject == null) return;
         
         var itemObject = networkObject.GetComponent<ItemObject>();
@@ -130,7 +130,7 @@ public class ItemSpawner : NetworkBehaviour
         }
 
         // === 오브젝트 풀링 사용 부분 ===
-        var networkObject = NetworkObjectPool.Instance.GetObject(position, Quaternion.identity);
+        var networkObject = NetworkItemPool.Instance.GetObject(position, Quaternion.identity);
         if(networkObject == null) return;
         
         var itemObject = networkObject.GetComponent<ItemObject>();

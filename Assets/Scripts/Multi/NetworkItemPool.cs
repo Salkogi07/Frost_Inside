@@ -6,9 +6,9 @@ using System.Collections.Generic;
 /// 네트워크 오브젝트를 위한 간단한 오브젝트 풀링 시스템입니다.
 /// 서버에서만 오브젝트를 생성하고 관리합니다.
 /// </summary>
-public class NetworkObjectPool : NetworkBehaviour
+public class NetworkItemPool : NetworkBehaviour
 {
-    public static NetworkObjectPool Instance { get; private set; }
+    public static NetworkItemPool Instance { get; private set; }
     
     [Tooltip("풀링된 오브젝트들이 보관될 부모 Transform")]
     [SerializeField] private Transform poolParent;
