@@ -7,6 +7,13 @@ using System.Collections;
 using Unity.Netcode;
 using Random = UnityEngine.Random;
 
+[System.Serializable]
+public struct MonsterTileMapping
+{
+    public TileBase tile;
+    public GameObject monsterPrefab;
+}
+
 public class MakeRandomMap : MonoBehaviour
 {
     [Header("=== 방 프리팹 및 플레이어 설정 ===")]
@@ -33,6 +40,11 @@ public class MakeRandomMap : MonoBehaviour
     [Header("=== 벽 제거 시 채울 바닥 타일 ===")]
     [Tooltip("벽이 제거된 위치에 채울 바닥 타일을 할당하세요.")]
     [SerializeField] private TileBase fillerBackgroundTile;
+    
+    [Header("=== 초기 몬스터 설정 ===")]
+    [Tooltip("타일과 스폰될 몬스터 프리팹을 연결합니다.")]
+    [SerializeField] private List<MonsterTileMapping> monsterTileMappings;
+    private Dictionary<TileBase, GameObject> monsterPrefabDict = new Dictionary<TileBase, GameObject>();
 
     //  방별 스폰 위치 저장
     private List<List<Vector2Int>> roomItemSpawnPositions = new List<List<Vector2Int>>();
@@ -47,6 +59,7 @@ public class MakeRandomMap : MonoBehaviour
     private HashSet<Vector2Int> corridorTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> itemSpawnTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> monsterSpawnTiles = new HashSet<Vector2Int>();
+    private HashSet<Vector2Int> initialMonsterSpawnTiles = new HashSet<Vector2Int>();
 
     private Dictionary<Vector2Int, TileBase> floorTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> wallTileDict = new Dictionary<Vector2Int, TileBase>();
@@ -54,6 +67,7 @@ public class MakeRandomMap : MonoBehaviour
     private Dictionary<Vector2Int, TileBase> itemSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> monsterSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
     public Dictionary<Vector2Int, OreSetting> oreTileDict = new Dictionary<Vector2Int, OreSetting>();
+    private Dictionary<Vector2Int, TileBase> initialMonsterSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
 
     private List<BoundsInt> roomBounds = new List<BoundsInt>();
     
@@ -66,6 +80,14 @@ public class MakeRandomMap : MonoBehaviour
     private void Awake()
     {
         GameManager.instance.makeRandomMap = this;
+        // 몬스터 타일 맵핑을 딕셔너리로 변환하여 빠른 조회를 가능하게 함
+        foreach (var mapping in monsterTileMappings)
+        {
+            if (mapping.tile != null && mapping.monsterPrefab != null)
+            {
+                monsterPrefabDict[mapping.tile] = mapping.monsterPrefab;
+            }
+        }
     }
 
     public void GenerateMapFromSeed(int seed)
@@ -100,6 +122,7 @@ public class MakeRandomMap : MonoBehaviour
         corridorTiles.Clear(); corridorTileDict.Clear();
         itemSpawnTiles.Clear(); itemSpawnTileDict.Clear();
         monsterSpawnTiles.Clear(); monsterSpawnTileDict.Clear();
+        initialMonsterSpawnTiles.Clear(); initialMonsterSpawnTileDict.Clear();
 
         // 첫 방 배치
         PlaceRoom(roomPrefabs[0], Vector2Int.zero);
@@ -127,10 +150,12 @@ public class MakeRandomMap : MonoBehaviour
         spreadTilemap.SpreadItemSpawnTilemapWithTiles(itemSpawnTileDict);
         spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
         spreadTilemap.SpreadMonsterSpawnTilemapWithTiles(monsterSpawnTileDict);
+        spreadTilemap.SpreadInitialMonsterSpawnTilemapWithTiles(initialMonsterSpawnTileDict);
 
         spreadTilemap.HideCorridorRenderer();
         spreadTilemap.HideItemSpawnRenderer();
         spreadTilemap.HideMonsterSpawnRenderer();
+        spreadTilemap.HideInitialMonsterSpawnRenderer();
 
         spreadTilemap.FillGroundWithNoise(
             mapMin, mapMax,
@@ -150,11 +175,49 @@ public class MakeRandomMap : MonoBehaviour
             {
                 Debug.LogError("[MakeRandomMap] ItemSpawner가 할당되지 않았습니다!");
             }
+            
+            SpawnInitialMonsters();
         }
         
         if (NetworkManager.Singleton.IsClient)
         {
             NetworkTransmission.instance.NotifyServerMapGeneratedServerRpc();
+        }
+    }
+    
+    // 초기 몬스터를 스폰하는 새로운 메서드
+    private void SpawnInitialMonsters()
+    {
+        if (!NetworkManager.Singleton.IsServer) return;
+
+        Debug.Log($"[MakeRandomMap] Spawning {initialMonsterSpawnTileDict.Count} initial monsters.");
+
+        foreach (var pair in initialMonsterSpawnTileDict)
+        {
+            Vector2Int cellPos = pair.Key;
+            TileBase tile = pair.Value;
+
+            if (monsterPrefabDict.TryGetValue(tile, out GameObject monsterPrefab))
+            {
+                Vector3 worldPos = spreadTilemap.InitialMonsterSpawnTilemap
+                    .CellToWorld((Vector3Int)cellPos) + new Vector3(0.5f, 0.5f, 0f);
+
+                // NetworkMonsterPool에서 몬스터 가져오기
+                var monsterNetworkObject = NetworkMonsterPool.Instance.GetObject(monsterPrefab, worldPos, Quaternion.identity);
+                if (monsterNetworkObject != null)
+                {
+                    var baseMonster = monsterNetworkObject.GetComponent<Entity>();
+                    if (baseMonster != null)
+                    {
+                        // 몬스터 활성화 및 초기 설정
+                        //baseMonster.SetupAndSpawn();
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"[MakeRandomMap] No monster prefab mapping found for tile '{tile.name}' at position {cellPos}.");
+            }
         }
     }
 
@@ -211,13 +274,15 @@ public class MakeRandomMap : MonoBehaviour
                 out Tilemap wallTM,
                 out Tilemap corridorTM,
                 out Tilemap itemSpawnTM,
-                out Tilemap monsterSpawnTM
+                out Tilemap monsterSpawnTM,
+                out Tilemap initialMonsterSpawnTM
         );
         CopyTilemapWithTiles(backgroundTM, offset, floorTiles, floorTileDict);
         CopyTilemapWithTiles(wallTM, offset, wallTiles, wallTileDict);
         CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
         CopyTilemapWithTiles(itemSpawnTM, offset, itemSpawnTiles, itemSpawnTileDict);
         CopyTilemapWithTiles(monsterSpawnTM, offset, monsterSpawnTiles, monsterSpawnTileDict);
+        CopyTilemapWithTiles(initialMonsterSpawnTM, offset, initialMonsterSpawnTiles, initialMonsterSpawnTileDict);
 
         var localBounds = backgroundTM.cellBounds;
         var worldOrigin = new Vector3Int(
@@ -252,7 +317,7 @@ public class MakeRandomMap : MonoBehaviour
         foundOffset = Vector2Int.zero;
         connectionPoints = new List<Vector2Int>();
 
-        GetTilemaps(roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM);
+        GetTilemaps(roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM, out var initialMonsterTM);
         var newCorridors = GetLocalCorridorPositions(corridorTM);
         if (newCorridors.Count == 0) return false;
 
@@ -447,7 +512,7 @@ public class MakeRandomMap : MonoBehaviour
         }
     }
 
-    private void GetTilemaps(GameObject roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM)
+    private void GetTilemaps(GameObject roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM, out Tilemap initialMonsterSpawnTM)
     {
         var children = roomPrefab.GetComponentsInChildren<Transform>();
         Transform parent = children[1];  // 프로젝트 구조에 따라 인덱스를 조정하세요
@@ -456,6 +521,9 @@ public class MakeRandomMap : MonoBehaviour
         corridorTM = parent.Find("CorridorTilemap").GetComponent<Tilemap>();
         itemSpawnTM = parent.Find("ItemSpawnTilemap").GetComponent<Tilemap>();
         monsterSpawnTM = parent.Find("MonsterSpawnTilemap").GetComponent<Tilemap>();
+        
+        Transform initialMonsterTransform = parent.Find("InitialMonsterSpawnTilemap");
+        initialMonsterSpawnTM = initialMonsterTransform != null ? initialMonsterTransform.GetComponent<Tilemap>() : null;
     }
 
     // 맵 생성 허용 범위를 Gizmos로 시각화
