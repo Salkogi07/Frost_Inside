@@ -19,7 +19,6 @@ public class SpreadTilemap : MonoBehaviour
     [SerializeField] private Tilemap corridor;
     [SerializeField] private Tilemap itemSpawn;
     [SerializeField] private Tilemap monsterSpawn;
-    [SerializeField] private Tilemap initialMonsterSpawn;
 
     [Header("=== 광석 타일맵 ===")]
     [SerializeField] private Tilemap ore;
@@ -27,7 +26,6 @@ public class SpreadTilemap : MonoBehaviour
     public Tilemap OreTilemap => ore;
     public Tilemap ItemSpawnTilemap => itemSpawn;
     public Tilemap MonsterSpawnTilemap => monsterSpawn;
-    public Tilemap InitialMonsterSpawnTilemap => initialMonsterSpawn;
 
     [Header("=== 기본 타일 ===")]
     [SerializeField] private TileBase backgroundTile;
@@ -35,7 +33,6 @@ public class SpreadTilemap : MonoBehaviour
     [SerializeField] private TileBase corridorTile;
     [SerializeField] private TileBase itemSpawnTile;
     [SerializeField] private TileBase monsterSpawnTile;
-    [SerializeField] private TileBase initialMonsterSpawnTile;
 
     [Header("=== 지면 노이즈 설정 ===")]
     [Tooltip("지면 타일을 그릴 타일맵")]
@@ -76,11 +73,6 @@ public class SpreadTilemap : MonoBehaviour
     {
         SpreadTile(positions, monsterSpawn, monsterSpawnTile);
     }
-    
-    public void SpreadInitialMonsterSpawnTilemap(HashSet<Vector2Int> positions)
-    {
-        SpreadTile(positions, initialMonsterSpawn, initialMonsterSpawnTile);
-    }
 
     // 직접 Tile 지정해서 퍼뜨리기
     public void SpreadBackgroundTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
@@ -107,11 +99,6 @@ public class SpreadTilemap : MonoBehaviour
     {
         SpreadTileWithOriginal(tileDict, monsterSpawn);
     }
-    
-    public void SpreadInitialMonsterSpawnTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
-    {
-        SpreadTileWithOriginal(tileDict, initialMonsterSpawn);
-    }
 
     // 모든 타일맵 초기화
     public void ClearAllTiles()
@@ -122,7 +109,6 @@ public class SpreadTilemap : MonoBehaviour
         itemSpawn.ClearAllTiles();
         if (groundTilemap != null) groundTilemap.ClearAllTiles();
         if (monsterSpawn != null) monsterSpawn.ClearAllTiles();
-        if (initialMonsterSpawn != null) initialMonsterSpawn.ClearAllTiles();
     }
 
     /// <summary>
@@ -151,16 +137,6 @@ public class SpreadTilemap : MonoBehaviour
     public void HideMonsterSpawnRenderer()
     {
         var rend = monsterSpawn.GetComponent<TilemapRenderer>();
-        if (rend != null)
-            rend.enabled = false;
-    }
-    
-    /// <summary>
-    /// 초기 몬스터 스폰 타일맵의 렌더러를 비활성화합니다.
-    /// </summary>
-    public void HideInitialMonsterSpawnRenderer()
-    {
-        var rend = initialMonsterSpawn.GetComponent<TilemapRenderer>();
         if (rend != null)
             rend.enabled = false;
     }
