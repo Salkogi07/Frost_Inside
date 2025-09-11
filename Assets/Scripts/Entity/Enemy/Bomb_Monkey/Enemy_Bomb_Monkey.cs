@@ -225,10 +225,7 @@ public class Enemy_Bomb_Monkey : Entity
         {
             Gizmos.color = Color.green;
             Gizmos.DrawLine(JumpState._jumpData.primaryJumpCheck.position,
-                new Vector3(
-                    JumpState._jumpData.primaryJumpCheck.position.x +
-                    (FacingDirection * JumpState._jumpData.jumpCheckDistance),
-                    JumpState._jumpData.primaryJumpCheck.position.y));
+                new Vector3(JumpState._jumpData.primaryJumpCheck.position.x + (FacingDirection * JumpState._jumpData.jumpCheckDistance), JumpState._jumpData.primaryJumpCheck.position.y));
         }
 
         if (boobTargetChack != null)
