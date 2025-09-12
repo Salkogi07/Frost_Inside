@@ -47,6 +47,7 @@ GameObject:
   - component: {fileID: 1085462276512591964}
   - component: {fileID: 7383356623526947584}
   - component: {fileID: 8535873310416486735}
+  - component: {fileID: 2376164601649004438}
   m_Layer: 8
   m_Name: Bomb_Monkey
   m_TagString: Enemy
@@ -197,7 +198,7 @@ MonoBehaviour:
     jumpCheckDistance: 1
   battleMoveSpeed: 2.62
   attackDistance: 2
-  battleTimeDuration: 1
+  battleTimeDuration: 5
   minRetreatDistance: 1
   retreatVelocity: {x: 0, y: 0}
   playerCheck: {fileID: 3801618138440901879}
@@ -230,7 +231,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth:
-    baseValue: 25
+    baseValue: 0
     Modifiers: 
   isDead: 0
   knockbackDuration: 0.2
@@ -271,6 +272,21 @@ MonoBehaviour:
   Groggy: 0
   speed: 0
   difficulty: 1
+--- !u!114 &2376164601649004438
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060806058238291733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  TransitionStateInfoList: []
+  m_Animator: {fileID: 9068676646645593236}
 --- !u!1 &4548980474477005176
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,8 +423,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -790803779
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 7902665179585780823, guid: b365c61ac2b262f4faf110bf094abcec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

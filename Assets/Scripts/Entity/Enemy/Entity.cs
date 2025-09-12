@@ -7,36 +7,6 @@ public class Entity : NetworkBehaviour
     public Animator Anim { get; private set; }
     public Rigidbody2D rb { get; private set; }
     
-    // public float lastTimeWasInBattle;
-    // public float inGameTime;
-
-
-    // Enemy 코드를 따로 만들어야함 EntityDeath() 
-    // ovrrive
-
-    // public void TryEnterBattleState(Transform player)
-    // {
-    //     if (EnemyStateMachine.currentState == BattleState)
-    //     {
-    //         return;
-    //     }
-    //     if(EnemyStateMachine.currentState == AttackState)
-    //     {
-    //         return;
-    //     }
-    //     this.player = player;
-    //     EnemyStateMachine.ChangeState(BattleState);
-    // }
-
-    // public Transform GetPlayerReference()
-    // {
-    //     if (player == null)
-    //     {
-    //         player = PlayerDetection().transform;            
-    //     }
-    //     return player;
-    // }
-    
     private Coroutine KnockbackCo;
     protected bool isknocked;
 

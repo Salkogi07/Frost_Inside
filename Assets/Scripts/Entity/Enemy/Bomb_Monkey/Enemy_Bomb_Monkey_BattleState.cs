@@ -14,34 +14,45 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
     {
     }
 
-
     public override void Enter()
     {
         base.Enter();
-        
 
+        // 이 상태의 모든 로직은 서버에서만 실행되어야 합니다.
+        if (!bombMonkey.IsServer) return;
+
+        player = bombMonkey.GetPlayerReference();
+        
+        // 플레이어 참조를 얻지 못했다면 즉시 Idle 상태로 돌아갑니다.
         if (player == null)
         {
-            player = bombMonkey.GetPlayerReference();
+            enemyStateMachine.ChangeState(bombMonkey.IdleState);
+            return;
         }
-
-        // player ??= enemy.GetPlayerReference();
+        
+        // 후퇴 로직을 SetVelocity를 통해 처리하여 방향 전환도 함께 처리합니다.
         if (shouldRetreat())
         {
-            rb.linearVelocity = new Vector2(bombMonkey.retreatVelocity.x * -DirectionToPlayer(),
-                bombMonkey.retreatVelocity.y);
-            bombMonkey.HandleFlip(DirectionToPlayer());
+            bombMonkey.SetVelocity(bombMonkey.retreatVelocity.x * -DirectionToPlayer(), bombMonkey.retreatVelocity.y);
         }
     }
 
     public override void Update()
     {
         base.Update();
-        distanceX();
-        Debug.Log(lastTimeWasInBattle);
-        
-        
-        if (bombMonkey.PlayerDetection() == true)
+
+        // AI 로직은 서버에서만 실행합니다.
+        if (!bombMonkey.IsServer) return;
+
+        // 플레이어가 비활성화되었거나 사라졌는지 확인합니다.
+        if (player == null || !player.gameObject.activeInHierarchy)
+        {
+            enemyStateMachine.ChangeState(bombMonkey.IdleState);
+            return;
+        }
+
+        // PlayerDetection()은 RaycastHit2D를 반환하므로, collider가 있는지 확인해야 합니다.
+        if (bombMonkey.PlayerDetection().collider != null)
         {
             UpdateBattleTimer();
             Explosive = true;
@@ -53,18 +64,22 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
              if (BattleTimeIsOver())
              {
                  enemyStateMachine.ChangeState(bombMonkey.IdleState);
-                 
              }
         }
-
-
-        
     }
 
     public override void FiexedUpdate()
     {
         base.FiexedUpdate();
+        
+        // 물리 및 이동 로직은 서버에서만 실행합니다.
+        if (!bombMonkey.IsServer) return;
+        
+        // 플레이어 참조가 유효한지 다시 확인합니다.
+        if (player == null) return;
+        
         acceleration();
+        
         if (bombMonkey.JumpState._jumpData.IsJumpDetected || distanceX())
         {
             bombMonkey.JumpState.StateName = "Chase_director";
@@ -73,20 +88,35 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
     }
 
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
+    
     public bool BattleTimeIsOver() => Time.time > lastTimeWasInBattle + bombMonkey.battleTimeDuration;
 
     private bool distanceX()
     {
+        // player가 null일 수 있는 경우를 대비합니다.
+        if (player == null) return false;
+        
         float distanceX = Mathf.Abs(player.transform.position.x - bombMonkey.transform.position.x);
-        if (distanceX >= 3f)
-            return true;
-        return false;
+        return distanceX >= 3f;
     }
 
-    private bool shouldRetreat() => DistanceToPlayer() < bombMonkey.minRetreatDistance;
+    private bool shouldRetreat()
+    {
+        // player가 null일 수 있는 경우를 대비합니다.
+        if (player == null) return false;
+        
+        return DistanceToPlayer() < bombMonkey.minRetreatDistance;
+    }
 
     public void acceleration()
     {
+        // player가 null이면 가속 로직을 실행하지 않습니다.
+        if (player == null)
+        {
+            bombMonkey.SetVelocity(0, rb.linearVelocity.y); // 멈추도록 처리
+            return;
+        }
+
         int currentDirection = DirectionToPlayer();
 
         // 방향이 바뀌었는지 확인
@@ -106,6 +136,7 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
 
         float finalSpeed = bombMonkey.battleMoveSpeed + moveSpeedBoost;
 
+        // 부모 클래스의 SetVelocity를 호출하여 속도와 방향을 한 번에 제어합니다.
         bombMonkey.SetVelocity(finalSpeed * DirectionToPlayer(), rb.linearVelocity.y);
     }
 
@@ -116,14 +147,14 @@ public class Enemy_Bomb_Monkey_BattleState : Enemy_Bomb_Monkey_State
             return float.MaxValue;
         }
 
-        return Mathf.Abs(player.position.x - bombMonkey.transform.position.x);
+        return Vector2.Distance(player.position, bombMonkey.transform.position);
     }
 
     private int DirectionToPlayer()
     {
         if (player == null)
         {
-            return 0;
+            return 0; // 플레이어가 없으면 방향도 없습니다.
         }
 
         return player.position.x > bombMonkey.transform.position.x ? 1 : -1;

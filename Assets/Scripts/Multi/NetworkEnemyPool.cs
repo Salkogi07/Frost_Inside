@@ -3,16 +3,16 @@ using Unity.Netcode;
 using System.Collections.Generic;
 using System.Linq;
 
-public class NetworkMonsterPool : NetworkBehaviour
+public class NetworkEnemyPool : NetworkBehaviour
 {
-    public static NetworkMonsterPool Instance { get; private set; }
+    public static NetworkEnemyPool Instance { get; private set; }
 
     [Tooltip("풀링된 몬스터들이 보관될 부모 Transform")]
     [SerializeField] private Transform poolParent;
 
     [Header("Pool Settings")]
     [Tooltip("풀링할 모든 몬스터 프리팹 리스트")]
-    [SerializeField] private List<GameObject> monsterPrefabs;
+    [SerializeField] private List<GameObject> enemyPrefabs;
 
     [Tooltip("종류별로 초기에 생성해 둘 몬스터 수")]
     [SerializeField] private int initialPoolSize = 10;
@@ -42,10 +42,19 @@ public class NetworkMonsterPool : NetworkBehaviour
         if (!IsServer) return;
         InitializePool();
     }
-
+    
+    /// <summary>
+    /// 이 풀이 관리하는 모든 몬스터 프리팹의 읽기 전용 리스트를 반환합니다.
+    /// MonsterSpawner가 스폰할 몬스터 종류를 조회하기 위해 사용합니다.
+    /// </summary>
+    public IReadOnlyList<GameObject> GetAvailablePrefabs()
+    {
+        return enemyPrefabs;
+    }
+    
     private void InitializePool()
     {
-        foreach (var prefab in monsterPrefabs)
+        foreach (var prefab in enemyPrefabs)
         {
             if (prefab == null) continue;
             
