@@ -13,7 +13,13 @@ public class Enemy_Combat : MonoBehaviour
     [SerializeField] private Transform targetChack;
     [SerializeField] private float targetcheckRadius;
     [SerializeField] private LayerMask whatIsTarget;
-    // public TagHandle;
+    [SerializeField] private Enemy_Stats stats;
+
+    private void Start()
+    {
+        stats = GetComponent<Enemy_Stats>();
+    }
+    
     
     public void PerformAttack()
     {
@@ -24,11 +30,9 @@ public class Enemy_Combat : MonoBehaviour
             // Player_Condition playerCondition = target.GetComponent<Player_Condition>();
             //
             // playerCondition?.TakeDamage(damage);
-            Entity_Health entityHealth = target.GetComponent<Entity_Health>();
-            entityHealth?.TakeDamage(damage,transform);
-            // Enemy_Health enemy_Health = target.GetComponent<Enemy_Health>();
-            //  
-            // enemy_Health?.TakeDamage(damage,transform);
+            damage = stats.damage.GetValue();
+            target.GetComponent<Entity_Health>().TakeDamage(damage, transform);
+            
         }
     }
     
