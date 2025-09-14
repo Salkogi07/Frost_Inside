@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 5939018590205686830}
   - component: {fileID: 2575061915154524599}
   - component: {fileID: 2884380198255634024}
+  - component: {fileID: 5341855780544795157}
   - component: {fileID: 6514348181608736322}
   - component: {fileID: 1085462276512591964}
   - component: {fileID: 7383356623526947584}
@@ -161,6 +162,19 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &5341855780544795157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1060806058238291733}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f70b57acef3489cad4a322b9fdf62b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &6514348181608736322
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,6 +188,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
+  positionUpdateThreshold: 0.1
+  lerpDuration: 0.1
+  monkey_health: {fileID: 0}
   stats: {fileID: 8535873310416486735}
   whatIsGround:
     serializedVersion: 2
@@ -229,16 +246,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bef547b437b2be940a31ba19fdbffc7d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  maxHealth:
-    baseValue: 0
-    Modifiers: 
-  isDead: 0
+  ShowTopMostFoldoutHeaderGroup: 1
   knockbackDuration: 0.2
   KnockbackPower: {x: 1.5, y: 2.5}
   heavyKnockbackpower: {x: 7, y: 7}
   heavyKnockbackDuration: 0.5
   heavyDamageThreshold: 0.3
+  currentHealth: 0
 --- !u!114 &7383356623526947584
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,6 +279,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20af4ffdd60e9d34c96edf430f1d2362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth:
+    baseValue: 0
+    Modifiers: 
   damage:
     baseValue: 35
     Modifiers: 

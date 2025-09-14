@@ -66,7 +66,7 @@ public class NetworkItemPool : NetworkBehaviour
         {
             networkObject = objectPool.Dequeue();
             networkObject.transform.SetPositionAndRotation(position, rotation);
-            networkObject.gameObject.SetActive(true);
+            networkObject.gameObject.GetComponent<ActiveStateSynchronizer>().SetActiveState(true);
         }
         else
         {
@@ -87,7 +87,7 @@ public class NetworkItemPool : NetworkBehaviour
         if (!IsServer) return;
         
         networkObject.transform.SetParent(poolParent, worldPositionStays: false);
-        networkObject.gameObject.SetActive(false);
+        networkObject.gameObject.GetComponent<ActiveStateSynchronizer>().SetActiveState(false);
         objectPool.Enqueue(networkObject);
     }
 }

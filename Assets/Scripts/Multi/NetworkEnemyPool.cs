@@ -94,7 +94,7 @@ public class NetworkEnemyPool : NetworkBehaviour
         {
             var networkObject = pool.Dequeue();
             networkObject.transform.SetPositionAndRotation(position, rotation);
-            networkObject.gameObject.SetActive(true);
+            networkObject.gameObject.GetComponent<ActiveStateSynchronizer>().SetActiveState(true);
             return networkObject;
         }
         else
@@ -120,7 +120,7 @@ public class NetworkEnemyPool : NetworkBehaviour
         if (_networkIdToPrefabMap.TryGetValue(networkObject.NetworkObjectId, out GameObject prefab))
         {
             networkObject.transform.SetParent(poolParent, worldPositionStays: false);
-            networkObject.gameObject.SetActive(false);
+            networkObject.gameObject.GetComponent<ActiveStateSynchronizer>().SetActiveState(false);
             
             // 찾은 프리팹에 해당하는 풀에 인스턴스를 반환
             if (objectPool.TryGetValue(prefab, out var pool))
