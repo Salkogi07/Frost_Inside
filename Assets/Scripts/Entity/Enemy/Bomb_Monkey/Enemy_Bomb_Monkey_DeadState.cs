@@ -17,7 +17,10 @@ public class Enemy_Bomb_Monkey_DeadState : Enemy_Bomb_Monkey_State
         base.Enter();
         Debug.Log("Entered");
 
-        enemyStateMachine.SwitchOffStateMachine();
-        Object.Destroy(bombMonkey.gameObject);
+        if (bombMonkey.IsServer)
+        {
+            enemyStateMachine.SwitchOffStateMachine();
+            bombMonkey.ReturnToPool();
+        }
     }
 }

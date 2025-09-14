@@ -2,7 +2,7 @@
 using Stats;
 using UnityEngine;
 
-public class Enemy_Bomb_Monkey : Entity
+public class Enemy_Bomb_Monkey : Enemy
 {
     public Enemy_Bomb_Monkey_IdleState IdleState;
     public Enemy_Bomb_Monkey_MoveState MoveState;
@@ -11,15 +11,11 @@ public class Enemy_Bomb_Monkey : Entity
     public Enemy_Bomb_Monkey_AttackState AttackState;
     public Enemy_Bomb_Monkey_DeadState DeadState;
 
-
     private BoxCollider2D coll;
+    public Enemy_Bomb_Monkey_Health monkey_health;
     public Enemy_Stats stats;
 
     protected Enemy_Bomb_Monkey_StateMachine EnemyStateMachine;
-
-
-    private bool _isFacingRight = false;
-    public int FacingDirection { get; private set; } = -1;
 
     [Header("Collision detection [Ground]")] [SerializeField]
     public LayerMask whatIsGround;
@@ -66,6 +62,65 @@ public class Enemy_Bomb_Monkey : Entity
     public float maxSpeedBoost = 3f;
 
     public Transform player { get; private set; }
+    
+    protected virtual void Awake()
+    {
+        base.Awake();
+
+        EnemyStateMachine = new Enemy_Bomb_Monkey_StateMachine();
+        coll = GetComponent<BoxCollider2D>();
+        stats = GetComponent<Enemy_Stats>();
+        monkey_health = GetComponent<Enemy_Bomb_Monkey_Health>();
+
+        AttackState = new Enemy_Bomb_Monkey_AttackState(this, EnemyStateMachine, "attack");
+        IdleState = new Enemy_Bomb_Monkey_IdleState(this, EnemyStateMachine, "idle");
+        MoveState = new Enemy_Bomb_Monkey_MoveState(this, EnemyStateMachine, "move");
+        BattleState = new Enemy_Bomb_Monkey_BattleState(this, EnemyStateMachine, "chase");
+        // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
+        JumpState = new Enemy_Bomb_Monkey_JumpState(this, EnemyStateMachine, "jump", jumpData);
+        DeadState = new Enemy_Bomb_Monkey_DeadState(this, EnemyStateMachine, "dead");
+    }
+    
+    protected virtual void Start()
+    {
+        if(IsServer)
+            EnemyStateMachine.Initialize(IdleState);
+    }
+    
+    public override void InitializeForPool(Vector3 initialPosition)
+    {
+        base.InitializeForPool(initialPosition);
+        
+        if (IsServer)
+        {
+            monkey_health.currentHealth = stats.maxHealth.GetValue();
+            
+            // 상태 머신을 초기 상태(Idle)로 리셋합니다.
+            EnemyStateMachine.Initialize(IdleState);
+        }
+    }
+    
+    public void Deading()
+    {
+        if (!IsServer) return;
+        EnemyStateMachine.ChangeState(DeadState);
+    }
+
+    protected virtual void Update()
+    {
+        if (!IsServer) return;
+        
+        HandleCollisionDetection();
+        PerformAttack();
+        EnemyStateMachine.UpdateActiveState();
+    }
+
+    protected virtual void FixedUpdate()
+    {
+        if (!IsServer) return;
+        
+        EnemyStateMachine.FiexedUpdateActiveState();
+    }
 
     public void TryEnterBattleState(Transform player)
     {
@@ -128,47 +183,6 @@ public class Enemy_Bomb_Monkey : Entity
     {
         return Physics2D.OverlapCircleAll(boobTargetChack.position, targetcheckRadius, whatIsBob);
     }
-
-    protected virtual void Awake()
-    {
-        base.Awake();
-
-        EnemyStateMachine = new Enemy_Bomb_Monkey_StateMachine();
-        coll = GetComponent<BoxCollider2D>();
-        stats = GetComponent<Enemy_Stats>();
-
-        AttackState = new Enemy_Bomb_Monkey_AttackState(this, EnemyStateMachine, "attack");
-        IdleState = new Enemy_Bomb_Monkey_IdleState(this, EnemyStateMachine, "idle");
-        MoveState = new Enemy_Bomb_Monkey_MoveState(this, EnemyStateMachine, "move");
-        BattleState = new Enemy_Bomb_Monkey_BattleState(this, EnemyStateMachine, "chase");
-        // GroundedState = new Enemy_GroundedState(this, EnemyStateMachine,null);
-        JumpState = new Enemy_Bomb_Monkey_JumpState(this, EnemyStateMachine, "jump", jumpData);
-        DeadState = new Enemy_Bomb_Monkey_DeadState(this, EnemyStateMachine, "dead");
-    }
-    
-    protected virtual void Start()
-    {
-        EnemyStateMachine.Initialize(IdleState);
-    }
-
-    public void Deading()
-    {
-        Debug.Log("d");
-        EnemyStateMachine.ChangeState(DeadState);
-    }
-
-    protected virtual void Update()
-    {
-        HandleCollisionDetection();
-        PerformAttack();
-        EnemyStateMachine.UpdateActiveState();
-    }
-
-    protected virtual void FixedUpdate()
-    {
-        EnemyStateMachine.FiexedUpdateActiveState();
-    }
-
 
     public void HandleFlip(float xVelcoity)
     {

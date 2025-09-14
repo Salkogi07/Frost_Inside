@@ -17,8 +17,10 @@ public class NetworkEnemyPool : NetworkBehaviour
     [Tooltip("종류별로 초기에 생성해 둘 몬스터 수")]
     [SerializeField] private int initialPoolSize = 10;
 
-    // Prefab의 고유 ID를 Key로 사용하여 몬스터 풀을 관리
-    private Dictionary<ulong, Queue<NetworkObject>> objectPool = new Dictionary<ulong, Queue<NetworkObject>>();
+    // Key를 GameObject (Prefab) 자체로 사용하여 몬스터 풀을 관리
+    private Dictionary<GameObject, Queue<NetworkObject>> objectPool = new Dictionary<GameObject, Queue<NetworkObject>>();
+    // 스폰된 NetworkObject의 ID를 통해 원본 프리팹을 찾기 위한 맵
+    private Dictionary<ulong, GameObject> _networkIdToPrefabMap = new Dictionary<ulong, GameObject>();
 
     private void Awake()
     {
@@ -58,21 +60,24 @@ public class NetworkEnemyPool : NetworkBehaviour
         {
             if (prefab == null) continue;
             
-            var networkPrefab = prefab.GetComponent<NetworkObject>();
-            if (networkPrefab == null)
+            if (prefab.GetComponent<NetworkObject>() == null)
             {
                 Debug.LogError($"[NetworkMonsterPool] Prefab '{prefab.name}' does not have a NetworkObject component.");
                 continue;
             }
 
-            ulong prefabId = networkPrefab.NetworkObjectId; 
-            objectPool[prefabId] = new Queue<NetworkObject>();
+            // 프리팹을 Key로 사용하여 큐 생성
+            objectPool[prefab] = new Queue<NetworkObject>();
 
             for (int i = 0; i < initialPoolSize; i++)
             {
                 var instance = Instantiate(prefab, poolParent);
                 var networkObject = instance.GetComponent<NetworkObject>();
                 networkObject.Spawn(false);
+                
+                // 스폰된 인스턴스의 ID와 원본 프리팹을 매핑
+                _networkIdToPrefabMap[networkObject.NetworkObjectId] = prefab;
+                
                 ReturnObjectToPool(networkObject);
             }
         }
@@ -82,12 +87,10 @@ public class NetworkEnemyPool : NetworkBehaviour
     {
         if (!IsServer) return null;
 
-        var networkPrefab = prefab.GetComponent<NetworkObject>();
-        if (networkPrefab == null) return null;
+        if (prefab.GetComponent<NetworkObject>() == null) return null;
         
-        ulong prefabId = networkPrefab.NetworkObjectId;
-
-        if (objectPool.TryGetValue(prefabId, out var pool) && pool.Count > 0)
+        // 프리팹을 Key로 사용하여 해당하는 풀을 찾음
+        if (objectPool.TryGetValue(prefab, out var pool) && pool.Count > 0)
         {
             var networkObject = pool.Dequeue();
             networkObject.transform.SetPositionAndRotation(position, rotation);
@@ -99,7 +102,12 @@ public class NetworkEnemyPool : NetworkBehaviour
             // 해당 프리팹의 풀이 비었거나 존재하지 않을 경우 새로 생성
             var instance = Instantiate(prefab, position, rotation, poolParent);
             var networkObject = instance.GetComponent<NetworkObject>();
-            networkObject.Spawn(true);
+            networkObject.Spawn(false);
+            
+            // 동적으로 생성된 인스턴스도 ID와 원본 프리팹을 매핑
+            _networkIdToPrefabMap[networkObject.NetworkObjectId] = prefab;
+            networkObject.transform.SetParent(poolParent, worldPositionStays: false);
+            
             return networkObject;
         }
     }
@@ -108,15 +116,29 @@ public class NetworkEnemyPool : NetworkBehaviour
     {
         if (!IsServer || networkObject == null) return;
         
-        ulong prefabId = networkObject.NetworkObjectId;
-
-        if (!objectPool.ContainsKey(prefabId))
+        // NetworkObjectId를 사용해 원본 프리팹을 찾음
+        if (_networkIdToPrefabMap.TryGetValue(networkObject.NetworkObjectId, out GameObject prefab))
         {
-            objectPool[prefabId] = new Queue<NetworkObject>();
+            networkObject.transform.SetParent(poolParent, worldPositionStays: false);
+            networkObject.gameObject.SetActive(false);
+            
+            // 찾은 프리팹에 해당하는 풀에 인스턴스를 반환
+            if (objectPool.TryGetValue(prefab, out var pool))
+            {
+                pool.Enqueue(networkObject);
+            }
+            else
+            {
+                 Debug.LogWarning($"[NetworkEnemyPool] Pool for prefab '{prefab.name}' not found. Creating a new one.");
+                 var newPool = new Queue<NetworkObject>();
+                 newPool.Enqueue(networkObject);
+                 objectPool[prefab] = newPool;
+            }
         }
-
-        networkObject.transform.SetParent(poolParent, worldPositionStays: false);
-        networkObject.gameObject.SetActive(false);
-        objectPool[prefabId].Enqueue(networkObject);
+        else
+        {
+            Debug.LogError($"[NetworkEnemyPool] Could not find original prefab for NetworkObject ID {networkObject.NetworkObjectId}. The object will be destroyed instead of pooled.");
+            Destroy(networkObject.gameObject);
+        }
     }
 }

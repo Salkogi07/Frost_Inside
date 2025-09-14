@@ -73,7 +73,10 @@ public class NetworkItemPool : NetworkBehaviour
             // 풀이 비었을 때 새로 생성하는 경우에도 부모를 지정합니다.
             var instance = Instantiate(itemPrefab, position, rotation, poolParent);
             networkObject = instance.GetComponent<NetworkObject>();
-            networkObject.Spawn(true);
+            networkObject.Spawn(false);
+            
+            objectPool.Enqueue(networkObject);
+            networkObject.transform.SetParent(poolParent, worldPositionStays: false);
         }
         
         return networkObject;

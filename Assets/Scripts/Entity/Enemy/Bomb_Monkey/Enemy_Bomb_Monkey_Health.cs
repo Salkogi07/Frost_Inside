@@ -1,86 +1,32 @@
 using System;
+using Stats;
 using UnityEngine;
 
-public class Enemy_Bomb_Monkey_Health : MonoBehaviour
+public class Enemy_Bomb_Monkey_Health : Enemy_Health
 {
-    // private Enemy_Skeleton enemy => GetComponent<Enemy_Skeleton>();
-    private Enemy_Bomb_Monkey enemy;
-    private Entity_VFX _entityVFX;
-    private Entity entity;
+    private Enemy_Stats stats;
+    public float currentHealth;
 
-    [SerializeField] protected int health;
-    [SerializeField] protected Stat maxHealth;
-    [SerializeField] protected bool isDead;
-
-    [Header("On Damage Knockback")] [SerializeField]
-    private float knockbackDuration = .2f;
-
-    [SerializeField] private Vector2 KnockbackPower = new Vector2(1.5f, 2.5f);
-    [SerializeField] private Vector2 heavyKnockbackpower = new Vector2(7f, 7f);
-    [SerializeField] private float heavyKnockbackDuration = .5f;
-
-    [Header("On Heavy Damage")] [SerializeField]
-    private float heavyDamageThreshold = .3f;
-
-    protected virtual void Awake()
+    protected override void Awake()
     {
-        enemy = GetComponent<Enemy_Bomb_Monkey>();
-        entity = GetComponent<Entity>();
-        _entityVFX = GetComponent<Entity_VFX>();
-
-        health = maxHealth.GetValue();
+        base.Awake();
+        stats = GetComponent<Enemy_Stats>();
     }
-    
-    private void Update()
+
+    public override void TakeDamage(int damage, Transform damageDealer)
     {
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (!IsServer) return;
+
+        // Bomb Monkey의 최대 체력을 기준으로 넉백 계산
+        EntityMaxHealth = stats.maxHealth.GetValue();
+
+        currentHealth -= damage;
+        if (currentHealth <= 0)
         {
-            TakeDamage(5, transform);
+            // 이미 자폭 로직이 상태 머신에 있으므로, 체력으로 죽는 경우는 여기서 처리
+            GetComponent<Enemy_Bomb_Monkey>().Deading();
         }
+
+        base.TakeDamage(damage, damageDealer);
     }
-
-    public void TakeDamage(int damage, Transform damageDealer)
-    {
-        Vector2 knockback = CalculateKnockback(damage, damageDealer);
-        float duration = CalculateDuration(damage);
-
-        // 대미지 비례 넉백량 증가
-        entity?.Reciveknockback(knockback, duration);
-
-        _entityVFX?.PlayOnDamageVfx();
-        ReduceHp(damage);
-    }
-
-    private void ReduceHp(int damage)
-    {
-        health -= damage;
-        // Debug.Log(health);
-        if (health <= 0)
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        isDead = true;
-        enemy.Deading();
-    }
-    
-    // 대미지 비례 넉백량 증가
-    private float CalculateDuration(float damage) => IsHeavyDamage(damage) ? heavyKnockbackDuration : knockbackDuration;
-
-    private Vector2 CalculateKnockback(float damage, Transform damageDealer)
-    {
-        int direction = transform.position.x > damageDealer.position.x ? 1 : -1;
-
-        Vector2 knockback = IsHeavyDamage(damage) ? heavyKnockbackpower : KnockbackPower;
-
-        knockback.x = knockback.x * direction;
-
-        return knockback;
-    }
-
-    // 대미지 비례 넉백량 증가
-    private bool IsHeavyDamage(float damage) => damage / maxHealth.GetValue() > heavyDamageThreshold;
 }
