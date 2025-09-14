@@ -167,9 +167,17 @@ public class ItemObject : NetworkBehaviour
     public void ResetForPool()
     {
         if (!IsServer) return;
-
+        
         networkItem.Value = Inventory_Item.Empty;
         rb.linearVelocity = Vector2.zero;
         rb.angularVelocity = 0f;
+        
+        DeactivateItemClientRpc();
+    }
+    
+    [ClientRpc]
+    private void DeactivateItemClientRpc()
+    {
+        gameObject.SetActive(false);
     }
 }

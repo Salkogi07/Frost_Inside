@@ -160,6 +160,7 @@ public class Enemy : Entity
         var networkObject = GetComponent<NetworkObject>();
         if (networkObject != null && NetworkEnemyPool.Instance != null)
         {
+            DeactivateEnemyClientRpc();
             NetworkEnemyPool.Instance.ReturnObjectToPool(networkObject);
         }
         else
@@ -167,5 +168,11 @@ public class Enemy : Entity
             // 풀을 사용하지 않는 경우 그냥 파괴
             Destroy(gameObject);
         }
+    }
+    
+    [ClientRpc]
+    private void DeactivateEnemyClientRpc()
+    {
+        gameObject.SetActive(false);
     }
 }
