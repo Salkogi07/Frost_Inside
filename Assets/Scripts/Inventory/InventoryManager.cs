@@ -82,13 +82,18 @@ public class InventoryManager : MonoBehaviour
 
     private bool InitializePlayerComponents()
     {
+        Debug.Log("InitializePlayerComponents 1");
         _playerObject = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
-
+        
         if (_playerObject == null)
             return true;
+        
+        Debug.Log("InitializePlayerComponents 2");
 
         if (_playerCondition == null) _playerCondition = _playerObject.GetComponent<Player_Condition>();
         if (_playerItemDrop == null) _playerItemDrop = _playerObject.GetComponent<Player_ItemDrop>();
+        
+        Debug.Log("InitializePlayerComponents 3");
         
         return false;
     }
