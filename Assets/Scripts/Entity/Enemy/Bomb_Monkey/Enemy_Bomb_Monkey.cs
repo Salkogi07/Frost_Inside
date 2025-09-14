@@ -108,6 +108,8 @@ public class Enemy_Bomb_Monkey : Enemy
 
     protected virtual void Update()
     {
+        base.Update();
+        
         if (!IsServer) return;
         
         HandleCollisionDetection();
