@@ -49,6 +49,7 @@ public class Enemy : Entity
         }
         else
         {
+            Debug.Log("Enemy Snyc : Client");
             // 클라이언트: 서버로부터 받은 데이터로 위치와 방향 보간
             HandleClientInterpolation();
         }
