@@ -3,7 +3,8 @@
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    
+
+    public GameObject playerPrefab;
     public GamePlayerSpawner gamePlayerSpawner;
     public MakeRandomMap makeRandomMap;
     public ItemSpawner itemSpawner;

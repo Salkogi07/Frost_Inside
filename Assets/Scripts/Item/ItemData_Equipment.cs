@@ -41,7 +41,7 @@ public class ItemData_Equipment : ItemData
 
     public void AddModifiers()
     {
-        GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+        GameObject playerObj = GameManager.instance.playerPrefab;
         Player_Stats playerStats = playerObj.GetComponent<Player_Stats>();
 
         playerStats.Mining.AddModifier(mining);
@@ -54,7 +54,7 @@ public class ItemData_Equipment : ItemData
 
     public void RemoveModifiers()
     {
-        GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+        GameObject playerObj = GameManager.instance.playerPrefab;
         Player_Stats playerStats = playerObj.GetComponent<Player_Stats>();
 
         playerStats.Mining.RemoveModifier(mining);

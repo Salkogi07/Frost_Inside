@@ -82,18 +82,13 @@ public class InventoryManager : MonoBehaviour
 
     private bool InitializePlayerComponents()
     {
-        Debug.Log("InitializePlayerComponents 1");
-        _playerObject = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
-        
+        _playerObject = GameManager.instance.playerPrefab;
+
         if (_playerObject == null)
             return true;
-        
-        Debug.Log("InitializePlayerComponents 2");
 
         if (_playerCondition == null) _playerCondition = _playerObject.GetComponent<Player_Condition>();
         if (_playerItemDrop == null) _playerItemDrop = _playerObject.GetComponent<Player_ItemDrop>();
-        
-        Debug.Log("InitializePlayerComponents 3");
         
         return false;
     }
@@ -108,10 +103,9 @@ public class InventoryManager : MonoBehaviour
         {
             if (itemToUse.Data is ItemData_UseItem useItemData)
             {
-                GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
-                if (playerObj != null)
+                if (_playerObject != null)
                 {
-                    useItemData.ExecuteItemEffect(playerObj.transform);
+                    useItemData.ExecuteItemEffect(_playerObject.transform);
                     quickSlotItems[selectedQuickSlot] = Inventory_Item.Empty;
 
                     InventoryUI.Instance.UpdateAllSlots();
@@ -126,10 +120,9 @@ public class InventoryManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {
-            GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
-            if (playerObj != null)
+            if (_playerObject != null)
             {
-                playerObj.GetComponent<Player_ItemDrop>().DropItem(SlotType.QuickSlot, selectedQuickSlot);
+                _playerObject.GetComponent<Player_ItemDrop>().DropItem(SlotType.QuickSlot, selectedQuickSlot);
             }
         }
     }

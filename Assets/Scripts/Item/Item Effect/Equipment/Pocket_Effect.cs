@@ -18,7 +18,7 @@ public class Pocket_Effect : Equipment_Effect
         
         if (!InventoryManager.instance.isPocket)
         {
-            GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+            GameObject playerObj = GameManager.instance.playerPrefab;
             playerObj.GetComponent<Player_ItemDrop>().NotPocket_ItemDrop();
         }
         
