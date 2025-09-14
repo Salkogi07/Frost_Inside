@@ -1,183 +1,177 @@
 ﻿using Unity.Netcode;
 using UnityEngine;
 
+// 모든 적의 부모 클래스. 네트워크 동기화와 기본적인 로직을 담당합니다.
+// abstract 키워드를 사용하여 이 클래스 자체를 직접 씬에 배치할 수 없도록 합니다.
 public abstract class Enemy : Entity
 {
     [Header("Network Sync")]
-    [SerializeField] private float positionUpdateThreshold = 0.05f;
-    [SerializeField] private float lerpDuration = 0.05f;
-    [Tooltip("몬스터가 처음 스폰될 때 바라볼 방향 (1: 오른쪽, -1: 왼쪽)")]
-    [SerializeField] private int initialFacingDirection = -1; // 원본 코드에 맞춰 왼쪽을 기본값으로 설정
+    // [서버] -> [클라이언트] 단방향 동기화
+    private NetworkVariable<Vector2> _networkPosition = new NetworkVariable<Vector2>(default, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    private NetworkVariable<bool> _networkIsFacingRight = new NetworkVariable<bool>(true, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
-    // --- 네트워크 변수들 ---
-    private readonly NetworkVariable<Vector2> _networkPosition = new NetworkVariable<Vector2>();
-    private readonly NetworkVariable<int> _networkFacingDirection = new NetworkVariable<int>();
-    // 애니메이션 동기화를 위해 X축 속도를 네트워크로 전송합니다.
-    private readonly NetworkVariable<float> _networkVelocityX = new NetworkVariable<float>();
-    
-    // --- 클라이언트 측 Lerp 관련 변수들 ---
+    [Header("Movement")]
+    public bool IsFacingRight { get; protected set; } = true;
+    public int FacingDirection { get; protected set; } = 1;
+
+    [Header("Network Optimization")]
+    [SerializeField] private float positionUpdateThreshold = 0.1f; // 이 거리 이상 움직여야 위치 전송
+    [SerializeField] private float lerpDuration = 0.1f; // 클라이언트 측에서 위치 보간에 걸리는 시간
+
     private Vector2 _lerpStartPos;
     private Vector2 _lerpTargetPos;
     private float _lerpTime;
-    private Vector2 _lastSentPosition;
-
-    // --- 서버 측 상태 변수 ---
-    private bool _isFacingRight = true;
-    public int FacingDirection { get; protected set; } = 1;
-
-    // 클라이언트가 애니메이터에 사용할 수 있도록 네트워크로 동기화된 X축 속도를 노출합니다.
-    public float NetworkVelocityX => _networkVelocityX.Value;
+    
+    // 풀에서 처음 생성되었을 때 순간이동(Lerp 없음)을 위한 플래그
+    private bool _teleportOnNextUpdate = false;
 
     public override void OnNetworkSpawn()
     {
-        if (IsServer)
+        base.OnNetworkSpawn();
+
+        // 서버가 아닌 클라이언트에서는 물리 시뮬레이션을 비활성화합니다.
+        // 클라이언트는 서버가 보내주는 위치 값으로만 움직여야 합니다.
+        if (!IsServer && rb != null)
         {
-            _lastSentPosition = transform.position;
-            // 인스펙터에서 설정한 초기 방향을 적용합니다.
-            FacingDirection = initialFacingDirection;
-            _isFacingRight = initialFacingDirection == 1;
-            transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * FacingDirection, transform.localScale.y, transform.localScale.z);
-            _networkFacingDirection.Value = FacingDirection;
+            rb.isKinematic = true;
         }
-        else
-        {
-            if (rb != null) rb.isKinematic = true;
-            _networkPosition.OnValueChanged += OnPositionChanged;
-            _networkFacingDirection.OnValueChanged += OnFacingDirectionChanged;
-            // 초기 방향을 즉시 적용합니다.
-            HandleVisualFacingDirection(_networkFacingDirection.Value);
-        }
+        
+        // 네트워크 변수 값이 변경될 때마다 클라이언트에서 호출될 함수를 등록합니다.
+        _networkPosition.OnValueChanged += OnPositionChanged;
     }
 
     public override void OnNetworkDespawn()
     {
-        if (!IsServer)
+        base.OnNetworkDespawn();
+        if (_networkPosition != null)
         {
             _networkPosition.OnValueChanged -= OnPositionChanged;
-            _networkFacingDirection.OnValueChanged -= OnFacingDirectionChanged;
         }
     }
-
+    
     protected virtual void Update()
     {
-        if (IsServer) return;
-
-        if (_lerpTime < lerpDuration)
+        // 서버는 AI 로직과 물리적 움직임을 처리하고, 그 결과를 네트워크 변수에 씁니다.
+        if (IsServer)
         {
-            _lerpTime += Time.deltaTime;
-            transform.position = Vector2.Lerp(_lerpStartPos, _lerpTargetPos, _lerpTime / lerpDuration);
+            // (자식 클래스에서 StateMachine.UpdateActiveState() 등을 호출)
+            UpdateNetworkVariablesIfNeeded();
         }
+        // 클라이언트는 서버로부터 받은 데이터로 부드럽게 위치와 방향을 보간합니다.
         else
         {
-            transform.position = _lerpTargetPos;
+            // 스폰 직후 순간이동 처리
+            if (_teleportOnNextUpdate)
+            {
+                transform.position = _networkPosition.Value;
+                _teleportOnNextUpdate = false;
+            }
+            else
+            {
+                 // 위치 보간 (Lerp)
+                if (_lerpTime < lerpDuration)
+                {
+                    _lerpTime += Time.deltaTime;
+                    transform.position = Vector2.Lerp(_lerpStartPos, _lerpTargetPos, _lerpTime / lerpDuration);
+                }
+                else
+                {
+                    transform.position = _lerpTargetPos;
+                }
+            }
+
+            // 방향 동기화 (시각적 처리만)
+            if (IsFacingRight != _networkIsFacingRight.Value)
+            {
+                FlipVisualsOnly();
+            }
         }
     }
 
-    protected virtual void FixedUpdate()
-    {
-        if (!IsServer || !gameObject.activeInHierarchy) return;
-
-        if (Vector2.Distance(transform.position, _lastSentPosition) > positionUpdateThreshold)
-        {
-            _networkPosition.Value = transform.position;
-            _lastSentPosition = transform.position;
-        }
-        // 서버의 Rigidbody 속도를 네트워크 변수에 계속 업데이트하여 클라이언트에 전송합니다.
-        _networkVelocityX.Value = rb.linearVelocity.x;
-    }
-
-    protected abstract void ResetEnemyState();
-
-    public void InitializeForPool(Vector3 startPosition)
+    /// <summary>
+    /// NetworkEnemyPool에서 호출되는 초기화 함수입니다.
+    /// 몬스터를 활성화하고 시작 위치를 설정합니다.
+    /// </summary>
+    /// <param name="initialPosition">몬스터가 스폰될 월드 위치</param>
+    public virtual void InitializeForPool(Vector3 initialPosition)
     {
         if (!IsServer) return;
 
-        transform.position = startPosition;
-        _lastSentPosition = startPosition;
-        _networkPosition.Value = startPosition;
-
-        var health = GetComponent<Enemy_Health>();
-        if (health != null) health.ResetHealth();
+        // 클라이언트가 다음 업데이트에서 순간이동하도록 플래그 설정
+        _teleportOnNextUpdate = true;
         
-        // 초기 방향을 다시 설정합니다.
-        FacingDirection = initialFacingDirection;
-        _isFacingRight = initialFacingDirection == 1;
-        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * FacingDirection, transform.localScale.y, transform.localScale.z);
-        _networkFacingDirection.Value = FacingDirection;
-
-        ResetEnemyState();
-        SyncInitialPositionClientRpc(startPosition);
+        // 서버 측 위치 즉시 설정
+        transform.position = initialPosition;
+        
+        // 네트워크 변수 업데이트 (클라이언트들에게 전송)
+        _networkPosition.Value = initialPosition;
+        
+        // (필요 시) 체력, 상태 등 초기화 로직 추가
     }
-
-    [ClientRpc]
-    private void SyncInitialPositionClientRpc(Vector3 startPosition)
+    
+    // 서버에서만 호출되어야 하는 속도 설정 함수
+    public void SetVelocity(float xVelocity, float yVelocity)
     {
-        if (IsServer) return;
-        transform.position = startPosition;
-        _lerpStartPos = startPosition;
-        _lerpTargetPos = startPosition;
-        _lerpTime = lerpDuration;
-    }
+        if (!IsServer || isknocked) return;
 
+        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
+        CheckAndFlip(xVelocity);
+    }
+    
+    // 서버에서만 호출되어야 하는 방향 전환 함수
+    public void Flip()
+    {
+        if (!IsServer) return;
+
+        IsFacingRight = !IsFacingRight;
+        FacingDirection *= -1;
+        transform.Rotate(0, 180, 0);
+        
+        // 방향 변경을 클라이언트에 알림
+        _networkIsFacingRight.Value = IsFacingRight;
+    }
+    
+    // 자식 클래스에서 반드시 구현해야 하는 죽음 처리 로직
+    public abstract void Die();
+    
+    // 서버에서 위치나 방향이 크게 변경되었을 때만 네트워크 변수를 업데이트하여 최적화합니다.
+    private void UpdateNetworkVariablesIfNeeded()
+    {
+        if (Vector2.Distance(transform.position, _networkPosition.Value) > positionUpdateThreshold)
+        {
+            _networkPosition.Value = transform.position;
+        }
+
+        if (IsFacingRight != _networkIsFacingRight.Value)
+        {
+            _networkIsFacingRight.Value = IsFacingRight;
+        }
+    }
+    
+    // 클라이언트에서 위치 값이 변경되었을 때 호출됩니다.
     private void OnPositionChanged(Vector2 previousValue, Vector2 newValue)
     {
+        if (IsServer) return;
+
+        // 새로운 보간 시작
         _lerpStartPos = transform.position;
         _lerpTargetPos = newValue;
         _lerpTime = 0;
     }
 
-    private void OnFacingDirectionChanged(int previousValue, int newValue)
+    // 클라이언트에서 방향 전환 시 시각적 요소만 변경 (물리적 변경 없음)
+    private void FlipVisualsOnly()
     {
-        HandleVisualFacingDirection(newValue);
+        IsFacingRight = _networkIsFacingRight.Value;
+        FacingDirection = IsFacingRight ? 1 : -1;
+        transform.rotation = Quaternion.Euler(0, IsFacingRight ? 0 : 180, 0);
     }
 
-    /// <summary>
-    /// (서버 전용) 몬스터의 속도를 설정하고, 움직이는 방향으로 몸을 돌립니다.
-    /// </summary>
-    public void SetVelocity(float xVelocity, float yVelocity)
+    private void CheckAndFlip(float xDirection)
     {
-        if (!IsServer || isknocked) return;
-        rb.linearVelocity = new Vector2(xVelocity, yVelocity);
-        HandleFlip(xVelocity);
-    }
-    
-    /// <summary>
-    /// (서버 전용) 후퇴와 같이, 특정 방향을 바라보면서 다른 방향으로 움직여야 할 때 사용합니다.
-    /// </summary>
-    public void SetVelocityAndFaceDirection(Vector2 velocity, int directionToFace)
-    {
-        if (!IsServer || isknocked) return;
-        rb.linearVelocity = velocity;
-        // HandleFlip 로직을 사용하되, 실제 속도가 아닌 '바라볼 방향'을 기준으로 합니다.
-        if (directionToFace > 0 && !_isFacingRight) Flip();
-        else if (directionToFace < 0 && _isFacingRight) Flip();
-    }
-
-    private void HandleFlip(float xVelocity)
-    {
-        if (xVelocity > 0 && !_isFacingRight) Flip();
-        else if (xVelocity < 0 && _isFacingRight) Flip();
-    }
-
-    /// <summary>
-    /// (서버 전용) 방향을 전환하고 네트워크에 동기화합니다.
-    /// </summary>
-    public void Flip()
-    {
-        if (!IsServer) return;
-        _isFacingRight = !_isFacingRight;
-        FacingDirection *= -1;
-        _networkFacingDirection.Value = FacingDirection;
-        // 서버에서도 시각적 방향을 업데이트합니다.
-        HandleVisualFacingDirection(FacingDirection);
-    }
-
-    /// <summary>
-    /// (서버와 클라이언트 모두 사용) 전달받은 방향 값으로 실제 오브젝트의 스케일을 조절해 뒤집습니다.
-    /// </summary>
-    private void HandleVisualFacingDirection(int newDirection)
-    {
-        // transform.Rotate 대신 localScale을 직접 조작하여 더 안정적으로 방향을 전환합니다.
-        transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x) * newDirection, transform.localScale.y, transform.localScale.z);
+        if (xDirection > 0 && !IsFacingRight)
+            Flip();
+        else if (xDirection < 0 && IsFacingRight)
+            Flip();
     }
 }

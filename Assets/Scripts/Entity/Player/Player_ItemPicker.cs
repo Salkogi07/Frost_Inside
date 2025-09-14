@@ -1,15 +1,26 @@
+using System;
 using UnityEngine;
 using Unity.Netcode;
 
 public class Player_ItemPicker : NetworkBehaviour
 {
+    private Player_Condition _player_condition;
+    
     public float pickupRange = 3f;
     public float pickupCooldown = 0.5f;
     private float nextPickupTime = 0f;
 
+    private void Awake()
+    {
+        _player_condition = GetComponent<Player_Condition>();
+    }
+
     void Update()
     {
         if (!IsOwner) return;
+        
+        if(_player_condition.CheckIsDead())
+            return;
 
         if (InventoryManager.instance.isInvenOpen || Time.time < nextPickupTime)
             return;

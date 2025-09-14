@@ -7,6 +7,11 @@ public class InventoryManager : MonoBehaviour
 {
     public static InventoryManager instance { get; private set; }
 
+    // 플레이어 관련 참조를 저장할 변수
+    private GameObject _playerObject;
+    private Player_Condition _playerCondition;
+    private Player_ItemDrop _playerItemDrop;
+    
     [Header("Data")]
     public List<Inventory_Item> startingItems;
     public Inventory_Item[] inventoryItems;
@@ -65,11 +70,29 @@ public class InventoryManager : MonoBehaviour
 
     private void Update()
     {
+        if (InitializePlayerComponents()) return;
+
+        if (_playerCondition != null && _playerCondition.CheckIsDead())
+            return;
+        
         UpdateInventory();
         HandleQuickSlotSelection();
         HandleItemThrowInput();
     }
-    
+
+    private bool InitializePlayerComponents()
+    {
+        _playerObject = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+
+        if (_playerObject == null)
+            return true;
+
+        if (_playerCondition == null) _playerCondition = _playerObject.GetComponent<Player_Condition>();
+        if (_playerItemDrop == null) _playerItemDrop = _playerObject.GetComponent<Player_ItemDrop>();
+        
+        return false;
+    }
+
     public void UseItemInQuickSlot()
     {
         // 선택된 퀵슬롯의 아이템을 가져옵니다.
@@ -81,10 +104,13 @@ public class InventoryManager : MonoBehaviour
             if (itemToUse.Data is ItemData_UseItem useItemData)
             {
                 GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
-                useItemData.ExecuteItemEffect(playerObj.transform);
-                quickSlotItems[selectedQuickSlot] = Inventory_Item.Empty;
+                if (playerObj != null)
+                {
+                    useItemData.ExecuteItemEffect(playerObj.transform);
+                    quickSlotItems[selectedQuickSlot] = Inventory_Item.Empty;
 
-                InventoryUI.Instance.UpdateAllSlots();
+                    InventoryUI.Instance.UpdateAllSlots();
+                }
             }
         }
     }
@@ -95,9 +121,9 @@ public class InventoryManager : MonoBehaviour
         
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {
-            if (GameManager.instance != null)
+            GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
+            if (playerObj != null)
             {
-                GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
                 playerObj.GetComponent<Player_ItemDrop>().DropItem(SlotType.QuickSlot, selectedQuickSlot);
             }
         }
@@ -286,8 +312,8 @@ public class InventoryManager : MonoBehaviour
 
     public void UpdatePlayerWeight()
     {
-        GameObject playerObj = PlayerDataManager.instance.GetPlayerObject(NetworkManager.Singleton.LocalClientId);
-        playerObj.GetComponent<Player_Condition>().Weight = CalculateTotalWeight();
+        if (_playerCondition != null)
+            _playerCondition.Weight = CalculateTotalWeight();
     }
     
     private float CalculateTotalWeight()

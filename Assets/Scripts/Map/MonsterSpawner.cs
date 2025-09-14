@@ -47,7 +47,6 @@ public class MonsterSpawner : NetworkBehaviour
         if (!IsServer) yield break;
         while (true)
         {
-            // ... (스폰 간격 계산 로직은 동일) ...
             float rawHour = TimerManager.instance.Hours + TimerManager.instance.Minutes / 60f;
             float timeNorm = Mathf.Clamp01((rawHour - 7f) / 15f);
             float dynamicMin = Mathf.Lerp(maxSpawnInterval, minSpawnInterval, timeNorm);
@@ -62,16 +61,12 @@ public class MonsterSpawner : NetworkBehaviour
     private void SpawnMonsters()
     {
         if (!IsServer || mapData == null || NetworkEnemyPool.Instance == null) return;
-
-        // ... (스폰 수 결정 및 플레이어 방 제외 로직은 동일) ...
+        
         float rawHour = TimerManager.instance.Hours + TimerManager.instance.Minutes / 60f;
         float timeNorm = Mathf.Clamp01((rawHour - 8f) / 14f);
         int totalSpawnCount = DetermineSpawnCount(timeNorm);
         HashSet<int> occupiedRoomIndices = GetOccupiedRooms();
-
-        // --- 핵심 수정 부분 ---
-
-        // 1. 풀에서 스폰 가능한 모든 몬스터 프리팹의 마스터 리스트를 가져옵니다.
+        
         var allAvailablePrefabs = NetworkEnemyPool.Instance.GetAvailablePrefabs();
         if (allAvailablePrefabs == null || allAvailablePrefabs.Count == 0)
         {
@@ -82,8 +77,6 @@ public class MonsterSpawner : NetworkBehaviour
         int spawnedCount = 0;
         for (int s = 0; s < totalSpawnCount; s++)
         {
-            // 2. 스폰 위치를 정하기 위해 유효한 방 후보를 찾습니다.
-            //    (이제 난이도 조건 없이, 스폰 위치가 있는지만 확인합니다.)
             var candidateRooms = Enumerable.Range(0, mapData.RoomMonsterSpawnPositions.Count)
                 .Where(i => !occupiedRoomIndices.Contains(i) && mapData.RoomMonsterSpawnPositions[i].Count > 0)
                 .ToList();
@@ -96,27 +89,23 @@ public class MonsterSpawner : NetworkBehaviour
 
             int roomIdx = candidateRooms[Random.Range(0, candidateRooms.Count)];
             
-            // 3. 선택된 방의 위치(깊이)와 현재 시간을 기반으로 '위협도 점수'를 계산합니다.
             float centerY = mapData.RoomBounds[roomIdx].center.y;
             float depthNorm = Mathf.Clamp01((mapData.MapMax.y - centerY) / (float)(mapData.MapMax.y - mapData.MapMin.y));
             float threatLevel = Mathf.Clamp01(timeNorm * timeDifficultyWeight + depthNorm * depthDifficultyWeight);
-
-            // 4. 위협도 점수에 따라 이번 스폰에서 허용될 난이도 목록을 동적으로 생성합니다.
+            
             var dynamicAllowedDifficulties = new List<int>();
-            if (threatLevel >= 0f) dynamicAllowedDifficulties.Add(1); // 난이도 1은 항상 가능
+            if (threatLevel >= 0f) dynamicAllowedDifficulties.Add(1);
             if (threatLevel >= mediumDifficultyThreshold) dynamicAllowedDifficulties.Add(2);
             if (threatLevel >= hardDifficultyThreshold) dynamicAllowedDifficulties.Add(3);
             
             Debug.Log($"[Difficulty] Room:{roomIdx} Time:{timeNorm:P1} Depth:{depthNorm:P1} -> Threat:{threatLevel:P1}. Allowed Diffs: [{string.Join(",", dynamicAllowedDifficulties)}]");
-
-            // 5. 생성된 난이도 목록으로 풀의 프리팹들을 필터링합니다.
+            
             var spawnablePrefabs = allAvailablePrefabs
                 .Where(p => p.GetComponent<Stats.Enemy_Stats>() != null && dynamicAllowedDifficulties.Contains(p.GetComponent<Stats.Enemy_Stats>().difficulty))
                 .ToList();
 
             if (spawnablePrefabs.Count == 0) continue;
-
-            // 6. 스폰 위치를 정하고, 필터링된 프리팹 목록에서 가중치에 따라 하나를 선택하여 스폰합니다.
+            
             var positions = mapData.RoomMonsterSpawnPositions[roomIdx];
             Vector2Int cell = positions[Random.Range(0, positions.Count)];
             Vector3 worldPos = spreadTilemap.MonsterSpawnTilemap
