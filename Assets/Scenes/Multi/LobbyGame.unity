@@ -17725,12 +17725,20 @@ PrefabInstance:
       value: GameStartSpot
       objectReference: {fileID: 0}
     - target: {fileID: 4884073947085092874, guid: 64a9f8775c045424abc472e9620f4aa7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884073947085092874, guid: 64a9f8775c045424abc472e9620f4aa7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4884073947085092874, guid: 64a9f8775c045424abc472e9620f4aa7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.45
+      value: 17.32
       objectReference: {fileID: 0}
     - target: {fileID: 4884073947085092874, guid: 64a9f8775c045424abc472e9620f4aa7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.47
+      value: 0.14
       objectReference: {fileID: 0}
     - target: {fileID: 4884073947085092874, guid: 64a9f8775c045424abc472e9620f4aa7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -18900,6 +18908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8786d9077a7d4f31811382a98d9bae56, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerPrefab: {fileID: 0}
   gamePlayerSpawner: {fileID: 0}
   makeRandomMap: {fileID: 0}
   itemSpawner: {fileID: 0}
