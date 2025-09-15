@@ -49,7 +49,7 @@ public class Enemy : Entity
         }
         else
         {
-            Debug.Log("Enemy Snyc : Client");
+            //Debug.Log("Enemy Snyc : Client");
             // 클라이언트: 서버로부터 받은 데이터로 위치와 방향 보간
             HandleClientInterpolation();
         }
@@ -79,7 +79,7 @@ public class Enemy : Entity
         {
             transform.position = _networkPosition.Value;
             _justSpawned = false;
-            Debug.Log("Client : justSpawned");
+            //Debug.Log("Client : justSpawned");
         }
         
         // 네트워크 위치 값이 변경되면 새로운 보간 시작
@@ -88,11 +88,11 @@ public class Enemy : Entity
             _lerpStartPos = transform.position;
             _lerpTargetPos = _networkPosition.Value;
             _lerpTime = 0;
-            Debug.Log("Clinet : lerp Start");
+            //Debug.Log("Clinet : lerp Start");
         }
         
-        Debug.LogFormat("_networkPosition : {0}, _networkIsFacingRight : {1}", _networkPosition.Value, _networkIsFacingRight.Value);
-        Debug.LogFormat("_lerpStartPos: {0}, position : {1}, _lerpTargetPos : {2} ", _lerpStartPos, transform.position, _lerpTargetPos);
+        //Debug.LogFormat("_networkPosition : {0}, _networkIsFacingRight : {1}", _networkPosition.Value, _networkIsFacingRight.Value);
+        //Debug.LogFormat("_lerpStartPos: {0}, position : {1}, _lerpTargetPos : {2} ", _lerpStartPos, transform.position, _lerpTargetPos);
 
         // 보간 진행
         if (_lerpTime < lerpDuration)

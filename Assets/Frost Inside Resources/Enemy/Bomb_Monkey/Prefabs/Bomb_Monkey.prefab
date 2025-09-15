@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 1085462276512591964}
   - component: {fileID: 7383356623526947584}
   - component: {fileID: 8535873310416486735}
-  - component: {fileID: 2376164601649004438}
+  - component: {fileID: 1907412776036566910}
   m_Layer: 8
   m_Name: Bomb_Monkey
   m_TagString: Enemy
@@ -289,7 +289,7 @@ MonoBehaviour:
   Groggy: 0
   speed: 0
   difficulty: 1
---- !u!114 &2376164601649004438
+--- !u!114 &1907412776036566910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -298,7 +298,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1060806058238291733}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e8d0727d5ae3244e3b569694d3912374, type: 3}
+  m_Script: {fileID: 11500000, guid: cb5c705d3c70beb42beeac03edda07d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1

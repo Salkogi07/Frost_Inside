@@ -8,7 +8,6 @@ public class Bomb_Effect : UseItem_Effect
 
     public override void ExecuteEffect(Transform _playerPos)
     {
-        Debug.Log("Boom");
         GameObject bombInstance = Instantiate(boomObj, _playerPos.position, Quaternion.identity);
         
         bombInstance.GetComponent<NetworkObject>().Spawn();
