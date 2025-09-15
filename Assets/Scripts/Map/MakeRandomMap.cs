@@ -43,12 +43,14 @@ public class MakeRandomMap : MonoBehaviour
     [SerializeField][Range(0, 1f)] private float oreSpawnChance = 0.05f; // 타일당 등장 확률
 
     private HashSet<Vector2Int> floorTiles = new HashSet<Vector2Int>();
+    private HashSet<Vector2Int> propsTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> wallTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> corridorTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> itemSpawnTiles = new HashSet<Vector2Int>();
     private HashSet<Vector2Int> monsterSpawnTiles = new HashSet<Vector2Int>();
 
     private Dictionary<Vector2Int, TileBase> floorTileDict = new Dictionary<Vector2Int, TileBase>();
+    private Dictionary<Vector2Int, TileBase> propsTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> wallTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> corridorTileDict = new Dictionary<Vector2Int, TileBase>();
     private Dictionary<Vector2Int, TileBase> itemSpawnTileDict = new Dictionary<Vector2Int, TileBase>();
@@ -123,6 +125,7 @@ public class MakeRandomMap : MonoBehaviour
 
         // 타일맵 반영
         spreadTilemap.SpreadBackgroundTilemapWithTiles(floorTileDict);
+        spreadTilemap.SpreadPropsTilemapWithTiles(propsTileDict);
         spreadTilemap.SpreadCorridorTilemapWithTiles(corridorTileDict);
         spreadTilemap.SpreadItemSpawnTilemapWithTiles(itemSpawnTileDict);
         spreadTilemap.SpreadWallTilemapWithTiles(wallTileDict);
@@ -211,13 +214,15 @@ public class MakeRandomMap : MonoBehaviour
                 out Tilemap wallTM,
                 out Tilemap corridorTM,
                 out Tilemap itemSpawnTM,
-                out Tilemap monsterSpawnTM
+                out Tilemap monsterSpawnTM,
+                out Tilemap propsTM
         );
         CopyTilemapWithTiles(backgroundTM, offset, floorTiles, floorTileDict);
         CopyTilemapWithTiles(wallTM, offset, wallTiles, wallTileDict);
         CopyTilemapWithTiles(corridorTM, offset, corridorTiles, corridorTileDict);
         CopyTilemapWithTiles(itemSpawnTM, offset, itemSpawnTiles, itemSpawnTileDict);
         CopyTilemapWithTiles(monsterSpawnTM, offset, monsterSpawnTiles, monsterSpawnTileDict);
+        CopyTilemapWithTiles(propsTM, offset, propsTiles, propsTileDict);
 
         var localBounds = backgroundTM.cellBounds;
         var worldOrigin = new Vector3Int(
@@ -252,7 +257,7 @@ public class MakeRandomMap : MonoBehaviour
         foundOffset = Vector2Int.zero;
         connectionPoints = new List<Vector2Int>();
 
-        GetTilemaps(roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM);
+        GetTilemaps(roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM, out Tilemap propsTM);
         var newCorridors = GetLocalCorridorPositions(corridorTM);
         if (newCorridors.Count == 0) return false;
 
@@ -447,7 +452,7 @@ public class MakeRandomMap : MonoBehaviour
         }
     }
 
-    private void GetTilemaps(GameObject roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM)
+    private void GetTilemaps(GameObject roomPrefab, out Tilemap backgroundTM, out Tilemap wallTM, out Tilemap corridorTM, out Tilemap itemSpawnTM, out Tilemap monsterSpawnTM, out Tilemap propsTM)
     {
         var children = roomPrefab.GetComponentsInChildren<Transform>();
         Transform parent = children[1];  // 프로젝트 구조에 따라 인덱스를 조정하세요
@@ -456,6 +461,7 @@ public class MakeRandomMap : MonoBehaviour
         corridorTM = parent.Find("CorridorTilemap").GetComponent<Tilemap>();
         itemSpawnTM = parent.Find("ItemSpawnTilemap").GetComponent<Tilemap>();
         monsterSpawnTM = parent.Find("MonsterSpawnTilemap").GetComponent<Tilemap>();
+        propsTM = parent.Find("PropsTilemap").GetComponent<Tilemap>();
     }
 
     // 맵 생성 허용 범위를 Gizmos로 시각화

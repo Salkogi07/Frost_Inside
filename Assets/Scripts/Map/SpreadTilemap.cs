@@ -15,6 +15,7 @@ public class SpreadTilemap : MonoBehaviour
     [Header("=== 기본 타일맵 ===")]
     [SerializeField] private Tilemap ground;
     [SerializeField] private Tilemap background;
+    [SerializeField] private Tilemap props;
     [SerializeField] private Tilemap wall;
     [SerializeField] private Tilemap corridor;
     [SerializeField] private Tilemap itemSpawn;
@@ -29,6 +30,7 @@ public class SpreadTilemap : MonoBehaviour
 
     [Header("=== 기본 타일 ===")]
     [SerializeField] private TileBase backgroundTile;
+    [SerializeField] private TileBase propsTile;
     [SerializeField] private TileBase wallTile;
     [SerializeField] private TileBase corridorTile;
     [SerializeField] private TileBase itemSpawnTile;
@@ -52,6 +54,11 @@ public class SpreadTilemap : MonoBehaviour
     public void SpreadBackgroundTilemap(HashSet<Vector2Int> positions)
     {
         SpreadTile(positions, background, backgroundTile);
+    }
+    
+    public void SpreadPropsTilemap(HashSet<Vector2Int> positions)
+    {
+        SpreadTile(positions, props, propsTile);
     }
 
     public void SpreadWallTilemap(HashSet<Vector2Int> positions)
@@ -79,6 +86,11 @@ public class SpreadTilemap : MonoBehaviour
     {
         SpreadTileWithOriginal(tileDict, background);
     }
+    
+    public void SpreadPropsTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
+    {
+        SpreadTileWithOriginal(tileDict, props);
+    }
 
     public void SpreadWallTilemapWithTiles(Dictionary<Vector2Int, TileBase> tileDict)
     {
@@ -104,6 +116,7 @@ public class SpreadTilemap : MonoBehaviour
     public void ClearAllTiles()
     {
         background.ClearAllTiles();
+        props.ClearAllTiles();
         wall.ClearAllTiles();
         corridor.ClearAllTiles();
         itemSpawn.ClearAllTiles();
