@@ -96,6 +96,32 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -103,20 +129,80 @@ TextureImporter:
       name: Lab_Props_Desk(3)_0
       rect:
         serializedVersion: 2
-        x: 3
+        x: 0
         y: 0
-        width: 66
-        height: 16
+        width: 24
+        height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: 12, y: 3}
+        - {x: -8, y: 3}
+        - {x: -8, y: 1}
+        - {x: -4, y: 1}
+        - {x: -4, y: -12}
+        - {x: 12, y: -12}
+      tessellationDetail: 0
       bones: []
       spriteID: d9e30d0ec6a1ac8b0800000000000000
       internalID: -5131259770504724835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lab_Props_Desk(3)_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 12, y: 3}
+        - {x: -12, y: 3}
+        - {x: -12, y: -12}
+        - {x: 12, y: -12}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a520e705156b6b4aa5f696ea00b0736
+      internalID: -2082514625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lab_Props_Desk(3)_2
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 4, y: 1}
+        - {x: 8, y: 1}
+        - {x: 8, y: 3}
+        - {x: -12, y: 3}
+        - {x: -12, y: -12}
+        - {x: 4, y: -12}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8271bcf131f8424facf3528d0587772
+      internalID: -1128460253
       vertices: []
       indices: 
       edges: []
@@ -125,7 +211,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 2cf4948c39357c04c945200f50b22fb3
     internalID: 0
     vertices: []
     indices: 
@@ -136,6 +222,8 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Lab_Props_Desk(3)_0: -5131259770504724835
+      Lab_Props_Desk(3)_1: -2082514625
+      Lab_Props_Desk(3)_2: -1128460253
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

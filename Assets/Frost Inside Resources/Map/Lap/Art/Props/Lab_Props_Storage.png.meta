@@ -96,6 +96,32 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: WindowsStoreApps
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -104,19 +130,101 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 48
-        height: 48
+        y: 24
+        width: 24
+        height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
-      physicsShape: []
-      tessellationDetail: -1
+      physicsShape:
+      - - {x: 12, y: 12}
+        - {x: -8, y: 12}
+        - {x: -8, y: -12}
+        - {x: 12, y: -12}
+      tessellationDetail: 0
       bones: []
       spriteID: 3860808d401c4f310800000000000000
       internalID: 1437986407586465411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lab_Props_Storage_1
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 24
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 8, y: 12}
+        - {x: -12, y: 12}
+        - {x: -12, y: -12}
+        - {x: 8, y: -12}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f382951b4ca09843968348c8a3be4f8
+      internalID: 578947864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lab_Props_Storage_2
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 12, y: 12}
+        - {x: -8, y: 12}
+        - {x: -8, y: -12}
+        - {x: 12, y: -12}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4beb597b1f8beb84eb0d357a1a1e6977
+      internalID: -1801457662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Lab_Props_Storage_3
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 0
+        width: 24
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 8, y: 12}
+        - {x: -12, y: 12}
+        - {x: -12, y: -12}
+        - {x: 8, y: -12}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dc89489c19006b40aa0cc76282d59e1
+      internalID: 1964135735
       vertices: []
       indices: 
       edges: []
@@ -125,7 +233,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8acb32f258d96b646bb1e27bcc78319a
     internalID: 0
     vertices: []
     indices: 
@@ -136,6 +244,9 @@ TextureImporter:
       entries: []
     nameFileIdTable:
       Lab_Props_Storage_0: 1437986407586465411
+      Lab_Props_Storage_1: 578947864
+      Lab_Props_Storage_2: -1801457662
+      Lab_Props_Storage_3: 1964135735
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

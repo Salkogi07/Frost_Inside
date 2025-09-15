@@ -20,26 +20,26 @@ MonoBehaviour:
     defense: 50
     canMine: 1
   - tile: {fileID: 11400000, guid: 1b22b728388560d40800ef14adcf3d37, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
   - tile: {fileID: 11400000, guid: a4f63f1603e84e34896c23f59ef32fd8, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
   - tile: {fileID: 11400000, guid: 4ec546002ba7ca44387d9513c939441f, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
   - tile: {fileID: 11400000, guid: a7436ae3458ecc64d83a02b811e6d861, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
   - tile: {fileID: 11400000, guid: bef6ef8fed167f24c81a6afde92d66e1, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
   - tile: {fileID: 11400000, guid: 22eefdfaa3f862c4eaf1cb73d22b37ae, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
   - tile: {fileID: 11400000, guid: 22eefdfaa3f862c4eaf1cb73d22b37ae, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
   - tile: {fileID: 11400000, guid: 22eefdfaa3f862c4eaf1cb73d22b37ae, type: 2}
-    defense: 500
+    defense: 300
     canMine: 1
