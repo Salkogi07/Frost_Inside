@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Unity.Netcode;
 
 public class Enemy_Bomb_Monkey_AttackState : Enemy_Bomb_Monkey_State
 {
@@ -14,7 +13,7 @@ public class Enemy_Bomb_Monkey_AttackState : Enemy_Bomb_Monkey_State
         
         GameObject boomEffect = Object.Instantiate(bombMonkey.prf, bombMonkey.transform.position, Quaternion.identity);
         boomEffect.GetComponent<explosion_damage>().damage = bombMonkey.stats.damage.GetValue();
-        boomEffect.GetComponent<NetworkObject>().Spawn();
+        Debug.Log(boomEffect.GetComponent<explosion_damage>().damage);
         
         enemyStateMachine.ChangeState(bombMonkey.DeadState);
     }
