@@ -1,7 +1,4 @@
-﻿// GameStartSpot.cs (수정된 버전)
-// 역할: 호스트가 게임 시작을 트리거할 수 있는 상호작용 지점을 담당합니다.
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Unity.Netcode;
 
@@ -17,8 +14,7 @@ public class GameStartSpot : MonoBehaviour
     
     [Tooltip("(선택 사항) 누르는 시간을 시각적으로 보여줄 UI Image. Fill Method가 Radial 360으로 설정되어야 합니다.")]
     [SerializeField] private Image fillImage;
-
-    // --- 내부 변수 ---
+    
     private bool isHostInRange = false;
     private float currentHoldTime = 0f;
     private bool isHolding = false;
@@ -56,6 +52,13 @@ public class GameStartSpot : MonoBehaviour
                 ChatManager.instance?.AddMessage("Not all players are ready.", MessageType.PersonalSystem);
                 return; // 준비되지 않았으면 홀드를 시작하지 않습니다.
             }
+            
+            // 미션이 선택되었는지 확인합니다.
+            if (!MissionManager.instance.IsMissionAccepted)
+            {
+                ChatManager.instance?.AddMessage("A mission must be accepted before starting.", MessageType.PersonalSystem);
+                return; // 미션이 수락되지 않았으면 홀드를 시작하지 않습니다.
+            }
 
             isHolding = true;
             if (fillImage != null)
@@ -91,8 +94,8 @@ public class GameStartSpot : MonoBehaviour
 
     private void TriggerGameStart()
     {
-        // 다시 한번 확인: 내가 호스트이고 모든 플레이어가 준비되었는가?
-        if (NetworkManager.Singleton.IsHost && PlayerDataManager.instance.AreAllPlayersReady())
+        // 다시 한번 확인: 내가 호스트이고 모든 플레이어가 준비되었고 미션이 수락되었는가?
+        if (NetworkManager.Singleton.IsHost && PlayerDataManager.instance.AreAllPlayersReady() && MissionManager.instance.IsMissionAccepted)
         {
             Debug.Log("Host is starting the game...");
             NetworkTransmission.instance.RequestStartGameServerRpc();

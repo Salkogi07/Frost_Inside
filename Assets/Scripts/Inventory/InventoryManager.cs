@@ -129,7 +129,7 @@ public class InventoryManager : MonoBehaviour
 
     private void UpdateInventory()
     {
-        if (SettingManager.Instance.IsOpenSetting()) return;
+        if (SettingManager.Instance.IsOpenSetting() || MissionManager.instance.IsMissionPanelOpen) return;
         
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Open Inventory")))
         {

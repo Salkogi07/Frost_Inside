@@ -176,21 +176,39 @@ public class NetworkTransmission : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        if (PlayerDataManager.instance.AreAllPlayersReady())
+        // 게임 시작 조건: 모든 플레이어 준비 + 미션 수락 완료
+        if (PlayerDataManager.instance.AreAllPlayersReady() && MissionManager.instance.IsMissionAccepted)
         {
+            // MissionManager에 랜덤 미션 생성 요청 (이 부분은 로비 생성 시점으로 옮기는 것이 더 좋습니다)
+            // 여기서는 게임 시작 시점에 미션 진행상황을 초기화합니다.
+            MissionProgressManager.instance.ResetProgress();
+
             GameNetworkManager.instance.LockLobby();
             PlayerDataManager.instance.ClearLoadedClients();
-
-            // 모든 클라이언트에게 씬 로드 전에 로딩 화면을 먼저 켜도록 명령
+            
             ShowLoadingScreenClientRpc();
-
-            // LoadingManager를 거치지 않고 서버가 직접 씬 로드를 시작
+            
             LoadingManager.instance.AnimLate("Shader_Out", "Game");
         }
         else
         {
-            Debug.LogWarning($"Client {rpcParams.Receive.SenderClientId} requested game start, but not all players are ready.");
+            if (!PlayerDataManager.instance.AreAllPlayersReady())
+            {
+                Debug.LogWarning($"Client {rpcParams.Receive.SenderClientId} requested game start, but not all players are ready.");
+            }
+            if (!MissionManager.instance.IsMissionAccepted)
+            {
+                Debug.LogWarning($"Client {rpcParams.Receive.SenderClientId} requested game start, but no mission was accepted.");
+                // 요청한 클라이언트에게만 미션 미선택 메시지 전송
+                NotifyMissionNotSelectedClientRpc(new ClientRpcParams { Send = new ClientRpcSendParams { TargetClientIds = new[] { rpcParams.Receive.SenderClientId } } });
+            }
         }
+    }
+    
+    [ClientRpc]
+    private void NotifyMissionNotSelectedClientRpc(ClientRpcParams clientRpcParams = default)
+    {
+        ChatManager.instance?.AddMessage("A mission has not been selected. Cannot start the game.", MessageType.PersonalSystem);
     }
     
     [ClientRpc]

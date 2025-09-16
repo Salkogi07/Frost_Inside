@@ -116,7 +116,7 @@ public class Player : Entity
             return;
         }
         
-        if (ChatManager.instance.IsChatting || InventoryManager.instance.isInvenOpen)
+        if (ChatManager.instance.IsChatting || InventoryManager.instance.isInvenOpen || MissionManager.instance.IsMissionPanelOpen)
         {
             _playerStateMachine.ChangeState(IdleState);
             return;
