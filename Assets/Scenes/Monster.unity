@@ -2466,7 +2466,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 10
   m_Sprite: {fileID: 7928858964255100155, guid: 6c5c5e54d0f4fe54ca59b95e17ec117d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.8396226, g: 0.8396226, b: 0.8396226, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -3884,7 +3884,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &474305647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4108,7 +4108,7 @@ Transform:
   m_GameObject: {fileID: 474305646}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -125, y: 49.99, z: 0}
+  m_LocalPosition: {x: -75.2, y: 49.99, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4997,6 +4997,7 @@ Transform:
   - {fileID: 1804925140}
   - {fileID: 1819145674}
   - {fileID: 451416672}
+  - {fileID: 2020520726}
   m_Father: {fileID: 668091356}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590393191
@@ -5744,7 +5745,7 @@ Transform:
   m_GameObject: {fileID: 668091347}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -8.95, y: 50.98, z: 0}
+  m_LocalPosition: {x: -72.23, y: 49.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -5789,9 +5790,8 @@ MonoBehaviour:
     primaryJumpCheck: {fileID: 451416672}
     jumpCheckDistance: 0
   battleMoveSpeed: 2.6
-  attackDistance: 5
+  attackDistance: 4
   battleTimeDuration: 5
-  minRetreatDistance: 0
   retreatVelocity: {x: 0, y: 0}
   playerCheck: {fileID: 668091356}
   whatIsPlayer:
@@ -5801,6 +5801,12 @@ MonoBehaviour:
   IdleTime: 0
   MoveSpeed: 1.4
   moveAnimSpeedMultiplier: 1
+  machinegundirection: {fileID: 2020520726}
+  machin_gun_bullet: 50
+  fireRate: 0.1
+  cooldown: 0
+  cooltime: 10
+  raySpeed: 2
 --- !u!1 &670491607
 GameObject:
   m_ObjectHideFlags: 0
@@ -6312,7 +6318,7 @@ GameObject:
   - component: {fileID: 768967885}
   - component: {fileID: 768967884}
   m_Layer: 8
-  m_Name: snow_wolf
+  m_Name: snow_wolf(test)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21178,7 +21184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1550243685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22001,7 +22007,6 @@ MonoBehaviour:
   bulletPrefab: {fileID: 2435721809930264131, guid: 02e7f81602eadb14c98d945998083f41, type: 3}
   bullet: 100
   cooltime: 0.038
-  player: {fileID: 0}
 --- !u!212 &1587508519
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -48441,6 +48446,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2018650810}
   m_CullTransparentMesh: 1
+--- !u!1 &2020520725
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2020520726}
+  m_Layer: 8
+  m_Name: machine gun direction
+  m_TagString: Untagged
+  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2020520726
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020520725}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 552846181}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2022990273
 GameObject:
   m_ObjectHideFlags: 0
