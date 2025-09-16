@@ -45,14 +45,14 @@ public class Enemy_laboratory_robot : Entity
     [Header("Battle details")] public float battleMoveSpeed = 3;
     public float attackDistance = 2;
     public float battleTimeDuration = 5;
-    public float minRetreatDistance = 1;
+    
 
     public Vector2 retreatVelocity;
 
     [Header("Player detection")] [SerializeField]
-    private Transform playerCheck;
+    public Transform playerCheck;
 
-    [SerializeField] private LayerMask whatIsPlayer;
+    [SerializeField] public LayerMask whatIsPlayer;
     [SerializeField] private float playerCheckDistance = 10;
 
     [Header("Movement details")] public float IdleTime;
@@ -60,8 +60,14 @@ public class Enemy_laboratory_robot : Entity
 
     [Range(0, 10)] public float moveAnimSpeedMultiplier = 1;
 
-
-
+    [Header("machine gun")] 
+    [SerializeField] public Transform machinegundirection;
+    [SerializeField] public int machin_gun_bullet;
+    
+    [SerializeField] public float fireRate;
+    [SerializeField] public float cooldown;
+    [SerializeField] public float cooltime;
+    [SerializeField] public float raySpeed = 10f;
     public Transform player { get; private set; }
 
 
@@ -147,6 +153,7 @@ public void Deading()
     protected virtual void Update()
     {
         HandleCollisionDetection();
+        Cooltime();
         EnemyStateMachine.UpdateActiveState();
     }
 
@@ -209,10 +216,7 @@ public void Deading()
         Gizmos.color = Color.blue;
         Gizmos.DrawLine(playerCheck.position,
             new Vector3(playerCheck.position.x + (FacingDirection * attackDistance), playerCheck.position.y));
-
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawLine(playerCheck.position,
-            new Vector3(playerCheck.position.x + (FacingDirection * minRetreatDistance), playerCheck.position.y));
+        
         if (JumpState != null && JumpState._jumpData != null && JumpState._jumpData.primaryJumpCheck != null)
         {
             Gizmos.color = Color.green;
@@ -261,6 +265,15 @@ public void Deading()
         }
         
         return false;
+    }
+
+    private void Cooltime()
+    {
+        if (cooldown > 0f)
+        {
+            cooldown -= Time.deltaTime;
+        }
+        
     }
 }
     

@@ -7,7 +7,7 @@ public class Robot_Cannon : MonoBehaviour
     [SerializeField] public int bullet = 50;
     [SerializeField] public float cooltime = 0.1f;
     
-    public Transform player;
+    private Transform player;
 
     private float time;
 
@@ -15,7 +15,7 @@ public class Robot_Cannon : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        // player = GameObject.FindGameObjectWithTag("Player").transform;
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         Cannon();
     }
 

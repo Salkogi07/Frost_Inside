@@ -25,11 +25,11 @@ public class Enemy_laboratory_robot_BattleState : Enemy_laboratory_robot_State
             player = laboratoryRobot.GetPlayerReference();
         }
         // player ??= enemy.GetPlayerReference();
-        if (shouldRetreat())
-        {
-            rb.linearVelocity = new Vector2(laboratoryRobot.retreatVelocity.x*-DirectionToPlayer(),laboratoryRobot.retreatVelocity.y);
-            laboratoryRobot.HandleFlip(DirectionToPlayer());
-        }
+        // if (shouldRetreat())
+        // {
+        //     rb.linearVelocity = new Vector2(laboratoryRobot.retreatVelocity.x*-DirectionToPlayer(),laboratoryRobot.retreatVelocity.y);
+        //     laboratoryRobot.HandleFlip(DirectionToPlayer());
+        // }
         
     }
 
@@ -46,7 +46,7 @@ public class Enemy_laboratory_robot_BattleState : Enemy_laboratory_robot_State
         {
             enemyStateMachine.ChangeState(laboratoryRobot.IdleState);
         }
-        if (WithinAttackRange() && laboratoryRobot.PlayerDetection())
+        if (WithinAttackRange() && laboratoryRobot.PlayerDetection() && laboratoryRobot.cooldown <= 0f)
         {
             enemyStateMachine.ChangeState(laboratoryRobot.AttackState);
         }
@@ -70,7 +70,7 @@ public class Enemy_laboratory_robot_BattleState : Enemy_laboratory_robot_State
     private void UpdateBattleTimer() => lastTimeWasInBattle = Time.time;
     private bool BattleTimeIsOver() =>Time.time > lastTimeWasInBattle + laboratoryRobot.battleTimeDuration;
     private bool WithinAttackRange() => DistanceToPlayer() < laboratoryRobot.attackDistance;
-    private bool shouldRetreat() => DistanceToPlayer() < laboratoryRobot.minRetreatDistance;
+    // private bool shouldRetreat() => DistanceToPlayer() < laboratoryRobot.minRetreatDistance;
         
     
     
