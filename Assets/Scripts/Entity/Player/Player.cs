@@ -115,13 +115,7 @@ public class Player : Entity
             _playerStateMachine.ChangeState(DeathState);
             return;
         }
-        
-        if (ChatManager.instance.IsChatting || InventoryManager.instance.isInvenOpen || MissionManager.instance.IsMissionPanelOpen)
-        {
-            _playerStateMachine.ChangeState(IdleState);
-            return;
-        }
-        
+
         if (IsTest)
         {
             if (isknocked) return;
@@ -129,6 +123,14 @@ public class Player : Entity
             _playerStateMachine.UpdateActiveState();
             return;
         }
+        
+        if (ChatManager.instance.IsChatting || InventoryManager.instance.isInvenOpen || MissionManager.instance.IsMissionPanelOpen)
+        {
+            _playerStateMachine.ChangeState(IdleState);
+            return;
+        }
+        
+        
         
         if (IsOwner)
         {
