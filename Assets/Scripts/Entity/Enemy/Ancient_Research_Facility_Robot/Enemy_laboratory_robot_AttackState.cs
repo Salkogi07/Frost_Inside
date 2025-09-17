@@ -52,7 +52,7 @@ public class Enemy_laboratory_robot_AttackState : Enemy_laboratory_robot_State
 
         // 천천히 회전
         float newAngle = Mathf.LerpAngle(currentAngle, targetAngle, Time.deltaTime * laboratoryRobot.raySpeed);
-
+        
         // 회전 적용 (Z축만 회전)
         machinegundirection.rotation = Quaternion.Euler(0, 0, newAngle);
     }
@@ -88,13 +88,15 @@ public class Enemy_laboratory_robot_AttackState : Enemy_laboratory_robot_State
     {
        
         
-        Vector2 fireOrigin = laboratoryRobot.machinegundirection.position;
-        Vector2 direction = laboratoryRobot.player.position - laboratoryRobot.transform.position;
+        Transform gunTransform = laboratoryRobot.machinegundirection;
+
+        Vector2 fireOrigin = gunTransform.position;
+        Vector2 direction = gunTransform.right; // 또는 up - 총구 방향에 따라 변경
         float maxDistance = laboratoryRobot.attackDistance;
-        
+
         // Raycast로 총알을 발사하듯 시뮬레이션
-        RaycastHit2D hit = Physics2D.Raycast(fireOrigin, direction , laboratoryRobot.attackDistance, laboratoryRobot.whatIsPlayer);
-        
+        RaycastHit2D hit = Physics2D.Raycast(fireOrigin, direction, maxDistance, laboratoryRobot.whatIsPlayer);
+
         // 시각적 디버그
         Vector2 endPoint = fireOrigin + direction * maxDistance;
         Debug.DrawLine(fireOrigin, endPoint, Color.red, 0.3f);
@@ -103,7 +105,6 @@ public class Enemy_laboratory_robot_AttackState : Enemy_laboratory_robot_State
         if (hit.collider != null && hit.collider.CompareTag("Player"))
         {
             Debug.Log("플레이어 명중!");
-            // 예시: 플레이어에게 데미지 주기
             // hit.collider.GetComponent<PlayerHealth>()?.TakeDamage(1);
         }
     }
