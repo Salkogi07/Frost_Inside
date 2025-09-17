@@ -23,8 +23,8 @@ public class Enemy_Bomb_Monkey_AttackState : Enemy_Bomb_Monkey_State
 
         boomEffect.GetComponent<NetworkObject>().Spawn();
         int calculatedDamage = bombMonkey.stats.damage.GetValue();
-        boomEffect.GetComponent<Explosion_damage>().SetDamageClientRpc(calculatedDamage);
-        Debug.Log(boomEffect.GetComponent<Explosion_damage>().damage);
+        boomEffect.GetComponent<Explosion_Effect>().SetDamageClientRpc(calculatedDamage);
+        Debug.Log(boomEffect.GetComponent<Explosion_Effect>().damage);
         
         enemyStateMachine.ChangeState(bombMonkey.DeadState);
     }

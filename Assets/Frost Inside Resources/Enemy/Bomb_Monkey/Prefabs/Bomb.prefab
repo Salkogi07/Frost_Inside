@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2418395100605405785}
   - component: {fileID: -3393931738146035703}
+  - component: {fileID: 7319810192199958175}
   - component: {fileID: -3906223034950687709}
-  - component: {fileID: 5936457071276813492}
   - component: {fileID: 8961908978802505082}
   - component: {fileID: 1723957473456792681}
   - component: {fileID: 6642705912470756251}
@@ -62,6 +62,20 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &7319810192199958175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6600963996436454236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0a09412a90743744b12d2726633f618, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  damage: 0
 --- !u!114 &-3906223034950687709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,20 +91,6 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
   m_Animator: {fileID: 6642705912470756251}
---- !u!114 &5936457071276813492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6600963996436454236}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47ef11f9d5c4b1c45aed60ffd980b823, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
-  damage: 0
 --- !u!212 &8961908978802505082
 SpriteRenderer:
   m_ObjectHideFlags: 0
