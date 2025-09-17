@@ -358,9 +358,16 @@ public class Player : Entity
         }
         else
         {
-            _lerpTargetPos = position;
-            _lerpStartPos = position;
+            RequestTeleportClientRpc();
         }
+    }
+
+    [ClientRpc]
+    private void RequestTeleportClientRpc()
+    {
+        transform.position = _networkPosition.Value;
+        _lerpTargetPos = _networkPosition.Value;
+        _lerpStartPos = _networkPosition.Value;
     }
     
     // 클라이언트가 서버에게 파티클 재생을 요청하는 RPC입니다.
