@@ -18,13 +18,6 @@ public class Explosion_damage : NetworkBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 데미지 처리는 서버에서만 실행되도록 보장합니다.
-        if (!IsServer)
-        {
-            return;
-        }
-
-        // 상대방이 Entity_Health 컴포넌트를 가지고 있는지 확인하고 데미지를 줍니다.
         if (other.TryGetComponent<Entity_Health>(out var entityHealth))
         {
             entityHealth.TakeDamage(damage, transform);
