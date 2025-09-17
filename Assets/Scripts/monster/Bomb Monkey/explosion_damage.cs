@@ -8,7 +8,7 @@ public class Explosion_damage : NetworkBehaviour
     public int damage;
 
     [ClientRpc]
-    public void SetDamageRpc(int damageValue)
+    public void SetDamageClientRpc(int damageValue)
     {
         damage = damageValue;
         // 클라이언트에서 데미지가 잘 설정되었는지 확인하기 위한 로그
