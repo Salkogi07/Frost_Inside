@@ -349,27 +349,48 @@ public class Player : Entity
         FacingDirection *= -1;
     }
     
-    public void Teleport(Vector2 position)
+    /// <summary>
+    /// 텔레포트를 시작하는 공개 메서드입니다. Owner 클라이언트에서만 호출해야 합니다.
+    /// </summary>
+    /// <param name="newPosition">텔레포트할 목표 위치</param>
+    public void Teleport(Vector2 newPosition)
     {
-        if (IsOwner)
-        {
-            transform.position = position;
-            _networkPosition.Value = position;
-            _lerpTargetPos = position;
-            _lerpStartPos = position;
-        }
-        else
-        {
-            RequestTeleportClientRpc();
-        }
+        // Owner가 아니면 텔레포트를 요청할 수 없습니다.
+        if (!IsOwner) return;
+
+        // 서버에 텔레포트를 요청합니다.
+        TeleportServerRpc(newPosition);
     }
 
-    [ClientRpc]
-    private void RequestTeleportClientRpc()
+    /// <summary>
+    /// 클라이언트의 요청을 받아 서버에서 실행됩니다.
+    /// 서버가 모든 클라이언트에게 텔레포트를 명령합니다.
+    /// </summary>
+    [ServerRpc]
+    private void TeleportServerRpc(Vector2 newPosition)
     {
-        transform.position = _networkPosition.Value;
-        _lerpTargetPos = _networkPosition.Value;
-        _lerpStartPos = _networkPosition.Value;
+        // 1. 서버의 네트워크 변수(_networkPosition)를 즉시 갱신합니다.
+        //    이렇게 하면 나중에 접속하는 클라이언트도 올바른 위치에서 시작합니다.
+        _networkPosition.Value = newPosition;
+
+        // 2. 모든 클라이언트(요청한 클라이언트 포함)에게 텔레포트를 실행하라는 ClientRpc를 호출합니다.
+        TeleportClientRpc(newPosition);
+    }
+
+    /// <summary>
+    /// 서버의 명령을 받아 모든 클라이언트에서 실행됩니다.
+    /// 플레이어의 위치를 즉시 변경하고 Lerp 관련 변수를 초기화합니다.
+    /// </summary>
+    [ClientRpc]
+    private void TeleportClientRpc(Vector2 newPosition)
+    {
+        // 1. 물리적 위치를 즉시 목표 위치로 변경합니다.
+        transform.position = newPosition;
+
+        // 2. Lerp 로직을 무력화하기 위해 보간 시작점과 목표점을 모두 새로운 위치로 설정합니다.
+        //    이렇게 하면 다음 Update 프레임에서 Lerp가 작동하더라도 (newPosition에서 newPosition으로) 이동하게 되어 제자리에 머물게 됩니다.
+        _lerpStartPos = newPosition;
+        _lerpTargetPos = newPosition;
     }
     
     // 클라이언트가 서버에게 파티클 재생을 요청하는 RPC입니다.
