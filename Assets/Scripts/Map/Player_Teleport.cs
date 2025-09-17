@@ -13,11 +13,7 @@ public class Player_Teleport : MonoBehaviour
         if (other.tag == "Player")
         {
             Player player = other.GetComponent<Player>();
-            if (player.IsOwner)
-            {
-                StartCoroutine(Teleport(player));
-                
-            }
+            StartCoroutine(Teleport(player));
         }
     }
 
