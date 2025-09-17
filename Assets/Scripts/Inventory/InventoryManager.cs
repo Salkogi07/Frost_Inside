@@ -116,7 +116,7 @@ public class InventoryManager : MonoBehaviour
 
     private void HandleItemThrowInput()
     {
-        if (isInvenOpen || SettingManager.Instance.IsOpenSetting()) return;
+        if (isInvenOpen || SettingManager.Instance.IsOpenSetting() || MissionManager.instance.IsMissionPanelOpen) return;
         
         if (Input.GetKeyDown(KeyManager.instance.GetKeyCodeByName("Throw Item")))
         {
@@ -146,7 +146,7 @@ public class InventoryManager : MonoBehaviour
 
     private void HandleQuickSlotSelection()
     {
-        if (isInvenOpen || SettingManager.Instance.IsOpenSetting()) return;
+        if (isInvenOpen || SettingManager.Instance.IsOpenSetting() || MissionManager.instance.IsMissionPanelOpen) return;
 
         if (Input.GetKeyDown(KeyCode.Alpha1)) SelectQuickSlot(0);
         if (Input.GetKeyDown(KeyCode.Alpha2)) SelectQuickSlot(1);

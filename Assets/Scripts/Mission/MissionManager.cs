@@ -12,25 +12,25 @@ public class MissionManager : NetworkBehaviour
     [SerializeField]
     private List<Mission> allMissions = new List<Mission>();
 
-    // 네트워크 동기화 변수
-    private NetworkList<int> availableMissionIds;
-    private NetworkVariable<int> selectedMissionId = new NetworkVariable<int>(-1);
-    private NetworkVariable<bool> isMissionAccepted = new NetworkVariable<bool>(false);
-    
-    // 평판 (게임오버 체력)
-    private NetworkVariable<int> teamReputation = new NetworkVariable<int>(3);
+    // --- 네트워크 동기화 변수 ---
+    private NetworkList<int> availableMissionIds; // 이용 가능한 미션 ID 목록
+    private NetworkVariable<int> selectedMissionId = new NetworkVariable<int>(-1); // 선택된 미션 ID
+    private NetworkVariable<bool> isMissionAccepted = new NetworkVariable<bool>(false); // 미션 수락 여부
 
-    // 이벤트
-    public event System.Action<List<Mission>> OnAvailableMissionsUpdated;
-    public event System.Action<Mission> OnMissionSelected;
-    public event System.Action<bool> OnMissionAcceptedStatusChanged;
-    public event System.Action<int> OnReputationChanged;
+    // --- 평판 (게임 오버 조건) ---
+    private NetworkVariable<int> teamReputation = new NetworkVariable<int>(3); // 팀 평판
 
-    public Mission CurrentMission => GetMissionById(selectedMissionId.Value);
-    public bool IsMissionAccepted => isMissionAccepted.Value;
-    public int TeamReputation => teamReputation.Value;
-    
-    public bool IsMissionPanelOpen { get; private set; }
+    // --- 이벤트 ---
+    public event System.Action<List<Mission>> OnAvailableMissionsUpdated; // 이용 가능한 미션 목록 업데이트 시 호출
+    public event System.Action<Mission> OnMissionSelected; // 미션 선택 시 호출
+    public event System.Action<bool> OnMissionAcceptedStatusChanged; // 미션 수락 상태 변경 시 호출
+    public event System.Action<int> OnReputationChanged; // 평판 변경 시 호출
+
+    // --- 프로퍼티 ---
+    public Mission CurrentMission => GetMissionById(selectedMissionId.Value); // 현재 선택된 미션
+    public bool IsMissionAccepted => isMissionAccepted.Value; // 미션 수락 여부
+    public int TeamReputation => teamReputation.Value; // 팀 평판
+    public bool IsMissionPanelOpen { get; private set; } // 미션 패널이 열려있는지 여부
 
     private void Awake()
     {
@@ -48,14 +48,18 @@ public class MissionManager : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
-        GenerateRandomMissions();
-        
+        if (IsServer)
+        {
+            GenerateRandomMissions(); // 서버인 경우, 무작위 미션 생성
+        }
+
+        // 네트워크 변수 값 변경 시 이벤트 구독
         availableMissionIds.OnListChanged += OnAvailableMissionsChanged;
         selectedMissionId.OnValueChanged += OnSelectedMissionIdChanged;
         isMissionAccepted.OnValueChanged += OnAcceptedStatusChanged;
         teamReputation.OnValueChanged += OnReputationValueChanged;
 
-        // 씬 전환 후에도 UI가 최신 상태를 반영할 수 있도록 초기 이벤트 호출
+        // 씬 전환 후 UI가 현재 상태를 올바르게 반영하도록 초기 이벤트 호출
         if (availableMissionIds.Count > 0)
         {
             InvokeAvailableMissionsUpdate();
@@ -67,9 +71,10 @@ public class MissionManager : NetworkBehaviour
         OnMissionAcceptedStatusChanged?.Invoke(isMissionAccepted.Value);
         OnReputationChanged?.Invoke(teamReputation.Value);
     }
-    
+
     public override void OnNetworkDespawn()
     {
+        // 네트워크 변수 이벤트 구독 해제
         availableMissionIds.OnListChanged -= OnAvailableMissionsChanged;
         selectedMissionId.OnValueChanged -= OnSelectedMissionIdChanged;
         isMissionAccepted.OnValueChanged -= OnAcceptedStatusChanged;
@@ -81,6 +86,7 @@ public class MissionManager : NetworkBehaviour
         InvokeAvailableMissionsUpdate();
     }
 
+    // 이용 가능한 미션 목록 업데이트 이벤트를 호출하는 함수
     private void InvokeAvailableMissionsUpdate()
     {
         List<Mission> availableMissions = new List<Mission>();
@@ -104,25 +110,25 @@ public class MissionManager : NetworkBehaviour
     {
         OnMissionAcceptedStatusChanged?.Invoke(newValue);
     }
-    
+
     private void OnReputationValueChanged(int previousValue, int newValue)
     {
         OnReputationChanged?.Invoke(newValue);
         if (newValue <= 0)
         {
-            // 평판이 0 이하면 게임오버 로직 실행
-            Debug.Log("Team reputation is 0. Game Over.");
-            // ex: GameManager.instance.GameOver();
+            // 평판이 0 이하일 경우 게임 오버 로직 실행
+            Debug.Log("팀 평판이 0이 되어 게임 오버입니다.");
+            // 예시: GameManager.instance.GameOver();
         }
     }
-    
+
     public void SetPanelState(bool isOpen)
     {
         IsMissionPanelOpen = isOpen;
     }
 
     /// <summary>
-    /// (서버 전용) 로비에서 게임 시작 시 2~3개의 미션을 랜덤으로 생성합니다.
+    /// (서버 전용) 로비에서 게임이 시작될 때 2~3개의 무작위 미션을 생성합니다.
     /// </summary>
     public void GenerateRandomMissions()
     {
@@ -162,41 +168,34 @@ public class MissionManager : NetworkBehaviour
     [ServerRpc(RequireOwnership = false)]
     public void SelectMissionServerRpc(int missionId)
     {
-        // 이미 수락된 미션은 변경 불가
+        // 미션이 이미 수락된 상태에서는 선택을 변경할 수 없습니다.
         if (isMissionAccepted.Value) return;
 
-        bool isValidId = false;
-        foreach (int id in availableMissionIds)
-        {
-            if (id == missionId)
-            {
-                isValidId = true;
-                break;
-            }
-        }
-        if (isValidId)
+        if (availableMissionIds.Contains(missionId))
         {
             selectedMissionId.Value = missionId;
-        }
-    }
-    
-    [ServerRpc(RequireOwnership = false)]
-    public void DeselectMissionServerRpc()
-    {
-        if (!isMissionAccepted.Value)
-        {
-            selectedMissionId.Value = -1;
         }
     }
 
     [ServerRpc(RequireOwnership = false)]
     public void AcceptMissionServerRpc(ServerRpcParams rpcParams = default)
     {
-        if (rpcParams.Receive.SenderClientId != NetworkManager.Singleton.LocalClientId) return; // 방장만 실행 가능
+        if (rpcParams.Receive.SenderClientId != NetworkManager.Singleton.LocalClientId) return; // 호스트만 실행 가능
         if (selectedMissionId.Value != -1)
         {
             isMissionAccepted.Value = true;
-            Debug.Log($"Mission '{GetMissionById(selectedMissionId.Value).MissionTitle}' has been accepted by the host.");
+            Debug.Log($"호스트가 미션 '{GetMissionById(selectedMissionId.Value).MissionTitle}'을(를) 수락했습니다.");
+        }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void CancelMissionAcceptanceServerRpc(ServerRpcParams rpcParams = default)
+    {
+        if (rpcParams.Receive.SenderClientId != NetworkManager.Singleton.LocalClientId) return; // 호스트만 실행 가능
+        if (isMissionAccepted.Value)
+        {
+            isMissionAccepted.Value = false;
+            Debug.Log($"호스트가 미션 '{CurrentMission.MissionTitle}'의 수락을 취소했습니다.");
         }
     }
 
