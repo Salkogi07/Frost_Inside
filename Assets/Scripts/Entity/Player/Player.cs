@@ -340,11 +340,19 @@ public class Player : Entity
         if (IsGroundDetected)
             PlayDustEffectServerRpc();
 
-        Vector3 currentScale = playerObject.transform.localScale;
+        Vector2 currentScale = playerObject.transform.localScale;
         currentScale.x *= -1;
         playerObject.transform.localScale = currentScale;
         _isFacingRight = !_isFacingRight;
         FacingDirection *= -1;
+    }
+
+    public void Teleport(Vector2 position)
+    {
+        transform.position = position;
+        _networkPosition.Value = position;
+        _lerpTargetPos = position;
+        _lerpStartPos = position;
     }
     
     // 클라이언트가 서버에게 파티클 재생을 요청하는 RPC입니다.
