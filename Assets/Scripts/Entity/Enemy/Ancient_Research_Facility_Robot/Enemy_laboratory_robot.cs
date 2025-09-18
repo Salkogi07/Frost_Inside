@@ -62,6 +62,7 @@ public class Enemy_laboratory_robot : Entity
 
     [Header("machine gun")] 
     [SerializeField] public Transform machinegundirection;
+    [SerializeField] public SpriteRenderer muzzleFlashRenderer;
     [SerializeField] public int machin_gun_bullet;
     
     [SerializeField] public float fireRate;

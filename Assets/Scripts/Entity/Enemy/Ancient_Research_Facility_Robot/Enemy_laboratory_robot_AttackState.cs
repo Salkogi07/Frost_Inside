@@ -20,8 +20,9 @@ public class Enemy_laboratory_robot_AttackState : Enemy_laboratory_robot_State
         
         // fireOrigin = (laboratoryRobot.player.position - laboratoryRobot.transform.position).normalized;
         // fireOrigin.Normalize();
-        laboratoryRobot.StartCoroutine(FireGatlingGun());
+        laboratoryRobot.StartCoroutine(DelayedFireGatlingGun());
         currentDirection  = (laboratoryRobot.player.position - laboratoryRobot.transform.position).normalized;
+        
 
     }
 
@@ -56,7 +57,11 @@ public class Enemy_laboratory_robot_AttackState : Enemy_laboratory_robot_State
         // 회전 적용 (Z축만 회전)
         machinegundirection.rotation = Quaternion.Euler(0, 0, newAngle);
     }
-    
+    private IEnumerator DelayedFireGatlingGun()
+    {
+        yield return new WaitForSeconds(3f); // 3초 대기
+        yield return FireGatlingGun();       // 개틀링건 발사 시작
+    }
 
     private IEnumerator FireGatlingGun()
     {
@@ -86,7 +91,12 @@ public class Enemy_laboratory_robot_AttackState : Enemy_laboratory_robot_State
 
     private void FireBullet()
     {
-       
+        ShowMuzzleFlash(0.1f); // 섬광 보이기
+        
+        
+        
+        
+        
         
         Transform gunTransform = laboratoryRobot.machinegundirection;
 
@@ -106,6 +116,21 @@ public class Enemy_laboratory_robot_AttackState : Enemy_laboratory_robot_State
         {
             Debug.Log("플레이어 명중!");
             // hit.collider.GetComponent<PlayerHealth>()?.TakeDamage(1);
+        }
+    }
+    private void ShowMuzzleFlash(float duration)
+    {
+        laboratoryRobot.StartCoroutine(ShowMuzzleFlashCoroutine(duration));
+    }
+
+    private IEnumerator ShowMuzzleFlashCoroutine(float delay)
+    {
+        if (laboratoryRobot.muzzleFlashRenderer != null)
+        {
+            
+            laboratoryRobot.muzzleFlashRenderer.enabled = true;
+            yield return new WaitForSeconds(delay);
+            laboratoryRobot.muzzleFlashRenderer.enabled = false;
         }
     }
 }
