@@ -145,7 +145,8 @@ public class PlayerDataManager : MonoBehaviour
             SteamId = steamId,
             SteamName = steamName,
             IsReady = true,
-            SelectedCharacterId = 0
+            SelectedCharacterId = 0,
+            IsDead = false
         };
         playerInfoMap[clientId] = newPlayer;
         OnPlayerAdded?.Invoke(newPlayer);
@@ -175,6 +176,16 @@ public class PlayerDataManager : MonoBehaviour
         {
             info.SelectedCharacterId = characterId;
             OnPlayerUpdated?.Invoke(info);
+        }
+    }
+    
+    public void UpdatePlayerDeadStatus(ulong clientId, bool isDead)
+    {
+        if (playerInfoMap.TryGetValue(clientId, out var info))
+        {
+            info.IsDead = isDead;
+            OnPlayerUpdated?.Invoke(info);
+            Debug.Log($"[PlayerDataManager] Player {info.SteamName} dead status updated to: {isDead}");
         }
     }
 

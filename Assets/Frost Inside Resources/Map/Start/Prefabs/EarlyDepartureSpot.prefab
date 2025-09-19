@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4884073947085092874}
   - component: {fileID: 7999989566913055802}
-  - component: {fileID: 1900821356776900239}
+  - component: {fileID: 1727391392658828755}
   m_Layer: 0
-  m_Name: GameStartSpot
+  m_Name: EarlyDepartureSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &1900821356776900239
+--- !u!114 &1727391392658828755
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,10 +90,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 486036620562960388}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e4fbcb2cc7944498a289434e1258fb7, type: 3}
+  m_Script: {fileID: 11500000, guid: 20b9a89c152d431a8044751594905688, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  requiredHoldTime: 2
+  requiredHoldTime: 3
   interactionPrompt: {fileID: 6127481479072829768}
   fillImage: {fileID: 7350930439366386655}
 --- !u!1 &5793061234774097230
@@ -188,7 +188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &834669739797864057
 RectTransform:
   m_ObjectHideFlags: 0

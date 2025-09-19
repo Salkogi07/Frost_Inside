@@ -12,4 +12,5 @@ public class PlayerInfo
     public string SteamName;
     public bool IsReady;
     public int SelectedCharacterId = 0; // 0은 선택되지 않음을 의미
+    public bool IsDead = false;
 }

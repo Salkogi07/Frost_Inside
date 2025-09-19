@@ -21,4 +21,14 @@ public class SnowCrusier_Open : MonoBehaviour
         yield return new WaitForSeconds(waitSecond);
         anim.Play("open");
     }
+    
+    public void Close()
+    {
+        anim.Play("close");
+    }
+
+    public void Move()
+    {
+        anim.Play("move");
+    }
 }

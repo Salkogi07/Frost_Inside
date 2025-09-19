@@ -88,6 +88,23 @@ public class TimerManager : NetworkBehaviour
         {
             yield return new WaitForSeconds(timeSpeed);
             networkTotalMinutes.Value++;
+            
+            // 서버에서만 시간 경과에 따른 로직을 처리합니다.
+            if (IsServer)
+            {
+                // 현재 시간이 자정(0시)이 되었는지 확인합니다.
+                // (totalMinutes / 60)은 총 시간을 의미하며, 24로 나눈 나머지가 0이면 자정입니다.
+                int currentHour = (networkTotalMinutes.Value / 60) % 24;
+                if (currentHour == 0)
+                {
+                    // CruiserController가 존재하고 아직 출발하지 않았다면 출발 시퀀스 시작
+                    if (CruiserController.instance != null)
+                    {
+                        CruiserController.instance.StartDepartureSequence();
+                        break; // 타이머 코루틴 중지
+                    }
+                }
+            }
         }
     }
 }

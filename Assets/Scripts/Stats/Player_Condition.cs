@@ -200,7 +200,15 @@ public class Player_Condition : Entity_Health
 
     void Die()
     {
+        if (_isDead) return; // 중복 실행 방지
         _isDead = true;
+        
+        // 내가 이 캐릭터의 주인(Owner)일 경우에만 서버에 사망 사실을 보고합니다.
+        if (IsOwner)
+        {
+            NetworkTransmission.instance.ReportMyDeathServerRpc();
+            Debug.Log("Reporting my death to the server.");
+        }
     }
     #endregion
 
