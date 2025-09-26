@@ -319,7 +319,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
   TransitionStateInfoList: []
-  m_Animator: {fileID: 6116340301406287939}
+  m_Animator: {fileID: 5881637487873102800}
 --- !u!114 &3316583795968269838
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 4589327746630019981}
   - component: {fileID: 4383163789121894670}
   - component: {fileID: 1514953491766531400}
-  - component: {fileID: 6116340301406287939}
+  - component: {fileID: 5881637487873102800}
   m_Layer: 6
   m_Name: Sprite
   m_TagString: Player
@@ -622,7 +622,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c55236f81d1040348185cc0659dfa096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &6116340301406287939
+--- !u!95 &5881637487873102800
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
