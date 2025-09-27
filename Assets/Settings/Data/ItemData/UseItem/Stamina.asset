@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 26
   itemType: 1
-  itemName: Stamina
+  itemName: "\uC8FC\uC0AC\uAE30"
   itemWeight: 0
-  icon: {fileID: 21300000, guid: c805c898d1bd8064c80076484e27a7eb, type: 3}
+  icon: {fileID: 21300000, guid: ca2896d713b67ca4f8d67a89240f9a09, type: 3}
   explanation: "\uC2A4\uD14C\uBBF8\uB098 \uCC44\uC6CC\uC9D0"
   priceRange: {x: 50, y: 120}
   isOre: 0

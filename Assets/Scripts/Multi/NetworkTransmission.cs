@@ -209,10 +209,6 @@ public class NetworkTransmission : NetworkBehaviour
         // 게임 시작 조건: 모든 플레이어 준비 + 미션 수락 완료
         if (PlayerDataManager.instance.AreAllPlayersReady() && MissionManager.instance.IsMissionAccepted)
         {
-            // MissionManager에 랜덤 미션 생성 요청 (이 부분은 로비 생성 시점으로 옮기는 것이 더 좋습니다)
-            // 여기서는 게임 시작 시점에 미션 진행상황을 초기화합니다.
-            MissionProgressManager.instance.ResetProgress();
-
             GameNetworkManager.instance.LockLobby();
             PlayerDataManager.instance.ClearLoadedClients();
 

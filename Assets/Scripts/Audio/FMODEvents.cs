@@ -15,6 +15,15 @@ public class FMODEvents : MonoBehaviour
     [field: Header("Loading")]
     [field: SerializeField] public EventReference loading {get; private set;}
     
+    [field: Header("ButtonHover")]
+    [field: SerializeField] public EventReference buttonHover {get; private set;}
+    
+    [field: Header("ButtonClick")]
+    [field: SerializeField] public EventReference buttonClick {get; private set;}
+    
+    [field: Header("LaserMining")]
+    [field: SerializeField] public EventReference laserMining {get; private set;}
+    
     public static FMODEvents instance { get; private set; }
     
     private void Awake()

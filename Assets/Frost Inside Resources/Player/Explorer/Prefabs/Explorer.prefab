@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: -4094357913834435788}
   - component: {fileID: 6811224819524031968}
   - component: {fileID: -3421009123787721408}
+  - component: {fileID: 1537387776443196778}
   m_Layer: 6
   m_Name: Explorer
   m_TagString: Player
@@ -519,6 +520,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   miningSettings: {fileID: 11400000, guid: 79b329b56359235488e639a14f1ad263, type: 2}
+--- !u!114 &1537387776443196778
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3867197236472526811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc1747b707c4041bccddc62b15bce26, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  target: {fileID: 6961550826797008655}
 --- !u!1 &6627346968656088041
 GameObject:
   m_ObjectHideFlags: 0
@@ -5732,6 +5747,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6127418a1c9a21b4fae567b18c52847d, type: 3}
+--- !u!1 &6961550826797008655 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9061090767086828419, guid: 6127418a1c9a21b4fae567b18c52847d, type: 3}
+  m_PrefabInstance: {fileID: 2099543413444066444}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8440607584462023942 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7494021102814597514, guid: 6127418a1c9a21b4fae567b18c52847d, type: 3}

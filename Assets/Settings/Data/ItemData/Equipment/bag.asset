@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: 0
   itemName: "\uAC00\uBC29"
   itemWeight: 1.5
-  icon: {fileID: 21300000, guid: f4ea2a287a673c94d833143ad78e604d, type: 3}
+  icon: {fileID: 21300000, guid: e5358c11bcd60f74a8de96f97ef4e5d2, type: 3}
   explanation: "\uAC15\uB825\uD55C \uC720\u3163\uB825"
   priceRange: {x: 1, y: 1}
   isOre: 0

@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Test 1
   m_EditorClassIdentifier: 
   MissionId: 1
-  MissionTitle: "\uC7A5\uBCD1\uC900\uC744 \uCC3E\uC544\uB77C"
-  MissionSummary: "\uC6B0\uB9AC\uC758 \uCE5C\uAD6C \uC7A5\uBCD1\uC900"
-  MissionDetails: []
+  MissionTitle: "\uC548\uB155\uD558\uC138\uC694 \uC5F0\uAD6C\uC18C\uC785\uB2C8\uB2E4"
+  MissionSummary: "\uD604\uBBF8\uACBD \uAD6C\uD574\uC624\uAE30"
+  MissionDetails:
+  - "\uD604\uBBF8\uACBD [0 / 1]"
   ObjectiveType: 0
   CollectionRequirements:
-  - requiredItemId: 1
+  - requiredItemId: 19
     amount: 1
   EliminationRequirements: []

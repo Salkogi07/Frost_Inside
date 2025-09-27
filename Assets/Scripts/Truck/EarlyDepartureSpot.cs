@@ -9,7 +9,7 @@ public class EarlyDepartureSpot : MonoBehaviour
     [SerializeField] private GameObject interactionPrompt;
     [SerializeField] private Image fillImage;
 
-    private bool isHostInRange = false;
+    private bool isPlayerInRange = false;
     private float currentHoldTime = 0f;
     private bool isHolding = false;
 
@@ -25,7 +25,7 @@ public class EarlyDepartureSpot : MonoBehaviour
 
     private void Update()
     {
-        if (!isHostInRange) return;
+        if (!isPlayerInRange) return;
         
         // `KeyManager`가 있다면 사용하고, 없다면 KeyCode.E 등으로 직접 지정
         KeyCode interactionKey = KeyManager.instance.GetKeyCodeByName("Interaction");
@@ -56,11 +56,18 @@ public class EarlyDepartureSpot : MonoBehaviour
     
     private void TriggerEarlyDeparture()
     {
-        if (NetworkManager.Singleton.IsHost)
-        {
-            Debug.Log("Host is triggering an early departure...");
-            CruiserController.instance?.StartDepartureSequence();
-        }
+        // 서버에게 출발 시퀀스를 시작하도록 요청합니다.
+        RequestDepartureServerRpc();
+    }
+    
+    // 클라이언트가 서버에게 출발을 요청하기 위해 이 함수를 호출합니다.
+    // RequireOwnership = false로 설정하여 이 오브젝트의 소유자가 아니더라도 RPC를 보낼 수 있습니다.
+    [ServerRpc(RequireOwnership = false)]
+    private void RequestDepartureServerRpc()
+    {
+        Debug.Log("Server received a request for early departure.");
+        // 서버에서만 CruiserController의 출발 시퀀스를 실행합니다.
+        CruiserController.instance?.StartDepartureSequence();
     }
 
     private void ResetHoldState()
@@ -77,18 +84,18 @@ public class EarlyDepartureSpot : MonoBehaviour
     // 호스트인 로컬 플레이어만 상호작용 가능
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.TryGetComponent<NetworkObject>(out var netObj) && netObj.IsOwner && NetworkManager.Singleton.IsHost)
+        if (other.TryGetComponent<NetworkObject>(out var netObj) && netObj.IsOwner)
         {
-            isHostInRange = true;
+            isPlayerInRange = true;
             if (interactionPrompt != null) interactionPrompt.SetActive(true);
         }
     }
     
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.TryGetComponent<NetworkObject>(out var netObj) && netObj.IsOwner && NetworkManager.Singleton.IsHost)
+        if (other.TryGetComponent<NetworkObject>(out var netObj) && netObj.IsOwner)
         {
-            isHostInRange = false;
+            isPlayerInRange = false;
             if (interactionPrompt != null) interactionPrompt.SetActive(false);
             ResetHoldState();
         }

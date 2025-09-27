@@ -4,6 +4,13 @@ using Unity.Netcode;
 using System.Collections.Generic;
 using System.Linq;
 
+public enum MissionOutcome : byte
+{
+    None,    // 미션이 없거나 진행중
+    Success, // 성공
+    Failure  // 실패
+}
+
 public class MissionManager : NetworkBehaviour
 {
     public static MissionManager instance;
@@ -19,6 +26,8 @@ public class MissionManager : NetworkBehaviour
 
     // --- 평판 (게임 오버 조건) ---
     private NetworkVariable<int> teamReputation = new NetworkVariable<int>(3); // 팀 평판
+    
+    public NetworkVariable<MissionOutcome> FinalMissionOutcome { get; private set; } = new NetworkVariable<MissionOutcome>(MissionOutcome.None);
 
     // --- 이벤트 ---
     public event System.Action<List<Mission>> OnAvailableMissionsUpdated; // 이용 가능한 미션 목록 업데이트 시 호출
@@ -137,6 +146,7 @@ public class MissionManager : NetworkBehaviour
         availableMissionIds.Clear();
         isMissionAccepted.Value = false;
         selectedMissionId.Value = -1;
+        FinalMissionOutcome.Value = MissionOutcome.None;
 
         if (allMissions.Count == 0) return;
 
@@ -206,5 +216,15 @@ public class MissionManager : NetworkBehaviour
         {
             teamReputation.Value--;
         }
+    }
+    
+    /// <summary>
+    /// (서버 전용) 최종 미션 결과를 설정합니다.
+    /// </summary>
+    [ServerRpc(RequireOwnership = false)]
+    public void SetFinalMissionOutcomeServerRpc(MissionOutcome outcome)
+    {
+        FinalMissionOutcome.Value = outcome;
+        Debug.Log($"[Server] Final mission outcome set to: {outcome}");
     }
 }

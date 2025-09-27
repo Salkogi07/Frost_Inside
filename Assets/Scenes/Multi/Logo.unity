@@ -357,6 +357,27 @@ MonoBehaviour:
       Data3: 166772612
       Data4: -1377421393
     Path: event:/Loading/Loading
+  <buttonHover>k__BackingField:
+    Guid:
+      Data1: 1912364595
+      Data2: 1143260769
+      Data3: 1307893927
+      Data4: 812715572
+    Path: event:/SFX/UI/Button_Hover
+  <buttonClick>k__BackingField:
+    Guid:
+      Data1: -582122012
+      Data2: 1285981425
+      Data3: -1173409871
+      Data4: 1937794906
+    Path: event:/SFX/UI/Button_Click
+  <laserMining>k__BackingField:
+    Guid:
+      Data1: -1314183
+      Data2: 1234789879
+      Data3: 1088804505
+      Data4: -1721469881
+    Path: event:/SFX/Player/PlayerLaserMining
 --- !u!1001 &1556280768
 PrefabInstance:
   m_ObjectHideFlags: 0

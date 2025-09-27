@@ -12,6 +12,11 @@ public class ResultsScreenUIManager : MonoBehaviour
     [SerializeField] private Button nextButton;
     [SerializeField] private Transform playerResultsContainer; // 플레이어 결과 항목이 생성될 부모 Transform
     [SerializeField] private GameObject playerResultPrefab; // 이름과 상태 텍스트를 가진 UI 프리팹
+    
+    [Header("Mission Result")]
+    [SerializeField] private TMP_Text missionResultText;
+    [SerializeField] private Color successColor = Color.green;
+    [SerializeField] private Color failureColor = Color.red;
 
     private void Awake()
     {
@@ -45,8 +50,35 @@ public class ResultsScreenUIManager : MonoBehaviour
             texts[1].text = result.Status.ToString();
         }
         
+        UpdateMissionResultUI();
+        
         nextButton.interactable = true;
         resultsPanel.SetActive(true);
+    }
+    
+    private void UpdateMissionResultUI()
+    {
+        if (missionResultText == null) return;
+
+        MissionOutcome outcome = MissionManager.instance.FinalMissionOutcome.Value;
+
+        switch (outcome)
+        {
+            case MissionOutcome.Success:
+                missionResultText.gameObject.SetActive(true);
+                missionResultText.text = "MISSION SUCCESSFUL";
+                missionResultText.color = successColor;
+                break;
+            case MissionOutcome.Failure:
+                missionResultText.gameObject.SetActive(true);
+                missionResultText.text = "MISSION FAILED";
+                missionResultText.color = failureColor;
+                break;
+            case MissionOutcome.None:
+            default:
+                missionResultText.gameObject.SetActive(false);
+                break;
+        }
     }
 
     private void OnNextButtonClicked()

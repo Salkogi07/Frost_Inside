@@ -1,7 +1,6 @@
 ﻿using Unity.Netcode;
 using UnityEngine;
 
-[RequireComponent(typeof(NetworkObject))]
 public class ActiveStateSynchronizer : NetworkBehaviour
 {
     private readonly NetworkVariable<bool> _networkIsActive = new NetworkVariable<bool>(

@@ -27,6 +27,53 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 2289
+--- !u!114 &-5599296691899900519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/UI/Button_Hover
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/UI/Button_Hover
+  Guid:
+    Data1: 1912364595
+    Data2: 1143260769
+    Data3: 1307893927
+    Data4: 812715572
+  Banks:
+  - {fileID: 8506045650571816193}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 359
+--- !u!114 &-3266327967584710110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c18180ecb35941f4682ae60107b85b7c, type: 3}
+  m_Name: bank:/Player.bank
+  m_EditorClassIdentifier: 
+  Path: ../../FMod_file/QuesPick/Build/Desktop/Player.bank
+  Name: Player
+  StudioPath: bank:/Player
+  lastModified: 638945887405618604
+  FileSizes:
+  - Name: Desktop
+    Value: 26784
+  Exists: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,17 +91,21 @@ MonoBehaviour:
   - {fileID: 5336837122218376525}
   - {fileID: 6280964107919703565}
   - {fileID: 8506045650571816193}
+  - {fileID: -3266327967584710110}
   EditorEvents:
   - {fileID: 5599417682371273108}
   - {fileID: -8186721208015282537}
   - {fileID: 1530561487307898258}
+  - {fileID: -5599296691899900519}
+  - {fileID: 3885485133877223671}
+  - {fileID: 6372262727985435674}
   EditorParameters: []
   MasterBanks:
   - {fileID: 6280964107919703565}
   StringsBanks:
   - {fileID: 448354596783762299}
   cacheVersion: 131847
-  cacheTime: 638914171481105148
+  cacheTime: 638945887405618604
   SerializableEventsDict:
   - key: event:/Loading/Logo_Appears
     index: 0
@@ -62,6 +113,12 @@ MonoBehaviour:
     index: 1
   - key: event:/SFX/Player/PlayerSnowMove
     index: 2
+  - key: event:/SFX/UI/Button_Hover
+    index: 3
+  - key: event:/SFX/UI/Button_Click
+    index: 4
+  - key: event:/SFX/Player/PlayerLaserMining
+    index: 5
 --- !u!114 &448354596783762299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,10 +134,10 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638914157421346658
+  lastModified: 638945887405213125
   FileSizes:
   - Name: Desktop
-    Value: 982
+    Value: 1178
   Exists: 1
 --- !u!114 &1530561487307898258
 MonoBehaviour:
@@ -109,6 +166,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1500
+--- !u!114 &3885485133877223671
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/UI/Button_Click
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/UI/Button_Click
+  Guid:
+    Data1: -582122012
+    Data2: 1285981425
+    Data3: -1173409871
+    Data4: 1937794906
+  Banks:
+  - {fileID: 8506045650571816193}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 353
 --- !u!114 &5336837122218376525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -171,11 +255,38 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638914157421336482
+  lastModified: 638945887405203113
   FileSizes:
   - Name: Desktop
     Value: 1074
   Exists: 1
+--- !u!114 &6372262727985435674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Player/PlayerLaserMining
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Player/PlayerLaserMining
+  Guid:
+    Data1: -1314183
+    Data2: 1234789879
+    Data3: 1088804505
+    Data4: -1721469881
+  Banks:
+  - {fileID: -3266327967584710110}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 2663
 --- !u!114 &8506045650571816193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,8 +302,8 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638914167124187632
+  lastModified: 638945882700338682
   FileSizes:
   - Name: Desktop
-    Value: 47712
+    Value: 55648
   Exists: 1

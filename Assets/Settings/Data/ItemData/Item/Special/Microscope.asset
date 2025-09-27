@@ -16,7 +16,7 @@ MonoBehaviour:
   itemType: 3
   itemName: "\uD604\uBBF8\uACBD"
   itemWeight: 3
-  icon: {fileID: 21300000, guid: f4ea2a287a673c94d833143ad78e604d, type: 3}
+  icon: {fileID: 21300000, guid: a058d55db2080214f80cffbdfce2cc51, type: 3}
   explanation: "\uC2E4\uD5D8\uC2E4\uC5D0\uC11C \uC721\uC548\uC73C\uB85C \uC2DD\uBCC4\uD560
     \uC218 \uC5C6\uB294 \uC791\uC740 \uB300\uC0C1\uC774\uB098 \uAD6C\uC870\uB97C
     \uAD00\uCC30\uD558\uAE30 \uC704\uD574 \uC0AC\uC6A9\uB418\uB294 \uAD11\uD559\xB7\uC804\uC790

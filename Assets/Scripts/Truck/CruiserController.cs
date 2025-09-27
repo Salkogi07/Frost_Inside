@@ -25,6 +25,14 @@ public class CruiserController : NetworkBehaviour
     [Tooltip("플레이어 오브젝트에 할당된 레이어입니다.")]
     [SerializeField] private LayerMask playerLayer;
     
+    [Header("Mission Check")]
+    [Tooltip("미션 아이템을 확인할 영역의 중심 위치입니다.")]
+    [SerializeField] private Transform itemCheckZoneCenter;
+    [Tooltip("미션 아이템을 확인할 영역의 크기입니다.")]
+    [SerializeField] private Vector2 itemCheckZoneSize = new Vector2(10, 5);
+    [Tooltip("아이템 오브젝트에 할당된 레이어입니다.")]
+    [SerializeField] private LayerMask itemLayer;
+    
     [Header("References")]
     [Tooltip("플레이어가 출입을 감지하는 트리거 콜라이더")]
     [SerializeField] private Collider2D[] allEntrances;
@@ -146,6 +154,8 @@ public class CruiserController : NetworkBehaviour
             }
         }
         
+        CheckMissionItems();
+        
         // --- END: OverlapBox 로직 ---
 
         // 3. 최종 플레이어 상태 목록 생성
@@ -188,6 +198,77 @@ public class CruiserController : NetworkBehaviour
 
         // 7. 상태를 '이동 중'으로 변경하여 움직임 시작
         _networkState.Value = CruiserState.Moving;
+    }
+    
+    /// <summary>
+    /// (서버 전용) 크루저 내부의 아이템을 확인하여 미션 성공/실패 여부를 결정합니다.
+    /// </summary>
+    private void CheckMissionItems()
+    {
+        Mission currentMission = MissionManager.instance.CurrentMission;
+
+        // 수집 미션이 아니거나, 수락된 미션이 없으면 검사를 중단합니다.
+        if (currentMission == null || currentMission.ObjectiveType != MissionObjectiveType.Collect)
+        {
+            MissionManager.instance.SetFinalMissionOutcomeServerRpc(MissionOutcome.None);
+            return;
+        }
+
+        // 1. 크루저 내부의 모든 아이템을 수집합니다.
+        var itemsInCruiser = new Dictionary<int, int>();
+        if (itemCheckZoneCenter != null)
+        {
+            Collider2D[] itemsInZone = Physics2D.OverlapBoxAll(itemCheckZoneCenter.position, itemCheckZoneSize, 0f, itemLayer);
+            Debug.Log($"[Server] OverlapBox found {itemsInZone.Length} item colliders in the zone.");
+            
+            foreach (var itemCollider in itemsInZone)
+            {
+                if (itemCollider.TryGetComponent<ItemObject>(out var itemObject))
+                {
+                    Inventory_Item itemData = itemObject.GetItemData();
+                    if (!itemData.IsEmpty())
+                    {
+                        if (itemsInCruiser.ContainsKey(itemData.itemId))
+                        {
+                            itemsInCruiser[itemData.itemId]++;
+                        }
+                        else
+                        {
+                            itemsInCruiser[itemData.itemId] = 1;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogError("[Server] 'Item Check Zone Center'가 할당되지 않았습니다! 아이템 확인을 스킵합니다.");
+        }
+
+        // 2. 미션 요구사항과 비교합니다.
+        bool isSuccess = true;
+        foreach (var requirement in currentMission.CollectionRequirements)
+        {
+            // 요구 아이템이 없거나, 수량이 부족하면 실패 처리
+            if (!itemsInCruiser.ContainsKey(requirement.requiredItemId) || itemsInCruiser[requirement.requiredItemId] < requirement.amount)
+            {
+                isSuccess = false;
+                Debug.Log($"[Server] Mission Failed: Item ID {requirement.requiredItemId} required {requirement.amount}, but found {(itemsInCruiser.ContainsKey(requirement.requiredItemId) ? itemsInCruiser[requirement.requiredItemId] : 0)}.");
+                break;
+            }
+        }
+
+        // 3. 최종 결과를 설정합니다.
+        if (isSuccess)
+        {
+            MissionManager.instance.SetFinalMissionOutcomeServerRpc(MissionOutcome.Success);
+        }
+        else
+        {
+            MissionManager.instance.SetFinalMissionOutcomeServerRpc(MissionOutcome.Failure);
+            // 실패 시 평판 감소
+            MissionManager.instance.DecreaseReputationServerRpc();
+        }
     }
     
     [ClientRpc]
@@ -278,9 +359,18 @@ public class CruiserController : NetworkBehaviour
     // --- 기즈모(Gizmo)를 사용하여 에디터에서 확인 영역을 시각적으로 표시 ---
     private void OnDrawGizmosSelected()
     {
-        if (checkZoneCenter == null) return;
-
-        Gizmos.color = new Color(0, 1, 0, 0.5f); // 초록색, 반투명
-        Gizmos.DrawCube(checkZoneCenter.position, checkZoneSize);
+        // 플레이어 확인 영역 Gizmo
+        if (checkZoneCenter != null)
+        {
+            Gizmos.color = new Color(0, 1, 0, 0.5f);
+            Gizmos.DrawCube(checkZoneCenter.position, checkZoneSize);
+        }
+        
+        // 아이템 확인 영역 Gizmo
+        if (itemCheckZoneCenter != null)
+        {
+            Gizmos.color = new Color(0, 0, 1, 0.5f); // 파란색
+            Gizmos.DrawCube(itemCheckZoneCenter.position, itemCheckZoneSize);
+        }
     }
 }

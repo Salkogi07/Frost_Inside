@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -28,6 +29,7 @@ public class Laser : MonoBehaviour
 
     public void EnableLaser()
     {
+        gameObject.GetComponentInParent<ObjectActiveStateSynchronizer>().SetActiveState(true);
         lineRenderer.enabled = true;
 
         for (int i = 0; i < particles.Count; i++)
@@ -56,6 +58,8 @@ public class Laser : MonoBehaviour
     
     public void DisableLaser()
     {
+        gameObject.GetComponentInParent<ObjectActiveStateSynchronizer>().SetActiveState(false);
+        
         lineRenderer.enabled = false;
         
         for (int i = 0; i < particles.Count; i++)

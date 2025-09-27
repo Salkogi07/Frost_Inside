@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemId: 27
   itemType: 1
-  itemName: Bomb
+  itemName: "\uB2E4\uC774\uB108\uB9C8\uC774\uD2B8"
   itemWeight: 0
-  icon: {fileID: 21300000, guid: ca1988bab6c99a44a855b43096ac9633, type: 3}
+  icon: {fileID: 21300000, guid: a578fe3040bb18c43a62f8a779be1536, type: 3}
   explanation: "\uD3ED\uBC14\uB77C\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\u314F\uBC1C"
   priceRange: {x: 50, y: 120}
   isOre: 0

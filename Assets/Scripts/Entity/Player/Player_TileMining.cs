@@ -78,8 +78,7 @@ public class Player_TileMining : MonoBehaviour
             laserEndPoint = firePointPos + direction * miningRange; // 기본 사거리로 레이저 끝점 설정
             StopMining();
         }
-
-        // --- 수정된 코드 ---
+        
         // Owner 클라이언트에서만 레이저를 직접 업데이트하고, 네트워크 변수 갱신
         if (player.IsOwner)
         {
