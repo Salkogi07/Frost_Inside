@@ -69,7 +69,7 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/Player.bank
   Name: Player
   StudioPath: bank:/Player
-  lastModified: 638945887405618604
+  lastModified: 638956503783748346
   FileSizes:
   - Name: Desktop
     Value: 26784
@@ -105,7 +105,7 @@ MonoBehaviour:
   StringsBanks:
   - {fileID: 448354596783762299}
   cacheVersion: 131847
-  cacheTime: 638945887405618604
+  cacheTime: 638956503784236928
   SerializableEventsDict:
   - key: event:/Loading/Logo_Appears
     index: 0
@@ -134,7 +134,7 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/Master.strings.bank
   Name: Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638945887405213125
+  lastModified: 638956503783516380
   FileSizes:
   - Name: Desktop
     Value: 1178
@@ -208,7 +208,7 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/Laoding.bank
   Name: Laoding
   StudioPath: bank:/Laoding
-  lastModified: 638914171481105148
+  lastModified: 638956503783490740
   FileSizes:
   - Name: Desktop
     Value: 1005632
@@ -255,7 +255,7 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/Master.bank
   Name: Master
   StudioPath: bank:/Master
-  lastModified: 638945887405203113
+  lastModified: 638956503783506234
   FileSizes:
   - Name: Desktop
     Value: 1074
@@ -302,7 +302,7 @@ MonoBehaviour:
   Path: ../../FMod_file/QuesPick/Build/Desktop/SFX.bank
   Name: SFX
   StudioPath: bank:/SFX
-  lastModified: 638945882700338682
+  lastModified: 638956503784236928
   FileSizes:
   - Name: Desktop
     Value: 55648
