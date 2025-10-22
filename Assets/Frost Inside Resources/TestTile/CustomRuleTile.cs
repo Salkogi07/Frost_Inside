@@ -2,16 +2,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-// »õ·Î¿î ±ÔÄ¢ Å¬·¡½ºÀÔ´Ï´Ù. RuleTile.TilingRuleOutputÀ» »ó¼Ó¹Ş¾Æ
-// GameObject, Collider, Output(Single, Random, Animation) µîÀÇ ¼Ó¼ºÀ» ±×´ë·Î »ç¿ëÇÕ´Ï´Ù.
 [System.Serializable]
 public class OtherTilingRule : RuleTile.TilingRuleOutput
 {
     public enum Neighbor { DontCare, Is, IsNot };
-
-    // °Ë»ç ´ë»óÀÌ µÉ ´Ù¸¥ Å¸ÀÏ ¿¡¼Â
+    
     public TileBase m_OtherTile;
-    // 3x3 °İÀÚ¿¡ ´ëÇÑ 9°³ÀÇ ÀÌ¿ô ±ÔÄ¢
     public List<Neighbor> m_Neighbors = new List<Neighbor>(new Neighbor[9]);
 }
 
@@ -19,13 +15,22 @@ public class OtherTilingRule : RuleTile.TilingRuleOutput
 [CreateAssetMenu(fileName = "New Custom Rule Tile", menuName = "Tiles/Custom Rule Tile")]
 public class CustomRuleTile : RuleTile
 {
-    // Ä¿½ºÅÒ ¿¡µğÅÍ¿¡¼­ »ç¿ëÇÒ »õ·Î¿î ±ÔÄ¢ ¸®½ºÆ®
     [HideInInspector]
     public List<OtherTilingRule> m_OtherTilingRules = new List<OtherTilingRule>();
 
     public override void GetTileData(Vector3Int position, ITilemap tilemap, ref TileData tileData)
     {
-        // 'Other Tiling Rules'¸¦ ¸ÕÀú °Ë»çÇÕ´Ï´Ù.
+        // GetTileData í˜¸ì¶œ ì‹œ, íƒ€ì¼ì— ì ìš©í•  ê·œì¹™ì„ ë¨¼ì € ì°¾ìŠµë‹ˆë‹¤.
+        var iden = Matrix4x4.identity;
+        foreach (var rule in m_TilingRules)
+        {
+            if (RuleMatches(rule, position, tilemap, ref iden))
+            {
+                ApplyRule(rule, ref tileData, iden);
+                return;
+            }
+        }
+
         foreach (var rule in m_OtherTilingRules)
         {
             if (RuleMatches(rule, position, tilemap))
@@ -34,12 +39,19 @@ public class CustomRuleTile : RuleTile
                 return;
             }
         }
-
-        // ÀÏÄ¡ÇÏ´Â 'Other' ±ÔÄ¢ÀÌ ¾øÀ¸¸é, ±âº» 'Tiling Rules' ·ÎÁ÷À» ½ÇÇàÇÕ´Ï´Ù.
+        
         base.GetTileData(position, tilemap, ref tileData);
     }
-
-    // ±ÔÄ¢¿¡ µû¶ó Å¸ÀÏ µ¥ÀÌÅÍ¸¦ ¼³Á¤ÇÕ´Ï´Ù. Random, Animation Ãâ·ÂÀ» Áö¿øÇÏµµ·Ï ¼öÁ¤µË´Ï´Ù.
+    
+    // ê¸°ë³¸ TilingRuleì„ ì ìš©í•˜ê¸° ìœ„í•œ private ë©”ì†Œë“œ
+    private void ApplyRule(TilingRule rule, ref TileData tileData, Matrix4x4 transform)
+    {
+        tileData.sprite = rule.m_Sprites[0]; // ê¸°ë³¸ ê·œì¹™ì€ ì²« ë²ˆì§¸ ìŠ¤í”„ë¼ì´íŠ¸ë§Œ ì‚¬ìš©
+        tileData.gameObject = rule.m_GameObject;
+        tileData.colliderType = rule.m_ColliderType;
+        tileData.transform = transform;
+    }
+    
     private void ApplyRule(OtherTilingRule rule, Vector3Int position, ref TileData tileData)
     {
         tileData.gameObject = rule.m_GameObject;
@@ -60,8 +72,7 @@ public class CustomRuleTile : RuleTile
                 break;
         }
     }
-
-    // ¾Ö´Ï¸ŞÀÌ¼Ç µ¥ÀÌÅÍ¸¦ °¡Á®¿À´Â ºÎºĞÀ» ¿À¹ö¶óÀÌµåÇÕ´Ï´Ù.
+    
     public override bool GetTileAnimationData(Vector3Int position, ITilemap tilemap, ref TileAnimationData tileAnimationData)
     {
         foreach (var rule in m_OtherTilingRules)
@@ -73,7 +84,6 @@ public class CustomRuleTile : RuleTile
                 return true;
             }
         }
-        // ±âº» ¾Ö´Ï¸ŞÀÌ¼Ç ·ÎÁ÷µµ ½ÇÇàµÇµµ·Ï base È£ÃâÀ» Ãß°¡ÇÕ´Ï´Ù.
         return base.GetTileAnimationData(position, tilemap, ref tileAnimationData);
     }
 
@@ -94,7 +104,19 @@ public class CustomRuleTile : RuleTile
 
                 Vector3Int neighborPos = new Vector3Int(position.x + x, position.y + y, position.z);
                 TileBase neighborTile = tilemap.GetTile(neighborPos);
-                bool isOtherTile = (neighborTile == rule.m_OtherTile);
+                
+                bool isOtherTile = false;
+                // m_OtherTileì´ CustomRuleTile(í˜¹ì€ RuleTile) íƒ€ì…ì¸ì§€ í™•ì¸
+                if (rule.m_OtherTile is RuleTile otherRuleTile)
+                {
+                    // RuleTileì˜ RuleMatchë¥¼ ì‚¬ìš©í•˜ì—¬ ì•ˆì •ì ìœ¼ë¡œ ë¹„êµ
+                    isOtherTile = otherRuleTile.RuleMatch(0, neighborTile);
+                }
+                else
+                {
+                    // ì¼ë°˜ TileBaseì¸ ê²½ìš°, ê¸°ì¡´ì²˜ëŸ¼ ì°¸ì¡°ë¡œ ë¹„êµ
+                    isOtherTile = (neighborTile == rule.m_OtherTile);
+                }
 
                 if ((neighborRule == OtherTilingRule.Neighbor.Is && !isOtherTile) ||
                     (neighborRule == OtherTilingRule.Neighbor.IsNot && isOtherTile))

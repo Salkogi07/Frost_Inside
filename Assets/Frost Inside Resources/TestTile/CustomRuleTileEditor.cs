@@ -1,4 +1,6 @@
-﻿using UnityEditor;
+﻿#if UNITY_EDITOR
+
+using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 using System;
@@ -74,18 +76,14 @@ public class CustomRuleTileEditor : RuleTileEditor
 
         rect.y += 2f;
         rect.height -= k_PaddingBetweenRules;
-
-        // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-        //           레이아웃 너비 비율 수정 부분
+        
         float spriteWidth = k_DefaultElementHeight + 5f;
-        // 격자 너비를 3x3 셀이 정사각형으로 보이도록 정확하게 계산합니다. (18 * 3 = 54)
         float matrixWidth = 54f;
         float spacing = 10f;
 
         Rect spriteRect = new Rect(rect.xMax - spriteWidth, rect.y, spriteWidth, k_DefaultElementHeight);
         Rect matrixRect = new Rect(rect.xMax - spriteWidth - matrixWidth - (spacing / 2), rect.y, matrixWidth, k_DefaultElementHeight);
         Rect inspectorRect = new Rect(rect.x, rect.y, rect.width - matrixWidth - spriteWidth - spacing, rect.height);
-        // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
         OtherRuleInspectorOnGUI(inspectorRect, rule);
         OtherRuleMatrixOnGUI(matrixRect, rule.FindPropertyRelative("m_Neighbors"));
@@ -157,7 +155,7 @@ public class CustomRuleTileEditor : RuleTileEditor
         }
     }
 
-    // 중앙 규칙 격자 UI 그리기 (화살표 좌표 수정)
+    // 중앙 규칙 격자 UI 그리기 (수정 없음)
     private void OtherRuleMatrixOnGUI(Rect rect, SerializedProperty neighborsProp)
     {
         if (neighborsProp.arraySize != 9) neighborsProp.arraySize = 9;
@@ -185,11 +183,7 @@ public class CustomRuleTileEditor : RuleTileEditor
                 }
                 else
                 {
-                    // ▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼▼
-                    //            화살표 방향 좌표 수정 부분
-                    // GUI의 y좌표(아래로 증가)를 타일맵의 y좌표(위로 증가)로 변환해줍니다.
                     Vector3Int position = new Vector3Int(x - 1, 1 - y, 0);
-                    // ▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲▲
 
                     if (neighborValue == OtherTilingRule.Neighbor.Is)
                     {
@@ -219,3 +213,5 @@ public class CustomRuleTileEditor : RuleTileEditor
         firstSprite.objectReferenceValue = EditorGUI.ObjectField(new Rect(rect.x + 2, rect.y, rect.width - 4, k_DefaultElementHeight), firstSprite.objectReferenceValue, typeof(Sprite), false);
     }
 }
+
+#endif
