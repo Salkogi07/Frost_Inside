@@ -4520,9 +4520,9 @@ MonoBehaviour:
   spreadTilemap: {fileID: 608165600}
   seed: 0
   useRandomSeed: 1
-  placementDelay: 0.1
-  connectionDelay: 0.1
-  postProcessDelay: 0.1
+  placementDelay: 0.02
+  connectionDelay: 0.02
+  postProcessDelay: 0.02
   roomMin: {x: -50, y: -30}
   roomMax: {x: 50, y: 30}
   mapMin: {x: -120, y: -40}
