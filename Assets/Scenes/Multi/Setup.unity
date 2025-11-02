@@ -567,7 +567,6 @@ GameObject:
   - component: {fileID: 487868024}
   - component: {fileID: 487868023}
   - component: {fileID: 487868022}
-  - component: {fileID: 487868021}
   m_Layer: 0
   m_Name: MissionManager
   m_TagString: Untagged
@@ -575,19 +574,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &487868021
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 487868020}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83a445849e414debb61c1bc32f78910d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &487868022
 MonoBehaviour:
   m_ObjectHideFlags: 0

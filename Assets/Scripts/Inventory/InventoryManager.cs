@@ -105,7 +105,7 @@ public class InventoryManager : MonoBehaviour
             {
                 if (_playerObject != null)
                 {
-                    useItemData.ExecuteItemEffect(_playerObject.transform);
+                    useItemData.ExecuteItemEffect(_playerObject);
                     quickSlotItems[selectedQuickSlot] = Inventory_Item.Empty;
 
                     InventoryUI.Instance.UpdateAllSlots();
