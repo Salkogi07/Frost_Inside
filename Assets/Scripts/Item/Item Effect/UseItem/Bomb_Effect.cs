@@ -35,7 +35,7 @@ public class Bomb_Effect : UseItem_Effect
 
         if (bombNetworkObject.TryGetComponent<ThrownBomb>(out ThrownBomb bomb))
         {
-            Vector2 throwDirection = new Vector2(playerObject.GetComponent<Player>().FacingDirection, 0);
+            Vector2 throwDirection = new Vector2(playerObject.GetComponent<Player>().FacingDirection, 0.5f);
             
             bomb.SetDamage(damage); 
             bomb.Launch(throwDirection, throwForce);
