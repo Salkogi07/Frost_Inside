@@ -19699,7 +19699,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7494021102814597514}
   - component: {fileID: 7638858402639550430}
-  - component: {fileID: 7764789372516776416}
   m_Layer: 16
   m_Name: Gun
   m_TagString: Untagged
@@ -19743,34 +19742,3 @@ MonoBehaviour:
   firePoint: {fileID: 1523320119998611552}
   startVFX: {fileID: 4416957649938634530}
   endVFX: {fileID: 4284918916421537614}
---- !u!114 &7764789372516776416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9061090767086828419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CollisionTag: 
-  EventReference:
-    Guid:
-      Data1: -1314183
-      Data2: 1234789879
-      Data3: 1088804505
-      Data4: -1721469881
-    Path: event:/SFX/Player/PlayerLaserMining
-  Event: 
-  EventPlayTrigger: 11
-  EventStopTrigger: 12
-  AllowFadeout: 1
-  TriggerOnce: 0
-  Preload: 0
-  NonRigidbodyVelocity: 0
-  Params: []
-  OverrideAttenuation: 0
-  OverrideMinDistance: 1
-  OverrideMaxDistance: 20
