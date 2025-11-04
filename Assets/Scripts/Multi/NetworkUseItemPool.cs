@@ -18,7 +18,7 @@ public class NetworkUseItemPool : NetworkBehaviour
 {
     public static NetworkUseItemPool Instance { get; private set; }
 
-    [Tooltip("풀링된 오브젝트들이 보관될 부모 Transform")]
+    [Tooltip("풀링된 오브젝트들이 보관될 부모 Transform. 이 오브젝트에는 반드시 NetworkObject 컴포넌트가 있어야 합니다.")]
     [SerializeField] private Transform poolParent;
 
     [Header("Pool Settings")]
@@ -51,6 +51,7 @@ public class NetworkUseItemPool : NetworkBehaviour
 
     public override void OnNetworkSpawn()
     {
+        // 서버에서만 풀을 초기화합니다.
         if (!IsServer) return;
         InitializePools();
     }
@@ -65,7 +66,6 @@ public class NetworkUseItemPool : NetworkBehaviour
                 continue;
             }
 
-            // 이 프리팹에 대한 큐를 생성합니다.
             var queue = new Queue<NetworkObject>();
             poolQueues.Add(config.prefab, queue);
 
@@ -74,11 +74,9 @@ public class NetworkUseItemPool : NetworkBehaviour
                 var instance = Instantiate(config.prefab, poolParent);
                 var networkObject = instance.GetComponent<NetworkObject>();
                 
-                // 스폰은 하되, 클라이언트에게 활성화 상태로 보이게 하지는 않습니다.
                 networkObject.Spawn(false); 
                 
-                // 생성 직후 바로 풀에 반환하여 비활성화 상태로 만듭니다.
-                ReturnObjectToPool(networkObject, config.prefab);
+                ReturnObjectToPoolInternal(networkObject, config.prefab);
             }
         }
     }
@@ -105,19 +103,17 @@ public class NetworkUseItemPool : NetworkBehaviour
         }
         else
         {
-            // 풀이 비었다면 새로 생성합니다.
-            var instance = Instantiate(prefab, poolParent);
+            var instance = Instantiate(prefab);
             networkObject = instance.GetComponent<NetworkObject>();
             networkObject.Spawn(false);
         }
         
-        // 위치와 회전을 설정하고 활성화합니다.
+        // [수정된 부분 1] null을 Transform으로 명시하고, worldPositionStays를 true로 설정
+        networkObject.TrySetParent(null as Transform, true);
         networkObject.transform.SetPositionAndRotation(position, rotation);
-        // 부모를 임시로 null로 설정하여 월드 좌표계에서 자유롭게 움직이게 합니다.
-        networkObject.transform.SetParent(null, worldPositionStays: true);
+        
         networkObject.gameObject.GetComponent<ActiveStateSynchronizer>().SetActiveState(true);
 
-        // 어떤 프리팹에서 생성되었는지 기록합니다.
         spawnedObjectsToPrefab.Add(networkObject, prefab);
 
         return networkObject;
@@ -130,28 +126,34 @@ public class NetworkUseItemPool : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        // 이 오브젝트가 어떤 원본 프리팹에서 생성되었는지 찾습니다.
         if (spawnedObjectsToPrefab.TryGetValue(networkObject, out GameObject prefab))
         {
-            ReturnObjectToPool(networkObject, prefab);
+            ReturnObjectToPoolInternal(networkObject, prefab);
             spawnedObjectsToPrefab.Remove(networkObject);
         }
         else
         {
             Debug.LogWarning($"{networkObject.name}는 이 풀에서 관리하는 오브젝트가 아닙니다. Despawn 후 Destroy합니다.");
-            networkObject.Despawn();
+            networkObject.Despawn(true);
         }
     }
     
     // 내부적으로 사용될 반환 로직
-    private void ReturnObjectToPool(NetworkObject networkObject, GameObject prefab)
+    private void ReturnObjectToPoolInternal(NetworkObject networkObject, GameObject prefab)
     {
         networkObject.gameObject.GetComponent<ActiveStateSynchronizer>().SetActiveState(false);
-        networkObject.transform.SetParent(poolParent);
+        
+        // [수정된 부분 2] worldPositionStays를 false로 설정하여 부모 기준 로컬 좌표를 리셋
+        networkObject.TrySetParent(poolParent, false);
         
         if(poolQueues.TryGetValue(prefab, out var queue))
         {
             queue.Enqueue(networkObject);
+        }
+        else
+        {
+             Debug.LogWarning($"{prefab.name}에 해당하는 큐를 찾을 수 없어 {networkObject.name}를 파괴합니다.");
+             networkObject.Despawn(true);
         }
     }
 }
