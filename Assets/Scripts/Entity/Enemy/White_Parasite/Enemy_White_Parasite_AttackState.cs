@@ -7,9 +7,9 @@ public class Enemy_White_Parasite_AttackState : Enemy_White_Parasite_State
     {
     }
 
-    public override void Update()
+    public override void Enter()
     {
-        base.Update();
+        base.Enter();
         
         if(triggerCalled)
         {
@@ -17,7 +17,8 @@ public class Enemy_White_Parasite_AttackState : Enemy_White_Parasite_State
             // 끝없는 추격
         }
         
-        
-            
+        // int calculatedStamina = whiteParasite.stats.damage.GetValue();
+        // PlayerCondition.ChangeTemperature(calculatedStamina);
+        // enemyStateMachine.ChangeState(whiteParasite.DeadState);
     }
 }

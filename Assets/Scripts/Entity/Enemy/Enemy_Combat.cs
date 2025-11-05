@@ -43,6 +43,7 @@ public class Enemy_Combat : MonoBehaviour
     
     private void OnDrawGizmos()
     {
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(targetChack.position, targetcheckRadius);
     }
 }

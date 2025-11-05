@@ -8,6 +8,7 @@ public class Enemy_White_Parasite_BattleState : Enemy_White_Parasite_State
     private float lastTimeWasInBattle;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
+    public bool Explosive = false;
 
     public Enemy_White_Parasite_BattleState(Enemy_White_Parasite whiteParasite, Enemy_White_Parasite_StateMachine enemyStateMachine, string animBoolName) : base(whiteParasite, enemyStateMachine, animBoolName)
     {
@@ -58,7 +59,27 @@ public class Enemy_White_Parasite_BattleState : Enemy_White_Parasite_State
             enemyStateMachine.ChangeState(whiteParasite.JumpState);
             
         }
-        
+        if (player == null || !player.gameObject.activeInHierarchy)
+        {
+            enemyStateMachine.ChangeState(whiteParasite.IdleState);
+            return;
+        }
+
+        // PlayerDetection()은 RaycastHit2D를 반환하므로, collider가 있는지 확인해야 합니다.
+        if (whiteParasite.PlayerDetection().collider != null)
+        {
+            UpdateBattleTimer();
+            Explosive = true;
+        }
+        else
+        {
+            Explosive = false;
+             
+            if (BattleTimeIsOver())
+            {
+                enemyStateMachine.ChangeState(whiteParasite.IdleState);
+            }
+        }
     }
 
     public override void FiexedUpdate()

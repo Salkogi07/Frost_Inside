@@ -10,7 +10,7 @@ public class Enemy_White_Parasite : Entity
     public Enemy_White_Parasite_BattleState BattleState;
     public Enemy_White_Parasite_JumpState JumpState;
     public Enemy_White_Parasite_AttackState AttackState;
-    private Enemy_White_Parasite_DeadState DeadState;
+    public Enemy_White_Parasite_DeadState DeadState;
 
 
     private BoxCollider2D coll;
@@ -52,7 +52,7 @@ public class Enemy_White_Parasite : Entity
 
     [SerializeField] private LayerMask whatIsPlayer;
     [SerializeField] private float playerCheckDistance = 10;
-
+    [SerializeField] public float targetcheckRadius = 1f;
     [Header("Movement details")] public float IdleTime;
     public float MoveSpeed = 1.4f;
 
@@ -144,6 +144,7 @@ public void Deading()
     protected virtual void Update()
     {
         HandleCollisionDetection();
+        PerformAttack();
         EnemyStateMachine.UpdateActiveState();
     }
 
@@ -152,7 +153,26 @@ public void Deading()
         EnemyStateMachine.FiexedUpdateActiveState();
     }
 
+    public void PerformAttack()
+    {
+        GetDetectedColliders();
+        Debug.Log("왕지렁이");
+        if (BattleState.Explosive)
+        {
+            foreach (var target in GetDetectedColliders())
+            {
+                target.GetComponent<Player_Condition>().ChangeTemperature(-50f);
+                EnemyStateMachine.ChangeState(DeadState);
+            }
+        }
+    }
 
+    private Collider2D[] GetDetectedColliders()
+    {
+        return Physics2D.OverlapCircleAll(transform.position, targetcheckRadius, whatIsPlayer);
+        
+    }
+    
     public void HandleFlip(float xVelcoity)
     {
         if (xVelcoity > 0 && !_isFacingRight)
@@ -216,6 +236,10 @@ public void Deading()
             Gizmos.DrawLine(JumpState._jumpData.primaryJumpCheck.position,
                 new Vector3(JumpState._jumpData.primaryJumpCheck.position.x + (FacingDirection * JumpState._jumpData.jumpCheckDistance), JumpState._jumpData.primaryJumpCheck.position.y));
         }
+       
+        Gizmos.color = Color.white;
+        Gizmos.DrawWireSphere(transform.position, targetcheckRadius);
+        
     }
 
     public void CallAnimationTrigger()

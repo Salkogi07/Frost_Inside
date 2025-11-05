@@ -342,7 +342,7 @@ Transform:
   m_GameObject: {fileID: 40942335}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.149, y: 0.14, z: 0}
+  m_LocalPosition: {x: -0.175, y: 0.225, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3476,7 +3476,7 @@ Transform:
   m_GameObject: {fileID: 402020609}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.338, y: -0.443, z: 0}
+  m_LocalPosition: {x: -0.338, y: -0.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3811,7 +3811,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &474305647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6150,11 +6150,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 36520864720831461, guid: 18225d0806210874ab2e15824726e6da, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -81.24956
+      value: -89.21
       objectReference: {fileID: 0}
     - target: {fileID: 36520864720831461, guid: 18225d0806210874ab2e15824726e6da, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 50.439804
+      value: 49.86
       objectReference: {fileID: 0}
     - target: {fileID: 36520864720831461, guid: 18225d0806210874ab2e15824726e6da, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7989,7 +7989,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 0.3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 941837973}
@@ -8061,7 +8061,6 @@ GameObject:
   - component: {fileID: 982900952}
   - component: {fileID: 982900951}
   - component: {fileID: 982900950}
-  - component: {fileID: 982900949}
   - component: {fileID: 982900954}
   - component: {fileID: 982900948}
   - component: {fileID: 982900947}
@@ -8131,25 +8130,6 @@ MonoBehaviour:
   Groggy: 0
   speed: 0
   difficulty: 1
---- !u!114 &982900949
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 982900944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48a59b1ea13a136449911b058a5a0446, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  damage: 10
-  targetChack: {fileID: 955733127}
-  targetcheckRadius: 1
-  whatIsTarget:
-    serializedVersion: 2
-    m_Bits: 64
-  stats: {fileID: 0}
 --- !u!114 &982900950
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8236,9 +8216,9 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.04937285, y: -0.1674769}
-  m_Size: {x: 0.37885237, y: 1.009913}
-  m_Direction: 0
+  m_Offset: {x: -0.04937285, y: -0.02}
+  m_Size: {x: 1, y: 0.3}
+  m_Direction: 1
 --- !u!4 &982900953
 Transform:
   m_ObjectHideFlags: 0
@@ -8248,7 +8228,7 @@ Transform:
   m_GameObject: {fileID: 982900944}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.44, y: 49.74, z: 0}
+  m_LocalPosition: {x: -15.06, y: 49.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8275,13 +8255,13 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   groundCheck: {fileID: 402020610}
-  groundCheckDistance: 0
+  groundCheckDistance: 0.15
   whatIsWall:
     serializedVersion: 2
     m_Bits: 8
   primaryWallCheck: {fileID: 40942336}
   secondaryWallCheck: {fileID: 40942336}
-  wallCheckDistance: 0
+  wallCheckDistance: 0.15
   jumpData:
     jumpForce: 6
     jumpCoolTime: 0
@@ -8293,15 +8273,16 @@ MonoBehaviour:
     primaryJumpCheck: {fileID: 86597125}
     jumpCheckDistance: 0
   battleMoveSpeed: 3
-  attackDistance: 2
+  attackDistance: 0
   battleTimeDuration: 5
-  minRetreatDistance: 1
+  minRetreatDistance: 0
   retreatVelocity: {x: 0, y: 0}
   playerCheck: {fileID: 982900953}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 64
   playerCheckDistance: 10
+  targetcheckRadius: 0.52
   IdleTime: 0
   MoveSpeed: 1.4
   moveAnimSpeedMultiplier: 1
