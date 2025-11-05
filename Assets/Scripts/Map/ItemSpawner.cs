@@ -16,7 +16,8 @@ public class ItemSpawner : NetworkBehaviour
 
     private void Awake()
     {
-        GameManager.instance.itemSpawner = this;
+        if (GameManager.instance != null)
+            GameManager.instance.itemSpawner = this;
     }
 
     // SpawnItemsOnMap 메서드의 로직은 거의 동일하지만, Instantiate 부분을 변경합니다.

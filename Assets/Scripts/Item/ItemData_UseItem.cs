@@ -5,7 +5,7 @@ public class ItemData_UseItem : ItemData
 {
     public UseItem_Effect[] itemEffect;
 
-    public void ExecuteItemEffect(Transform _playerPos)
+    public void ExecuteItemEffect(GameObject _playerPos)
     {
         foreach (var item in itemEffect)
         {
