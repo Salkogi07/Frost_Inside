@@ -22,20 +22,20 @@ AnimationClip:
     curve:
     - time: 0
       value: {fileID: -1733780308238462412, guid: 11d59757fb1562e48a10fd7945008916, type: 3}
-    - time: 0.06666667
+    - time: 0.125
       value: {fileID: 1712507069495156994, guid: 11d59757fb1562e48a10fd7945008916, type: 3}
-    - time: 0.15
+    - time: 0.25
       value: {fileID: 4874132144196522930, guid: 11d59757fb1562e48a10fd7945008916, type: 3}
-    - time: 0.21666667
+    - time: 0.375
       value: {fileID: -295907764, guid: 11d59757fb1562e48a10fd7945008916, type: 3}
-    - time: 0.3
+    - time: 0.5
       value: {fileID: -295907764, guid: 11d59757fb1562e48a10fd7945008916, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
     script: {fileID: 0}
     flags: 2
-  m_SampleRate: 60
+  m_SampleRate: 8
   m_WrapMode: 0
   m_Bounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -62,7 +62,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 0.53333336
+    m_StopTime: 0.625
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -89,7 +89,7 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 0.53333336
+  - time: 0.5
     functionName: CurrentStateTrigger
     data: 
     objectReferenceParameter: {fileID: 0}

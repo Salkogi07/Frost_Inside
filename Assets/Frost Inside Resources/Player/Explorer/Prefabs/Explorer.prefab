@@ -383,7 +383,7 @@ MonoBehaviour:
   groundCheckSize: {x: 0.3, y: 0.1}
   whatIsGround:
     serializedVersion: 2
-    m_Bits: 8
+    m_Bits: 264
   CanMine: 1
   positionUpdateThreshold: 0.05
   lerpDuration: 0.05

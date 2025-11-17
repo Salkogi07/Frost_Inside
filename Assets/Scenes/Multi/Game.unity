@@ -45110,6 +45110,7 @@ MonoBehaviour:
   poolParent: {fileID: 1492779297}
   enemyPrefabs:
   - {fileID: 1060806058238291733, guid: f2495d88f4f12434aa64c8208d0f236c, type: 3}
+  - {fileID: 3024046757833780178, guid: 7b81e16efbe34e54cb45844a13444ec7, type: 3}
   initialPoolSize: 10
 --- !u!1 &1522563343
 GameObject:
