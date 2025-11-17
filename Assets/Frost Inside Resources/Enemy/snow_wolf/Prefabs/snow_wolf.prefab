@@ -291,6 +291,7 @@ GameObject:
   - component: {fileID: 8549634170168031629}
   - component: {fileID: 3459505029955319631}
   - component: {fileID: 2053020371455589749}
+  - component: {fileID: 5074460572309347443}
   m_Layer: 8
   m_Name: snow_wolf
   m_TagString: Enemy
@@ -530,6 +531,19 @@ MonoBehaviour:
   heavyKnockbackpower: {x: 7, y: 7}
   heavyKnockbackDuration: 0.5
   heavyDamageThreshold: 0.3
+--- !u!114 &5074460572309347443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3024046757833780178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f70b57acef3489cad4a322b9fdf62b1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!1 &8055315337082901137
 GameObject:
   m_ObjectHideFlags: 0

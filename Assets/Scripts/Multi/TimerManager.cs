@@ -33,7 +33,7 @@ public class TimerManager : NetworkBehaviour
     private Observable<int> _minutesObservable;
     public Observable<int> MinutesObservable => _minutesObservable ??= _minutesPropertiy.AsObservable();
 
-    private float timeSpeed = 1f;
+    private float timeSpeed = .3f;
 
     private void Awake()
     {
