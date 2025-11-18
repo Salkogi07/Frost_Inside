@@ -66,6 +66,9 @@ TagManager:
   - name: Ground
     uniqueID: 3122112259
     locked: 0
+  - name: Ore
+    uniqueID: 1333039267
+    locked: 0
   - name: Effect
     uniqueID: 3108179205
     locked: 0
