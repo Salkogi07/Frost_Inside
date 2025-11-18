@@ -7,6 +7,7 @@ public class MapInteractionManager : NetworkBehaviour
     public static MapInteractionManager Instance;
     
     public SpreadTilemap spreadTilemap;
+    public TopTileLightPlacer lightPlacer;
     
     private void Awake()
     {
@@ -60,5 +61,7 @@ public class MapInteractionManager : NetworkBehaviour
         Tilemap tilemap = spreadTilemap.GetTileMap(tileMapType);
         
         tilemap.SetTile(cellPosition, null);
+
+        lightPlacer.GenerateFalloffLightMask();
     }
 }

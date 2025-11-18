@@ -142,6 +142,8 @@ public class MakeRandomMap : MonoBehaviour
 
         GenerateOres();
 
+        MapInteractionManager.Instance.lightPlacer.GenerateFalloffLightMask();
+
         // 아이템 생성은 서버만 담당
         if (NetworkManager.Singleton.IsServer)
         {
