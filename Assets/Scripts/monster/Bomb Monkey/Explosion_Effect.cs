@@ -13,6 +13,11 @@ public class Explosion_Effect : NetworkBehaviour
         Debug.Log($"[Client] Explosion damage set to: {damage}");
     }
 
+    public override void OnNetworkSpawn()
+    {
+        StartCoroutine(DestroyAfterDelay());
+    }
+
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -22,13 +27,11 @@ public class Explosion_Effect : NetworkBehaviour
         }
         
         Debug.Log($"[Server] Dealt {damage} damage to {other.name}");
-        
-        StartCoroutine(DestroyAfterDelay());
     }
 
     private IEnumerator DestroyAfterDelay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.4f);
         
         if (IsServer)
         {
